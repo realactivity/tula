@@ -105,23 +105,23 @@ This project is in **early development**. Current status:
 | Deployment Guide | ✅ Complete |
 | OpenClaw Setup | ✅ Complete |
 | Telegram Integration | ✅ Complete |
-| Intelligent Email Ingestion and Router | 📋 Planned |
+| Intelligent Email Ingestion and Router | 🔨 In Progress |
 | Laboratory Parser Skill | 🔨 In Progress |
 | Medical Image Interpretation (DICOM) | 📋 Planned |
 | Patient Health Journal Skill | 🔨 In Progress |
-| Professional Journal Skill | 🔨 In Progress |
+| Professional Journal Skill Planned | 📋 Planned        |
 | Wearable Device Integration | 📋 Planned |
 | Genomic Report Import | 📋 Planned |
 | EHR / Patient Portal Connector (FHIR R4) | 📋 Planned |
 | Home Device Sync (BP, Scale, Pulse Ox) | 📋 Planned |
-| De-Identification Engine | 📋 Planned |
+| De-Identification Engine | 🔨 In Progress |
 | Research Synthesis | 📋 Planned |
 | Healthcare Model Routing | 📋 Planned |
 | MedGemma Integration | 📋 Planned |
-| Microsoft Healthcare AI Integration | 📋 Planned |
+| Microsoft Healthcare AI Integration | 🔨 In Progress |
 | MedASR Medical Speech | 📋 Planned |
 | Voice Transcription (Whisper/MedASR) | 📋 Planned |
-| Medication Adherence (IoT) | 💡 Community Idea |
+| Medication Adherence (IoT) | 🔨 In Progress |
 | Caregiver Dashboard | 💡 Community Idea |
 
 ## Contributing
@@ -159,8 +159,8 @@ Tula is a [RealActivity](https://realactivity.com) initiative.
 
 ## Founding Contributors
 
-- **Paul Swider** - Creator. Health data integration, laboratory parsing, wearable integration, infrastructure.
-- **Sal Rosales** - Medical adherence, caregiver tools, IoT integration.
+- **[Paul Swider](https://www.linkedin.com/in/pswider)** - Creator. Health data integration, laboratory parsing, wearable integration, infrastructure.
+- **[Sal Rosales](https://www.linkedin.com/in/salros)** - Medical adherence, caregiver tools, IoT integration.
 
 ## License
 
