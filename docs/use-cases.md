@@ -21,3 +21,11 @@ For those with significant family histories of cancer, cardiovascular disease, d
 ## Preventive Health and Wellness
 
 Healthy individuals focused on long-term wellness can use Tula to track wearable physiological data, monitor routine laboratory work, log nutrition and exercise, and stay current with relevant clinical and translational research.
+
+## Community Health in Low-Resource Settings
+
+In many low- and middle-income countries, community health workers serve as the front line of care, often managing large patient populations with limited clinical support and fragmented record-keeping systems. A shared Tula instance deployed at a community health center can consolidate patient-reported symptoms, medication adherence records, and basic laboratory data into a structured, searchable system accessible through Telegram on a basic smartphone.
+
+Tula's architecture is designed for this context. It operates on low-bandwidth mobile networks, requires no proprietary software licenses, integrates with open-source health information systems via FHIR R4, and supports multilingual interaction through the underlying AI model's language capabilities. The de-identification engine enables anonymized data contribution to research collaborations, helping address the systemic underrepresentation of LMIC populations in global health datasets.
+
+Tula is not a substitute for trained clinicians, functioning health infrastructure, or evidence-based public health programs. It is a supplementary tool that can reduce administrative burden, improve continuity of care documentation, and provide health literacy support where access to specialist interpretation is limited.

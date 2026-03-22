@@ -4,6 +4,8 @@
 
 Named after a brilliant, strong woman - a Mensa member and mother of five - Tula embodies sharp intelligence, warmth, and directness in service of one goal: **helping individuals take an active, informed role in their health.**
 
+Tula is also designed to be deployed anywhere. It is open source, self-hosted, model-agnostic, and accessible through Telegram, which operates on low-bandwidth connections and basic smartphones worldwide. A community health center in rural Rwanda, a patient advocacy group in Brazil, or an individual managing a chronic condition in India can deploy the same platform used in a US academic medical center. Health equity requires not just better tools, but tools that are free, private, and available to everyone.
+
 ## Why This Matters
 
 Tula exists because health is not abstract. Behind every biomarker is a person. Behind every caregiver is someone they love.
@@ -35,7 +37,7 @@ Tula is **not** a standalone application. It is a health-focused skill layer bui
 
 ## Who Tula Is For
 
-Tula supports patients navigating complex illness, caregivers, individuals managing chronic conditions, those with hereditary risk factors, and anyone focused on preventive health and wellness. See the [detailed use cases](docs/use-cases.md) for more information.
+Tula supports patients navigating complex illness, caregivers, individuals managing chronic conditions, those with hereditary risk factors, community health programs in low-resource settings, and anyone focused on preventive health and wellness. See the [detailed use cases](docs/use-cases.md) for more information.
 
 ## Architecture
 
@@ -97,19 +99,19 @@ This project is in **early development**. Current status:
 | Deployment Guide | ✅ Complete |
 | OpenClaw Setup | ✅ Complete |
 | Telegram Integration | ✅ Complete |
-| Intelligent Email Ingestion and Router | 📋 Planned |
+| Intelligent Email Ingestion and Router | 🔨 In Progress |
 | Laboratory Parser Skill | 🔨 In Progress |
 | Medical Image Interpretation (DICOM) | 📋 Planned |
 | Patient Health Journal Skill | 🔨 In Progress |
-| Professional Journal Skill | 🔨 In Progress |
+| Professional Journal Skill | 📋 Planned |
 | Wearable Device Integration | 📋 Planned |
 | Genomic Report Import | 📋 Planned |
 | EHR / Patient Portal Connector (FHIR R4) | 📋 Planned |
 | Home Device Sync (BP, Scale, Pulse Ox) | 📋 Planned |
-| De-Identification Engine | 📋 Planned |
+| De-Identification Engine | 📋 In Progress |
 | Research Synthesis | 📋 Planned |
 | Voice Transcription (Whisper) | 📋 Planned |
-| Medication Adherence (IoT) | 💡 Community Idea |
+| Medication Adherence (IoT) | 💡 In Progress |
 | Caregiver Dashboard | 💡 Community Idea |
 
 ## Contributing
@@ -130,6 +132,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines. See the [communi
 - **Patient empowerment through health literacy.** Tula translates clinical information into language that supports informed decision-making.
 - **Data sovereignty.** All data is stored locally on the user's own server. No cloud health platforms. No third-party data sharing.
 - **Caregiver recognition.** Caregiver support is a core use case, not a secondary consideration.
+- **Global health equity.** Open source, self-hosted, model-agnostic, and accessible on low-bandwidth networks. Designed so that a clinic in a low-resource setting has access to the same tools as a patient in a high-income country.
 
 See the [full principles](docs/principles.md) for our complete set of values and commitments.
 
@@ -141,12 +144,12 @@ Running Tula costs approximately **$35 - $115/month** depending on usage, from t
 
 This project originated as a personal build by a Windows Server administrator of 25 years deploying his first native Linux server to run an AI health agent. The [deployment guide](docs/deployment-guide.md) was written in real time as issues were encountered and resolved. It documents the actual experience, including common errors and their solutions.
 
-Tula is a [RealActivity](https://realactivity.com) initiative.
+Tula is a [RealActivity](https://realactivity.ai) initiative.
 
 ## Founding Contributors
 
-- **Paul Swider** - Creator. Health data integration, laboratory parsing, wearable integration, infrastructure.
-- **Sal Rosales** - Medical adherence, caregiver tools, IoT integration.
+- **[Paul Swider](https://www.linkedin.com/in/pswider)** - Creator. Health data integration, laboratory parsing, wearable integration, infrastructure.
+- **[Sal Rosales](https://www.linkedin.com/in/salros)** - Medical adherence, caregiver tools, IoT integration.
 
 ## License
 

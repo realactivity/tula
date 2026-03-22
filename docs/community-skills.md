@@ -29,3 +29,11 @@ The following skills represent areas of interest for development, either by the 
 
 - 🔒 **De-Identification Engine** - Removal of names, dates of birth, medical record numbers, and other PHI from health documents prior to sharing or export. Designed to support individuals who wish to participate in health communities, consult with health coaches, or contribute to research without compromising their identity.
 - 🛡️ **Audit Trail** - Logging of all data access, export, and sharing events. Complete visibility into what data has left the local environment.
+
+## Global Health and Equity
+
+- 🌍 **Multilingual Skill Templates** - Localized versions of core skills (medication adherence, patient check-ins, symptom logging) with language as a configurable parameter. Priority languages: Spanish, Portuguese, French, Swahili, Hindi, Arabic, Tagalog.
+- 🏥 **OpenMRS Connector** - Integration with OpenMRS, the open-source medical record system deployed across hundreds of health facilities in LMICs, via FHIR R4.
+- 📱 **Low-Bandwidth Optimization** - Skill variants designed for minimal data consumption, including text-only modes and compressed report formats for areas with limited connectivity.
+- 👩‍⚕️ **Community Health Worker Dashboard** - Shared Tula instance supporting multiple community health workers managing patient panels, with role-based access and patient-level symptom and adherence tracking.
+- 📊 **Anonymized Research Contribution** - Voluntary, de-identified data export formatted for research registries and public health surveillance, enabling underrepresented populations to contribute to global health datasets.

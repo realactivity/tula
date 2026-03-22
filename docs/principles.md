@@ -26,6 +26,24 @@ Individuals supporting a loved one through illness carry a significant burden th
 
 All skills are released under the MIT license. Use them, modify them, share them, and build upon them.
 
+## Global Health Equity
+
+Current AI health tools are overwhelmingly trained on data from high-income, English-speaking countries and delivered through proprietary platforms that require paid subscriptions. This approach excludes billions of people in low- and middle-income countries who face the greatest burden of disease and the least access to clinical resources.
+
+Tula is designed to address this gap through deliberate architectural decisions:
+
+- **Free and open source.** No subscription fees, no vendor lock-in. The MIT license ensures that any organization, clinic, or individual can deploy Tula without cost barriers.
+- **Self-hosted with data sovereignty.** All data remains on infrastructure controlled by the user or their organization. This aligns with the growing emphasis on national data sovereignty, particularly in the Global South, where governments are asserting greater control over health data governance.
+- **Model-agnostic.** Tula routes to whatever AI model is available and appropriate. In regions where frontier API providers are unavailable or cost-prohibitive, Tula can use open-weight models (Llama, Qwen, Nemotron) running on local or regional infrastructure.
+- **Low-bandwidth accessible.** Telegram, Tula's primary interface, operates on low-bandwidth mobile connections and basic smartphones. The email ingestion gateway similarly functions without high-speed connectivity. These are the dominant communication channels in Sub-Saharan Africa, South Asia, and Latin America.
+- **Multilingual by design.** Skills are designed with language as a configurable parameter. Medication adherence reminders, patient check-ins, and health education should function in Spanish, Portuguese, Swahili, Hindi, Tagalog, and any language supported by the underlying AI model, without rewriting the skill.
+- **FHIR R4 interoperability.** The EHR connector skill uses FHIR R4, enabling integration with open-source health information systems such as OpenMRS that are widely deployed across LMICs.
+- **De-identification for research equity.** The de-identification engine enables individuals in underrepresented populations to contribute anonymized health data to research collaborations, helping address the systemic data gaps that perpetuate inequity in AI model training.
+
+Tula is not a replacement for health system infrastructure, trained clinicians, or evidence-based public health programs. It is a tool that can augment existing resources, reduce the cognitive burden on patients and community health workers, and provide health literacy support in contexts where access to specialist interpretation is limited.
+
+We welcome contributors from all regions and health systems. If you are deploying Tula in a low-resource setting, we want to learn from your experience and adapt the platform to better serve your community.
+
 ## AI-Assisted Interpretation, Not Clinical Diagnosis
 
 Tula supports health literacy and informed patient-provider communication. It is not a medical device, not a diagnostic tool, and not a substitute for professional medical advice, diagnosis, or treatment. Users should always consult qualified healthcare providers for clinical decisions. Tula's purpose is to help individuals become more informed participants in their own care.
