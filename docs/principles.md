@@ -26,6 +26,16 @@ Individuals supporting a loved one through illness carry a significant burden th
 
 All skills are released under the MIT license. Use them, modify them, share them, and build upon them.
 
+## Intelligent Model Routing
+
+Tula does not rely on a single AI model for all tasks. Each task is directed to the most capable, cost-effective, and privacy-appropriate model available in the user's deployment environment.
+
+Purpose-built healthcare models handle medical-specific tasks: Google MedGemma for medical image interpretation and lab report extraction, Microsoft MedImageInsight and CXRReportGen for medical imaging analysis in Azure environments, and MedASR for medical speech transcription. General-purpose reasoning models such as Claude handle clinical synthesis, trend analysis, and research summarization. Lightweight models handle routine interactions such as daily check-ins and journaling.
+
+This routing is deployment-context-aware. An academic medical center on Azure accesses Microsoft's healthcare AI models through Foundry with enterprise governance and MACC-eligible billing. A community health center running a self-hosted instance uses MedGemma 4B locally with no API fees and no data leaving the local server. Both receive the best model selection their environment supports.
+
+This approach optimizes accuracy, cost, privacy, and global accessibility simultaneously. For the complete routing matrix and configuration details, see the [model routing reference](model-routing.md).
+
 ## Global Health Equity
 
 Current AI health tools are overwhelmingly trained on data from high-income, English-speaking countries and delivered through proprietary platforms that require paid subscriptions. This approach excludes billions of people in low- and middle-income countries who face the greatest burden of disease and the least access to clinical resources.
@@ -34,9 +44,9 @@ Tula is designed to address this gap through deliberate architectural decisions:
 
 - **Free and open source.** No subscription fees, no vendor lock-in. The MIT license ensures that any organization, clinic, or individual can deploy Tula without cost barriers.
 - **Self-hosted with data sovereignty.** All data remains on infrastructure controlled by the user or their organization. This aligns with the growing emphasis on national data sovereignty, particularly in the Global South, where governments are asserting greater control over health data governance.
-- **Model-agnostic.** Tula routes to whatever AI model is available and appropriate. In regions where frontier API providers are unavailable or cost-prohibitive, Tula can use open-weight models (Llama, Qwen, Nemotron) running on local or regional infrastructure.
+- **Model-agnostic.** Tula routes to whatever AI model is available and appropriate. In regions where frontier API providers are unavailable or cost-prohibitive, Tula can use open-weight models (Llama, Qwen, Nemotron) running on local or regional infrastructure. For medical-specific tasks, MedGemma 4B runs locally on modest hardware with no API fees, providing medical image and text comprehension in offline environments.
 - **Low-bandwidth accessible.** Telegram, Tula's primary interface, operates on low-bandwidth mobile connections and basic smartphones. The email ingestion gateway similarly functions without high-speed connectivity. These are the dominant communication channels in Sub-Saharan Africa, South Asia, and Latin America.
-- **Multilingual by design.** Skills are designed with language as a configurable parameter. Medication adherence reminders, patient check-ins, and health education should function in Spanish, Portuguese, Swahili, Hindi, Tagalog, and any language supported by the underlying AI model, without rewriting the skill.
+- **Multilingual by design.** Skills are designed with language as a configurable parameter. Medication adherence reminders, patient check-ins, and health education should function in Spanish, Portuguese, Swahili, Hindi, Tagalog, and any language supported by the underlying AI model, without rewriting the skill. MedASR supports medical speech recognition for voice-based data entry in clinical settings where typing is impractical.
 - **FHIR R4 interoperability.** The EHR connector skill uses FHIR R4, enabling integration with open-source health information systems such as OpenMRS that are widely deployed across LMICs.
 - **De-identification for research equity.** The de-identification engine enables individuals in underrepresented populations to contribute anonymized health data to research collaborations, helping address the systemic data gaps that perpetuate inequity in AI model training.
 

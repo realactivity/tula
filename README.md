@@ -23,8 +23,8 @@ Caregivers deserve dedicated support. Medication adherence, appointment coordina
 Tula is **not** a standalone application. It is a health-focused skill layer built on top of OpenClaw, providing the following capabilities:
 
 - 📧 **Intelligent Email Ingestion** - Forward any health-related correspondence to Tula for automatic classification and routing. Tula identifies the content type (laboratory results, imaging studies, explanation of benefits, appointment confirmations, prescription notifications, provider messages) and routes each item to the appropriate skill for processing and structured storage.
-- 🧪 **Laboratory Result Parsing** - Automated extraction of biomarker values, units, and reference ranges from laboratory report PDFs. Longitudinal trend tracking with out-of-range flagging.
-- 🩻 **Medical Image Interpretation** - Support for DICOM imaging studies including MRI, CT, radiograph, mammography, and ultrasound. Tula provides plain-language annotation of key findings, medical terminology translation, and longitudinal comparison across sequential studies. Integrates with laboratory and clinical record data for comprehensive context.
+- 🧪 **Laboratory Result Parsing** - Automated extraction of biomarker values, units, and reference ranges from laboratory report PDFs using purpose-built medical text models (MedGemma) or general-purpose reasoning models (Claude). Longitudinal trend tracking with out-of-range flagging.
+- 🩻 **Medical Image Interpretation** - Support for DICOM imaging studies including MRI, CT, radiograph, mammography, and ultrasound. Powered by purpose-built healthcare imaging models (Google MedGemma multimodal or Microsoft MedImageInsight/CXRReportGen, depending on deployment context). Provides plain-language annotation of key findings, medical terminology translation, and longitudinal comparison across sequential studies.
 - 🧬 **Genomic Health Reports** - Import and analysis of consumer genomic data (e.g., 23andMe) to identify clinically relevant genetic variants and correlate predispositions with current biomarker profiles and care protocols.
 - 🏥 **Electronic Health Record Integration** - Retrieval of medical history, visit summaries, and provider documentation from patient portals via FHIR R4 and patient access APIs.
 - ⌚ **Wearable Device Integration** - Synchronization of daily physiological metrics from compatible wearable devices (e.g., Garmin), including heart rate variability (HRV), resting heart rate, sleep architecture, and stress indicators.
@@ -32,8 +32,9 @@ Tula is **not** a standalone application. It is a health-focused skill layer bui
 - 📓 **Patient Health Journal** - Structured daily check-ins via Telegram for tracking sleep quality, energy levels, mood, symptom burden, and treatment protocol adherence.
 - 💼 **Professional Journal** - Business-focused note capture with automated daily summaries, weekly synthesis, and searchable history.
 - 🔬 **Research Synthesis** - Scheduled retrieval and summarization of current peer-reviewed literature and clinical evidence relevant to the user's health profile and active protocols.
-- 🗣️ **Voice Input** - Speech-to-text transcription of Telegram voice messages for hands-free interaction.
+- 🗣️ **Voice Input** - Speech-to-text transcription of Telegram voice messages. Medical voice input uses MedASR (5x more accurate than general-purpose transcription on clinical terminology). General voice uses Whisper or Azure Speech Services.
 - 🔒 **De-Identification** - Removal of protected health information (PHI) from health documents prior to sharing, export, or use in research contexts. Designed to support HIPAA Safe Harbor de-identification principles.
+- 🧠 **Intelligent Model Routing** - Each task is directed to the most capable, cost-effective, and privacy-appropriate model available. Purpose-built healthcare models handle medical imaging and text extraction. General-purpose reasoning models handle clinical synthesis and trend analysis. Lightweight models handle routine interactions. See the [model routing reference](docs/model-routing.md) for details.
 
 ## Who Tula Is For
 
@@ -68,9 +69,14 @@ Tula Skills (this repository)
   |-- De-Identification Engine
   |-- Research Synthesis
         |
-AI Models (Anthropic Claude Sonnet / Opus, Google Gemini)
+AI Model Routing Layer (deployment-context-aware)
+  |-- Medical Imaging: MedGemma 4B / MedImageInsight / CXRReportGen
+  |-- Medical Text: MedGemma 27B / Claude in Foundry
+  |-- Medical Speech: MedASR / Azure Speech Services
+  |-- Clinical Reasoning: Claude Sonnet / Opus
+  |-- General Tasks: Gemini Flash / GPT-4o mini / Qwen / Llama
         |
-SQLite (local storage, user-controlled)
+FHIR R4 Storage (local JSON files, user-controlled)
 ```
 
 ## Getting Started
@@ -99,19 +105,23 @@ This project is in **early development**. Current status:
 | Deployment Guide | ✅ Complete |
 | OpenClaw Setup | ✅ Complete |
 | Telegram Integration | ✅ Complete |
-| Intelligent Email Ingestion and Router | 🔨 In Progress |
+| Intelligent Email Ingestion and Router | 📋 Planned |
 | Laboratory Parser Skill | 🔨 In Progress |
 | Medical Image Interpretation (DICOM) | 📋 Planned |
 | Patient Health Journal Skill | 🔨 In Progress |
-| Professional Journal Skill | 📋 Planned |
+| Professional Journal Skill | 🔨 In Progress |
 | Wearable Device Integration | 📋 Planned |
 | Genomic Report Import | 📋 Planned |
 | EHR / Patient Portal Connector (FHIR R4) | 📋 Planned |
 | Home Device Sync (BP, Scale, Pulse Ox) | 📋 Planned |
-| De-Identification Engine | 📋 In Progress |
+| De-Identification Engine | 📋 Planned |
 | Research Synthesis | 📋 Planned |
-| Voice Transcription (Whisper) | 📋 Planned |
-| Medication Adherence (IoT) | 💡 In Progress |
+| Healthcare Model Routing | 📋 Planned |
+| MedGemma Integration | 📋 Planned |
+| Microsoft Healthcare AI Integration | 📋 Planned |
+| MedASR Medical Speech | 📋 Planned |
+| Voice Transcription (Whisper/MedASR) | 📋 Planned |
+| Medication Adherence (IoT) | 💡 Community Idea |
 | Caregiver Dashboard | 💡 Community Idea |
 
 ## Contributing
@@ -131,6 +141,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines. See the [communi
 
 - **Patient empowerment through health literacy.** Tula translates clinical information into language that supports informed decision-making.
 - **Data sovereignty.** All data is stored locally on the user's own server. No cloud health platforms. No third-party data sharing.
+- **Intelligent model routing.** Each task is directed to the most capable model for that specific job. Purpose-built healthcare models for medical imaging and text. General-purpose reasoning models for clinical synthesis. The right model for the right task in the right deployment context.
 - **Caregiver recognition.** Caregiver support is a core use case, not a secondary consideration.
 - **Global health equity.** Open source, self-hosted, model-agnostic, and accessible on low-bandwidth networks. Designed so that a clinic in a low-resource setting has access to the same tools as a patient in a high-income country.
 
@@ -144,12 +155,12 @@ Running Tula costs approximately **$35 - $115/month** depending on usage, from t
 
 This project originated as a personal build by a Windows Server administrator of 25 years deploying his first native Linux server to run an AI health agent. The [deployment guide](docs/deployment-guide.md) was written in real time as issues were encountered and resolved. It documents the actual experience, including common errors and their solutions.
 
-Tula is a [RealActivity](https://realactivity.ai) initiative.
+Tula is a [RealActivity](https://realactivity.com) initiative.
 
 ## Founding Contributors
 
-- **[Paul Swider](https://www.linkedin.com/in/pswider)** - Creator. Health data integration, laboratory parsing, wearable integration, infrastructure.
-- **[Sal Rosales](https://www.linkedin.com/in/salros)** - Medical adherence, caregiver tools, IoT integration.
+- **Paul Swider** - Creator. Health data integration, laboratory parsing, wearable integration, infrastructure.
+- **Sal Rosales** - Medical adherence, caregiver tools, IoT integration.
 
 ## License
 

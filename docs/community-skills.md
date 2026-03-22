@@ -8,7 +8,7 @@ The following skills represent areas of interest for development, either by the 
 - 🤝 **Caregiver Dashboard** - Centralized tracking of appointments, medications, treatment milestones, and care coordination notes
 - 📋 **Treatment Timeline** - Visual representation of the full treatment arc: diagnosis, procedures, chemotherapy cycles, imaging studies, and follow-up visits
 - 🧘 **Caregiver and Patient Resilience Tracker** - Structured journaling with longitudinal stress and wellbeing pattern analysis
-- 💬 **Symptom Logger** - Rapid voice or text entry of symptoms, adverse effects, and pain assessments (NRS/VAS). Exportable summaries formatted for clinical review.
+- 💬 **Symptom Logger** - Rapid voice or text entry of symptoms, adverse effects, and pain assessments (NRS/VAS). Voice input powered by MedASR for accurate medical speech transcription. Exportable summaries formatted for clinical review.
 - 📞 **Appointment Preparation** - Prior to each clinical visit, Tula reviews recent laboratory results, imaging, symptoms, and medications, then generates a structured list of discussion points for the patient-provider encounter.
 
 ## Data Integration
@@ -17,6 +17,10 @@ The following skills represent areas of interest for development, either by the 
 - 🏥 **EHR Connector** - Retrieval of clinical records from patient portals via FHIR R4 and patient access APIs (Epic MyChart, Oracle Health/Cerner). Consolidation of visit summaries, problem lists, medication lists, and provider notes.
 - 🩺 **Home Device Sync** - Integration with Bluetooth/Wi-Fi blood pressure monitors (Omron, Withings), body composition scales, pulse oximeters, thermometers, and glucose meters. Automated daily readings without manual entry.
 - 📈 **CGM Integration** - Continuous glucose monitor data synchronization with meal and activity correlation.
+- 🩻 **Radiology Report Generation** - Automated chest X-ray report drafting using CXRReportGen (Azure) or MedGemma 4B multimodal (self-hosted). Supports longitudinal comparison across sequential imaging studies.
+- 🔬 **Histopathology Analysis** - Whole-slide histopathology image interpretation using MedGemma 4B multimodal. Supports tissue classification and finding summarization.
+- 🔍 **Medical Image Similarity Search** - Using MedImageInsight (Azure) to find prior imaging studies with similar findings, supporting longitudinal tracking and comparative analysis.
+- 📋 **Longitudinal Imaging Comparison** - Track changes across sequential imaging studies over time, with automated identification of interval changes and progression indicators.
 
 ## Wellness and Optimization
 
@@ -34,6 +38,7 @@ The following skills represent areas of interest for development, either by the 
 
 - 🌍 **Multilingual Skill Templates** - Localized versions of core skills (medication adherence, patient check-ins, symptom logging) with language as a configurable parameter. Priority languages: Spanish, Portuguese, French, Swahili, Hindi, Arabic, Tagalog.
 - 🏥 **OpenMRS Connector** - Integration with OpenMRS, the open-source medical record system deployed across hundreds of health facilities in LMICs, via FHIR R4.
-- 📱 **Low-Bandwidth Optimization** - Skill variants designed for minimal data consumption, including text-only modes and compressed report formats for areas with limited connectivity.
-- 👩‍⚕️ **Community Health Worker Dashboard** - Shared Tula instance supporting multiple community health workers managing patient panels, with role-based access and patient-level symptom and adherence tracking.
+- 📱 **Low-Bandwidth Optimization** - Skill variants designed for minimal data consumption, including text-only modes and compressed report formats for areas with limited connectivity. MedGemma 4B can be deployed locally for zero-API-cost medical AI in environments without reliable internet.
+- 👩‍⚕️ **Community Health Worker Dashboard** - Shared Tula instance supporting multiple community health workers managing patient panels, with role-based access and patient-level symptom and adherence tracking. MedASR enables medical speech input for clinical staff using dictation workflows.
 - 📊 **Anonymized Research Contribution** - Voluntary, de-identified data export formatted for research registries and public health surveillance, enabling underrepresented populations to contribute to global health datasets.
+- 🔌 **Offline Medical AI** - Locally deployed MedGemma 4B multimodal for medical image and text comprehension in environments without internet connectivity. Enables medical imaging interpretation, lab report extraction, and clinical text reasoning without any API calls or data transmission.

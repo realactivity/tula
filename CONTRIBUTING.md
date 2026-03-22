@@ -70,6 +70,8 @@ What data is stored, the storage format, and the SQLite table schema if applicab
 - **Include units and reference ranges.** Health data requires clinical context. Always store measurement units and applicable reference ranges alongside values.
 - **Document the data schema.** Other skills may need to cross-reference data from your skill. Clear schema documentation supports interoperability across the Tula ecosystem.
 - **Use appropriate clinical terminology.** When referencing medical concepts, use standard clinical terminology (e.g., "heart rate variability" rather than informal abbreviations). Include plain-language explanations where appropriate.
+- **Specify model routing.** Skills should document which model they recommend for each task and which deployment contexts they support. Reference the [model routing table](docs/model-routing.md) for standard routing decisions. For medical imaging tasks, specify MedGemma or MedImageInsight. For medical text extraction, specify MedGemma or Claude. For medical speech, specify MedASR. Skills should define fallback behavior when the preferred model is unavailable.
+- **Support multiple deployment contexts.** Skills should work in both Azure-native and self-hosted environments where possible. Document any Azure-specific dependencies clearly so that self-hosted users can identify alternatives.
 
 ### Improve Documentation
 

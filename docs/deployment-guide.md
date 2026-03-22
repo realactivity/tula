@@ -430,7 +430,8 @@ With your agent running and accessible through Telegram, consider the following:
 1. **Configure email integration** using the himalaya skill to enable forwarding laboratory results and health documents to your agent.
 2. **Build custom health skills** for laboratory parsing, journaling, and biomarker tracking. See the [community skill ideas](community-skills.md) for inspiration.
 3. **Set up scheduled tasks** using OpenClaw's cron system for daily check-ins, weekly research synthesis, and automated health summaries.
-4. **Review security hardening** including firewall configuration (`ufw`), fail2ban for brute-force protection, and Tailscale for private VPN access.
+4. **Configure healthcare AI models** for medical image interpretation, laboratory report extraction, and medical speech recognition. Tula supports purpose-built healthcare models from Google (MedGemma, MedASR) and Microsoft (MedImageInsight, CXRReportGen). See the [model routing reference](model-routing.md) for configuration details.
+5. **Review security hardening** including firewall configuration (`ufw`), fail2ban for brute-force protection, and Tailscale for private VPN access.
 
 ---
 
