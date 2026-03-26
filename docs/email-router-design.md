@@ -50,6 +50,37 @@ Content-type-specific handler
 Mark email as seen, move to Processed folder
 ```
 
+## Photo Ingestion
+
+The email router supports image attachments as a first-class data path. The user photographs any health document with their phone camera and emails the image to Tula. The email router detects the image attachment, sends it to a multimodal AI model (Claude or MedGemma) along with the email metadata, and the model extracts structured data from the photograph.
+
+This path handles the same content types as PDF and text-based email, but captures data that would otherwise never enter a structured system: printed reports handed to patients in clinics, patient portal screens, prescription bottles, hospital whiteboards, insurance mailings, discharge instructions, and provider handwritten notes.
+
+### Processing Pipeline for Photo Attachments
+
+1. Email arrives with image attachment (JPEG, PNG, HEIC)
+2. Email router detects image attachment and classifies the email using both metadata and a low-resolution preview of the image
+3. Based on classification, the full-resolution image is sent to the appropriate multimodal model:
+   - Laboratory results: extract biomarker names, values, units, reference ranges, and flags
+   - Prescriptions: extract medication name, dosage, frequency, prescriber, pharmacy
+   - Appointments: extract date, time, provider, location, visit type
+   - Vital signs: extract readings from device displays (blood pressure, glucose, weight)
+   - Insurance EOBs: extract procedure codes, amounts, dates of service
+   - All other health content: extract relevant text and store as DocumentReference
+4. Extracted data is mapped to FHIR R4 resources using the same pipeline as PDF-based extraction
+5. Telegram notification sent with summary
+
+### Image Quality Considerations
+
+Multimodal AI extraction quality depends on image clarity. The following factors affect accuracy:
+
+- **Lighting:** Well-lit, evenly illuminated documents produce the best results. Shadows, glare, and low-light conditions reduce extraction confidence.
+- **Angle:** Straight-on photographs are preferred. Angled photographs introduce perspective distortion that can cause character misreads.
+- **Resolution:** Modern smartphone cameras produce sufficient resolution for all health document types. Cropping to the relevant area before sending can improve results by reducing noise.
+- **Focus:** Out-of-focus images are the most common cause of extraction errors. Ensure the text is sharp before sending.
+
+The extraction pipeline should include a confidence score for each extracted value. Values below a configurable confidence threshold should be flagged for user verification via Telegram rather than stored directly.
+
 ## FHIR R4 Storage Schema
 
 ### Why FHIR for Local Storage

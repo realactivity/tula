@@ -22,7 +22,8 @@ Caregivers deserve dedicated support. Medication adherence, appointment coordina
 
 Tula is **not** a standalone application. It is a health-focused skill layer built on top of OpenClaw, providing the following capabilities:
 
-- 📧 **Intelligent Email Ingestion** - Forward any health-related correspondence to Tula for automatic classification and routing. Tula identifies the content type (laboratory results, imaging studies, explanation of benefits, appointment confirmations, prescription notifications, provider messages) and routes each item to the appropriate skill for processing and structured storage.
+- 📧 **Intelligent Email Ingestion** - Forward any health-related correspondence to Tula for automatic classification and routing. Tula identifies the content type (laboratory results, imaging studies, explanation of benefits, appointment confirmations, prescription notifications, provider messages) and routes each item to the appropriate skill for processing and structured storage. Email security is enforced at the Exchange transport layer with sender and recipient allowlists. See the [security model](docs/security-model.md).
+- 📸 **Universal Photo Capture** - Photograph any health document with your phone and email it to Tula. Printed lab reports, patient portal screens, prescription bottles, hospital whiteboards, insurance EOBs, discharge instructions, imaging reports. If you can see it, you can photograph it, and Tula can extract structured data from it using multimodal AI. No patient portal integration required. No FHIR API. No IT department involvement. Your phone camera becomes the universal health data connector.
 - 🧪 **Laboratory Result Parsing** - Automated extraction of biomarker values, units, and reference ranges from laboratory report PDFs using purpose-built medical text models (MedGemma) or general-purpose reasoning models (Claude). Longitudinal trend tracking with out-of-range flagging.
 - 🩻 **Medical Image Interpretation** - Support for DICOM imaging studies including MRI, CT, radiograph, mammography, and ultrasound. Powered by purpose-built healthcare imaging models (Google MedGemma multimodal or Microsoft MedImageInsight/CXRReportGen, depending on deployment context). Provides plain-language annotation of key findings, medical terminology translation, and longitudinal comparison across sequential studies.
 - 🧬 **Genomic Health Reports** - Import and analysis of consumer genomic data (e.g., 23andMe) to identify clinically relevant genetic variants and correlate predispositions with current biomarker profiles and care protocols.
@@ -47,6 +48,7 @@ User Interface (Telegram / Email / Voice)
         |
 Data Sources
   |-- Email Inbox (automated classification and routing)
+  |-- Phone Camera (photograph any health document, email to Tula)
   |-- Laboratory PDFs (Quest Diagnostics, LabCorp, institutional labs)
   |-- Genomic Reports (23andMe, AncestryDNA, clinical panels)
   |-- EHR / Patient Portal (FHIR R4 API)
