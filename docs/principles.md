@@ -14,6 +14,14 @@ All data is stored locally on the user's own server. No cloud health platforms. 
 
 Local storage is the baseline. De-identification tools enable safe sharing when the user chooses to do so. The user controls what data leaves their environment and in what form.
 
+## Defense in Depth
+
+Health data requires more than local storage. Every ingestion channel is secured at multiple layers to minimize attack surface, contain the blast radius of any individual control failure, and protect against both direct and indirect threats.
+
+Email ingestion follows the TripIt model: the user forwards health-related emails from their authorized account to Tula's dedicated mailbox. Inbound email is restricted at the Exchange transport layer to authorized senders only. Outbound email is restricted to authorized recipients only, preventing data exfiltration even if an attacker successfully injects malicious instructions into the AI processing pipeline. Anti-spoofing controls (SPF, DKIM, DMARC) protect against sender forgery. Application-level allowlists provide a secondary check independent of the mail transport rules.
+
+Tula's security model is published in its entirety and includes an honest assessment of residual risks, including indirect prompt injection via forwarded third-party content. No system is fully secure. Transparency about what is and is not protected is itself a security practice. For the complete threat analysis, see the [security model](security-model.md).
+
 ## Comprehensive Health Context
 
 Laboratory data, genomic information, medical records, imaging studies, wearable metrics, home device readings, and patient-reported outcomes are maintained in a single, cross-referenced repository. AI-powered analysis surfaces correlations across data sources that may not be apparent when reviewed in isolation.

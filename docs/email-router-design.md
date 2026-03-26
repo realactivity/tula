@@ -473,11 +473,26 @@ When query volume or complexity outgrows file-based storage, migrate to SQLite w
 
 ## Security Considerations
 
-- Email credentials (IMAP password or app password) stored in himalaya config with restricted file permissions (chmod 600)
+### Email Transport Restrictions
+
+Tula's mailbox is locked down at the Exchange transport layer:
+
+- **Inbound:** Only authorized senders (configured in the Exchange mail flow rule) can deliver email to Tula's inbox. All other senders receive a rejection. Messages from unauthorized senders never reach the mailbox and are never processed.
+- **Outbound:** Tula can only send email to authorized recipients. This prevents data exfiltration even if a prompt injection succeeds in instructing the agent to email health records to an external address.
+- **Anti-spoofing:** SPF, DKIM, and DMARC on the authorized sender's domain protect against From header forgery.
+- **Application-level allowlist:** The email router skill performs its own sender verification before processing, independent of the Exchange transport rules.
+
+### Credential and Data Protection
+
+- Email credentials (OAuth2 tokens) stored in himalaya config with restricted file permissions (chmod 600)
 - Health data directories have restricted permissions (chmod 700)
 - Original email attachments (PDFs containing PHI) stored locally with no external transmission
 - Classification and extraction prompts are sent to the LLM API; the LLM provider's data retention policy applies. Use providers with zero data retention for sensitive health data.
 - De-identification engine (future) will enable safe sharing of stored FHIR data
+
+### Prompt Injection
+
+The inbound sender restriction eliminates direct prompt injection via email. Indirect prompt injection via forwarded third-party content (lab PDFs, provider messages) is a residual risk with low probability and is mitigated by the outbound transport restriction. For the complete threat analysis, including prompt injection analysis by channel, data in transit considerations, and a deployment security checklist, see the [security model](security-model.md).
 
 ## Future Considerations
 

@@ -105,23 +105,24 @@ This project is in **early development**. Current status:
 | Deployment Guide | ✅ Complete |
 | OpenClaw Setup | ✅ Complete |
 | Telegram Integration | ✅ Complete |
+| Email Security Model | ✅ Complete |
 | Intelligent Email Ingestion and Router | 🔨 In Progress |
 | Laboratory Parser Skill | 🔨 In Progress |
 | Medical Image Interpretation (DICOM) | 📋 Planned |
 | Patient Health Journal Skill | 🔨 In Progress |
-| Professional Journal Skill Planned | 📋 Planned        |
+| Professional Journal Skill | 🔨 In Progress |
 | Wearable Device Integration | 📋 Planned |
 | Genomic Report Import | 📋 Planned |
 | EHR / Patient Portal Connector (FHIR R4) | 📋 Planned |
 | Home Device Sync (BP, Scale, Pulse Ox) | 📋 Planned |
-| De-Identification Engine | 🔨 In Progress |
+| De-Identification Engine | 📋 Planned |
 | Research Synthesis | 📋 Planned |
 | Healthcare Model Routing | 📋 Planned |
 | MedGemma Integration | 📋 Planned |
-| Microsoft Healthcare AI Integration | 🔨 In Progress |
+| Microsoft Healthcare AI Integration | 📋 Planned |
 | MedASR Medical Speech | 📋 Planned |
 | Voice Transcription (Whisper/MedASR) | 📋 Planned |
-| Medication Adherence (IoT) | 🔨 In Progress |
+| Medication Adherence (IoT) | 💡 Community Idea |
 | Caregiver Dashboard | 💡 Community Idea |
 
 ## Contributing
@@ -144,6 +145,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines. See the [communi
 - **Intelligent model routing.** Each task is directed to the most capable model for that specific job. Purpose-built healthcare models for medical imaging and text. General-purpose reasoning models for clinical synthesis. The right model for the right task in the right deployment context.
 - **Caregiver recognition.** Caregiver support is a core use case, not a secondary consideration.
 - **Global health equity.** Open source, self-hosted, model-agnostic, and accessible on low-bandwidth networks. Designed so that a clinic in a low-resource setting has access to the same tools as a patient in a high-income country.
+- **Defense in depth.** Email ingestion is locked to authorized senders at the Exchange transport layer. Outbound email is restricted to authorized recipients. Prompt injection risks are analyzed honestly and mitigated at multiple layers. See the [security model](docs/security-model.md).
 
 See the [full principles](docs/principles.md) for our complete set of values and commitments.
 
@@ -155,12 +157,12 @@ Running Tula costs approximately **$35 - $115/month** depending on usage, from t
 
 This project originated as a personal build by a Windows Server administrator of 25 years deploying his first native Linux server to run an AI health agent. The [deployment guide](docs/deployment-guide.md) was written in real time as issues were encountered and resolved. It documents the actual experience, including common errors and their solutions.
 
-Tula is a [RealActivity](https://realactivity.com) initiative.
+Tula is a [RealActivity](https://realactivity.ai) initiative.
 
 ## Founding Contributors
 
-- **[Paul Swider](https://www.linkedin.com/in/pswider)** - Creator. Health data integration, laboratory parsing, wearable integration, infrastructure.
-- **[Sal Rosales](https://www.linkedin.com/in/salros)** - Medical adherence, caregiver tools, IoT integration.
+- **Paul Swider** - Creator. Health data integration, laboratory parsing, wearable integration, infrastructure.
+- **Sal Rosales** - Medical adherence, caregiver tools, IoT integration.
 
 ## License
 
