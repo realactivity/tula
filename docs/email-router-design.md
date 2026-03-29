@@ -447,9 +447,12 @@ Each processing step routes to the most appropriate model based on the user's de
 
 ### Phase 1: Email Connectivity (Target: This Week)
 
+For the complete step-by-step walkthrough of this phase, see the [email router setup guide](email-router-setup-guide.md).
+
 Deliverables:
-- Dedicated Gmail account for Tula with app password
-- Himalaya configured on VM with IMAP/SMTP credentials
+- Dedicated Microsoft 365 mailbox for Tula
+- Exchange transport rules restricting inbound and outbound email to authorized addresses
+- Himalaya configured on VM with OAuth2 credentials
 - Cron job polling inbox every 60 seconds
 - Basic notification: "New email received from {sender}: {subject}"
 - Test: Forward yourself an email, confirm Telegram notification

@@ -427,7 +427,7 @@ If any file in `sshd_config.d/` contains `PasswordAuthentication no`, it will ov
 
 With your agent running and accessible through Telegram, consider the following:
 
-1. **Configure email integration** using the himalaya skill to enable forwarding laboratory results and health documents to your agent.
+1. **Configure email integration** using the [email router setup guide](email-router-setup-guide.md). The guide walks through creating a dedicated M365 mailbox, locking it down with Exchange transport rules, configuring himalaya with OAuth2, and setting up automated inbox polling.
 2. **Build custom health skills** for laboratory parsing, journaling, and biomarker tracking. See the [community skill ideas](community-skills.md) for inspiration.
 3. **Set up scheduled tasks** using OpenClaw's cron system for daily check-ins, weekly research synthesis, and automated health summaries.
 4. **Configure healthcare AI models** for medical image interpretation, laboratory report extraction, and medical speech recognition. Tula supports purpose-built healthcare models from Google (MedGemma, MedASR) and Microsoft (MedImageInsight, CXRReportGen). See the [model routing reference](model-routing.md) for configuration details.

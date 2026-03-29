@@ -94,9 +94,11 @@ FHIR R4 Storage (local JSON files, user-controlled)
 
 1. **Deploy OpenClaw** - Follow the [step-by-step deployment guide](docs/deployment-guide.md). The guide covers the complete process from Azure VM creation to Telegram integration. It is written to be accessible to administrators without prior Linux experience.
 
-2. **Install Tula Skills** - Coming soon. Skills will be installable via ClawHub or by copying skill directories into the OpenClaw workspace.
+2. **Configure Email Ingestion** - Follow the [email router setup guide](docs/email-router-setup-guide.md) to create a dedicated M365 mailbox, lock it down with Exchange transport rules, configure himalaya with OAuth2, and set up inbox polling.
 
-3. **Configure Data Sources** - Set up email forwarding for laboratory results, connect wearable and home health devices, and configure check-in schedules.
+3. **Install Tula Skills** - Coming soon. Skills will be installable via ClawHub or by copying skill directories into the OpenClaw workspace.
+
+4. **Configure Data Sources** - Connect wearable and home health devices and configure check-in schedules.
 
 ## Project Status
 

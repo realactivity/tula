@@ -24,7 +24,7 @@ A practical example of this model: a patient photographs their Epic MyChart scre
 
 Tula's dedicated mailbox accepts email from authorized senders only. All other senders are rejected at the mail server level before the message reaches the inbox.
 
-**Implementation:** An Exchange Online transport rule (mail flow rule) rejects any message sent to Tula's mailbox that does not originate from an address on the authorized sender list. The sender receives a bounce notification. The message is never delivered to the mailbox, never polled by himalaya, and never processed by Tula.
+**Implementation:** An Exchange Online transport rule (mail flow rule) rejects any message sent to Tula's mailbox that does not originate from an address on the authorized sender list. The sender receives a bounce notification. The message is never delivered to the mailbox, never polled by himalaya, and never processed by Tula. For the step-by-step configuration including PowerShell commands, see the [email router setup guide](email-router-setup-guide.md).
 
 ```
 Inbound email
