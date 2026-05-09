@@ -1,0 +1,22 @@
+id: edge-case-001
+name: Edge Case - Multiple unrelated topics
+description: |
+  Patient bundles three unrelated questions (refill, lab result, new symptom).
+  Skill should NOT cram everything into one message. It should either produce
+  separate messages OR ask the patient which to send first / which is most
+  urgent.
+tags:
+  - edge-case
+  - multi-topic
+inputs:
+  prompt: |
+    Can you help me write to Dr. Patel? I need a refill on my metformin, I
+    have questions about my recent A1c result, and I also have a new rash on
+    my forearm that's been there for four days.
+expected:
+  output_contains:
+    - "Subject:"
+  output_not_contains:
+    - "metformin refill, A1c, and rash"
+  outcomes:
+    - type: task_completed

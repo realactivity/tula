@@ -96,7 +96,7 @@ FHIR R4 Storage (local JSON files, user-controlled)
 
 2. **Configure Email Ingestion** - Follow the [email router setup guide](docs/email-router-setup-guide.md) to create a dedicated M365 mailbox, lock it down with Exchange transport rules, configure himalaya with OAuth2, and set up inbox polling.
 
-3. **Install Tula Skills** - Coming soon. Skills will be installable via ClawHub or by copying skill directories into the OpenClaw workspace.
+3. **Install Tula Skills** - Skills live under [`skills/`](skills/). Copy the ones you want into `~/.openclaw/workspace/skills/` on your OpenClaw host. See the [skills development guide](docs/skills-development.md) for details, conventions, and the testing workflow with Microsoft Waza.
 
 4. **Configure Data Sources** - Connect wearable and home health devices and configure check-in schedules.
 
@@ -110,6 +110,9 @@ This project is in **early development**. Current status:
 | OpenClaw Setup | ✅ Complete |
 | Telegram Integration | ✅ Complete |
 | Email Security Model | ✅ Complete |
+| Skills Authoring Framework (Waza + conventions) | ✅ Complete |
+| `med-pdf` Skill (medical PDF parsing) | ✅ Complete |
+| `epic-note` Skill (patient portal messages) | ✅ Complete |
 | Intelligent Email Ingestion and Router | 🔨 In Progress |
 | Laboratory Parser Skill | 🔨 In Progress |
 | Medical Image Interpretation (DICOM) | 📋 Planned |
@@ -137,7 +140,7 @@ Contributions are welcome. Tula is built as a set of standard OpenClaw skills. C
 
 - **Report issues** - If something does not work as expected, open an issue. Detailed bug reports are among the most valuable contributions at this stage.
 - **Propose a health skill** - We are tracking community ideas in [Discussions](../../discussions).
-- **Build a skill** - Review the [skill template](skills/TEMPLATE/) for the expected structure. Submit a pull request.
+- **Build a skill** - Read the [skills development guide](docs/skills-development.md) and use the [`med-pdf`](skills/med-pdf/) skill as the reference template. The [skills authoring conventions](skills/AGENTS.md) explain the OpenClaw-first / Waza-second priority rule. Submit a pull request.
 - **Improve documentation** - The deployment guide was written during a real setup session. If any section is unclear or outdated, improvements are appreciated.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines. See the [community skill ideas](docs/community-skills.md) for a full list of skills we would like to build.

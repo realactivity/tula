@@ -1,0 +1,19 @@
+id: negative-trigger-001
+name: Non-medical PDF should not trigger
+description: |
+  Paul sends an insurance EOB or billing statement. This is not a medical
+  document for clinical reasoning. The skill should NOT invoke med-pdf
+  (no extract.mjs, no parse_labs/imaging).
+tags:
+  - negative-trigger
+  - anti-trigger
+inputs:
+  prompt: |
+    Here's the EOB from my insurance for last month's visit. Can you tell me
+    if I owe anything?
+expected:
+  output_not_contains:
+    - "extract.mjs"
+    - "parse_labs"
+    - "parse_imaging"
+    - ".med-pdf-cache"

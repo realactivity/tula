@@ -1,0 +1,20 @@
+id: positive-trigger-001
+name: Lab PDF (text-extractable)
+description: |
+  Paul sends a Quest/LabCorp PDF that has extractable text. The skill should
+  recognize the trigger and walk through the workflow: extract.mjs first,
+  detect hasText:true, run parse_labs.mjs, scan abnormal flags, persist.
+tags:
+  - positive-trigger
+  - labs
+  - text-extractable
+inputs:
+  prompt: |
+    I just downloaded my latest LabCorp panel as a PDF. Can you take a look
+    and tell me what's worth paying attention to compared to my last set?
+expected:
+  output_contains:
+    - "extract.mjs"
+    - "parse_labs"
+  outcomes:
+    - type: task_completed

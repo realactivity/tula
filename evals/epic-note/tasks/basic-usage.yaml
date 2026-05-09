@@ -1,0 +1,27 @@
+id: basic-usage-001
+name: Basic Usage - New medication side effect
+description: |
+  Patient wants to ask their PCP about a new dry cough that started after
+  beginning lisinopril. Skill should produce a single, well-formatted portal
+  message with a clear ask, brief context, and pertinent data.
+tags:
+  - basic
+  - happy-path
+  - medication-question
+inputs:
+  prompt: |
+    Help me draft a MyChart message to Dr. Patel. I started lisinopril 10mg
+    about three weeks ago for blood pressure, and since roughly the second
+    week I've had a dry, non-productive cough that wakes me up most nights.
+    No fever, no congestion, no shortness of breath. My home BP this morning
+    was 128/82. I want to ask if I should switch medications.
+  files:
+    - path: patient-context.md
+expected:
+  output_contains:
+    - "Subject:"
+    - "Hello Dr. Patel"
+    - "lisinopril"
+    - "Thank you"
+  outcomes:
+    - type: task_completed

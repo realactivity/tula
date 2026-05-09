@@ -1,0 +1,22 @@
+id: positive-trigger-002
+name: MyChart imaging PDF (image-only)
+description: |
+  Paul sends a MyChart CT export. These are image-only PDFs (text rendered as
+  outlined vector paths). The skill should run extract.mjs, detect
+  hasText:false, fall back to the image tool for OCR on pageN.png, then run
+  parse_imaging.mjs.
+tags:
+  - positive-trigger
+  - imaging
+  - image-only
+inputs:
+  prompt: |
+    Here's the CT chest report I got from MyChart. The PDF looks weird —
+    when I tried to copy text it didn't work. Can you read it and tell me
+    what the impression says?
+expected:
+  output_contains:
+    - "extract.mjs"
+    - "parse_imaging"
+  outcomes:
+    - type: task_completed

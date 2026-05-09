@@ -1,0 +1,16 @@
+id: should-not-trigger-001
+name: Should Not Trigger - General medical question
+description: |
+  Patient asks a general educational question with no intent to message a
+  clinician. Skill should NOT generate a portal message. It should answer the
+  question or redirect to a more appropriate skill.
+tags:
+  - anti-trigger
+  - negative-test
+inputs:
+  prompt: "What is hypertension and why does it matter?"
+expected:
+  output_not_contains:
+    - "Subject:"
+    - "Hello Dr."
+    - "Thank you,"

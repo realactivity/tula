@@ -1,0 +1,46 @@
+name: epic-note-eval
+description: |
+  Evaluation suite for the epic-note skill. Verifies that drafted portal
+  messages are structured, concise, contain a single clear ask, and route
+  emergencies to 911 instead of producing a message.
+skill: epic-note
+version: "1.0"
+config:
+  trials_per_task: 1
+  timeout_seconds: 300
+  parallel: false
+  executor: copilot-sdk
+  model: claude-sonnet-4.6
+metrics:
+  - name: task_completion
+    weight: 1.0
+    threshold: 0.8
+    description: Did the skill produce a usable, well-formed portal message (or correct triage override)?
+graders:
+  - type: text
+    name: has_subject_line
+    config:
+      regex_match:
+        - "(?im)^Subject:\\s.+"
+  - type: text
+    name: has_greeting
+    config:
+      regex_match:
+        - "(?i)Hello (Dr\\.|\\[Care Team\\])"
+  - type: text
+    name: has_signoff
+    config:
+      regex_match:
+        - "(?i)Thank you,"
+  - type: code
+    name: under_word_budget
+    config:
+      assertions:
+        - "len(output.split()) < 220"
+  - type: code
+    name: not_empty
+    config:
+      assertions:
+        - "len(output.strip()) > 0"
+tasks:
+  - "tasks/*.yaml"
