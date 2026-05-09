@@ -2,9 +2,10 @@ id: edge-case-001
 name: Edge Case - Multiple unrelated topics
 description: |
   Patient bundles three unrelated questions (refill, lab result, new symptom).
-  Skill should NOT cram everything into one message. It should either produce
-  separate messages OR ask the patient which to send first / which is most
-  urgent.
+  Skill should NOT cram everything into one message. It should propose
+  separate messages or ask the patient which to send first / which is most
+  urgent. The correct behavior is splitting, not bundling — so this task
+  intentionally does NOT use the portal-format graders.
 tags:
   - edge-case
   - multi-topic
@@ -15,7 +16,7 @@ inputs:
     my forearm that's been there for four days.
 expected:
   output_contains:
-    - "Subject:"
+    - "separate"
   output_not_contains:
     - "metformin refill, A1c, and rash"
   outcomes:

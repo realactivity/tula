@@ -2,3 +2,4 @@ results/
 .waza-cache/
 coverage.txt
 *.exe
+*-results.json

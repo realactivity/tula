@@ -19,9 +19,22 @@ inputs:
     - path: patient-context.md
 expected:
   output_contains:
-    - "Subject:"
-    - "Hello Dr. Patel"
     - "lisinopril"
-    - "Thank you"
   outcomes:
     - type: task_completed
+graders:
+  - type: text
+    name: has_subject_line
+    config:
+      regex_match:
+        - "(?im)^\\**Subject:\\**\\s.+"
+  - type: text
+    name: has_greeting
+    config:
+      regex_match:
+        - "(?i)Hello (Dr\\.|\\[Care Team\\])"
+  - type: text
+    name: has_signoff
+    config:
+      regex_match:
+        - "(?i)Thank you,"
