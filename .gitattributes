@@ -1,0 +1,17 @@
+# Auto-detect text files
+* text=auto
+
+# Shell scripts and POSIX-targeted files always use LF
+*.sh text eol=lf
+*.bash text eol=lf
+
+# YAML config and skill files (consumed by openclaw on Linux) use LF
+*.yaml text eol=lf
+*.yml text eol=lf
+
+# Markdown can keep platform-native EOL
+*.md text
+
+# Node ESM scripts that ship to the Linux runtime
+*.mjs text eol=lf
+*.js text eol=lf

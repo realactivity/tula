@@ -133,20 +133,55 @@ Switch eval.yaml to `executor: mock` for offline structure testing.
 
 ## Deploying to the VM
 
-Skills are deployed via SSH to the openclaw VM. The recommended approach:
+Skills are deployed by **pulling** on the VM, not pushing from your laptop.
+This works regardless of host OS (Windows/macOS/Linux) and matches how
+openclaw expects to be administered.
+
+### One-time setup on the VM
 
 ```bash
-# From tula repo root, on the host running an openclaw agent VM:
-rsync -av --delete \
-  skills/<name>/ \
-  azureuser@ra-agent01:~/.openclaw/workspace/skills/<name>/
+ssh <your-openclaw-vm>
+git clone https://github.com/pswider/tula.git ~/tula
+chmod +x ~/tula/scripts/deploy-skills.sh
 ```
 
-OpenClaw's skills watcher will pick up the change on the next agent turn (no
-restart needed) — see the openclaw skills doc for snapshot/refresh
-behavior.
+### Every deploy after that
 
-**Don't deploy `evals/`.** That stays in `tula/` and runs locally only.
+```bash
+ssh <your-openclaw-vm>
+~/tula/scripts/deploy-skills.sh
+```
+
+This script:
+
+1. `git pull --ff-only` in `~/tula`
+2. `rsync -a --delete` every directory under `tula/skills/` that has a
+   `SKILL.md` to `~/.openclaw/workspace/skills/<name>/`
+3. Runs `openclaw skills list` and confirms each deployed skill shows
+   `✓ ready`
+
+Useful flags:
+
+| Flag | Effect |
+|---|---|
+| `--dry-run` | Show planned changes, don't write |
+| `--skill <name>` | Deploy a single skill |
+| `--no-pull` | Skip `git pull` (use whatever's checked out) |
+| `--no-verify` | Skip the `openclaw skills list` check |
+
+OpenClaw's skills watcher picks up new/changed skills automatically — no
+daemon restart needed.
+
+### Why not rsync from your laptop?
+
+It works on macOS/Linux (`rsync -av --delete skills/<name>/ user@host:...`),
+but on Windows it requires WSL or Cygwin to get rsync. The VM-pull pattern
+sidesteps that and gives you `git pull` + verification for free.
+
+### Don't deploy `evals/`
+
+Evals stay in `tula/` and run locally only. The deploy script enforces this
+by only syncing directories under `skills/`.
 
 ## Privacy
 

@@ -1,6 +1,48 @@
 # Scripts
 
-Operational scripts for running and backing up a Tula agent.
+Operational scripts for deploying, running, and backing up a Tula agent.
+
+## `deploy-skills.sh`
+
+Pull-based skill deployer. Runs **on the OpenClaw VM**. Updates a local
+clone of `tula`, then `rsync`s every directory under `tula/skills/` that
+contains a `SKILL.md` into `~/.openclaw/workspace/skills/`. Optionally
+verifies each skill shows `✓ ready` via `openclaw skills list`.
+
+### One-time setup
+
+```bash
+ssh <your-openclaw-vm>
+git clone https://github.com/pswider/tula.git ~/tula
+chmod +x ~/tula/scripts/deploy-skills.sh
+```
+
+### Usage
+
+```bash
+# Default: pull, deploy all skills, verify
+~/tula/scripts/deploy-skills.sh
+
+# Preview only
+~/tula/scripts/deploy-skills.sh --dry-run
+
+# Single skill
+~/tula/scripts/deploy-skills.sh --skill epic-note
+
+# Don't pull (use whatever's currently checked out)
+~/tula/scripts/deploy-skills.sh --no-pull
+
+# Skip openclaw skills list verification
+~/tula/scripts/deploy-skills.sh --no-verify
+```
+
+### Why VM-pull, not laptop-push?
+
+- Works regardless of host OS (Windows users don't need WSL/Cygwin for rsync).
+- Verification (`openclaw skills list`) only makes sense on the VM anyway.
+- `git pull` ensures you deploy a real, version-controlled state.
+
+## `aria-backup.sh`
 
 ## `aria-backup.sh`
 
