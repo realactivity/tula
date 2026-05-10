@@ -42,6 +42,27 @@ chmod +x ~/tula/scripts/deploy-skills.sh
 - Verification (`openclaw skills list`) only makes sense on the VM anyway.
 - `git pull` ensures you deploy a real, version-controlled state.
 
+## `install-coding-agent.sh`
+
+Set up the OpenClaw `coding-agent` delegate. Installs a coding CLI
+(Claude Code by default, or Codex with `--cli codex`), enables the
+bundled `coding-agent` skill in `~/.openclaw/openclaw.json` (with
+backup), and verifies `openclaw skills list` shows it as `✓ ready`.
+
+```bash
+ssh <your-openclaw-vm>
+~/tula/scripts/install-coding-agent.sh                # Claude Code (default)
+~/tula/scripts/install-coding-agent.sh --cli codex    # Codex instead
+~/tula/scripts/install-coding-agent.sh --no-enable    # Install only, don't touch openclaw.json
+```
+
+The script does NOT log you in to the chosen CLI — that step is
+interactive and must be done manually after the script finishes. See
+[`docs/agent/coding-agent.md`](../docs/agent/coding-agent.md) for the
+full walkthrough including troubleshooting (workspace device-auth
+policy blocks, OAuth state mismatch over SSH tunnel, broken interactive
+PATH).
+
 ## `aria-backup.sh`
 
 ## `aria-backup.sh`

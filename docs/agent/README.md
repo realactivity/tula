@@ -14,6 +14,7 @@ deploying their own Tula instance has a sane baseline.
 | [`IDENTITY.md`](IDENTITY.md) | The agent's name, vibe, and emoji — currently set to "Tula" |
 | [`HEARTBEAT.md`](HEARTBEAT.md) | Empty-by-default file the agent edits to track recurring tasks |
 | [`TOOLS.md.example`](TOOLS.md.example) | Template for environment-specific notes (cameras, SSH hosts, voice prefs) — copy to `TOOLS.md` and customize |
+| [`coding-agent.md`](coding-agent.md) | How Tula writes code: direct edits vs delegated coding, delegate CLI options (Claude Code / Codex / OpenCode), install + login walkthrough, troubleshooting |
 
 ## How to use these
 
