@@ -94,7 +94,7 @@ FHIR R4 Storage (local JSON files, user-controlled)
 
 1. **Deploy OpenClaw** - Follow the [step-by-step deployment guide](docs/deployment-guide.md). The guide covers the complete process from Azure VM creation to Telegram integration. It is written to be accessible to administrators without prior Linux experience.
 
-2. **Configure Email Ingestion** - Follow the [email router setup guide](docs/email-router-setup-guide.md) to create a dedicated M365 mailbox, lock it down with Exchange transport rules, configure himalaya with OAuth2, and set up inbox polling.
+2. **Configure Email Ingestion** - The [email router design](docs/email-router-design.md) and [setup guide](docs/email-router-setup-guide.md) lay out the architecture and M365 / Entra ID / transport-rule steps. The [build plan](docs/email-router-build-plan.md) sequences the actual implementation work and replaces the himalaya client with Microsoft Graph API for cleaner OAuth and tighter integration with the existing Node-based skill scripts.
 
 3. **Install Tula Skills** - Skills live under [`skills/`](skills/). Copy the ones you want into `~/.openclaw/workspace/skills/` on your OpenClaw host. See the [skills development guide](docs/skills-development.md) for details, conventions, and the testing workflow with Microsoft Waza.
 
