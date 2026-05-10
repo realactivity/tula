@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+
+  /* color tokens — clinically calm, dark-mode-first */
+  --color-bg: oklch(0.16 0.005 264);
+  --color-bg-elevated: oklch(0.20 0.006 264);
+  --color-bg-card: oklch(0.22 0.007 264);
+  --color-fg: oklch(0.96 0.005 264);
+  --color-fg-muted: oklch(0.74 0.008 264);
+  --color-fg-subtle: oklch(0.55 0.010 264);
+  --color-border: oklch(0.30 0.008 264);
+  --color-accent: oklch(0.74 0.16 165);
+  --color-accent-fg: oklch(0.16 0.005 264);
+  --color-flag-high: oklch(0.74 0.18 22);
+  --color-flag-low: oklch(0.78 0.14 250);
+  --color-flag-ok: oklch(0.78 0.14 165);
+}
+
+@media (prefers-color-scheme: light) {
+  @theme {
+    --color-bg: oklch(0.99 0.002 264);
+    --color-bg-elevated: oklch(0.97 0.003 264);
+    --color-bg-card: oklch(1.00 0.000 264);
+    --color-fg: oklch(0.20 0.010 264);
+    --color-fg-muted: oklch(0.45 0.012 264);
+    --color-fg-subtle: oklch(0.62 0.010 264);
+    --color-border: oklch(0.91 0.005 264);
+    --color-accent: oklch(0.55 0.18 165);
+    --color-accent-fg: oklch(0.99 0.002 264);
+    --color-flag-high: oklch(0.55 0.20 22);
+    --color-flag-low: oklch(0.60 0.18 250);
+    --color-flag-ok: oklch(0.55 0.16 165);
+  }
+}
+
+html,
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* clean focus ring matching the accent */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}

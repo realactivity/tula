@@ -299,20 +299,33 @@ just a viewer.
 | Beautiful UI ≠ accessible UI | Medium | shadcn primitives are a11y by default; verify with axe in CI |
 | FHIR file lock contention between router writes and dashboard reads | Low | Atomic write (write to .tmp + rename) on router side; dashboard tolerates partial reads gracefully |
 
-## Open decisions
+## Locked-in decisions
 
-We need answers to these before scaffolding:
+| Decision | Choice |
+|---|---|
+| Stack | **Next.js 15 + Tailwind CSS v4 + shadcn/ui + Framer Motion** (TypeScript) |
+| Access | **Cloudflare Tunnel + Cloudflare Access (Zero Trust)** — VM invisible to public internet, identity-aware proxy, free for personal up to 50 users, supports caregiver access without VPN install |
+| Name / brand | **aria** (lowercase) — matches the agent runtime; dashboard reachable at `https://aria.<your-cloudflare-domain>/` |
+| Caregivers in Phase 1 | **Yes** — Cloudflare Access policies grant access by email allowlist |
+| Charts library | **Recharts** for default, **Visx** if we need lower-level control |
+| Hostname | Custom domain via Cloudflare Tunnel (e.g., `aria.realactivity.ai`); Cloudflare provides TLS automatically |
+| Repo location | `apps/aria-web/` (monorepo-style; tula skills + scripts + dashboard all in one repo) |
 
-1. **Stack**: SvelteKit (recommended) vs Next.js vs Astro vs Express+HTMX?
-2. **Access**: Tailscale (recommended) vs Cloudflare Tunnel vs Entra OAuth vs local SSH-tunnel?
-3. **Branding / name**: "Tula Dashboard"? "Tula Console"? "Aria"? Just "Tula"?
-4. **Hostname**: `https://tula.aria-agent01.<tailnet>.ts.net` (Tailscale MagicDNS) vs a custom domain via Cloudflare Tunnel?
-5. **Charts library**: LayerChart (small, Svelte-native) vs ECharts (richer)
-   vs Recharts (if we go React)?
-6. **Caregivers viewing the dashboard**: in scope for Phase 1, or after?
-   This affects auth choice — Tailscale is fine if it's just Paul; if
-   caregivers need access without a VPN install, lean Cloudflare Tunnel
-   + Cloudflare Access.
+### Why these choices
+
+- **Stack**: shadcn/ui is the de-facto modern component system; the React
+  ecosystem (magicui, aceternity, Geist) leads on "stunning UX" component
+  libraries. Tailwind v4's CSS-first config + Next.js 15's mature Server
+  Components + Framer Motion's physics-based animations give us the
+  Linear/Vercel-grade feel without writing CSS.
+- **Access**: caregivers need to reach the dashboard without installing
+  VPN software, which rules out Tailscale-only. Cloudflare Tunnel +
+  Access is the canonical Zero Trust pattern: VM stays private, public
+  hostname is gated by identity-aware proxy with email/SSO auth. Free
+  for personal use.
+- **Name**: aligning with the operational identity (`aria-repo`,
+  `aria-backup.sh`, the agent's runtime name) keeps mental model
+  consistent. Tula stays the agent persona/product name.
 
 ## Sequencing with the email-router work
 
