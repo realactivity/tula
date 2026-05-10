@@ -96,6 +96,8 @@ FHIR R4 Storage (local JSON files, user-controlled)
 
 2. **Configure Email Ingestion** - The [email router design](docs/email-router-design.md) and [setup guide](docs/email-router-setup-guide.md) lay out the architecture and M365 / Entra ID / transport-rule steps. The [build plan](docs/email-router-build-plan.md) sequences the actual implementation work and replaces the himalaya client with Microsoft Graph API for cleaner OAuth and tighter integration with the existing Node-based skill scripts.
 
+3. **Browse Your Health Data** - The [dashboard build plan](docs/dashboard-build-plan.md) describes a Node web app served from the VM that renders a beautiful, modern, mobile-friendly view of all email-ingested FHIR data — activity feed, lab trends, imaging reports, medications, appointments, with live updates as new emails are processed. Designed to be reachable privately via Tailscale; no public exposure of health data.
+
 3. **Install Tula Skills** - Skills live under [`skills/`](skills/). Copy the ones you want into `~/.openclaw/workspace/skills/` on your OpenClaw host. See the [skills development guide](docs/skills-development.md) for details, conventions, and the testing workflow with Microsoft Waza.
 
 4. **Configure Data Sources** - Connect wearable and home health devices and configure check-in schedules.
