@@ -21,10 +21,15 @@
 #      - codex   → @openai/codex
 # 2. Verifies the binary is on PATH and prints its version.
 # 3. (codex only) Drops `model = "gpt-5.5"` into `~/.codex/config.toml`.
-# 4. Patches `~/.openclaw/openclaw.json` with:
+# 4. (claude only) Merges `permissions.defaultMode = "bypassPermissions"`
+#    and `permissions.skipDangerousModePermissionPrompt = true` into
+#    `~/.claude/settings.json`. Without this, OpenClaw spawns claude
+#    non-interactively and Claude Code silently refuses to write files
+#    because it can't show its permission prompt.
+# 5. Patches `~/.openclaw/openclaw.json` with:
 #      skills.entries.coding-agent.enabled = true
 #    (backup written to openclaw.json.bak.coding-agent first run)
-# 5. Runs `openclaw skills list` and confirms `coding-agent` shows ✓ ready.
+# 6. Runs `openclaw skills list` and confirms `coding-agent` shows ✓ ready.
 #
 # ## Usage
 #   install-coding-agent.sh                 Install Claude Code (default), enable skill
@@ -131,6 +136,35 @@ TOML
     else
         echo "[install-coding-agent] $cfg already has a model setting — leaving alone"
     fi
+fi
+
+if [[ "$CLI" == "claude" ]]; then
+    echo ""
+    echo "[install-coding-agent] configuring ~/.claude/settings.json for headless spawn"
+    python3 - <<'PY'
+import json
+from pathlib import Path
+
+p = Path.home() / ".claude" / "settings.json"
+p.parent.mkdir(parents=True, exist_ok=True)
+cfg = json.loads(p.read_text()) if p.exists() else {}
+
+perms = cfg.setdefault("permissions", {})
+changed = False
+if perms.get("defaultMode") != "bypassPermissions":
+    perms["defaultMode"] = "bypassPermissions"
+    changed = True
+if perms.get("skipDangerousModePermissionPrompt") is not True:
+    perms["skipDangerousModePermissionPrompt"] = True
+    changed = True
+
+if changed:
+    p.write_text(json.dumps(cfg, indent=2) + "\n")
+    print("    permissions.defaultMode = bypassPermissions")
+    print("    permissions.skipDangerousModePermissionPrompt = true")
+else:
+    print("    already configured — no change")
+PY
 fi
 
 # ---------- enable skill ---------------------------------------------------

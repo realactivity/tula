@@ -96,9 +96,12 @@ The script:
 
 1. `sudo npm install -g` the chosen package
 2. (Codex only) Drops `model = "gpt-5.5"` into `~/.codex/config.toml`
-3. Patches `~/.openclaw/openclaw.json`:
+3. (Claude Code only) Merges `permissions.defaultMode: "bypassPermissions"`
+   into `~/.claude/settings.json` so Claude Code can write files when
+   spawned non-interactively (see "Headless permission gotcha" below)
+4. Patches `~/.openclaw/openclaw.json`:
    `skills.entries.coding-agent.enabled = true` (with a backup first)
-4. Verifies `openclaw skills list` shows `coding-agent ✓ ready`
+5. Verifies `openclaw skills list` shows `coding-agent ✓ ready`
 
 ## Log in (interactive — manual step)
 
@@ -135,9 +138,54 @@ openclaw skills list | grep coding-agent
 # expected: ✓ ready  🧩 coding-agent
 ```
 
-Then have Tula attempt a multi-file change. The agent should invoke the
-coding-agent skill, which spawns the chosen CLI in the background. Watch
-for "spawning ..." or "delegating to ..." in Tula's response.
+Then have Tula attempt a multi-file change. A good smoke-test prompt:
+
+> Build a small Node.js CLI in `~/scratch/coding-agent-smoke/` that
+> takes a number from argv and prints whether it's prime, a Fibonacci
+> number, or both. 3 files plus a README. Test with 13.
+
+Verify on the VM:
+
+```bash
+ls -la ~/scratch/coding-agent-smoke/
+node ~/scratch/coding-agent-smoke/cli.mjs 13
+# expected: 13 is prime and a Fibonacci number.
+```
+
+The agent should invoke the coding-agent skill, which spawns the chosen
+CLI in the background. Watch for "delegating", "spawning", or skill
+invocation language in the agent's response.
+
+## Headless permission gotcha (Claude Code)
+
+When OpenClaw spawns Claude Code as a delegate, Claude Code runs with
+no TTY. Its default permission mode shows an interactive prompt before
+writing any file, which there's no way to answer headlessly — so it
+silently refuses to act. Symptom: the agent reports it delegated, the
+target directory ends up empty, and you'll see something like
+*"failed to create the app due to permission prompt unavailable in
+interactive mode"*.
+
+Fix: configure Claude Code to bypass permissions by default in
+`~/.claude/settings.json`:
+
+```json
+{
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "skipDangerousModePermissionPrompt": true
+  }
+}
+```
+
+`install-coding-agent.sh` writes this for you when you install Claude
+Code. If you installed Claude Code manually, run the script with
+`--no-enable` to apply just the settings change without re-touching
+`openclaw.json`.
+
+Per-project deny rules in `permissions.deny` still take precedence over
+`bypassPermissions`, so you can scope sensitive paths off-limits while
+keeping the rest open.
 
 ## Troubleshooting
 
@@ -181,6 +229,18 @@ Either:
   idempotent)
 - A required binary isn't on the PATH that openclaw sees — check with
   `bash -l -c 'command -v claude codex'`
+
+### Agent says it delegated but target directory is empty
+
+Claude Code is failing silently on its permission prompt. See the
+"Headless permission gotcha" section above. Fix:
+
+```bash
+~/tula/scripts/install-coding-agent.sh --no-enable
+# this re-runs only the settings patch, doesn't touch openclaw.json
+```
+
+Then ask the agent to retry.
 
 ## Reference
 
