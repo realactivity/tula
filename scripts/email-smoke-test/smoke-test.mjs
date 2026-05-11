@@ -5,9 +5,9 @@
 //   TULA_CLIENT_ID=<guid> TULA_TENANT_ID=<guid> node smoke-test.mjs [--auth-only] [--top N]
 //
 // Authenticates against Microsoft Graph via device-code flow (silent on
-// second run thanks to the MSAL cache under ~/.tula/), then lists the N
-// most recent messages in aria@realactivity.com's INBOX. Prints subject,
-// sender, and received timestamp.
+// second run thanks to the file cache under ~/.tula/), then lists the N
+// most recent messages in the signed-in mailbox's INBOX. Prints
+// subject, sender, and received timestamp.
 //
 // Exit codes:
 //   0 — success
@@ -16,7 +16,7 @@
 //   4 — Graph call failed
 
 import { Client } from '@microsoft/microsoft-graph-client';
-import { buildCredential, getAccessToken, GRAPH_SCOPES } from './auth.mjs';
+import { buildPca, getAccessToken, GRAPH_SCOPES } from './auth.mjs';
 
 function parseArgs(argv) {
   const opts = { authOnly: false, top: 5 };
@@ -43,12 +43,12 @@ function parseArgs(argv) {
   return opts;
 }
 
-function buildGraphClient(credential) {
+function buildGraphClient(pca) {
   return Client.initWithMiddleware({
     authProvider: {
       getAccessToken: async () => {
-        const token = await getAccessToken(credential);
-        return token.token;
+        const result = await getAccessToken(pca);
+        return result.accessToken;
       },
     },
     defaultVersion: 'v1.0',
@@ -66,9 +66,9 @@ function formatRow({ subject, from, receivedDateTime }) {
 async function main() {
   const opts = parseArgs(process.argv.slice(2));
 
-  let credential;
+  let pca;
   try {
-    credential = buildCredential();
+    pca = await buildPca();
   } catch (err) {
     console.error(err.message);
     process.exit(3);
@@ -77,16 +77,16 @@ async function main() {
   console.log('Acquiring access token for Microsoft Graph...');
   console.log(`  Scopes: ${GRAPH_SCOPES.join(', ')}`);
 
-  let token;
+  let result;
   try {
-    token = await getAccessToken(credential);
+    result = await getAccessToken(pca);
   } catch (err) {
     console.error('Auth failed:', err.message ?? err);
     process.exit(4);
   }
 
-  const expiresOn = token.expiresOnTimestamp
-    ? new Date(token.expiresOnTimestamp).toISOString()
+  const expiresOn = result.expiresOn
+    ? new Date(result.expiresOn).toISOString()
     : 'unknown';
   console.log(`Token acquired. Expires at ${expiresOn}.`);
 
@@ -95,7 +95,7 @@ async function main() {
     return;
   }
 
-  const client = buildGraphClient(credential);
+  const client = buildGraphClient(pca);
 
   console.log('\nFetching identity (/me)...');
   let me;

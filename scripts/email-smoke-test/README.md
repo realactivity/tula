@@ -101,10 +101,11 @@ OK — 5 message(s) listed.
 
 ## Subsequent runs
 
-The MSAL token cache lives at `~/.tula/aria-graph` (chmod 700 dir,
-unencrypted file — this is the documented pattern for headless servers
-without a desktop keychain daemon). Refresh tokens are good for ~90
-days of inactivity. So:
+The MSAL token cache lives at `~/.tula/msal-cache.json` (chmod 600 file
+inside a chmod 700 directory). No OS keychain / D-Bus / `libsecret`
+dependency — this script uses `@azure/msal-node` directly with a plain
+file cache plugin, which is the documented headless-server pattern.
+Refresh tokens are good for ~90 days of inactivity. So:
 
 ```bash
 node smoke-test.mjs           # silent re-auth from cache
@@ -121,6 +122,7 @@ node smoke-test.mjs --auth-only  # just refresh tokens, skip Graph call
 | `AADSTS65001: The user or administrator has not consented` | Admin consent step on the API permissions blade was skipped. |
 | `AADSTS50020: User account ... does not exist in tenant` | You signed in as a personal Microsoft account on the device-code page. Sign in as `aria@realactivity.com` (or whatever account owns the mailbox in this tenant). |
 | `Error: ENOENT ~/.tula/...` | Permission issue writing the cache; ensure `~/.tula/` is owned by the current user and is mode 700. |
+| `libsecret-1.so.0: cannot open shared object file` | Old version of this script used `@azure/identity-cache-persistence` (transitively loads `keytar`, which needs `libsecret` on Linux). The current version uses `@azure/msal-node` directly with a file cache — no native deps. If you see this, `rm -rf node_modules package-lock.json && npm install` to pick up the new deps. |
 | First `npm install` warns about deprecated packages | Safe to ignore; same as the OpenClaw install. |
 
 ## What's intentionally NOT in this script
