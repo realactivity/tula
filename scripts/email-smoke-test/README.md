@@ -52,7 +52,7 @@ Do this in the M365 admin Web UI; cannot be automated from here.
 ssh azureuser@<your-vm-ip>
 
 # 1. Pull the repo if you haven't already
-cd ~/tula && git pull          # or: git clone https://github.com/pswider/tula.git ~/tula
+cd ~/tula && git pull          # or: git clone https://github.com/realactivity/tula.git ~/tula
 
 # 2. Install deps for the smoke test
 cd ~/tula/scripts/email-smoke-test

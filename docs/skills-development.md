@@ -141,7 +141,7 @@ openclaw expects to be administered.
 
 ```bash
 ssh <your-openclaw-vm>
-git clone https://github.com/pswider/tula.git ~/tula
+git clone https://github.com/realactivity/tula.git ~/tula
 chmod +x ~/tula/scripts/deploy-skills.sh
 ```
 

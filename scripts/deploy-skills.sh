@@ -45,7 +45,7 @@
 #
 # ## First-time setup on a new VM
 #   1. Clone tula somewhere stable:
-#        git clone https://github.com/pswider/tula.git ~/tula
+#        git clone https://github.com/realactivity/tula.git ~/tula
 #   2. (Optional) chmod +x ~/tula/scripts/deploy-skills.sh
 #   3. Run:
 #        ~/tula/scripts/deploy-skills.sh
@@ -91,7 +91,7 @@ done
 
 if [[ ! -d "$TULA_REPO_DIR/.git" ]]; then
     echo "[deploy-skills] ERROR: $TULA_REPO_DIR is not a git checkout"
-    echo "[deploy-skills] clone first: git clone https://github.com/pswider/tula.git $TULA_REPO_DIR"
+    echo "[deploy-skills] clone first: git clone https://github.com/realactivity/tula.git $TULA_REPO_DIR"
     exit 1
 fi
 
