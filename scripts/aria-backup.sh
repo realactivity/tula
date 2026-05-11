@@ -9,7 +9,7 @@
 # ## Purpose
 # Idempotent backup of the user's `~/.openclaw/` directory (openclaw config
 # + the "Tula" agent workspace) into a local git repo at `~/aria-repo`, then
-# pushed to a private GitHub repo (default: `realactivity/aria`).
+# pushed to a private GitHub repo (default: `realactivity/tula-vm-state`).
 #
 # Run it any time you want a fresh snapshot. It is safe to re-run; if nothing
 # changed, it commits nothing and exits 0.
@@ -103,7 +103,7 @@
 #   - Configure git auth (e.g. `gh auth login`) and run `git -C $ARIA_REPO_DIR push`.
 #
 # ## Restoring from this backup
-# `git clone https://github.com/realactivity/aria.git`, then copy the directories
+# `git clone https://github.com/realactivity/tula-vm-state.git`, then copy the directories
 # back into `~/.openclaw/`. Re-run `openclaw` to regenerate config and
 # re-pair devices; the excluded auth/credential files are not restored.
 # ============================ END AGENTS.md =================================

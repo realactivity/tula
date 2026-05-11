@@ -2,8 +2,11 @@
 
 Tula is maintained by RealActivity as an MIT-licensed open-source health agent
 skill collection. RealActivity also develops **Aria**, a commercial
-hospital-scale platform built on the same Tula skills. The two are distinct
-products with distinct licenses and distinct repositories.
+hospital-scale platform built on the same Tula skills. Aria's runtime gives
+every patient their own AI agent and coordinates thousands of these agents
+under a shared multi-tenant control plane — an architecture RealActivity
+calls a **Patient Swarm**. The two are distinct products with distinct
+licenses and distinct repositories.
 
 This document scopes what the public Tula repo is for, what it accepts
 contributions for, and what's out of scope.
@@ -34,11 +37,12 @@ Contributions that improve any of the above are welcome. See
 
 ## What's out of scope (lives in Aria)
 
-The following capabilities are part of Aria, the commercial hospital-scale
-platform, and live in a separate private repository:
+The following Patient Swarm capabilities are part of Aria, the commercial
+hospital-scale platform, and live in a separate private repository:
 
-- **Multi-tenant agent runtime** — per-patient isolation, tenant-scoped
-  workspaces, fleet skill deployment.
+- **Patient Swarm runtime** — the multi-tenant control plane that schedules
+  one isolated agent per patient on top of OpenClaw, with tenant-scoped
+  workspaces and fleet skill deployment.
 - **Patient identity and SSO** — Entra ID / OIDC integration, RBAC,
   caregiver proxy access, consent flows.
 - **Multi-tenant ingest router** — shared mailbox with patient-token
