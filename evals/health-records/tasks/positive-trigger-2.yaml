@@ -1,0 +1,29 @@
+id: positive-trigger-002
+name: Trend-across-visits request invokes structured-records reasoning
+description: |
+  Paul asks to trend a lab across multiple visits. This is the canonical
+  case where structured FHIR beats a single PDF — the skill should
+  recognize it and propose either pulling records (if not yet loaded) or
+  querying loaded records using FHIR vocabulary (Observation, LOINC,
+  reference range). It must NOT pivot to "send me each PDF separately"
+  or invoke med-pdf scripts.
+tags:
+  - positive-trigger
+  - trending
+  - longitudinal
+inputs:
+  prompt: |
+    Can you pull every A1c I've ever had on file and tell me whether the
+    trend is meaningful?
+expected:
+  outcomes:
+    - type: task_completed
+  output_not_contains:
+    - "extract.mjs"
+    - "parse_labs.mjs"
+graders:
+  - type: text
+    name: uses_structured_vocabulary
+    config:
+      regex_match:
+        - "(?i)(Observation|LOINC|FHIR|portal|records|trend|reference range|connect)"

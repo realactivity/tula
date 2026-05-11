@@ -1,0 +1,24 @@
+id: positive-trigger-001
+name: Connect-records request triggers SMART-on-FHIR workflow
+description: |
+  Paul asks to connect his patient portal. The skill should recognize this
+  and either start the create-session → userUrl workflow or describe it,
+  using health-records vocabulary (session, link, decrypt, FHIR). It must
+  NOT pivot to "send me a PDF" (that's med-pdf) or to drafting a message.
+tags:
+  - positive-trigger
+  - connect
+  - smart-on-fhir
+inputs:
+  prompt: |
+    I'd like to hook up my MyChart so you can see my actual medical records
+    instead of guessing from PDFs. How do we do that?
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: recognizes_connect_workflow
+    config:
+      regex_match:
+        - "(?i)(create-session|userUrl|sessionId|link|connect|portal|FHIR|encrypt)"

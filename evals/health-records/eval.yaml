@@ -1,0 +1,28 @@
+name: health-records-eval
+description: |
+  Evaluation suite for the health-records skill. Verifies the agent
+  recognizes patient-portal / FHIR pull requests, drives the
+  create-session → show-link → finalize workflow, declines non-records
+  prompts, respects PHI boundaries, and hands off to med-pdf / epic-note
+  when those are the right tools.
+skill: health-records
+version: "1.0"
+config:
+  trials_per_task: 1
+  timeout_seconds: 300
+  parallel: false
+  executor: copilot-sdk
+  model: claude-sonnet-4.6
+metrics:
+  - name: task_completion
+    weight: 1.0
+    threshold: 0.8
+    description: Did the skill respond correctly to triggers and anti-triggers?
+graders:
+  - type: code
+    name: not_empty
+    config:
+      assertions:
+        - "len(output.strip()) > 0"
+tasks:
+  - "tasks/*.yaml"

@@ -1,0 +1,26 @@
+id: redirect-to-med-pdf-001
+name: PDF screenshot should redirect to med-pdf, not create a session
+description: |
+  Paul shares a screenshot/PDF of results. That's med-pdf's job —
+  health-records should NOT spin up a SMART-on-FHIR session for a single
+  document. The agent should recognize the wrong-tool case and either
+  describe the med-pdf workflow or defer to it.
+tags:
+  - negative-trigger
+  - skill-routing
+inputs:
+  prompt: |
+    Here's a screenshot of my CBC from the MyChart app — can you tell me
+    what's flagged?
+expected:
+  output_not_contains:
+    - "create-session.mjs"
+    - "finalize-session.mjs"
+    - "sessionId"
+    - "/connect/"
+graders:
+  - type: text
+    name: mentions_pdf_or_med_pdf
+    config:
+      regex_match:
+        - "(?i)(med-pdf|extract|PDF|image|screenshot|attach|file|OCR)"
