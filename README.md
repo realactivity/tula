@@ -184,9 +184,11 @@ Tula is a [RealActivity](https://realactivity.ai) initiative.
 
 ## License
 
-MIT - see [LICENSE](LICENSE). The code is free to use, modify, and distribute.
+MIT - see [LICENSE](LICENSE). The code is free to use, modify, and distribute. Tula will remain MIT-licensed.
 
 "Tula" and "RealActivity" are trademarks of RealActivity. The MIT license covers the code, not the name. See [TRADEMARK.md](TRADEMARK.md) for details.
+
+RealActivity is also developing **Aria**, a commercial hospital-scale platform built on the same Tula skills. Aria is private and proprietary; Tula remains open source. See [`OPEN_CORE.md`](OPEN_CORE.md) for the scope boundary between the two.
 
 ## Disclaimer
 
