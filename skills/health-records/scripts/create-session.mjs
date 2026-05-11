@@ -29,7 +29,20 @@
  *
  * Errors go to stderr; exit code 1 on failure.
  *
- * Ported from Joshua Mandel's TypeScript original (bun) to Node ESM.
+ * ── Attribution ────────────────────────────────────────────────────────────
+ *
+ * Adapted from Joshua Mandel's `jmandel/health-skillz` (MIT-licensed). This
+ * is a Node ESM port of the TypeScript / Bun original; the wire protocol
+ * and crypto design are his.
+ *
+ *   Original: https://github.com/jmandel/health-skillz
+ *   Copyright (c) 2025-2026 Joshua Mandel.
+ *
+ * Port and OpenClaw skill adaptations:
+ *   Copyright (c) 2026 Paul J. Swider.
+ *
+ * Licensed under the MIT License. See ../LICENSE for the full text.
+ *
  * Requires Node 18+ for the global `fetch` and Web Crypto API.
  */
 
