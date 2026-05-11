@@ -59,7 +59,7 @@
 #   logs/                                 local logs, may leak data
 #   exec-approvals.json                   local approval cache
 #   update-check.json                     regenerable
-#   openclaw.json*                        live config, every .bak variant, and
+#       openclaw.json*                        live config, every .bak variant, and
 #                                         .last-good — all carry API keys
 #   agents/main/sessions/                 chat trajectories, large + leak risk
 #   agents/main/agent/auth-profiles.json  model provider auth tokens
@@ -67,7 +67,10 @@
 #   identity/device.json                  device Ed25519 keypair (private key)
 #   devices/paired.json                   operator token
 #   workspace/.filebrowser-admin-password admin password
-#   workspace/.git/                       nested git, would shadow our repo
+#   **/.git/  (any depth, except root)    nested git repos — would either
+#                                         shadow our repo or be treated as
+#                                         submodules with no commits checked
+#                                         out, breaking `git add -A`
 #
 # Glob patterns are supported in PURGE entries (e.g. `openclaw.json*`).
 # See the PURGE array definition for the full syntax notes.
@@ -146,12 +149,19 @@ PURGE=(
                                            # .json.bak.<timestamp>, .json.bak.<name>,
                                            # .json.last-good — all hold API keys.
     'workspace/.filebrowser-admin-password'
-    'workspace/.git'
     # noise / regenerable
     'logs'
     'update-check.json'
     'plugin-runtime-deps'
 )
+
+# Nested-.git protection. Any `.git` directory under the source — at any
+# depth — gets excluded from rsync and rm'd from the destination, with one
+# exception: the aria-repo's own `.git/` at the destination root, which
+# IS our backup repo. This catches openclaw's coding-agent skill creating
+# `workspace/claude/.git/` (and any future nested checkouts we don't know
+# about), which would otherwise be staged as submodules and break
+# `git add -A` with "does not have a commit checked out".
 
 PROTECT=(
     'aria-backup.sh'
@@ -241,8 +251,11 @@ RSYNC_ARGS=(-a --delete)
 [[ $DRY_RUN -eq 1 ]] && RSYNC_ARGS+=(--dry-run)
 for ex in "${PURGE[@]}"   ; do RSYNC_ARGS+=(--exclude="/$ex"); done
 for ex in "${PROTECT[@]}" ; do RSYNC_ARGS+=(--exclude="/$ex"); done
+# Nested .git at ANY depth — unanchored (no leading `/`) so rsync matches
+# at every level, with trailing slash to only match directories.
+RSYNC_ARGS+=(--exclude='.git/')
 
-log "rsync ${ARIA_SOURCE}/ -> ${ARIA_REPO_DIR}/ (purge=${#PURGE[@]}, protect=${#PROTECT[@]})"
+log "rsync ${ARIA_SOURCE}/ -> ${ARIA_REPO_DIR}/ (purge=${#PURGE[@]}, protect=${#PROTECT[@]}, +nested-git)"
 rsync "${RSYNC_ARGS[@]}" "${ARIA_SOURCE}/" "${ARIA_REPO_DIR}/"
 
 # ---------- step 2: purge secret/junk paths from repo ----------------------
@@ -265,6 +278,15 @@ if [[ $DRY_RUN -eq 0 ]]; then
         done
     done
     shopt -u nullglob
+
+    # Sweep any nested .git directories that older runs may have committed
+    # before we excluded them, OR that rsync just dropped here on a freshly
+    # discovered nested checkout. `-mindepth 2` protects our OWN .git at
+    # the destination root from getting wiped.
+    while IFS= read -r -d '' nested; do
+        vlog "purging nested git repo at ${nested#$ARIA_REPO_DIR/}"
+        rm -rf -- "$nested"
+    done < <(find "$ARIA_REPO_DIR" -mindepth 2 -type d -name '.git' -prune -print0)
 fi
 
 # ---------- step 3: secret scan --------------------------------------------
