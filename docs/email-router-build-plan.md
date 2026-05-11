@@ -10,6 +10,43 @@ The goal is a TripIt-style health inbox: forward any health email, photo,
 or PDF to a single dedicated address, and the data shows up in aria
 automatically.
 
+## Locked-in decisions (May 2026)
+
+Phase 0 decisions were resolved during the kickoff session. All examples
+below use these values; older illustrative `tula@<domain>` references in
+the design doc and setup guide should be read as `aria@realactivity.com`.
+
+| Decision | Value |
+|---|---|
+| Mailbox address | **`aria@realactivity.com`** (mailbox already exists in Exchange Online) |
+| M365 license source | **Microsoft Partner benefits** |
+| Exchange transport rules | **DEFERRED** until end-to-end flow works (see safety note below) |
+| FHIR storage path | **`~/.openclaw/workspace/tula/fhir/`** (build plan Option A) |
+| Polling cadence | **30 seconds** (systemd timer; cron's 60s floor is too slow) |
+| Triage / classify / summarize / FHIR write model | **Claude Sonnet 4.7** |
+| Extract + structured clinical detail model | **Claude Opus 4.7** |
+
+### Safety note on the deferred transport rules
+
+The build plan originally called transport rules "the data security gate"
+(installed *before* the first client connection). We are deliberately
+deferring them to keep Phase 1 frictionless, on the explicit condition
+below.
+
+**Hard checkpoint — transport rules MUST be installed before:**
+
+1. The address `aria@realactivity.com` is shared with any human other
+   than the owner.
+2. The address is registered in any vendor portal (MyChart, LabCorp,
+   Quest, insurance EOB delivery, etc.) as a destination.
+3. Any inbox auto-forward (from a personal account or otherwise) is
+   pointed at the mailbox.
+
+In practice this means transport rules must ship before end of Phase 3
+(per-content-type handlers writing real FHIR) — because Phase 3 is the
+first time it's tempting to do a real-vendor test. Treat this as a
+release gate, not a nice-to-have.
+
 ## Deviation from the existing setup guide
 
 The setup guide describes **himalaya** as the email client. This build
@@ -93,27 +130,29 @@ Before writing any code:
 
 1. **Verify VM state** — Node version, `~/.openclaw/workspace/tula/`
    directory existence.
-2. **M365 mailbox** — create `tula@<domain>` per
-   `email-router-setup-guide.md` Step 1.
-3. **Exchange transport rules** — inbound + outbound per setup guide
-   Step 2. **Build before the client connects.** This is the data security
-   gate.
+2. **M365 mailbox** — ✅ already exists: `aria@realactivity.com`.
+3. ~~**Exchange transport rules**~~ — deferred per the locked-in
+   decisions above. Re-enter the timeline before Phase 3 ships any real
+   data.
 4. **Entra ID app registration** — register `Tula Email Agent` per
-   setup guide Step 3, but with the **Graph permissions** above, not the
-   IMAP/SMTP permissions in the original guide.
-5. **Smoke-test connectivity** — a small Node script (in `scripts/` for
-   now, not yet a skill) that:
+   setup guide Step 3, but with the **Graph delegated permissions** in
+   the table above, not the IMAP/SMTP permissions in the original guide.
+   Required Authentication config: **Allow public client flows: Yes**
+   (device-code flow won't work without this).
+5. **Smoke-test connectivity** — a small Node project at
+   [`scripts/email-smoke-test/`](../scripts/email-smoke-test/) that:
    - Authenticates via device code (`@azure/identity`'s
      `DeviceCodeCredential`), prints code + URL.
-   - Calls `client.me.messages.get()` and prints subject lines of the
-     5 most recent messages.
-   - Confirms refresh tokens are persisting to a file we can `chmod 600`.
+   - Calls `client.api('/me/messages')` and prints subject + sender +
+     received-time of the 5 most recent messages.
+   - Persists the MSAL token cache to a chmod-600 file under
+     `~/.tula/` so subsequent runs don't require re-authenticating.
 
 **Deliverable**: poll the mailbox from the VM and read recent emails.
 No parsing, no skill, no FHIR yet.
 
-**Estimated effort**: 90-120 minutes total. Most of the time is in M365
-setup (Entra + transport rules). The Node smoke test is ~30 minutes.
+**Estimated effort**: 30-45 minutes (mailbox already exists; transport
+rules deferred; only Entra app registration + smoke-test run remain).
 
 ### Phase 2 — Build the `email-router` tula skill
 
@@ -197,12 +236,17 @@ alone is ~half a day.
 
 ### Phase 4 — Continuous polling + Telegram notifications
 
-1. Cron entry on the VM:
+1. **Systemd timer on the VM** (not cron — cron's 60s floor is too slow
+   for the locked-in 30s cadence). Pattern:
+   ```ini
+   # /etc/systemd/system/aria-email-poll.timer
+   [Timer]
+   OnBootSec=30s
+   OnUnitActiveSec=30s
+   Unit=aria-email-poll.service
    ```
-   * * * * * /home/azureuser/.openclaw/workspace/skills/email-router/scripts/poll-cron.sh
-   ```
-   The cron wrapper uses `flock` to avoid overlap (same pattern as
-   `aria-cron.sh`).
+   The service unit runs the poll script with `flock -n` to prevent
+   overlap if a poll runs long (same protection pattern as `aria-cron.sh`).
 2. After each successful classification + extraction, the skill calls
    the agent's existing Telegram channel to post a summary.
 3. Aria's `MEMORY.md` gets longitudinal updates ("HbA1c trending down:
@@ -238,19 +282,20 @@ a Telegram message in <2 minutes with extracted values and trend deltas.
 
 ## What to do next session
 
-Before any coding, we need answers to the Phase 0 decisions. Specifically
-the ones that block the M365 work:
+Phase 0 decisions are resolved (see top of doc). Remaining Phase 1 work:
 
-1. Mailbox domain
-2. Authorized sender list
-3. License source confirmation
-4. (Less blocking) storage path, polling cadence, multimodal model
-
-Once decided:
-
-1. M365 mailbox + transport rules (`email-router-setup-guide.md` Steps 1-2,
-   takes ~30 min in the admin portal)
-2. Entra ID app registration with **Graph** permissions (NOT
-   IMAP/SMTP per the original guide)
-3. Phase 1 smoke-test Node script
-4. Phase 2 skill scaffold + first eval task
+1. **Register the Entra ID app** at https://entra.microsoft.com →
+   App registrations → New registration. Single-tenant. Allow public
+   client flows = **Yes**. Add **delegated** Graph permissions:
+   `Mail.Read`, `Mail.ReadWrite`, `User.Read`, `offline_access`. Grant
+   admin consent. Record the Application (client) ID and Directory
+   (tenant) ID.
+2. **Run the smoke test** from
+   [`scripts/email-smoke-test/`](../scripts/email-smoke-test/) on the
+   VM (see its README).
+3. **Authorized sender list** — still owed. Defaults to
+   `pswider@realactivity.com` only. Needed before transport rules ship
+   in Phase 3.
+4. **Phase 2 skill scaffold** once the smoke test passes:
+   `skills/email-router/` modeled on `skills/med-pdf/`, plus the first
+   `evals/email-router/tasks/` entry.

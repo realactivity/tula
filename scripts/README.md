@@ -170,8 +170,28 @@ git remote add origin https://github.com/<you>/aria.git
 ./aria-backup.sh
 ```
 
+## `email-smoke-test/`
+
+Phase 1 connectivity test for the email-router. A small Node project
+(its own `package.json`) that does device-code OAuth against Microsoft
+Graph and lists the 5 most recent messages in `aria@realactivity.com`.
+
+Run on the VM after registering the `Tula Email Agent` app in Entra:
+
+```bash
+cd ~/tula/scripts/email-smoke-test
+npm install
+export TULA_CLIENT_ID=<guid> TULA_TENANT_ID=<guid>
+node smoke-test.mjs
+```
+
+See [`email-smoke-test/README.md`](email-smoke-test/README.md) for the
+full Entra setup walkthrough and troubleshooting. This scaffold is
+throwaway — Phase 2 lifts it into `skills/email-router/scripts/` and
+deletes this directory.
+
 ## Provenance
 
-Both scripts originated in a private operational repo. They are reproduced
-here so that anyone running a Tula agent can use the same backup pattern
-for their own private snapshot repo.
+The backup scripts originated in a private operational repo. They are
+reproduced here so that anyone running a Tula agent can use the same
+backup pattern for their own private snapshot repo.
