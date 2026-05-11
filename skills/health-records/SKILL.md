@@ -103,8 +103,8 @@ What this skill adds on top:
 - Node ESM port of the scripts so they run under OpenClaw's bundled Node 22
   with no Bun runtime dependency.
 - Re-shaping to openclaw skill conventions (frontmatter, progressive
-  disclosure into `references/`, body-section order per
-  [`skills/AGENTS.md`](../AGENTS.md)).
+  disclosure into `references/`, body-section order per the repo-level
+  `skills/AGENTS.md`).
 - Tula-specific PHI guardrails — refuse external upload, confine outputs
   to `~/.openclaw/workspace/`, never echo `privateKeyJwk`.
 - Waza-evaluable test harness under `evals/health-records/`.
