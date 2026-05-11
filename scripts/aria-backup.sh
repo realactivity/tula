@@ -59,7 +59,8 @@
 #   logs/                                 local logs, may leak data
 #   exec-approvals.json                   local approval cache
 #   update-check.json                     regenerable
-#   openclaw.json, .bak*, .last-good      main config, contains API keys
+#   openclaw.json*                        live config, every .bak variant, and
+#                                         .last-good — all carry API keys
 #   agents/main/sessions/                 chat trajectories, large + leak risk
 #   agents/main/agent/auth-profiles.json  model provider auth tokens
 #   identity/device-auth.json             operator token
@@ -67,6 +68,9 @@
 #   devices/paired.json                   operator token
 #   workspace/.filebrowser-admin-password admin password
 #   workspace/.git/                       nested git, would shadow our repo
+#
+# Glob patterns are supported in PURGE entries (e.g. `openclaw.json*`).
+# See the PURGE array definition for the full syntax notes.
 #
 # ## Adding new exclusions
 # When you discover a new file that shouldn't be backed up:
@@ -123,6 +127,12 @@ ARIA_BRANCH="${ARIA_BRANCH:-main}"
 # rsync's `--exclude` is used for both buckets (so the source side ignores
 # them); after rsync, we explicitly `rm -rf` PURGE entries at the destination
 # to clean up stragglers from older runs that didn't have them excluded yet.
+#
+# Glob characters (`*`, `?`, `[...]`) ARE supported in PURGE entries — rsync
+# handles them natively in `--exclude` patterns, and the post-rsync purge
+# step below uses `shopt -s nullglob` for the matching shell expansion.
+# Keep patterns anchored to the repo root (no leading slash; the loops add
+# context). Use a glob in preference to listing every numbered variant.
 PURGE=(
     # secrets / PII
     'credentials'
@@ -132,12 +142,9 @@ PURGE=(
     'identity/device.json'
     'devices/paired.json'
     'exec-approvals.json'
-    'openclaw.json'
-    'openclaw.json.bak'
-    'openclaw.json.bak.1'
-    'openclaw.json.bak.2'
-    'openclaw.json.bak.3'
-    'openclaw.json.last-good'
+    'openclaw.json*'                       # covers .json, .json.bak, .json.bak.<n>,
+                                           # .json.bak.<timestamp>, .json.bak.<name>,
+                                           # .json.last-good — all hold API keys.
     'workspace/.filebrowser-admin-password'
     'workspace/.git'
     # noise / regenerable
@@ -239,15 +246,25 @@ log "rsync ${ARIA_SOURCE}/ -> ${ARIA_REPO_DIR}/ (purge=${#PURGE[@]}, protect=${#
 rsync "${RSYNC_ARGS[@]}" "${ARIA_SOURCE}/" "${ARIA_REPO_DIR}/"
 
 # ---------- step 2: purge secret/junk paths from repo ----------------------
+#
+# `shopt -s nullglob` makes globs that match nothing expand to zero args
+# (rather than the literal pattern string), so the loop body skips cleanly
+# for entries that don't exist on this run. Literal (non-glob) paths still
+# work — they expand to themselves when present, and to nothing when not.
 
 if [[ $DRY_RUN -eq 0 ]]; then
-    for path in "${PURGE[@]}"; do
-        target="$ARIA_REPO_DIR/$path"
-        if [[ -e "$target" || -L "$target" ]]; then
-            vlog "purging $path"
-            rm -rf -- "$target"
-        fi
+    shopt -s nullglob
+    for pattern in "${PURGE[@]}"; do
+        # Intentionally unquoted on the right-hand side so the shell expands
+        # globs against the repo working tree.
+        for target in "$ARIA_REPO_DIR"/$pattern; do
+            if [[ -e "$target" || -L "$target" ]]; then
+                vlog "purging ${target#$ARIA_REPO_DIR/}"
+                rm -rf -- "$target"
+            fi
+        done
     done
+    shopt -u nullglob
 fi
 
 # ---------- step 3: secret scan --------------------------------------------
