@@ -2,6 +2,28 @@
 
 Thank you for your interest in contributing. This project is in early development and every contribution has meaningful impact, whether it is a bug report, a documentation improvement, or a new health skill.
 
+## Scope
+
+Before opening a non-trivial PR, please read [`OPEN_CORE.md`](OPEN_CORE.md). It describes what lives in this public repo (core health skills, the eval harness, single-user deployment) versus what's part of Aria, RealActivity's commercial hospital-scale platform (multi-tenant runtime, SSO, patient-facing dashboard at scale, audit, compliance). Contributions to the public scope are welcome; ideas for the out-of-scope areas are best raised in a Discussion or by reaching out directly.
+
+## Developer Certificate of Origin (DCO)
+
+All commits to this repository must be signed off under the [Developer Certificate of Origin](https://developercertificate.org/). The DCO is a lightweight, per-commit confirmation that you have the right to submit your contribution under the project's MIT license.
+
+To sign off a commit, add a `Signed-off-by:` trailer with your real name and email:
+
+```bash
+git commit -s -m "Add CGM trend skill"
+```
+
+The `-s` flag automatically appends:
+
+```
+Signed-off-by: Your Name <you@example.com>
+```
+
+PRs whose commits lack a sign-off will be flagged by CI and asked to amend. If you forget on an existing commit, `git commit --amend -s` (last commit) or an interactive rebase (older commits) will fix it. By signing off, you certify the four statements in the [DCO text](https://developercertificate.org/).
+
 ## How to Contribute
 
 ### Report Issues
