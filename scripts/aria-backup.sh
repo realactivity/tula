@@ -169,6 +169,7 @@ PROTECT=(
     '.gitignore'
     '.git'
     'scripts'
+    'docs'
 )
 
 # Regex patterns that look like real credentials. Tuned to be high-signal;
