@@ -32,7 +32,7 @@ Individuals supporting a loved one through illness carry a significant burden th
 
 ## Open Source by Design
 
-All skills are released under the MIT license. Use them, modify them, share them, and build upon them.
+All first-party skills are released under the Apache License 2.0. The codebase includes a small number of third-party MIT-licensed components in derivative skills (notably `skills/health-records/`, derived from [jmandel/health-skillz](https://github.com/jmandel/health-skillz)); see [`NOTICE`](../NOTICE) for full attribution. Use the code, modify it, share it, and build upon it under the terms of the applicable license.
 
 ## Intelligent Model Routing
 
@@ -50,7 +50,7 @@ Current AI health tools are overwhelmingly trained on data from high-income, Eng
 
 Tula is designed to address this gap through deliberate architectural decisions:
 
-- **Free and open source.** No subscription fees, no vendor lock-in. The MIT license ensures that any organization, clinic, or individual can deploy Tula without cost barriers.
+- **Free and open source.** No subscription fees, no vendor lock-in. The Apache License 2.0 ensures that any organization, clinic, or individual can deploy Tula without cost barriers, with explicit patent protection for downstream users.
 - **Self-hosted with data sovereignty.** All data remains on infrastructure controlled by the user or their organization. This aligns with the growing emphasis on national data sovereignty, particularly in the Global South, where governments are asserting greater control over health data governance.
 - **Model-agnostic.** Tula routes to whatever AI model is available and appropriate. In regions where frontier API providers are unavailable or cost-prohibitive, Tula can use open-weight models (Llama, Qwen, Nemotron) running on local or regional infrastructure. For medical-specific tasks, MedGemma 4B runs locally on modest hardware with no API fees, providing medical image and text comprehension in offline environments.
 - **Low-bandwidth accessible.** Telegram, Tula's primary interface, operates on low-bandwidth mobile connections and basic smartphones. The email ingestion gateway similarly functions without high-speed connectivity. These are the dominant communication channels in Sub-Saharan Africa, South Asia, and Latin America.

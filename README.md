@@ -136,9 +136,9 @@ This project is in **early development**. Current status:
 
 ## Tula and Aria
 
-Tula is maintained by RealActivity as an open-source project under the MIT license. RealActivity also develops **Aria**, a commercial hospital-scale platform built on the same Tula skills. The two are distinct products with distinct licenses:
+Tula is maintained by RealActivity as an open-source project under the Apache License 2.0. RealActivity also develops **Aria**, a commercial hospital-scale platform built on the same Tula skills. The two are distinct products with distinct licenses:
 
-- **Tula** is the public, MIT-licensed health agent skill collection and single-user reference deployment. It runs end-to-end on a single VM and is complete on its own.
+- **Tula** is the public, Apache-2.0–licensed health agent skill collection and single-user reference deployment. It runs end-to-end on a single VM and is complete on its own.
 - **Aria** is RealActivity's private, commercial multi-tenant platform for hospitals and health systems. It consumes Tula skills as a versioned dependency and adds the patient identity, ingest router, dashboard, LLM gateway, audit, and compliance plumbing required at hospital scale.
 
 Contributions to Tula skills benefit both projects. The scope of what's maintained in this repo vs. what lives in Aria is documented in [`OPEN_CORE.md`](OPEN_CORE.md).
@@ -184,9 +184,9 @@ Tula is a [RealActivity](https://realactivity.ai) initiative.
 
 ## License
 
-MIT - see [LICENSE](LICENSE). The code is free to use, modify, and distribute. Tula will remain MIT-licensed.
+Apache License 2.0 — see [LICENSE](LICENSE) and [NOTICE](NOTICE). The code is free to use, modify, and distribute under the terms of the license, including its explicit patent grant and patent-retaliation clause. Tula was relicensed from MIT to Apache 2.0 in May 2026 to add contributor patent protections; the `skills/health-records/` subdirectory retains its upstream MIT terms (see [NOTICE](NOTICE) for full attribution). Tula will remain Apache-2.0-licensed going forward.
 
-"Tula" and "RealActivity" are trademarks of RealActivity. The MIT license covers the code, not the name. See [TRADEMARK.md](TRADEMARK.md) for details.
+"Tula" and "RealActivity" are trademarks of RealActivity. The Apache 2.0 license covers the code, not the name. See [TRADEMARK.md](TRADEMARK.md) for details.
 
 RealActivity is also developing **Aria**, a commercial hospital-scale platform built on the same Tula skills. Aria is private and proprietary; Tula remains open source. See [`OPEN_CORE.md`](OPEN_CORE.md) for the scope boundary between the two.
 

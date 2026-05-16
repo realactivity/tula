@@ -1,0 +1,31 @@
+Tula
+Copyright 2026 RealActivity
+
+This product includes software developed by RealActivity
+(https://realactivity.ai).
+
+================================================================================
+
+Tula was originally released under the MIT License and was relicensed under the
+Apache License, Version 2.0 effective May 2026. The relicense was made by the
+sole contributing copyright holder (RealActivity) to add explicit contributor
+patent grants and patent-retaliation protection for downstream consumers.
+Forks of pre-May-2026 commits retain the right to use those commits under the
+original MIT terms.
+
+================================================================================
+
+Third-party components retained under their original licenses:
+
+skills/health-records/
+    Derived from health-skillz by Joshua Mandel
+    (https://github.com/jmandel/health-skillz)
+
+    Original copyright (c) Joshua Mandel. Used and modified under the
+    terms of the MIT License. The full upstream MIT license text and
+    attribution are preserved at skills/health-records/LICENSE.
+
+    The Apache License 2.0 grant in this repository's top-level LICENSE
+    does NOT apply to files under skills/health-records/; those files
+    remain governed by the MIT License as documented in their own
+    LICENSE file.

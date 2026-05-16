@@ -8,7 +8,7 @@ Before opening a non-trivial PR, please read [`OPEN_CORE.md`](OPEN_CORE.md). It 
 
 ## Developer Certificate of Origin (DCO)
 
-All commits to this repository must be signed off under the [Developer Certificate of Origin](https://developercertificate.org/). The DCO is a lightweight, per-commit confirmation that you have the right to submit your contribution under the project's MIT license.
+All commits to this repository must be signed off under the [Developer Certificate of Origin](https://developercertificate.org/). The DCO is a lightweight, per-commit confirmation that you have the right to submit your contribution under the project's Apache License 2.0. Tula uses Apache 2.0 + DCO together as a defense-in-depth approach: the Apache license's built-in contributor patent grant covers the legal mechanics, and the DCO adds an explicit per-commit affirmation that catches "I'm submitting code I don't have rights to." This is the same pattern used by Kubernetes, Prometheus, and most other Cloud Native Computing Foundation projects.
 
 To sign off a commit, add a `Signed-off-by:` trailer with your real name and email:
 

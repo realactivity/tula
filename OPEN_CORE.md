@@ -1,6 +1,6 @@
 # Open Core Scope
 
-Tula is maintained by RealActivity as an MIT-licensed open-source health agent
+Tula is maintained by RealActivity as an Apache-2.0-licensed open-source health agent
 skill collection. RealActivity also develops **Aria**, a commercial
 hospital-scale platform built on the same Tula skills. Aria's runtime gives
 every patient their own AI agent and coordinates thousands of these agents
@@ -84,8 +84,8 @@ This means:
 ## Trademark
 
 "Tula," "Aria," and "RealActivity" are trademarks of RealActivity. See
-[`TRADEMARK.md`](TRADEMARK.md). You may fork the Tula code under the MIT
-license; you may not call your fork "Tula" or "Aria."
+[`TRADEMARK.md`](TRADEMARK.md). You may fork the Tula code under the
+Apache License 2.0; you may not call your fork "Tula" or "Aria."
 
 ## Questions
 
