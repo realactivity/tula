@@ -20,8 +20,8 @@
 # 2. For each top-level directory under `tula/skills/` that contains a
 #    `SKILL.md`, `rsync -a --delete` it to
 #    `~/.openclaw/workspace/skills/<name>/`.
-# 3. (Optional) Run `openclaw skills list` and grep for each deployed skill
-#    to confirm it shows `✓ ready`.
+# 3. (Optional) Run `openclaw skills list` and look up each deployed skill
+#    in the name column (awk -F'│' on column 3) to confirm `✓ ready`.
 #
 # Note: `tula/skills/AGENTS.md` is NOT a skill — it's the conventions doc —
 # so it's filtered out.
@@ -167,7 +167,13 @@ if (( DO_VERIFY && DRY_RUN == 0 )); then
 
     failed=0
     for name in "${DEPLOYED[@]}"; do
-        line="$(echo "$skills_output" | grep -E "${name}\b" | head -1 || true)"
+        # Split the table on the column delimiter `│` and look for the
+        # skill name as a standalone word in column 3 (the name column).
+        # Avoids false positives when another skill's description column
+        # mentions this skill by name (e.g. a "DO NOT USE FOR: ... use
+        # epic-note" cross-reference would otherwise match before the
+        # actual epic-note row).
+        line="$(echo "$skills_output" | awk -F'│' -v n="$name" '$3 ~ "(^| )" n "( |$)" {print; exit}')"
         if [[ -z "$line" ]]; then
             echo "    ✗ $name (not visible to openclaw)"
             failed=1
