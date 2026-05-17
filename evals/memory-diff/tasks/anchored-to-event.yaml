@@ -1,0 +1,38 @@
+id: anchored-to-event-001
+name: Anchored Window - Since starting a medication
+description: |
+  User uses a named-event anchor instead of a calendar date. Skill should
+  scan memory for the start date of lisinopril (present in the fixture
+  at 2026-04-30), use that as the window start, and produce a diff
+  scoped to the time since. Output should mention the lisinopril anchor
+  explicitly in the trailing window descriptor.
+tags:
+  - anchored-window
+  - happy-path
+  - event-anchor
+inputs:
+  prompt: |
+    What's changed in my health since I started lisinopril?
+  files:
+    - path: MEMORY.md
+    - path: memory/2026-04-25.md
+    - path: memory/2026-04-30.md
+    - path: memory/2026-05-10.md
+    - path: memory/2026-05-16.md
+expected:
+  output_contains:
+    - "memory-diff"
+    - "lisinopril"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: has_signature_line
+    config:
+      regex_match:
+        - "(?i)Powered by memory-diff"
+  - type: text
+    name: window_references_anchor
+    config:
+      regex_match:
+        - "(?i)(since\\s+2026-04-30|since\\s+lisinopril|since\\s+started)"

@@ -11,7 +11,7 @@ tags:
   - multi-topic
 inputs:
   prompt: |
-    Can you help me write to Dr. Patel? I need a refill on my metformin, I
+    Can you help me write to Dr. Dave Matthews? I need a refill on my metformin, I
     have questions about my recent A1c result, and I also have a new rash on
     my forearm that's been there for four days.
 expected:

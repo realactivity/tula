@@ -9,14 +9,14 @@ Each example shows the patient's free-text request and the ideal output.
 **Patient input:**
 
 > I started Lisinopril 10mg three weeks ago and I've been getting a dry cough
-> every night. I want to ask Dr. Patel if I should switch.
+> every night. I want to ask Dr. Dave Matthews if I should switch.
 
 **Output:**
 
 ```
 Subject: Persistent dry cough since starting lisinopril — routine
 
-Hello Dr. Patel,
+Hello Dr. Dave Matthews,
 
 I'd like to ask whether I should switch off lisinopril due to a persistent cough.
 
@@ -29,7 +29,7 @@ fever, no congestion, no shortness of breath. Home BP this morning: 128/82.
 - Symptom: nightly dry cough, no other URI symptoms
 
 Thank you,
-Jamie
+Dylan
 ```
 
 ---
@@ -54,7 +54,7 @@ metformin 1000 mg twice daily and have not changed diet or activity since our
 last visit.
 
 Thank you,
-Jamie
+Dylan
 ```
 
 ---
@@ -70,7 +70,7 @@ Jamie
 ```
 Subject: Refill request — metformin — this week
 
-Hello Dr. Patel,
+Hello Dr. Dave Matthews,
 
 Could I please get a refill on metformin 1000 mg twice daily before I travel
 next week?
@@ -78,7 +78,7 @@ next week?
 I have about 5 days remaining. Pharmacy: Riverside Pharmacy.
 
 Thank you,
-Jamie
+Dylan
 ```
 
 ---

@@ -105,6 +105,14 @@ The reference implementation is `skills/myhealth-pulse/`. Any new skill
 that orchestrates personalized signal aggregation, monitoring, or
 recommendation should follow this pattern.
 
+**Forthcoming user dashboard.** The profile files documented above are
+designed to be readable and writable by a forthcoming Tula user dashboard
+app, so the user can tune topics, feeds, thresholds, and tier weights
+without editing YAML by hand. When designing a new personalization-aware
+skill, prefer a profile shape that a non-technical UI can render: typed
+fields, finite enums, simple lists. Avoid free-form prose, regex, or
+embedded code in profile values.
+
 ## Token Discipline (Waza polish, not openclaw requirement)
 
 - Aim for SKILL.md under 500 tokens (Waza's hard cap).

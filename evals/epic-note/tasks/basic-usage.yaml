@@ -10,7 +10,7 @@ tags:
   - medication-question
 inputs:
   prompt: |
-    Help me draft a MyChart message to Dr. Patel. I started lisinopril 10mg
+    Help me draft a MyChart message to Dr. Dave Matthews. I started lisinopril 10mg
     about three weeks ago for blood pressure, and since roughly the second
     week I've had a dry, non-productive cough that wakes me up most nights.
     No fever, no congestion, no shortness of breath. My home BP this morning

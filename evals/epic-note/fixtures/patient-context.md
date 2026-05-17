@@ -4,9 +4,9 @@ This is synthetic test data for evaluating the `epic-note` skill. No real PHI.
 
 ## Demographics
 
-- Preferred name: Jamie
-- Age: 54
-- Pronouns: they/them
+- Preferred name: Dylan
+- Age: 51
+- Pronouns: he/him
 
 ## Active problem list
 
@@ -26,7 +26,7 @@ This is synthetic test data for evaluating the `epic-note` skill. No real PHI.
 
 ## Care team
 
-- PCP: Dr. Patel (internal medicine)
+- PCP: Dr. Dave Matthews (internal medicine)
 - Endocrinologist: Dr. Nguyen
 - Pharmacy: Riverside Pharmacy
 

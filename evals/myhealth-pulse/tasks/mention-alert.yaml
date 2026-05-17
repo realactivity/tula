@@ -5,7 +5,7 @@ description: |
   the mention-only query variant per the social-x adapter contract (drop
   the broad topic clause, keep identity handles), and still emit the
   standard digest shape with the trailing signature line. The fixture
-  profile defines the identity (`@drsynth`).
+  profile defines the identity (`@dylanmeyer`).
 tags:
   - mention
   - happy-path

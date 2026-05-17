@@ -1,17 +1,18 @@
 # Synthetic profile for myhealth-pulse evals.
 # Stands in for ~/.openclaw/workspace/memory/profile.yaml during test runs.
-# Persona: Dr. Casey Synth — fictional clinical-AI researcher. No real PII.
+# Persona: Dylan Meyer — fictional 51-year-old with a professional
+# interest in clinical AI / health-data interoperability. No real PII.
 
 version: 1
 
 identity:
-  display_name: "Dr. Casey Synth"
-  short_name: "Casey"
-  pronouns: "they/them"
+  display_name: "Dylan Meyer"
+  short_name: "Dylan"
+  pronouns: "he/him"
 
 social:
   - platform: x
-    handle: "@drsynth"
+    handle: "@dylanmeyer"
 
 topics:
   primary:

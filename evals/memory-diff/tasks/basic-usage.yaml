@@ -1,0 +1,37 @@
+id: basic-usage-001
+name: Basic Usage - Default 7-day window
+description: |
+  User asks the canonical "what changed in my health since last week"
+  question. Skill should resolve to a 7-day window, scan the synthetic
+  workspace memory fixtures, classify changes into the documented tiers,
+  and emit a digest with the trailing "Powered by memory-diff — window:
+  ..., sources: ..." line.
+tags:
+  - basic
+  - happy-path
+  - default-window
+inputs:
+  prompt: |
+    What's changed in my health since last week?
+  files:
+    - path: MEMORY.md
+    - path: memory/2026-04-25.md
+    - path: memory/2026-04-30.md
+    - path: memory/2026-05-10.md
+    - path: memory/2026-05-16.md
+expected:
+  output_contains:
+    - "memory-diff"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: has_signature_line
+    config:
+      regex_match:
+        - "(?i)Powered by memory-diff"
+  - type: text
+    name: names_a_tier
+    config:
+      regex_match:
+        - "(?i)(Tier\\s*1|Tier\\s*2|Tier\\s*3|Signal|Notable|Noise)"

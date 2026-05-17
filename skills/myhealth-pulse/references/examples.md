@@ -1,8 +1,9 @@
 # Examples
 
-Four realistic outputs. All examples use the synthetic persona
-"Dr. Casey Synth (@drsynth)" with topics centered on clinical AI research,
-so they're safe to publish and reuse in eval fixtures.
+Four realistic outputs covering the common cases. All examples use the
+synthetic user persona "Dylan Meyer" (`@dylanmeyer`, he/him, age 51) —
+fictional user with a professional interest in clinical AI and
+health-data interoperability. Safe to publish and reuse in eval fixtures.
 
 ## Daily pulse (mixed feeds, normal volume)
 
@@ -14,12 +15,12 @@ Profile resolved from `~/.openclaw/workspace/memory/profile.yaml`. Both
 ```
 **Why USCDI v4 is the quiet inflection point for clinical AI** — source: web-brave · score: 88
 https://www.healthcareitnews.com/news/uscdi-v4-clinical-ai-inflection
-Aligns with Casey's interop + AI thesis — v4 finally adds the data
+Aligns with Dylan's interop + AI thesis — v4 finally adds the data
 classes ambient AI vendors have been faking with custom mappings.
 
-**.@drsynth thread on FHIR-to-LLM round-trip grounding** — source: social-x · score: 84
-https://x.com/drsynth/status/...
-Direct mention of Casey; thread argues the bottleneck is no longer
+**.@dylanmeyer thread on FHIR-to-LLM round-trip grounding** — source: social-x · score: 84
+https://x.com/dylanmeyer/status/...
+Direct mention of Dylan; thread argues the bottleneck is no longer
 extraction but bidirectional grounding. Worth a quote-RT.
 
 **STAT: ambient documentation vendors add SMART on FHIR write-back** — source: web-brave · score: 76
@@ -35,12 +36,12 @@ Powered by myhealth-pulse — feeds: social-x, web-brave
 Input: `Any mentions of me in clinical AI discussions today?`
 
 ```
-**@drnatasha replying to @drsynth on FHIR consent UX** — source: social-x · score: 92
+**@drnatasha replying to @dylanmeyer on FHIR consent UX** — source: social-x · score: 92
 https://x.com/drnatasha/status/...
-Direct reply on a thread Casey started Tuesday. Pushes back on the
+Direct reply on a thread Dylan started Tuesday. Pushes back on the
 "consent-by-context" framing — worth engaging.
 
-**HIStalk roundup quotes Dr. Synth on USCDI v4** — source: web-brave · score: 86
+**HIStalk roundup quotes Dylan Meyer on USCDI v4** — source: web-brave · score: 86
 https://histalk2.com/...
 First HIStalk pickup this quarter. Authority source, primary topic.
 
@@ -67,9 +68,9 @@ Powered by myhealth-pulse — feeds: social-x, web-brave
 Input: `Run myhealth-pulse`, `BRAVE_API_KEY` not set in the environment.
 
 ```
-**.@drsynth thread on FHIR-to-LLM round-trip grounding** — source: social-x · score: 84
-https://x.com/drsynth/status/...
-Direct mention of Casey; one item from the social side only.
+**.@dylanmeyer thread on FHIR-to-LLM round-trip grounding** — source: social-x · score: 84
+https://x.com/dylanmeyer/status/...
+Direct mention of Dylan; one item from the social side only.
 
 Powered by myhealth-pulse — feeds: social-x (unavailable: web-brave)
 ```
