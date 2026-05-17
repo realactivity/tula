@@ -1,6 +1,6 @@
 # 🧬 Tula - Your Personal Health AI Agent
 
-[![Watch: AI Agent & Copilot Podcast — OpenClaw-Powered Healthcare Assistant Builds Patient Agency with Paul Swider](https://raw.githubusercontent.com/realactivity/tula/main/articles/cloud-wars-podcast-2026-05.jpg)](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/)
+[![Watch the AI Agent and Copilot Podcast episode](https://github.com/realactivity/tula/blob/main/articles/cloud-wars-podcast-2026-05.jpg?raw=true)](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/)
 
 **▶ Featured:** Paul Swider on the *AI Agent & Copilot Podcast* — [*OpenClaw-Powered Healthcare Assistant Builds Patient Agency*](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) · 17 min · May 14, 2026
 
