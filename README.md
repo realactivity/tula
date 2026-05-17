@@ -1,5 +1,15 @@
 # 🧬 Tula - Your Personal Health AI Agent
 
+<p align="center">
+  <a href="https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/">
+    <img src="articles/cloud-wars-podcast-2026-05.jpg" alt="Watch: AI Agent &amp; Copilot Podcast — OpenClaw-Powered Healthcare Assistant Builds Patient Agency with Paul Swider" width="640">
+  </a>
+</p>
+
+<p align="center">
+  <strong>▶ Featured:</strong> Paul Swider on the <em>AI Agent &amp; Copilot Podcast</em> — <a href="https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/"><em>OpenClaw-Powered Healthcare Assistant Builds Patient Agency</em></a> · 17 min · May 14, 2026
+</p>
+
 **Tula** is an open-source collection of [OpenClaw](https://github.com/openclaw/openclaw) skills, configurations, and patterns designed to transform a general-purpose AI agent into a personal health intelligence assistant.
 
 Named after a brilliant, strong woman - a Mensa member and mother of five - Tula embodies sharp intelligence, warmth, and directness in service of one goal: **helping individuals take an active, informed role in their health.**
