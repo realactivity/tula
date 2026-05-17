@@ -81,6 +81,27 @@ This means:
 - **Aria is not required.** Nothing in Tula depends on Aria or assumes
   Aria's runtime.
 
+## Patient-agent evaluation conventions live here
+
+Tula is also the home of the patient-agent evaluation conventions that
+Aria (and any other operator) builds on top of. The eval suites under
+[`evals/`](evals/), the authoring conventions in
+[`skills/AGENTS.md`](skills/AGENTS.md), the [`waza check`](https://github.com/microsoft/waza)
+spec gates wired into CI, and the continuous status doc at
+[`docs/evals.md`](docs/evals.md) are deliberately open so the format
+can be referenced as a vendor-neutral starting point. See
+[`articles/how-will-you-know-if-your-patient-ai-is-working.md`](articles/how-will-you-know-if-your-patient-ai-is-working.md)
+for the public framing of this work.
+
+Aria runs these same evaluations continuously, at hospital scale, per
+patient agent, and composes their outputs (along with EHR-fidelity
+measurements and audit-completeness signals) into a governance score
+that surfaces in the operator dashboard. The continuous-execution
+layer, the EHR comparison engine, the audit aggregation, and the
+score composition method are part of Aria, not Tula. See
+[`articles/every-patient-ai-needs-two-scores.md`](articles/every-patient-ai-needs-two-scores.md)
+for the public framing of why the split lands where it does.
+
 ## Trademark
 
 "Tula," "Aria," and "RealActivity" are trademarks of RealActivity. See
