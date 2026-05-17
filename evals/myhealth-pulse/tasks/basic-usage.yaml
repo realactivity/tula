@@ -1,0 +1,33 @@
+id: basic-usage-001
+name: Basic Usage - Daily pulse digest with synthetic profile
+description: |
+  User asks for a normal daily pulse. Skill should load the profile from
+  the fixture, resolve enabled adapters (social-x + web-brave), call them,
+  score results against the profile's topics, and emit a digest in the
+  documented shape with the trailing "Powered by myhealth-pulse — feeds:
+  ..." line that names at least one active adapter.
+tags:
+  - basic
+  - happy-path
+  - daily-pulse
+inputs:
+  prompt: |
+    Run myhealth-pulse
+  files:
+    - path: profile.yaml
+expected:
+  output_contains:
+    - "myhealth-pulse"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: has_signature_line
+    config:
+      regex_match:
+        - "(?i)Powered by myhealth-pulse"
+  - type: text
+    name: names_an_adapter
+    config:
+      regex_match:
+        - "(?i)(source:\\s*(social-x|web-brave)|feeds:.*?(social-x|web-brave))"

@@ -1,0 +1,27 @@
+id: mention-alert-001
+name: Mention Alert - Search for handle mentions
+description: |
+  User asks specifically about mentions of themselves. Skill should run
+  the mention-only query variant per the social-x adapter contract (drop
+  the broad topic clause, keep identity handles), and still emit the
+  standard digest shape with the trailing signature line. The fixture
+  profile defines the identity (`@drsynth`).
+tags:
+  - mention
+  - happy-path
+inputs:
+  prompt: |
+    Any mentions of me in clinical AI discussions today?
+  files:
+    - path: profile.yaml
+expected:
+  output_contains:
+    - "myhealth-pulse"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: has_signature_line
+    config:
+      regex_match:
+        - "(?i)Powered by myhealth-pulse"

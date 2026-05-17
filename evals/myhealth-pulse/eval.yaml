@@ -1,0 +1,31 @@
+name: myhealth-pulse-eval
+description: |
+  Evaluation suite for the myhealth-pulse skill. Verifies the agent
+  recognizes daily-pulse and mention-alert triggers, produces a digest in
+  the documented shape, declines PHI-laced prompts, and hands off to
+  med-pdf / epic-note / health-records when those are the right tools.
+
+  Top-level graders apply to every task. Task-level graders fire only for
+  that task — digest-format graders belong on the happy-path tasks only;
+  anti-trigger tasks intentionally don't produce a digest.
+skill: myhealth-pulse
+version: "1.0"
+config:
+  trials_per_task: 1
+  timeout_seconds: 300
+  parallel: false
+  executor: copilot-sdk
+  model: claude-sonnet-4.6
+metrics:
+  - name: task_completion
+    weight: 1.0
+    threshold: 0.8
+    description: Did the skill produce the correct outcome for this task?
+graders:
+  - type: code
+    name: not_empty
+    config:
+      assertions:
+        - "len(output.strip()) > 0"
+tasks:
+  - "tasks/*.yaml"

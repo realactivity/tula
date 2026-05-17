@@ -79,6 +79,32 @@ Match the canonical openclaw skills (e.g., `skills/github`) — in this order:
   markdown links: `[scripts](references/scripts.md)`.
 - Skill scripts live in `scripts/`. Prefer Node ESM (`.mjs`) for portability.
 
+## Personal Data: Reference, Don't Embed
+
+Skills that personalize behavior to a specific user (handle, name, topics,
+provider list, device IDs, etc.) **must reference personal data, not
+contain it**. This keeps the public repo generic, makes skills portable
+to Aria's per-tenant runtime without modification, and prevents one
+user's identity from traveling with every fork.
+
+The pattern:
+
+1. **The skill defines a profile schema** in `references/profile-schema.md`
+   — what keys exist, what they mean, what does NOT belong (PHI, real
+   medical history, etc.).
+2. **The skill resolves the profile at runtime** from a documented
+   precedence: `skills.entries.<skill>.profile` in `openclaw.json` →
+   `<SKILL>_PROFILE` env var → `~/.openclaw/workspace/memory/<file>.yaml`.
+3. **Eval fixtures use a synthetic persona** (e.g., `@drsynth` /
+   "Dr. Casey Synth"). No real names, handles, providers, or topics.
+4. **The actual user profile lives outside the repo** — in the workspace
+   memory directory on a personal VM, or in the multi-tenant identity
+   store in Aria. Either way, never under version control with the skill.
+
+The reference implementation is `skills/myhealth-pulse/`. Any new skill
+that orchestrates personalized signal aggregation, monitoring, or
+recommendation should follow this pattern.
+
 ## Token Discipline (Waza polish, not openclaw requirement)
 
 - Aim for SKILL.md under 500 tokens (Waza's hard cap).

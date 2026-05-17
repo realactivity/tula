@@ -1,0 +1,49 @@
+# Synthetic profile for myhealth-pulse evals.
+# Stands in for ~/.openclaw/workspace/memory/profile.yaml during test runs.
+# Persona: Dr. Casey Synth — fictional clinical-AI researcher. No real PII.
+
+version: 1
+
+identity:
+  display_name: "Dr. Casey Synth"
+  short_name: "Casey"
+  pronouns: "they/them"
+
+social:
+  - platform: x
+    handle: "@drsynth"
+
+topics:
+  primary:
+    - "clinical AI"
+    - "FHIR"
+    - "SMART on FHIR"
+    - "USCDI"
+  secondary:
+    - "ambient documentation"
+    - "digital therapeutics"
+  negative:
+    - "weight loss"
+    - "supplements"
+    - "stock tip"
+
+feeds:
+  enabled:
+    - social-x
+    - web-brave
+  windows:
+    daily: 24h
+    weekly: 7d
+  thresholds:
+    keep_score: 70
+    max_items: 8
+
+authority_sources:
+  - himss.org
+  - statnews.com
+  - histalk2.com
+  - healthcareitnews.com
+
+notifications:
+  digest_channel: chat
+  urgent_channel: chat
