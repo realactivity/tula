@@ -1,0 +1,91 @@
+name: Eval Status
+
+# Regenerate docs/evals.md from `waza check` output + any results/ files.
+# Runs static analysis only — no live API calls, no model auth required.
+# Live `waza run` execution lives in the separate eval.yml workflow.
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - 'evals/**'
+      - 'scripts/generate-eval-status.sh'
+      - '.github/workflows/eval-status.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - 'evals/**'
+      - 'scripts/generate-eval-status.sh'
+      - '.github/workflows/eval-status.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  status:
+    name: Regenerate eval status
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Need full history for the commit-on-push step below.
+          fetch-depth: 0
+          # Use the default GITHUB_TOKEN; persisted for the push step.
+          persist-credentials: true
+
+      - name: Install Waza
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/microsoft/waza/main/install.sh | bash
+          # install.sh writes to /usr/local/bin if writable, otherwise ~/bin
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Install jq
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq jq
+
+      - name: Show waza version
+        run: waza --version
+
+      - name: Regenerate docs/evals.md
+        run: bash scripts/generate-eval-status.sh
+
+      - name: Detect changes
+        id: changes
+        run: |
+          if git diff --quiet -- docs/evals.md; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "docs/evals.md is unchanged."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "docs/evals.md diff:"
+            git --no-pager diff -- docs/evals.md
+          fi
+
+      - name: Commit and push on main
+        if: github.event_name != 'pull_request' && steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/evals.md
+          git commit -s -m "docs/evals: regenerate from eval-status workflow"
+          git push
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request' && steps.changes.outputs.changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = "### Eval status updated for this PR\n\n" +
+              "Preview of `docs/evals.md` after this PR merges:\n\n" +
+              fs.readFileSync('docs/evals.md', 'utf8');
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            });
