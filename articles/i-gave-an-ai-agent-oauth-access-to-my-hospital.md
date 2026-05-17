@@ -3,6 +3,7 @@ title: I gave an AI agent OAuth access to my hospital. It worked on the first tr
 subtitle: "Or: the day a $30/month open-source agent pulled my full medical history through SMART on FHIR."
 status: draft
 drafted: 2026-05-16
+revised: 2026-05-17
 author: Paul J. Swider
 target_publication: Substack
 companion_content:
@@ -23,6 +24,8 @@ disclosure_check: |
 
 *Or: the day a $30/month open-source agent pulled my full medical history through SMART on FHIR.*
 
+*May 16, 2026*
+
 I just gave an AI agent OAuth access to my hospital's patient portal. I clicked through the consent screen, the agent walked through the SMART on FHIR handshake, decrypted the patient-pull payload, and dropped my full medical history onto a Linux box in Azure.
 
 It worked on the first try.
@@ -35,7 +38,7 @@ The agent is part of [Tula](https://github.com/realactivity/tula), an open-sourc
 
 The skill creates a one-time session with my hospital, hands me a URL, and waits. I open the URL on my phone, log into MyChart, click "allow access for this app to my records," and the hospital sends back an encrypted bundle containing every observation, condition, medication, lab result, and provider note in my chart.
 
-The agent decrypts it locally (the private key never leaves my VM), writes it to disk as FHIR R4 JSON, and is now ready to reason longitudinally about my health. A1c trends across years. Every blood pressure measurement on file. Every clinical note that mentions sleep apnea or thyroid or hereditary risk factors.
+The agent decrypts it locally (the private key never leaves my VM), writes it to disk as FHIR R4 JSON, and is now ready to reason longitudinally about my health. A1c trends across years. Every blood pressure measurement on file. Every clinical note that mentions sleep apnea or thyroid or hereditary risk factors. (The reasoning step itself uses whatever LLM is configured — Claude or Gemini against their HIPAA-eligible API tiers, or local MedGemma if you want the entire inference stack airgapped.)
 
 The whole stack costs about $30 a month to run. The hospital integration cost: $0.
 
@@ -43,7 +46,7 @@ The whole stack costs about $30 a month to run. The hospital integration cost: $
 
 A lot of healthcare AI demos use synthetic data. Synthetic data is fine for showing a UI, but it doesn't prove anything about whether your agent can survive contact with a real hospital's auth flow, a real Epic FHIR endpoint, a real OAuth dance that's been quietly tweaked twelve times since you last looked.
 
-Real medical records have real edge cases. Provider notes that contain instructions you didn't anticipate. PDF attachments that look textual but are actually scanned images. Date fields in seventeen different formats. LOINC codes that look standardized until you check four different lab vendors and discover they're not. Medication entries that omit the dose, the route, or the indication, depending on which subsystem wrote them.
+Real medical records have real edge cases. Provider notes that contain instructions you didn't anticipate. PDF attachments that look textual but are actually scanned images. Date fields in seventeen different formats. LOINC codes that look standardized until you check four different lab vendors and discover they're not. Medication entries that omit the dose, the route, or the indication, depending on which subsystem wrote them. Results vary by EHR too — Epic's FHIR endpoints are the strongest; some hospitals on other systems return spottier notes or imaging metadata.
 
 The reason this matters: you can spend two years building a "healthcare AI" product that works perfectly against synthetic data and then collapses the first time someone forwards an actual lab PDF.
 
@@ -70,6 +73,8 @@ This is the inversion of the default state of healthcare in the United States. T
 
 Tula is open source under the Apache License 2.0 (as of yesterday — relicensed from MIT to add explicit contributor patent grants for downstream consumers). Anyone can deploy it. Anyone can build on it. The deployment guide is in the repo; I wrote it during a real deployment session, including every error I ran into and how I fixed it. It runs on Azure, on bare metal, on a Raspberry Pi at the high end if you're patient.
 
+Running it on your own infrastructure means you own the security: keep the VM patched, encrypt the disk at rest, scope OAuth tokens narrowly and revoke them after the pull, and lock down the email channel. The full threat model and defense-in-depth posture is in [docs/security-model.md](https://github.com/realactivity/tula/blob/main/docs/security-model.md).
+
 There's a commercial side to this too. RealActivity (the company I run) is building **Aria**, a hospital-scale platform that runs one Tula agent per patient under multi-tenant identity, SSO, audit, compliance, BAA chain — all the things a hospital needs to deploy this to thousands of patients at once. We call the architecture a **Patient Swarm**: many specialized, patient-centered agents operating in parallel, each with isolated state, coordinated by a shared control plane. The clinical reasoning is the same as personal Tula; what Aria adds is scale, identity, and compliance.
 
 Personal Tula stays open, free, and complete on its own. Aria is built on top of it. The same skill that pulled my records this afternoon will run inside every patient cell in a hospital deployment. The boundaries are documented in the repo's [OPEN_CORE.md](https://github.com/realactivity/tula/blob/main/OPEN_CORE.md).
@@ -86,3 +91,7 @@ If you build something useful with this, I want to hear about it. If you're a ho
 The internet was supposed to give us this in 2005. It's twenty-one years late. Better late than never.
 
 — Paul
+
+---
+
+*Tula is open-source software for personal health data organization and health literacy. It is not a medical device, not FDA-cleared, and not intended to diagnose, treat, cure, or prevent any disease. Talk to your doctor about anything that matters.*
