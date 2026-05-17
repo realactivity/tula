@@ -31,6 +31,14 @@ The public Tula repo is the home of:
   [email router design](docs/email-router-design.md) at personal scale.
 - **The TripIt-style email ingestion pattern** at single-user scale — one
   mailbox, sender allowlist, Telegram or web for notifications.
+- **Voice integration at single-user scale** — the
+  [voice integration architecture](docs/voice-integration.md) for
+  giving your personal Tula agent a phone number via the open
+  `@openclaw/voice-call` plugin, including setup, costs, and known
+  limitations. The hospital-scale multi-tenant voice channel (with
+  HIPAA-eligible ConversationRelay transport, voice-specific
+  governance signals, and EHR-divergence detection on
+  voice-asserted facts) is part of Aria.
 
 Contributions that improve any of the above are welcome. See
 [`CONTRIBUTING.md`](CONTRIBUTING.md) for how to submit them.
