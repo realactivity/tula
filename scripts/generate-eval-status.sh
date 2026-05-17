@@ -97,10 +97,23 @@ for skill_md in "$SKILLS_DIR"/*/SKILL.md; do
             ts="$(jq -r '.timestamp' "$latest_run" | cut -d'T' -f1)"
             succeeded="$(jq -r '.summary.succeeded' "$latest_run")"
             total="$(jq -r '.summary.total_tests' "$latest_run")"
+            model="$(jq -r '.config.model_id // empty' "$latest_run")"
+            # Shorten common long model names so the table column doesn't
+            # blow up. Anything not in the case below renders as-is.
+            case "$model" in
+                claude-sonnet-4.6)    model="sonnet-4.6" ;;
+                claude-sonnet-4-*)    model="sonnet-4" ;;
+                claude-opus-*)        model="opus" ;;
+                gpt-4o-mini)          model="gpt-4o-mini" ;;
+                gpt-4o)               model="gpt-4o" ;;
+            esac
+            model_suffix=""
+            [[ -n "$model" ]] && model_suffix=", $model"
+
             if [[ "$succeeded" == "$total" ]]; then
-                live_cell="${succeeded}/${total} ✓ (${ts})"
+                live_cell="${succeeded}/${total} ✓ (${ts}${model_suffix})"
             else
-                live_cell="${succeeded}/${total} ✗ (${ts})"
+                live_cell="${succeeded}/${total} ✗ (${ts}${model_suffix})"
             fi
         fi
     fi
@@ -129,10 +142,11 @@ cat >> "$OUTPUT" <<'EOF'
   section). `⚠` marks "exceeds the soft cap but intentional"; `✓` marks
   "within budget."
 - **Last live run** — most recent `waza run` output published in
-  `results/`. Live eval execution requires `executor: copilot-sdk` plus
-  model auth, so it is a deliberate publish today rather than a
-  per-PR CI run. Raw run outputs stay private; only the pass-rate
-  summary surfaces here.
+  `results/`. Cells show pass rate, run date, and model used (e.g.,
+  `5/5 ✓ (2026-05-17, sonnet-4.6)`). Live eval execution requires
+  `executor: copilot-sdk` plus model auth, so it is a deliberate
+  publish today rather than a per-PR CI run. Raw run outputs stay
+  private; only the pass-rate summary surfaces here.
 
 ## What this does NOT measure
 
