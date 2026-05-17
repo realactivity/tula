@@ -34,6 +34,7 @@ Tula is **not** a standalone application. It is a health-focused skill layer bui
 - 💼 **Professional Journal** - Business-focused note capture with automated daily summaries, weekly synthesis, and searchable history.
 - 🔬 **Research Synthesis** - Scheduled retrieval and summarization of current peer-reviewed literature and clinical evidence relevant to the user's health profile and active protocols.
 - 🗣️ **Voice Input** - Speech-to-text transcription of Telegram voice messages. Medical voice input uses MedASR (5x more accurate than general-purpose transcription on clinical terminology). General voice uses Whisper or Azure Speech Services.
+- 📞 **Voice Calls (Plan Documented)** - Optional integration with Twilio to give the agent a phone number you call. The agent picks up, knows your records, and can carry a conversation. Architecture and setup walkthrough in [`docs/voice-integration.md`](docs/voice-integration.md); plugin not yet installed in the reference deployment.
 - 🔒 **De-Identification** - Removal of protected health information (PHI) from health documents prior to sharing, export, or use in research contexts. Designed to support HIPAA Safe Harbor de-identification principles.
 - 🧠 **Intelligent Model Routing** - Each task is directed to the most capable, cost-effective, and privacy-appropriate model available. Purpose-built healthcare models handle medical imaging and text extraction. General-purpose reasoning models handle clinical synthesis and trend analysis. Lightweight models handle routine interactions. See the [model routing reference](docs/model-routing.md) for details.
 
@@ -98,13 +99,15 @@ FHIR R4 Storage (local JSON files, user-controlled)
 
 3. **Browse Your Health Data** - The [dashboard build plan](docs/dashboard-build-plan.md) describes a Node web app served from the VM that renders a beautiful, modern, mobile-friendly view of all email-ingested FHIR data — activity feed, lab trends, imaging reports, medications, appointments, with live updates as new emails are processed. Designed to be reachable privately via Tailscale; no public exposure of health data.
 
-3. **Install Tula Skills** - Skills live under [`skills/`](skills/). Copy the ones you want into `~/.openclaw/workspace/skills/` on your OpenClaw host. See the [skills development guide](docs/skills-development.md) for details, conventions, and the testing workflow with Microsoft Waza.
+4. **Install Tula Skills** - Skills live under [`skills/`](skills/). Deploy them to your OpenClaw host with [`scripts/deploy-skills.sh`](scripts/deploy-skills.sh). See the [skills development guide](docs/skills-development.md) for details, conventions, and the testing workflow with Microsoft Waza. The continuous status of every shipped skill (compliance, spec, tokens, last live run) lives at [`docs/evals.md`](docs/evals.md) and is regenerated on every push by the [eval-status workflow](.github/workflows/eval-status.yml).
 
-4. **Configure Data Sources** - Connect wearable and home health devices and configure check-in schedules.
+5. **Configure Data Sources** - Connect wearable and home health devices and configure check-in schedules.
 
 ## Project Status
 
-This project is in **early development**. Current status:
+This project is in **active development**. Five skills are live on the reference deployment and pass continuous Waza compliance checks. Status:
+
+### Infrastructure
 
 | Component | Status |
 |-----------|--------|
@@ -113,22 +116,46 @@ This project is in **early development**. Current status:
 | Telegram Integration | ✅ Complete |
 | Email Security Model | ✅ Complete |
 | Skills Authoring Framework (Waza + conventions) | ✅ Complete |
-| `med-pdf` Skill (medical PDF parsing) | ✅ Complete |
-| `epic-note` Skill (patient portal messages) | ✅ Complete |
+| Personal Data Reference Convention (privacy seam) | ✅ Complete |
+| Continuous Eval Status (waza check + CI gate + docs/evals.md) | ✅ Complete |
+| Deploy Tooling (deploy-skills.sh, aria-backup.sh) | ✅ Complete |
+
+### Skills (deployed and ready on the reference VM)
+
+| Skill | Status |
+|-----------|--------|
+| [`med-pdf`](skills/med-pdf/) (medical PDF parsing: labs, imaging) | ✅ Complete |
+| [`epic-note`](skills/epic-note/) (patient portal messages) | ✅ Complete |
+| [`health-records`](skills/health-records/) (SMART on FHIR records pull from MyChart / patient portals) | ✅ Complete |
+| [`myhealth-pulse`](skills/myhealth-pulse/) (signal aggregation orchestrator across configured feeds) | ✅ Complete |
+| [`memory-diff`](skills/memory-diff/) (longitudinal change detection over workspace memory) | ✅ Complete |
+
+### Strategy artifacts
+
+| Artifact | Status |
+|-----------|--------|
+| [Patient agent evaluation standard article](articles/how-will-you-know-if-your-patient-ai-is-working.md) | 📝 Draft |
+| [Two-score framework article (governance + health portfolio)](articles/every-patient-ai-needs-two-scores.md) | 📝 Draft |
+| [Voice integration architecture (OpenClaw + Twilio)](docs/voice-integration.md) | 📝 Plan documented |
+| [Open-core scope split](OPEN_CORE.md) | ✅ Complete |
+
+### Roadmap (skills and integrations not yet built)
+
+| Component | Status |
+|-----------|--------|
 | Intelligent Email Ingestion and Router | 🔨 In Progress |
-| Laboratory Parser Skill | 🔨 In Progress |
-| Medical Image Interpretation (DICOM) | 📋 Planned |
+| Patient Health Dashboard (Node web app) | 🔨 In Progress |
+| Laboratory Parser (structured biomarker tracker beyond med-pdf) | 🔨 In Progress |
 | Patient Health Journal Skill | 🔨 In Progress |
 | Professional Journal Skill | 🔨 In Progress |
 | Wearable Device Integration | 📋 Planned |
+| Medical Image Interpretation (DICOM) | 📋 Planned |
 | Genomic Report Import | 📋 Planned |
-| EHR / Patient Portal Connector (FHIR R4) | 📋 Planned |
 | Home Device Sync (BP, Scale, Pulse Ox) | 📋 Planned |
 | De-Identification Engine | 📋 Planned |
 | Research Synthesis | 📋 Planned |
-| Healthcare Model Routing | 📋 Planned |
-| MedGemma Integration | 📋 Planned |
-| Microsoft Healthcare AI Integration | 📋 Planned |
+| Voice Calling (OpenClaw voice-call plugin install) | 📋 Planned |
+| Healthcare Model Routing (MedGemma / MedASR / MedImageInsight) | 📋 Planned |
 | MedASR Medical Speech | 📋 Planned |
 | Voice Transcription (Whisper/MedASR) | 📋 Planned |
 | Medication Adherence (IoT) | 💡 Community Idea |
@@ -142,6 +169,11 @@ Tula is maintained by RealActivity as an open-source project under the Apache Li
 - **Aria** is RealActivity's private, commercial multi-tenant platform for hospitals and health systems. It consumes Tula skills as a versioned dependency and adds the patient identity, ingest router, dashboard, LLM gateway, audit, and compliance plumbing required at hospital scale.
 
 Contributions to Tula skills benefit both projects. The scope of what's maintained in this repo vs. what lives in Aria is documented in [`OPEN_CORE.md`](OPEN_CORE.md).
+
+The open / closed split also applies to the evaluation infrastructure:
+
+- **Open in this repo:** the eval suites under [`evals/`](evals/), the skill authoring conventions in [`skills/AGENTS.md`](skills/AGENTS.md), the Waza spec gates wired into [CI](.github/workflows/eval-status.yml), and the continuous compliance status at [`docs/evals.md`](docs/evals.md). These are intended as a vendor-neutral starting point for evaluating any patient-facing AI agent. See the draft article [`how-will-you-know-if-your-patient-ai-is-working.md`](articles/how-will-you-know-if-your-patient-ai-is-working.md) for the public framing.
+- **Closed in Aria:** the continuous-execution layer that runs these evaluations per patient agent at hospital scale, the EHR-fidelity comparison engine that grounds the agent's view against the chart of record, the audit aggregation, and the governance score that composes those signals into a single number the quality officer can act on. See the draft article [`every-patient-ai-needs-two-scores.md`](articles/every-patient-ai-needs-two-scores.md) for the public framing of why the split lands where it does.
 
 ## Contributing
 
