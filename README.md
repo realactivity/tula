@@ -20,23 +20,29 @@ Caregivers deserve dedicated support. Medication adherence, appointment coordina
 
 ## What Is This?
 
-Tula is **not** a standalone application. It is a health-focused skill layer built on top of OpenClaw, providing the following capabilities:
+Tula is **not** a standalone application. It is a health-focused skill layer built on top of OpenClaw, providing the following capabilities.
 
-- 📧 **Intelligent Email Ingestion** - Forward any health-related correspondence to Tula for automatic classification and routing. Tula identifies the content type (laboratory results, imaging studies, explanation of benefits, appointment confirmations, prescription notifications, provider messages) and routes each item to the appropriate skill for processing and structured storage. Email security is enforced at the Exchange transport layer with sender and recipient allowlists. See the [security model](docs/security-model.md).
-- 📸 **Universal Photo Capture** - Photograph any health document with your phone and email it to Tula. Printed lab reports, patient portal screens, prescription bottles, hospital whiteboards, insurance EOBs, discharge instructions, imaging reports. If you can see it, you can photograph it, and Tula can extract structured data from it using multimodal AI. No patient portal integration required. No FHIR API. No IT department involvement. Your phone camera becomes the universal health data connector.
-- 🧪 **Laboratory Result Parsing** - Automated extraction of biomarker values, units, and reference ranges from laboratory report PDFs using purpose-built medical text models (MedGemma) or general-purpose reasoning models (Claude). Longitudinal trend tracking with out-of-range flagging.
-- 🩻 **Medical Image Interpretation** - Support for DICOM imaging studies including MRI, CT, radiograph, mammography, and ultrasound. Powered by purpose-built healthcare imaging models (Google MedGemma multimodal or Microsoft MedImageInsight/CXRReportGen, depending on deployment context). Provides plain-language annotation of key findings, medical terminology translation, and longitudinal comparison across sequential studies.
-- 🧬 **Genomic Health Reports** - Import and analysis of consumer genomic data (e.g., 23andMe) to identify clinically relevant genetic variants and correlate predispositions with current biomarker profiles and care protocols.
-- 🏥 **Electronic Health Record Integration** - Retrieval of medical history, visit summaries, and provider documentation from patient portals via FHIR R4 and patient access APIs.
-- ⌚ **Wearable Device Integration** - Synchronization of daily physiological metrics from compatible wearable devices (e.g., Garmin), including heart rate variability (HRV), resting heart rate, sleep architecture, and stress indicators.
-- 🩺 **Home Health Device Integration** - Connectivity with Bluetooth and Wi-Fi enabled home monitoring devices including blood pressure monitors, body composition scales, pulse oximeters, and glucose meters for continuous, passive data collection.
-- 📓 **Patient Health Journal** - Structured daily check-ins via Telegram for tracking sleep quality, energy levels, mood, symptom burden, and treatment protocol adherence.
-- 💼 **Professional Journal** - Business-focused note capture with automated daily summaries, weekly synthesis, and searchable history.
-- 🔬 **Research Synthesis** - Scheduled retrieval and summarization of current peer-reviewed literature and clinical evidence relevant to the user's health profile and active protocols.
-- 🗣️ **Voice Input** - Speech-to-text transcription of Telegram voice messages. Medical voice input uses MedASR (5x more accurate than general-purpose transcription on clinical terminology). General voice uses Whisper or Azure Speech Services.
+Status legend used below: **(Live)** = deployed and ready on the reference VM; **(In Progress)** = actively being built; **(Planned)** = designed and committed to roadmap; **(Plan Documented)** = full architecture in [`docs/`](docs/) but no implementation yet. The [Project Status](#project-status) table below is the canonical source of truth.
+
+- 🏥 **Electronic Health Record Integration (Live)** - Retrieval of medical history, visit summaries, conditions, medications, labs, and immunizations from patient portals via SMART on FHIR. Implemented in the [`health-records`](skills/health-records/) skill against MyChart, Oracle Health, Athena, and other ONC-certified portals. The skill that pulled my own hospital records on the first try.
+- 📸 **Universal Photo / PDF Capture (Live)** - Email or upload any medical PDF, screenshot, or photo. Tula extracts structured data using multimodal AI without requiring FHIR access or IT involvement. Implemented in the [`med-pdf`](skills/med-pdf/) skill, which handles text-extractable PDFs (Quest, LabCorp) and image-only PDFs (MyChart exports) with the same pipeline.
+- 🧪 **Laboratory Result Parsing (Live, via med-pdf)** - Automated extraction of biomarker values, units, and reference ranges from lab reports. Longitudinal trend tracking and out-of-range flagging. The dedicated structured-biomarker tracker skill remains on the roadmap.
+- ✉️ **Patient Portal Message Drafting (Live)** - Draft concise, well-formatted MyChart-style messages to your care team for medication questions, lab follow-ups, refill requests, and symptom reports. Implemented in the [`epic-note`](skills/epic-note/) skill with refusal logic for emergency-flavored prompts.
+- 📡 **Personal Health Pulse (Live)** - Aggregate configured signal feeds into a daily curated digest, scored against your personal topic preferences. Currently aggregates X (mentions and topic search) and Brave web search. Roadmap adapters cover wearables, portal inbox, calendar, email, and research feeds. Implemented in the [`myhealth-pulse`](skills/myhealth-pulse/) skill with the "Personal Data: Reference, Don't Embed" pattern.
+- 📈 **Longitudinal Change Detection (Live)** - "What changed in my health since last week?" or "since I started lisinopril?" Tula reads your workspace memory (chart pulls, PDFs, dated notes, pulse digests) and produces a tiered diff (Tier 1 signal, Tier 2 notable, Tier 3 collapsed). Implemented in the [`memory-diff`](skills/memory-diff/) skill.
+- 📧 **Intelligent Email Ingestion (In Progress)** - Forward health correspondence to Tula for automatic classification and routing to the right skill. Email security at the Exchange transport layer with sender and recipient allowlists. See the [security model](docs/security-model.md) for the boundary design.
+- 📊 **Patient Health Dashboard (In Progress)** - Node web app served from the VM that renders a mobile-friendly view of FHIR data with live updates as new emails are processed. Designed for private access via Tailscale; no public exposure of health data. See the [dashboard build plan](docs/dashboard-build-plan.md).
 - 📞 **Voice Calls (Plan Documented)** - Optional integration with Twilio to give the agent a phone number you call. The agent picks up, knows your records, and can carry a conversation. Architecture and setup walkthrough in [`docs/voice-integration.md`](docs/voice-integration.md); plugin not yet installed in the reference deployment.
-- 🔒 **De-Identification** - Removal of protected health information (PHI) from health documents prior to sharing, export, or use in research contexts. Designed to support HIPAA Safe Harbor de-identification principles.
-- 🧠 **Intelligent Model Routing** - Each task is directed to the most capable, cost-effective, and privacy-appropriate model available. Purpose-built healthcare models handle medical imaging and text extraction. General-purpose reasoning models handle clinical synthesis and trend analysis. Lightweight models handle routine interactions. See the [model routing reference](docs/model-routing.md) for details.
+- ⌚ **Wearable Device Integration (Planned)** - Daily physiological metrics (HRV, resting HR, sleep architecture, stress) from Garmin / Oura / Whoop / Withings / Apple Health, normalized into FHIR-shaped observations.
+- 🩻 **Medical Image Interpretation (Planned)** - DICOM imaging studies (MRI, CT, X-ray, mammography, ultrasound) annotated by purpose-built healthcare imaging models (MedGemma multimodal / Microsoft MedImageInsight / CXRReportGen), with longitudinal comparison across sequential studies.
+- 🧬 **Genomic Health Reports (Planned)** - Import and analysis of consumer genomic data (23andMe, AncestryDNA, clinical panels) correlated with current biomarker profiles.
+- 🩺 **Home Health Device Integration (Planned)** - Bluetooth and Wi-Fi devices including BP monitors, body composition scales, pulse oximeters, and glucose meters for passive continuous monitoring.
+- 📓 **Patient Health Journal (In Progress)** - Structured daily check-ins via Telegram for sleep, energy, mood, symptom burden, and treatment adherence.
+- 💼 **Professional Journal (In Progress)** - Business note capture with automated daily summaries, weekly synthesis, and searchable history.
+- 🔬 **Research Synthesis (Planned)** - Scheduled retrieval and summarization of current peer-reviewed literature relevant to your health profile and active protocols.
+- 🗣️ **Voice Input (Planned)** - Speech-to-text transcription of Telegram voice messages. Medical voice via MedASR (5x more accurate than general-purpose transcription on clinical terminology); general voice via Whisper or Azure Speech.
+- 🔒 **De-Identification (Planned)** - PHI removal from health documents prior to sharing or use in research contexts. Designed to support HIPAA Safe Harbor de-identification principles.
+- 🧠 **Intelligent Model Routing (Partial)** - Each task is directed to the most capable, cost-effective, and privacy-appropriate model available. The reference deployment currently routes through `copilot-sdk` with Claude Sonnet 4.6 as the default. Purpose-built healthcare model routing (MedGemma, MedImageInsight, MedASR) is on the roadmap. See the [model routing reference](docs/model-routing.md).
 
 ## Who Tula Is For
 
@@ -44,43 +50,76 @@ Tula supports patients navigating complex illness, caregivers, individuals manag
 
 ## Architecture
 
+The diagram below distinguishes **live** components (deployed and ready on the reference VM) from **planned** components (on the roadmap). The [Project Status](#project-status) table is the canonical source of truth for individual component states.
+
 ```
-User Interface (Telegram / Email / Voice)
+User Interface
+  |-- Telegram                                   (live)
+  |-- Email outbound                             (live)
+  |-- Email inbound auto-ingest                  (in progress)
+  |-- Voice calls (Twilio + voice-call plugin)   (plan documented)
         |
 Data Sources
-  |-- Email Inbox (automated classification and routing)
-  |-- Phone Camera (photograph any health document, email to Tula)
-  |-- Laboratory PDFs (Quest Diagnostics, LabCorp, institutional labs)
-  |-- Genomic Reports (23andMe, AncestryDNA, clinical panels)
-  |-- EHR / Patient Portal (FHIR R4 API)
-  |-- Wearable Devices (Garmin, compatible devices)
-  |-- Home Health Devices (BP monitors, scales, pulse oximeters, glucose meters)
+  |-- Live
+  |     |-- Patient portals via SMART on FHIR    -> health-records skill
+  |     |-- Medical PDFs (lab, imaging, OCR)     -> med-pdf skill
+  |     |-- X (Twitter) search                   -> @openclaw/xai-plugin
+  |     |-- Brave web search                     -> @openclaw/brave-plugin
+  |-- Planned
+        |-- Email inbox auto-classify            (M365 / Graph API)
+        |-- Wearables (Garmin, Oura, Whoop, Withings, Apple Health)
+        |-- Home devices (BP, scale, pulse ox, glucose)
+        |-- Genomic reports (23andMe, AncestryDNA)
+        |-- Research feeds (PubMed, Google Scholar)
         |
-OpenClaw Gateway (Azure B2s, Ubuntu 24.04 LTS)
+OpenClaw Gateway  -- single self-hosted VM (Azure B2s, Ubuntu 24.04, ~$30/mo)
         |
-Tula Skills (this repository)
-  |-- Email Router (classification and skill routing)
-  |-- Laboratory Parser
-  |-- Medical Image Interpreter (DICOM)
-  |-- Genomic Analyzer
-  |-- EHR Connector (FHIR R4)
-  |-- Biomarker Tracker
-  |-- Patient Health Journal
-  |-- Professional Journal
-  |-- Wearable Sync
-  |-- Home Device Sync
-  |-- De-Identification Engine
-  |-- Research Synthesis
+Tula Skills  -- deployed under ~/.openclaw/workspace/skills/
+  |-- Live (this repo, ✓ ready on reference VM)
+  |     |-- health-records   -- SMART on FHIR records pull
+  |     |-- med-pdf          -- PDF -> structured labs, imaging JSON
+  |     |-- epic-note        -- draft portal messages to clinicians
+  |     |-- myhealth-pulse   -- signal aggregation orchestrator
+  |     |-- memory-diff      -- longitudinal change detection
+  |-- Planned
+        |-- email-router     -- inbound classification and routing
+        |-- lab-parser       -- structured biomarker tracker beyond med-pdf
+        |-- patient-journal  -- Telegram daily check-ins
+        |-- professional-journal
+        |-- wearable-sync    -- one adapter per device family
+        |-- home-device-sync -- BP, scale, pulse ox, glucose
+        |-- genomic-analyzer
+        |-- medical-image-interpreter -- DICOM (MedGemma / MedImageInsight)
+        |-- de-identification-engine  -- HIPAA Safe Harbor
+        |-- research-synthesis        -- PubMed / Google Scholar summarization
         |
-AI Model Routing Layer (deployment-context-aware)
-  |-- Medical Imaging: MedGemma 4B / MedImageInsight / CXRReportGen
-  |-- Medical Text: MedGemma 27B / Claude in Foundry
-  |-- Medical Speech: MedASR / Azure Speech Services
-  |-- Clinical Reasoning: Claude Sonnet / Opus
-  |-- General Tasks: Gemini Flash / GPT-4o mini / Qwen / Llama
+Agent Workspace Memory  -- ~/.openclaw/workspace/
+  |-- MEMORY.md            -- persistent state (conditions, meds, providers, trends)
+  |-- memory/YYYY-MM-DD.md -- dated agent notes
+  |-- memory/profile.yaml  -- personalization profile (read by myhealth-pulse, etc.)
+  |-- .health-records-cache/<date>/<provider>.json   -- FHIR R4 pulls
+  |-- .med-pdf-cache/<slug>/                         -- PDF extractions
+  |-- .myhealth-pulse-cache/<date>.json              -- pulse digests
+  |-- .memory-diff-cache/<date>.md                   -- diff renderings
         |
-FHIR R4 Storage (local JSON files, user-controlled)
+Continuous Evaluation and Compliance  -- Microsoft Waza, this repo
+  |-- evals/<skill>/eval.yaml + tasks/ + fixtures/   (open eval suites)
+  |-- waza check         -- static compliance gate on every PR via CI
+  |-- docs/evals.md      -- continuous status, regenerated by CI on every push
+  |-- waza run (local)   -- live LLM execution; results/ gitignored
+        |
+AI Model Routing  -- deployment-context-aware; see docs/model-routing.md
+  |-- Reference deployment today
+  |     |-- Clinical reasoning: Claude Sonnet 4.6 via copilot-sdk
+  |     |-- General tasks: gpt-4o-mini (cheaper eval baseline)
+  |-- Planned
+        |-- Voice loop: Gemini Live (via @openclaw/voice-call plugin)
+        |-- Medical text: MedGemma 27B / Claude in Azure AI Foundry
+        |-- Medical imaging: MedGemma 4B / MedImageInsight / CXRReportGen
+        |-- Medical speech: MedASR / Azure Speech Services
 ```
+
+The five live skills produce structured outputs (FHIR R4 JSON, extracted lab/imaging JSON, rendered digests) that land in the workspace memory layer. Other skills consume what is already there rather than re-fetching: `memory-diff` reads from the cache directories `health-records` and `med-pdf` write to, and `myhealth-pulse` writes its own daily cache that `memory-diff` includes in its scan. This composition is intentional and is what makes the agent feel like it knows you over time rather than like a transactional chatbot.
 
 ## Getting Started
 
@@ -202,6 +241,8 @@ See the [full principles](docs/principles.md) for our complete set of values and
 ## Cost
 
 Running Tula costs approximately **$35 - $115/month** depending on usage, from text-based journaling and laboratory parsing at the low end to medical image interpretation and genomic analysis at the high end. No subscription fees. No platform lock-in. Users provide their own API keys. See the [cost guide](docs/cost-guide.md) for a detailed breakdown.
+
+Optional voice calling adds Twilio carrier fees (around $1/month for a US local number plus per-minute usage) and voice-model usage on top. A heavy personal user lands in the $30 to $60/month range above the base figure; light users stay under $10. See [`docs/voice-integration.md`](docs/voice-integration.md) for the full cost and latency breakdown.
 
 ## Background
 
