@@ -42,7 +42,7 @@ Status legend used below: **(Live)** = deployed and ready on the reference VM; *
 - 🔬 **Research Synthesis (Planned)** - Scheduled retrieval and summarization of current peer-reviewed literature relevant to your health profile and active protocols.
 - 🗣️ **Voice Input (Planned)** - Speech-to-text transcription of Telegram voice messages. Medical voice via MedASR (5x more accurate than general-purpose transcription on clinical terminology); general voice via Whisper or Azure Speech.
 - 🔒 **De-Identification (Planned)** - PHI removal from health documents prior to sharing or use in research contexts. Designed to support HIPAA Safe Harbor de-identification principles.
-- 🧠 **Intelligent Model Routing (Partial)** - Each task is directed to the most capable, cost-effective, and privacy-appropriate model available. The reference deployment currently routes through `copilot-sdk` with Claude Sonnet 4.6 as the default. Purpose-built healthcare model routing (MedGemma, MedImageInsight, MedASR) is on the roadmap. See the [model routing reference](docs/model-routing.md).
+- 🧠 **Intelligent Model Routing (Partial)** - Each task is directed to the most capable, cost-effective, and privacy-appropriate model available. First-class support for **Microsoft** (Azure AI Foundry, Azure OpenAI, Azure Speech Services, MedASR), **OpenAI** (GPT family, o-series reasoning models, Whisper), and **Anthropic** (Claude family, direct API or via Azure AI Foundry). Any other state-of-the-art model that OpenClaw can route to works too (Google Gemini including Gemini Live for voice, xAI Grok, Mistral, DeepSeek, Cohere, Cerebras, Together, Fireworks, open-weight models via vLLM or local serving, and many more). The reference deployment today routes through `copilot-sdk` with Claude Sonnet 4.6 as the default and gpt-4o-mini as the cheaper eval baseline. Purpose-built healthcare model routing (MedGemma, MedImageInsight, CXRReportGen, MedASR) is on the roadmap. See the [model routing reference](docs/model-routing.md).
 
 ## Who Tula Is For
 
@@ -110,9 +110,17 @@ Continuous Evaluation and Compliance  -- Microsoft Waza, this repo
         |
 AI Model Routing  -- deployment-context-aware; see docs/model-routing.md
   |-- Reference deployment today
-  |     |-- Clinical reasoning: Claude Sonnet 4.6 via copilot-sdk
-  |     |-- General tasks: gpt-4o-mini (cheaper eval baseline)
-  |-- Planned
+  |     |-- Clinical reasoning: Claude Sonnet 4.6 (Anthropic, via copilot-sdk)
+  |     |-- General tasks: gpt-4o-mini (OpenAI, via copilot-sdk)
+  |-- First-class supported providers (any provider can serve any role)
+  |     |-- Microsoft: Azure AI Foundry, Azure OpenAI, Azure Speech, MedASR
+  |     |-- OpenAI:    GPT family, o-series reasoning, Whisper
+  |     |-- Anthropic: Claude family (direct API or via Azure AI Foundry)
+  |-- Other SOTA providers OpenClaw can route to
+  |     |-- Google (Gemini, Gemini Live for voice), xAI (Grok), Mistral,
+  |     |   DeepSeek, Cohere, Cerebras, Together, Fireworks, open-weight
+  |     |   models via vLLM, and many more through the OpenClaw plugin system
+  |-- Planned healthcare-specific routing
         |-- Voice loop: Gemini Live (via @openclaw/voice-call plugin)
         |-- Medical text: MedGemma 27B / Claude in Azure AI Foundry
         |-- Medical imaging: MedGemma 4B / MedImageInsight / CXRReportGen
@@ -127,7 +135,7 @@ The five live skills produce structured outputs (FHIR R4 JSON, extracted lab/ima
 
 - An [OpenClaw](https://github.com/openclaw/openclaw) instance (see our [Deployment Guide](docs/deployment-guide.md))
 - An Azure VM (B2s is sufficient, approximately $30/month) or any server running Ubuntu 24.04 LTS
-- API keys for [Anthropic](https://console.anthropic.com) (Claude) and [Google AI Studio](https://aistudio.google.com) (Gemini)
+- A model provider OpenClaw can route to. First-class support for [Microsoft](https://azure.microsoft.com/en-us/products/ai-foundry) (Azure AI Foundry, Azure OpenAI), [OpenAI](https://platform.openai.com/) (GPT family, o-series), and [Anthropic](https://console.anthropic.com/) (Claude family). The reference deployment uses GitHub Copilot Pro via `copilot-sdk`. Any other [SOTA provider](docs/model-routing.md) that OpenClaw exposes also works.
 - A Telegram account
 
 ### Quick Start
