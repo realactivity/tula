@@ -6,6 +6,8 @@ Tula is an open-source personal health agent skill layer built on [OpenClaw](htt
 
 Tula is designed for patient agency: helping people better understand, organize, and act on their own health information without handing that data to another closed platform.
 
+Tula is named after a brilliant, strong woman, a Mensa member and mother of five. The project embodies her sharp intelligence, warmth, and directness in service of one goal: helping individuals take an active, informed role in their health.
+
 Tula is the open-source foundation. Aria is RealActivity's commercial hospital-scale platform for governed patient-agent infrastructure.
 
 ## 30-Second Summary

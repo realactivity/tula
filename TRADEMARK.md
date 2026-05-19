@@ -6,7 +6,7 @@ The Tula source code is released under the Apache License, Version 2.0 (see [`LI
 
 ## Details
 
-"Tula," "Aria," and "RealActivity" are trademarks of RealActivity. The Apache License 2.0 grants permission to use, modify, and distribute the *software*, but does not grant permission to use the Tula, Aria, or RealActivity names, logos, or branding (see §6 of the Apache License).
+"Tula," "Aria," and "RealActivity" are trademarks of RealActivity. The Apache License 2.0 grants permission to use, modify, and distribute the *software*, but does not grant permission to use the Tula, Aria, or RealActivity names, logos, or branding (see section 6 of the Apache License).
 
 Aria is RealActivity's commercial hospital-scale platform built on Tula skills. The Aria name is reserved for RealActivity's product and may not be used by forks or derivative projects.
 
