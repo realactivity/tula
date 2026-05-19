@@ -1,58 +1,164 @@
-# 🧬 Tula - Your Personal Health AI Agent
+# Tula: Open-Source Personal Health AI Agent
 
-**▶ Featured:** Paul Swider on the *AI Agent & Copilot Podcast* — [*OpenClaw-Powered Healthcare Assistant Builds Patient Agency*](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) · 17 min · May 14, 2026
+Your health. Your data. Your AI.
 
-**Tula** is an open-source collection of [OpenClaw](https://github.com/openclaw/openclaw) skills, configurations, and patterns designed to transform a general-purpose AI agent into a personal health intelligence assistant.
+Tula is an open-source personal health agent skill layer built on [OpenClaw](https://github.com/openclaw/openclaw). It helps individuals, caregivers, and health-focused communities organize health records, medical PDFs, lab results, portal messages, personal notes, and longitudinal health signals in a private, self-hosted AI workspace.
 
-Named after a brilliant, strong woman - a Mensa member and mother of five - Tula embodies sharp intelligence, warmth, and directness in service of one goal: **helping individuals take an active, informed role in their health.**
+Tula is designed for patient agency: helping people better understand, organize, and act on their own health information without handing that data to another closed platform.
 
-Tula is also designed to be deployed anywhere. It is open source, self-hosted, model-agnostic, and accessible through Telegram, which operates on low-bandwidth connections and basic smartphones worldwide. A community health center in rural Rwanda, a patient advocacy group in Brazil, or an individual managing a chronic condition in India can deploy the same platform used in a US academic medical center. Health equity requires not just better tools, but tools that are free, private, and available to everyone.
+Tula is the open-source foundation. Aria is RealActivity's commercial hospital-scale platform for governed patient-agent infrastructure.
+
+## 30-Second Summary
+
+Tula turns a general-purpose AI agent into a personal health intelligence assistant.
+
+It currently supports:
+
+- Pulling patient records from portals using SMART on FHIR
+- Parsing medical PDFs, lab reports, screenshots, and image-only documents
+- Drafting patient portal messages for medication questions, lab follow-ups, refill requests, and symptom summaries
+- Creating daily health signal digests
+- Comparing health information over time through longitudinal memory diffing
+- Running skills inside a self-hosted OpenClaw workspace
+- Supporting continuous evaluation and compliance checks through Microsoft Waza
+
+Tula is not a medical device, not a clinical decision support system, and not a replacement for professional medical advice.
+
+## What Is Tula?
+
+Tula is not a standalone consumer health app.
+
+Tula is a health-focused skill layer for OpenClaw. It provides reusable agent skills, configuration patterns, evaluation suites, and deployment guidance for building a self-hosted personal health AI assistant.
+
+The reference deployment runs on a single self-hosted VM and uses a private workspace memory model. Health data stays under the user's control.
+
+## What Tula Is Not
+
+Tula is not:
+
+- A medical device
+- A diagnostic system
+- A treatment recommendation engine
+- A substitute for a physician, nurse, pharmacist, or qualified healthcare professional
+- An emergency response system
+- A replacement for an EHR, patient portal, or clinical workflow system
+
+Tula is designed to support personal health organization, health literacy, caregiver coordination, and patient-facing AI experimentation in a private environment.
+
+## Open-Core Model
+
+Tula and Aria are related but distinct.
+
+| Project | Scope | License and Availability |
+|---|---|---|
+| Tula | Open-source health agent skill layer and single-user reference deployment | Apache License 2.0 |
+| Aria | Commercial hospital-scale patient-agent platform for governed, multi-tenant deployment | Proprietary RealActivity platform |
+
+Tula is complete and useful on its own. Aria consumes Tula skills as a versioned dependency and adds the enterprise infrastructure required for healthcare organizations, including patient identity, ingest routing, dashboards, LLM gateway governance, audit, compliance, and operational controls.
+
+The detailed scope split is documented in [`OPEN_CORE.md`](OPEN_CORE.md).
+
+## Core Capabilities
+
+| Capability | Status | Description |
+|---|---|---|
+| Electronic Health Record Integration | Live | Pulls medical history, visit summaries, conditions, medications, labs, and immunizations from patient portals using SMART on FHIR. Implemented in [`skills/health-records`](skills/health-records/). |
+| Medical PDF and Photo Capture | Live | Extracts structured data from PDFs, screenshots, lab reports, and image-only documents. Implemented in [`skills/med-pdf`](skills/med-pdf/). |
+| Laboratory Result Parsing | Live via med-pdf | Extracts biomarker values, units, reference ranges, and out-of-range flags. |
+| Patient Portal Message Drafting | Live | Drafts concise MyChart-style messages for medication questions, lab follow-ups, refill requests, and symptom reports. Implemented in [`skills/epic-note`](skills/epic-note/). |
+| Personal Health Pulse | Live | Aggregates configured signal feeds into a daily digest. Implemented in [`skills/myhealth-pulse`](skills/myhealth-pulse/). |
+| Longitudinal Change Detection | Live | Compares health information over time and produces tiered change summaries. Implemented in [`skills/memory-diff`](skills/memory-diff/). |
+| Intelligent Model Routing | Partial | Tasks routed to the most capable, cost-effective, and privacy-appropriate model available. First-class support for Microsoft, OpenAI, and Anthropic. Healthcare-specific routing (MedGemma, MedASR, MedImageInsight) on the roadmap. See [`docs/model-routing.md`](docs/model-routing.md). |
+| Intelligent Email Ingestion | In Progress | Classifies and routes forwarded health correspondence. Transport-layer sender allowlist; see [`docs/security-model.md`](docs/security-model.md). |
+| Patient Health Dashboard | In Progress | Mobile-friendly dashboard for FHIR data, labs, imaging reports, medications, and activity feed. See [`docs/dashboard-build-plan.md`](docs/dashboard-build-plan.md). |
+| Wearable Device Integration | Planned | Garmin, Oura, Whoop, Withings, Apple Health, and related device feeds. |
+| Medical Image Interpretation | Planned | DICOM imaging workflows using purpose-built healthcare imaging models. |
+| Genomic Health Reports | Planned | Consumer and clinical genomic report ingestion. |
+| De-Identification | Planned | PHI removal for research and sharing workflows. |
 
 ## Why This Matters
 
-Tula exists because health is not abstract. Behind every biomarker is a person. Behind every caregiver is someone they love.
+Most people do not have a health data problem. They have a health coordination problem.
 
-The people building this project are not doing so as a technical exercise. One of us is building Tula because he lost a parent to cancer and carries hereditary risk factors he is determined to monitor proactively. Another is building it because his wife is undergoing cancer treatment, and the demands of caregiving alongside daily life require better tools for tracking medications, understanding test results, and staying organized across multiple providers. Both need the same thing: an AI that consolidates health data, provides context, and highlights what matters, without selling it, sharing it, or placing it behind a subscription.
+Their labs are in one place. Their imaging reports are somewhere else. Their medications change over time. Their wearable signals are disconnected. Their portal messages are buried. Their caregivers are overloaded. Their clinicians are busy.
 
-That is the core insight. The architecture that supports a healthy individual in tracking wellness metrics is the same architecture that supports a patient in managing treatment adherence, or a caregiver in coordinating complex care. It is not three different products. It is one platform that adapts to the user's needs.
+Tula exists to give individuals and caregivers a private AI workspace for understanding and organizing their own health information.
 
-Whether you are here to support long-term health, manage a condition, or help someone you love navigate a difficult diagnosis, Tula is designed to serve your needs.
+The larger vision is patient agency: a world where every person can have an AI agent that helps them stay informed, prepared, and engaged in their care.
 
-Caregivers deserve dedicated support. Medication adherence, appointment coordination, treatment journaling, and caregiver wellbeing tracking are primary use cases for Tula, not secondary features.
+For healthcare organizations, this creates a second problem: if patient agents become common, hospitals will need governed infrastructure for safety, consent, identity, escalation, audit, and workflow integration. That is the role of Aria.
 
-## What Is This?
+The people building this project are not doing so as a technical exercise. One of us is building Tula because he lost a parent to cancer and carries hereditary risk factors he is determined to monitor proactively. Another is building it because his wife is undergoing cancer treatment, and the demands of caregiving alongside daily life require better tools for tracking medications, understanding test results, and staying organized across multiple providers.
 
-Tula is **not** a standalone application. It is a health-focused skill layer built on top of OpenClaw, providing the following capabilities.
+The architecture that supports a healthy individual in tracking wellness metrics is the same architecture that supports a patient in managing treatment adherence, or a caregiver in coordinating complex care. It is one platform that adapts to the user's needs.
 
-Status legend used below: **(Live)** = deployed and ready on the reference VM; **(In Progress)** = actively being built; **(Planned)** = designed and committed to roadmap; **(Plan Documented)** = full architecture in [`docs/`](docs/) but no implementation yet. The [Project Status](#project-status) table below is the canonical source of truth.
+## Enterprise Vision: Governed Patient Agents
 
-- 🏥 **Electronic Health Record Integration (Live)** - Retrieval of medical history, visit summaries, conditions, medications, labs, and immunizations from patient portals via SMART on FHIR. Implemented in the [`health-records`](skills/health-records/) skill against MyChart, Oracle Health, Athena, and other ONC-certified portals. The skill that pulled my own hospital records on the first try.
-- 📸 **Universal Photo / PDF Capture (Live)** - Email or upload any medical PDF, screenshot, or photo. Tula extracts structured data using multimodal AI without requiring FHIR access or IT involvement. Implemented in the [`med-pdf`](skills/med-pdf/) skill, which handles text-extractable PDFs (Quest, LabCorp) and image-only PDFs (MyChart exports) with the same pipeline.
-- 🧪 **Laboratory Result Parsing (Live, via med-pdf)** - Automated extraction of biomarker values, units, and reference ranges from lab reports. Longitudinal trend tracking and out-of-range flagging. The dedicated structured-biomarker tracker skill remains on the roadmap.
-- ✉️ **Patient Portal Message Drafting (Live)** - Draft concise, well-formatted MyChart-style messages to your care team for medication questions, lab follow-ups, refill requests, and symptom reports. Implemented in the [`epic-note`](skills/epic-note/) skill with refusal logic for emergency-flavored prompts.
-- 📡 **Personal Health Pulse (Live)** - Aggregate configured signal feeds into a daily curated digest, scored against your personal topic preferences. Currently aggregates X (mentions and topic search) and Brave web search. Roadmap adapters cover wearables, portal inbox, calendar, email, and research feeds. Implemented in the [`myhealth-pulse`](skills/myhealth-pulse/) skill with the "Personal Data: Reference, Don't Embed" pattern.
-- 📈 **Longitudinal Change Detection (Live)** - "What changed in my health since last week?" or "since I started lisinopril?" Tula reads your workspace memory (chart pulls, PDFs, dated notes, pulse digests) and produces a tiered diff (Tier 1 signal, Tier 2 notable, Tier 3 collapsed). Implemented in the [`memory-diff`](skills/memory-diff/) skill.
-- 📧 **Intelligent Email Ingestion (In Progress)** - Forward health correspondence to Tula for automatic classification and routing to the right skill. Email security at the Exchange transport layer with sender and recipient allowlists. See the [security model](docs/security-model.md) for the boundary design.
-- 📊 **Patient Health Dashboard (In Progress)** - Node web app served from the VM that renders a mobile-friendly view of FHIR data with live updates as new emails are processed. Designed for private access via Tailscale; no public exposure of health data. See the [dashboard build plan](docs/dashboard-build-plan.md).
-- 📞 **Voice Calls (Plan Documented)** - Optional integration with Twilio to give the agent a phone number you call. The agent picks up, knows your records, and can carry a conversation. Architecture and setup walkthrough in [`docs/voice-integration.md`](docs/voice-integration.md); plugin not yet installed in the reference deployment.
-- ⌚ **Wearable Device Integration (Planned)** - Daily physiological metrics (HRV, resting HR, sleep architecture, stress) from Garmin / Oura / Whoop / Withings / Apple Health, normalized into FHIR-shaped observations.
-- 🩻 **Medical Image Interpretation (Planned)** - DICOM imaging studies (MRI, CT, X-ray, mammography, ultrasound) annotated by purpose-built healthcare imaging models (MedGemma multimodal / Microsoft MedImageInsight / CXRReportGen), with longitudinal comparison across sequential studies.
-- 🧬 **Genomic Health Reports (Planned)** - Import and analysis of consumer genomic data (23andMe, AncestryDNA, clinical panels) correlated with current biomarker profiles.
-- 🩺 **Home Health Device Integration (Planned)** - Bluetooth and Wi-Fi devices including BP monitors, body composition scales, pulse oximeters, and glucose meters for passive continuous monitoring.
-- 📓 **Patient Health Journal (In Progress)** - Structured daily check-ins via Telegram for sleep, energy, mood, symptom burden, and treatment adherence.
-- 💼 **Professional Journal (In Progress)** - Business note capture with automated daily summaries, weekly synthesis, and searchable history.
-- 🔬 **Research Synthesis (Planned)** - Scheduled retrieval and summarization of current peer-reviewed literature relevant to your health profile and active protocols.
-- 🗣️ **Voice Input (Planned)** - Speech-to-text transcription of Telegram voice messages. Medical voice via MedASR (5x more accurate than general-purpose transcription on clinical terminology); general voice via Whisper or Azure Speech.
-- 🔒 **De-Identification (Planned)** - PHI removal from health documents prior to sharing or use in research contexts. Designed to support HIPAA Safe Harbor de-identification principles.
-- 🧠 **Intelligent Model Routing (Partial)** - Each task is directed to the most capable, cost-effective, and privacy-appropriate model available. First-class support for **Microsoft** (Azure AI Foundry, Azure OpenAI, Azure Speech Services, MedASR), **OpenAI** (GPT family, o-series reasoning models, Whisper), and **Anthropic** (Claude family, direct API or via Azure AI Foundry). Any other state-of-the-art model that OpenClaw can route to works too (Google Gemini including Gemini Live for voice, xAI Grok, Mistral, DeepSeek, Cohere, Cerebras, Together, Fireworks, open-weight models via vLLM or local serving, and many more). The reference deployment today routes through `copilot-sdk` with Claude Sonnet 4.6 as the default and gpt-4o-mini as the cheaper eval baseline. Purpose-built healthcare model routing (MedGemma, MedImageInsight, CXRReportGen, MedASR) is on the roadmap. See the [model routing reference](docs/model-routing.md).
+Tula demonstrates what an individual patient agent can do.
 
-## Who Tula Is For
+Aria extends that idea to healthcare organizations: a governed patient-agent platform where each patient can have a dedicated AI agent operating within organizational policies, consent rules, identity boundaries, escalation paths, audit controls, and approved workflows.
 
-Tula supports patients navigating complex illness, caregivers, individuals managing chronic conditions, those with hereditary risk factors, community health programs in low-resource settings, and anyone focused on preventive health and wellness. See the [detailed use cases](docs/use-cases.md) for more information.
+The opportunity is not simply a better chatbot. The opportunity is governed patient-agent infrastructure.
+
+Potential enterprise workflows include:
+
+- Patient access and navigation
+- Care journey support
+- Medication and appointment coordination
+- Patient satisfaction and experience monitoring
+- Caregiver support
+- Administrative follow-up
+- Longitudinal patient engagement
+- Patient-reported data capture
+- Health literacy and education
+- Safe escalation to human teams
+- Governance and audit reporting for patient-facing AI
+
+Aria is designed for organizations that need to manage patient agents safely, consistently, and at scale.
+
+## Commercial Use, Pilots, and Strategic Partnerships
+
+Tula is maintained by RealActivity as an open-source project.
+
+For hospitals, health systems, employers, payers, research organizations, patient advocacy groups, and digital health companies evaluating governed patient-agent infrastructure, RealActivity is developing Aria, a commercial hospital-scale platform built on the same foundation.
+
+Aria extends the Tula skill layer with enterprise capabilities for:
+
+- Patient-agent orchestration at scale
+- Identity, access, consent, and role-based governance
+- EHR-connected workflows
+- Audit trails and compliance reporting
+- Patient engagement and access workflows
+- Quality, safety, and evaluation controls
+- Model routing and LLM gateway governance
+- Administrative and operational healthcare workflows
+
+RealActivity is selectively exploring commercial pilots, strategic partnerships, design-partner relationships, and aligned investment conversations with organizations focused on patient agency, health data sovereignty, caregiver support, healthcare operations, and safe AI adoption.
+
+For commercial or strategic inquiries, contact:
+
+Paul Swider
+CEO, RealActivity
+pswider@realactivity.com
+
+## Demo
+
+A short demo walkthrough is coming soon.
+
+Planned demo flow:
+
+1. Connect a patient portal through SMART on FHIR
+2. Upload a lab report PDF
+3. Ask Tula what changed since the last lab result
+4. Draft a patient portal message to the care team
+5. Generate a daily health pulse
+6. Show how the same skill layer becomes part of Aria's governed patient-agent infrastructure
+
+[Watch the 3-minute Tula demo](#)
 
 ## Architecture
 
-The diagram below distinguishes **live** components (deployed and ready on the reference VM) from **planned** components (on the roadmap). The [Project Status](#project-status) table is the canonical source of truth for individual component states.
+The diagram below distinguishes live components (deployed and ready on the reference VM) from planned components (on the roadmap). The Project Status section below is the canonical source of truth for individual component states.
 
 ```
 User Interface
@@ -77,9 +183,9 @@ Data Sources
 OpenClaw Gateway  -- single self-hosted VM (Azure B2s, Ubuntu 24.04, ~$30/mo)
         |
 Tula Skills  -- deployed under ~/.openclaw/workspace/skills/
-  |-- Live (this repo, ✓ ready on reference VM)
+  |-- Live (this repo, ready on reference VM)
   |     |-- health-records   -- SMART on FHIR records pull
-  |     |-- med-pdf          -- PDF -> structured labs, imaging JSON
+  |     |-- med-pdf          -- PDF to structured labs, imaging JSON
   |     |-- epic-note        -- draft portal messages to clinicians
   |     |-- myhealth-pulse   -- signal aggregation orchestrator
   |     |-- memory-diff      -- longitudinal change detection
@@ -114,7 +220,7 @@ AI Model Routing  -- deployment-context-aware; see docs/model-routing.md
   |-- Reference deployment today
   |     |-- Clinical reasoning: Claude Sonnet 4.6 (Anthropic, via copilot-sdk)
   |     |-- General tasks: gpt-4o-mini (OpenAI, via copilot-sdk)
-  |-- First-class supported providers (any provider can serve any role)
+  |-- First-class supported providers
   |     |-- Microsoft: Azure AI Foundry, Azure OpenAI, Azure Speech, MedASR
   |     |-- OpenAI:    GPT family, o-series reasoning, Whisper
   |     |-- Anthropic: Claude family (direct API or via Azure AI Foundry)
@@ -129,130 +235,138 @@ AI Model Routing  -- deployment-context-aware; see docs/model-routing.md
         |-- Medical speech: MedASR / Azure Speech Services
 ```
 
-The five live skills produce structured outputs (FHIR R4 JSON, extracted lab/imaging JSON, rendered digests) that land in the workspace memory layer. Other skills consume what is already there rather than re-fetching: `memory-diff` reads from the cache directories `health-records` and `med-pdf` write to, and `myhealth-pulse` writes its own daily cache that `memory-diff` includes in its scan. This composition is intentional and is what makes the agent feel like it knows you over time rather than like a transactional chatbot.
-
-## Getting Started
-
-### Prerequisites
-
-- An [OpenClaw](https://github.com/openclaw/openclaw) instance (see our [Deployment Guide](docs/deployment-guide.md))
-- An Azure VM (B2s is sufficient, approximately $30/month) or any server running Ubuntu 24.04 LTS
-- A model provider OpenClaw can route to. First-class support for [Microsoft](https://azure.microsoft.com/en-us/products/ai-foundry) (Azure AI Foundry, Azure OpenAI), [OpenAI](https://platform.openai.com/) (GPT family, o-series), and [Anthropic](https://console.anthropic.com/) (Claude family). The reference deployment uses GitHub Copilot Pro via `copilot-sdk`. Any other [SOTA provider](docs/model-routing.md) that OpenClaw exposes also works.
-- A Telegram account
-
-### Quick Start
-
-1. **Deploy OpenClaw** - Follow the [step-by-step deployment guide](docs/deployment-guide.md). The guide covers the complete process from Azure VM creation to Telegram integration. It is written to be accessible to administrators without prior Linux experience.
-
-2. **Configure Email Ingestion** - The [email router design](docs/email-router-design.md) and [setup guide](docs/email-router-setup-guide.md) lay out the architecture and M365 / Entra ID / transport-rule steps. The [build plan](docs/email-router-build-plan.md) sequences the actual implementation work and replaces the himalaya client with Microsoft Graph API for cleaner OAuth and tighter integration with the existing Node-based skill scripts.
-
-3. **Browse Your Health Data** - The [dashboard build plan](docs/dashboard-build-plan.md) describes a Node web app served from the VM that renders a beautiful, modern, mobile-friendly view of all email-ingested FHIR data — activity feed, lab trends, imaging reports, medications, appointments, with live updates as new emails are processed. Designed to be reachable privately via Tailscale; no public exposure of health data.
-
-4. **Install Tula Skills** - Skills live under [`skills/`](skills/). Deploy them to your OpenClaw host with [`scripts/deploy-skills.sh`](scripts/deploy-skills.sh). See the [skills development guide](docs/skills-development.md) for details, conventions, and the testing workflow with Microsoft Waza. The continuous status of every shipped skill (compliance, spec, tokens, last live run) lives at [`docs/evals.md`](docs/evals.md) and is regenerated on every push by the [eval-status workflow](.github/workflows/eval-status.yml).
-
-5. **Configure Data Sources** - Connect wearable and home health devices and configure check-in schedules.
+The five live skills produce structured outputs (FHIR R4 JSON, extracted lab and imaging JSON, rendered digests) that land in the workspace memory layer. Other skills consume what is already there rather than re-fetching. `memory-diff` reads from the cache directories `health-records` and `med-pdf` write to, and `myhealth-pulse` writes its own daily cache that `memory-diff` includes in its scan. This composition is intentional and is what makes the agent feel like it knows you over time rather than like a transactional chatbot.
 
 ## Project Status
 
-This project is in **active development**. Five skills are live on the reference deployment and pass continuous Waza compliance checks. Status:
+Tula is in active development. The reference deployment currently includes five live skills that pass continuous Waza compliance checks.
+
+### Live Skills
+
+| Skill | Description | Status |
+|---|---|---|
+| [`health-records`](skills/health-records/) | SMART on FHIR record pull from MyChart and other patient portals | Complete |
+| [`med-pdf`](skills/med-pdf/) | Medical PDF parsing for labs, imaging reports, and structured extraction | Complete |
+| [`epic-note`](skills/epic-note/) | Patient portal message drafting | Complete |
+| [`myhealth-pulse`](skills/myhealth-pulse/) | Signal aggregation and daily health digest | Complete |
+| [`memory-diff`](skills/memory-diff/) | Longitudinal change detection over workspace memory | Complete |
 
 ### Infrastructure
 
 | Component | Status |
-|-----------|--------|
-| Deployment Guide | ✅ Complete |
-| OpenClaw Setup | ✅ Complete |
-| Telegram Integration | ✅ Complete |
-| Email Security Model | ✅ Complete |
-| Skills Authoring Framework (Waza + conventions) | ✅ Complete |
-| Personal Data Reference Convention (privacy seam) | ✅ Complete |
-| Continuous Eval Status (waza check + CI gate + docs/evals.md) | ✅ Complete |
-| Deploy Tooling (deploy-skills.sh, aria-backup.sh) | ✅ Complete |
+|---|---|
+| Deployment Guide | Complete |
+| OpenClaw Setup | Complete |
+| Telegram Integration | Complete |
+| Email Security Model | Complete |
+| Skills Authoring Framework (Waza and conventions) | Complete |
+| Personal Data Reference Convention (privacy seam) | Complete |
+| Continuous Eval Status (waza check, CI gate, docs/evals.md) | Complete |
+| Deploy Tooling (deploy-skills.sh, aria-backup.sh) | Complete |
 
-### Skills (deployed and ready on the reference VM)
+### In Progress
 
-| Skill | Status |
-|-----------|--------|
-| [`med-pdf`](skills/med-pdf/) (medical PDF parsing: labs, imaging) | ✅ Complete |
-| [`epic-note`](skills/epic-note/) (patient portal messages) | ✅ Complete |
-| [`health-records`](skills/health-records/) (SMART on FHIR records pull from MyChart / patient portals) | ✅ Complete |
-| [`myhealth-pulse`](skills/myhealth-pulse/) (signal aggregation orchestrator across configured feeds) | ✅ Complete |
-| [`memory-diff`](skills/memory-diff/) (longitudinal change detection over workspace memory) | ✅ Complete |
+| Component | Description |
+|---|---|
+| Intelligent Email Ingestion | Secure inbound routing and classification |
+| Patient Health Dashboard | Mobile-friendly private dashboard |
+| Patient Health Journal | Structured check-ins through Telegram |
+| Professional Journal | Daily and weekly synthesis for work notes |
+| Laboratory Parser | Structured biomarker tracker beyond med-pdf |
 
-### Strategy artifacts
+### Planned
+
+| Component | Description |
+|---|---|
+| Wearable Sync | Garmin, Oura, Whoop, Withings, Apple Health |
+| Home Device Sync | BP monitor, scale, pulse ox, glucose |
+| Genomic Analyzer | 23andMe, AncestryDNA, clinical panels |
+| Medical Image Interpreter | DICOM workflows with healthcare imaging models |
+| De-Identification Engine | PHI removal for sharing and research |
+| Research Synthesis | PubMed and literature monitoring |
+| Voice Calling | OpenClaw voice-call plugin integration |
+| Healthcare Model Routing | MedGemma, MedASR, MedImageInsight |
+
+### Strategy Artifacts
 
 | Artifact | Status |
-|-----------|--------|
-| [Patient agent evaluation standard article](articles/how-will-you-know-if-your-patient-ai-is-working.md) | 📝 Draft |
-| [Two-score framework article (governance + health portfolio)](articles/every-patient-ai-needs-two-scores.md) | 📝 Draft |
-| [Voice integration architecture (OpenClaw + Twilio)](docs/voice-integration.md) | 📝 Plan documented |
-| [Open-core scope split](OPEN_CORE.md) | ✅ Complete |
+|---|---|
+| [Patient agent evaluation standard article](articles/how-will-you-know-if-your-patient-ai-is-working.md) | Draft |
+| [Two-score framework article (governance and health portfolio)](articles/every-patient-ai-needs-two-scores.md) | Draft |
+| [Voice integration architecture (OpenClaw and Twilio)](docs/voice-integration.md) | Plan documented |
+| [Open-core scope split](OPEN_CORE.md) | Complete |
 
-### Roadmap (skills and integrations not yet built)
+### Community Ideas
 
-| Component | Status |
-|-----------|--------|
-| Intelligent Email Ingestion and Router | 🔨 In Progress |
-| Patient Health Dashboard (Node web app) | 🔨 In Progress |
-| Laboratory Parser (structured biomarker tracker beyond med-pdf) | 🔨 In Progress |
-| Patient Health Journal Skill | 🔨 In Progress |
-| Professional Journal Skill | 🔨 In Progress |
-| Wearable Device Integration | 📋 Planned |
-| Medical Image Interpretation (DICOM) | 📋 Planned |
-| Genomic Report Import | 📋 Planned |
-| Home Device Sync (BP, Scale, Pulse Ox) | 📋 Planned |
-| De-Identification Engine | 📋 Planned |
-| Research Synthesis | 📋 Planned |
-| Voice Calling (OpenClaw voice-call plugin install) | 📋 Planned |
-| Healthcare Model Routing (MedGemma / MedASR / MedImageInsight) | 📋 Planned |
-| MedASR Medical Speech | 📋 Planned |
-| Voice Transcription (Whisper/MedASR) | 📋 Planned |
-| Medication Adherence (IoT) | 💡 Community Idea |
-| Caregiver Dashboard | 💡 Community Idea |
+| Component | Description |
+|---|---|
+| Medication Adherence (IoT) | Community proposal |
+| Caregiver Dashboard | Community proposal |
 
-## Tula and Aria
+## Where to Start
 
-Tula is maintained by RealActivity as an open-source project under the Apache License 2.0. RealActivity also develops **Aria**, a commercial hospital-scale platform built on the same Tula skills. The two are distinct products with distinct licenses:
+### For Developers
 
-- **Tula** is the public, Apache-2.0–licensed health agent skill collection and single-user reference deployment. It runs end-to-end on a single VM and is complete on its own.
-- **Aria** is RealActivity's private, commercial multi-tenant platform for hospitals and health systems. It consumes Tula skills as a versioned dependency and adds the patient identity, ingest router, dashboard, LLM gateway, audit, and compliance plumbing required at hospital scale.
+Start with the deployment guide and the skills development guide.
 
-Contributions to Tula skills benefit both projects. The scope of what's maintained in this repo vs. what lives in Aria is documented in [`OPEN_CORE.md`](OPEN_CORE.md).
+- Deploy OpenClaw using [`docs/deployment-guide.md`](docs/deployment-guide.md)
+- Install the Tula skills with [`scripts/deploy-skills.sh`](scripts/deploy-skills.sh)
+- Run the reference VM
+- Review the Waza evaluation patterns in [`evals/`](evals/) and [`docs/evals.md`](docs/evals.md)
+- Build or improve a health skill following [`docs/skills-development.md`](docs/skills-development.md) and [`skills/AGENTS.md`](skills/AGENTS.md)
 
-The open / closed split also applies to the evaluation infrastructure:
+### For Patients and Caregivers
 
-- **Open in this repo:** the eval suites under [`evals/`](evals/), the skill authoring conventions in [`skills/AGENTS.md`](skills/AGENTS.md), the Waza spec gates wired into [CI](.github/workflows/eval-status.yml), and the continuous compliance status at [`docs/evals.md`](docs/evals.md). These are intended as a vendor-neutral starting point for evaluating any patient-facing AI agent. See the draft article [`how-will-you-know-if-your-patient-ai-is-working.md`](articles/how-will-you-know-if-your-patient-ai-is-working.md) for the public framing.
-- **Closed in Aria:** the continuous-execution layer that runs these evaluations per patient agent at hospital scale, the EHR-fidelity comparison engine that grounds the agent's view against the chart of record, the audit aggregation, and the governance score that composes those signals into a single number the quality officer can act on. See the draft article [`every-patient-ai-needs-two-scores.md`](articles/every-patient-ai-needs-two-scores.md) for the public framing of why the split lands where it does.
+Start with the personal health use cases and the self-hosted deployment guide.
+
+Tula is designed for people who want to organize their own records, understand their health information, and coordinate care without handing data to another closed platform. See [`docs/use-cases.md`](docs/use-cases.md).
+
+### For Healthcare Organizations
+
+Start with the Tula and Aria open-core model and the patient-agent evaluation articles.
+
+Tula shows the skill layer. Aria provides the governed infrastructure for hospital-scale use. See [`OPEN_CORE.md`](OPEN_CORE.md), the [evaluation standard draft](articles/how-will-you-know-if-your-patient-ai-is-working.md), and the [two-score framework draft](articles/every-patient-ai-needs-two-scores.md).
+
+## Evaluation: Open and Closed Boundaries
+
+The open and closed split applies to the evaluation infrastructure as well:
+
+- Open in this repo: the eval suites under [`evals/`](evals/), the skill authoring conventions in [`skills/AGENTS.md`](skills/AGENTS.md), the Waza spec gates wired into [CI](.github/workflows/eval-status.yml), and the continuous compliance status at [`docs/evals.md`](docs/evals.md). These are intended as a vendor-neutral starting point for evaluating any patient-facing AI agent. See the draft article [`how-will-you-know-if-your-patient-ai-is-working.md`](articles/how-will-you-know-if-your-patient-ai-is-working.md) for the public framing.
+- Closed in Aria: the continuous-execution layer that runs these evaluations per patient agent at hospital scale, the EHR-fidelity comparison engine that grounds the agent's view against the chart of record, the audit aggregation, and the governance score that composes those signals into a single number a quality officer can act on. See the draft article [`every-patient-ai-needs-two-scores.md`](articles/every-patient-ai-needs-two-scores.md) for the public framing of why the split lands where it does.
+
+## Coverage
+
+Paul Swider on the AI Agent and Copilot Podcast: [OpenClaw-Powered Healthcare Assistant Builds Patient Agency](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) (17 minutes, May 14, 2026).
 
 ## Contributing
 
 Contributions are welcome. Tula is built as a set of standard OpenClaw skills. Contributors familiar with OpenClaw can begin contributing immediately.
 
-**Ways to contribute:**
+Ways to contribute:
 
-- **Report issues** - If something does not work as expected, open an issue. Detailed bug reports are among the most valuable contributions at this stage.
-- **Propose a health skill** - We are tracking community ideas in [Discussions](../../discussions).
-- **Build a skill** - Read the [skills development guide](docs/skills-development.md) and use the [`med-pdf`](skills/med-pdf/) skill as the reference template. The [skills authoring conventions](skills/AGENTS.md) explain the OpenClaw-first / Waza-second priority rule. Submit a pull request.
-- **Improve documentation** - The deployment guide was written during a real setup session. If any section is unclear or outdated, improvements are appreciated.
+- Report issues. If something does not work as expected, open an issue. Detailed bug reports are among the most valuable contributions at this stage.
+- Propose a health skill. We track community ideas in [Discussions](../../discussions).
+- Build a skill. Read the [skills development guide](docs/skills-development.md) and use the [`med-pdf`](skills/med-pdf/) skill as the reference template. The [skills authoring conventions](skills/AGENTS.md) explain the OpenClaw-first, Waza-second priority rule. Submit a pull request.
+- Improve documentation. The deployment guide was written during a real setup session. If any section is unclear or outdated, improvements are appreciated.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines. See the [community skill ideas](docs/community-skills.md) for a full list of skills we would like to build.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines including the Developer Certificate of Origin (DCO) sign-off requirement. See the [community skill ideas](docs/community-skills.md) for a full list of skills we would like to build.
 
 ## Principles
 
-- **Patient empowerment through health literacy.** Tula translates clinical information into language that supports informed decision-making.
-- **Data sovereignty.** All data is stored locally on the user's own server. No cloud health platforms. No third-party data sharing.
-- **Intelligent model routing.** Each task is directed to the most capable model for that specific job. Purpose-built healthcare models for medical imaging and text. General-purpose reasoning models for clinical synthesis. The right model for the right task in the right deployment context.
-- **Caregiver recognition.** Caregiver support is a core use case, not a secondary consideration.
-- **Global health equity.** Open source, self-hosted, model-agnostic, and accessible on low-bandwidth networks. Designed so that a clinic in a low-resource setting has access to the same tools as a patient in a high-income country.
-- **Defense in depth.** Email ingestion is locked to authorized senders at the Exchange transport layer. Outbound email is restricted to authorized recipients. Prompt injection risks are analyzed honestly and mitigated at multiple layers. See the [security model](docs/security-model.md).
+- Patient empowerment through health literacy. Tula translates clinical information into language that supports informed decision-making.
+- Data sovereignty. All data is stored locally on the user's own server. No cloud health platforms. No third-party data sharing.
+- Intelligent model routing. Each task is directed to the most capable model for that specific job. Purpose-built healthcare models for medical imaging and text. General-purpose reasoning models for clinical synthesis. The right model for the right task in the right deployment context.
+- Caregiver recognition. Caregiver support is a core use case, not a secondary consideration.
+- Global health equity. Open source, self-hosted, model-agnostic, and accessible on low-bandwidth networks. Designed so that a clinic in a low-resource setting has access to the same tools as a patient in a high-income country.
+- Defense in depth. Email ingestion is locked to authorized senders at the Exchange transport layer. Outbound email is restricted to authorized recipients. Prompt injection risks are analyzed honestly and mitigated at multiple layers. See the [security model](docs/security-model.md).
 
-See the [full principles](docs/principles.md) for our complete set of values and commitments.
+See the [full principles](docs/principles.md) for the complete set of values and commitments.
 
 ## Cost
 
-Running Tula costs approximately **$35 - $115/month** depending on usage, from text-based journaling and laboratory parsing at the low end to medical image interpretation and genomic analysis at the high end. No subscription fees. No platform lock-in. Users provide their own API keys. See the [cost guide](docs/cost-guide.md) for a detailed breakdown.
+Running Tula costs approximately $35 to $115 per month depending on usage, from text-based journaling and laboratory parsing at the low end to medical image interpretation and genomic analysis at the high end. No subscription fees. No platform lock-in. Users provide their own API keys. See the [cost guide](docs/cost-guide.md) for a detailed breakdown.
 
-Optional voice calling adds Twilio carrier fees (around $1/month for a US local number plus per-minute usage) and voice-model usage on top. A heavy personal user lands in the $30 to $60/month range above the base figure; light users stay under $10. See [`docs/voice-integration.md`](docs/voice-integration.md) for the full cost and latency breakdown.
+Optional voice calling adds Twilio carrier fees (around $1 per month for a US local number plus per-minute usage) and voice-model usage on top. A heavy personal user lands in the $30 to $60 per month range above the base figure; light users stay under $10. See [`docs/voice-integration.md`](docs/voice-integration.md) for the full cost and latency breakdown.
 
 ## Background
 
@@ -262,21 +376,23 @@ Tula is a [RealActivity](https://realactivity.ai) initiative.
 
 ## Founding Contributors
 
-- **Paul Swider** - Creator. Health data integration, laboratory parsing, wearable integration, infrastructure.
-- **Sal Rosales** - Medical adherence, caregiver tools, IoT integration.
+- Paul Swider. Creator. Health data integration, laboratory parsing, wearable integration, infrastructure.
+- Sal Rosales. Medical adherence, caregiver tools, IoT integration.
+
+## Intellectual Property
+
+Tula is open source under the Apache License 2.0. RealActivity retains ownership of its trademarks, commercial platform architecture, proprietary Aria components, and non-public implementation details.
+
+RealActivity may pursue intellectual property protection around commercial patient-agent orchestration, governance, evaluation, and enterprise deployment patterns.
 
 ## License
 
-Apache License 2.0 — see [LICENSE](LICENSE) and [NOTICE](NOTICE). The code is free to use, modify, and distribute under the terms of the license, including its explicit patent grant and patent-retaliation clause. Tula was relicensed from MIT to Apache 2.0 in May 2026 to add contributor patent protections; the `skills/health-records/` subdirectory retains its upstream MIT terms (see [NOTICE](NOTICE) for full attribution). Tula will remain Apache-2.0-licensed going forward.
+Tula is licensed under the Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE) for details. The Apache 2.0 license applies to the open-source Tula codebase. It does not grant rights to RealActivity trademarks, the Aria commercial platform, proprietary deployment architecture, or non-public commercial implementation details.
 
-"Tula" and "RealActivity" are trademarks of RealActivity. The Apache 2.0 license covers the code, not the name. See [TRADEMARK.md](TRADEMARK.md) for details.
+The `skills/health-records/` subdirectory retains its upstream MIT terms. See [NOTICE](NOTICE) for attribution and license details.
 
-RealActivity is also developing **Aria**, a commercial hospital-scale platform built on the same Tula skills. Aria is private and proprietary; Tula remains open source. See [`OPEN_CORE.md`](OPEN_CORE.md) for the scope boundary between the two.
+"Tula", "Aria", and "RealActivity" are trademarks of RealActivity. The Apache 2.0 license covers the code, not the names. See [TRADEMARK.md](TRADEMARK.md) for details.
 
 ## Disclaimer
 
 Tula is an open-source software tool intended to support personal health data organization and health literacy. It is not a medical device, not FDA-cleared or approved, and not intended to diagnose, treat, cure, or prevent any disease or medical condition. Tula does not provide clinical decision support and should not be used as a substitute for professional medical advice, diagnosis, or treatment. Always seek the guidance of qualified healthcare providers with any questions regarding a medical condition. If you are experiencing a medical emergency, contact your local emergency services immediately.
-
----
-
-*Your health. Your data. Your AI. Whatever your journey, Tula is here to help.* 🧬
