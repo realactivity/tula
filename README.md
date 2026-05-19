@@ -141,20 +141,16 @@ Paul Swider
 CEO, RealActivity
 pswider@realactivity.com
 
-## Demo
+## Example Flow
 
-A short demo walkthrough is coming soon.
+Tula's reference deployment supports this end-to-end personal-health flow today, using the five live skills:
 
-Planned demo flow:
-
-1. Connect a patient portal through SMART on FHIR
-2. Upload a lab report PDF
-3. Ask Tula what changed since the last lab result
-4. Draft a patient portal message to the care team
-5. Generate a daily health pulse
-6. Show how the same skill layer becomes part of Aria's governed patient-agent infrastructure
-
-[Watch the 3-minute Tula demo](#)
+1. Connect a patient portal through SMART on FHIR (`health-records`)
+2. Upload a lab report PDF (`med-pdf`)
+3. Ask Tula what changed since the last lab result (`memory-diff`)
+4. Draft a patient portal message to the care team (`epic-note`)
+5. Generate a daily health pulse (`myhealth-pulse`)
+6. The same skill layer becomes part of Aria's governed patient-agent infrastructure at hospital scale
 
 ## Architecture
 
