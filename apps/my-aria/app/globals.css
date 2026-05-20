@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+
+  /* Surfaces — dark-first, MyChart-inspired clinical calm */
+  --color-bg: oklch(0.16 0.005 264);
+  --color-bg-elevated: oklch(0.20 0.006 264);
+  --color-bg-card: oklch(0.22 0.007 264);
+  --color-fg: oklch(0.96 0.005 264);
+  --color-fg-muted: oklch(0.74 0.008 264);
+  --color-fg-subtle: oklch(0.55 0.010 264);
+  --color-border: oklch(0.30 0.008 264);
+
+  /* Brand accent — burgundy (~#9B1C2C) */
+  --color-accent: oklch(0.46 0.16 18);
+  --color-accent-hover: oklch(0.52 0.17 18);
+  --color-accent-fg: oklch(0.98 0.002 264);
+  --color-accent-soft: oklch(0.36 0.08 18);
+
+  /* Informational — clinical blue (for appointments, balance, neutral status) */
+  --color-info: oklch(0.62 0.13 240);
+  --color-info-soft: oklch(0.30 0.06 240);
+
+  /* Flag tones — preserved from aria-web for shared FHIR semantics */
+  --color-flag-high: oklch(0.74 0.18 22);
+  --color-flag-low: oklch(0.78 0.14 250);
+  --color-flag-ok: oklch(0.78 0.14 165);
+}
+
+@media (prefers-color-scheme: light) {
+  @theme {
+    --color-bg: oklch(0.99 0.002 264);
+    --color-bg-elevated: oklch(0.97 0.003 264);
+    --color-bg-card: oklch(1.00 0.000 264);
+    --color-fg: oklch(0.20 0.010 264);
+    --color-fg-muted: oklch(0.45 0.012 264);
+    --color-fg-subtle: oklch(0.62 0.010 264);
+    --color-border: oklch(0.91 0.005 264);
+
+    --color-accent: oklch(0.42 0.17 18);
+    --color-accent-hover: oklch(0.38 0.18 18);
+    --color-accent-fg: oklch(0.99 0.002 264);
+    --color-accent-soft: oklch(0.94 0.04 18);
+
+    --color-info: oklch(0.50 0.15 240);
+    --color-info-soft: oklch(0.93 0.04 240);
+
+    --color-flag-high: oklch(0.55 0.20 22);
+    --color-flag-low: oklch(0.60 0.18 250);
+    --color-flag-ok: oklch(0.55 0.16 165);
+  }
+}
+
+html,
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}

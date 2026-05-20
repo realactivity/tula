@@ -1,0 +1,40 @@
+{
+  "name": "my-aria",
+  "version": "0.1.0",
+  "private": true,
+  "description": "My Aria — personal patient-portal-style view of Tula's FHIR data. MyChart-inspired, dark-first, single user, local data.",
+  "scripts": {
+    "dev": "next dev --turbo -p 3002",
+    "build": "next build",
+    "start": "next start -p 3002",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "screenshot": "node scripts/capture-dashboard.mjs"
+  },
+  "dependencies": {
+    "next": "^15.5.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "motion": "^12.0.0",
+    "lucide-react": "0.460.0",
+    "clsx": "2.1.1",
+    "tailwind-merge": "2.5.5",
+    "class-variance-authority": "0.7.1",
+    "date-fns": "4.1.0",
+    "recharts": "^3.0.0",
+    "gray-matter": "4.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.9.0",
+    "@types/react": "19.0.0",
+    "@types/react-dom": "19.0.0",
+    "typescript": "5.6.3",
+    "tailwindcss": "4.0.0-beta.5",
+    "@tailwindcss/postcss": "4.0.0-beta.5",
+    "postcss": "8.4.49",
+    "autoprefixer": "10.4.20"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
