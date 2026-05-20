@@ -61,6 +61,8 @@ Mobile keeps a bottom nav with only the five portal pages. The depth lives on de
 
 The home screen is not an activity feed clone. It is a **command surface**.
 
+![My Aria dashboard — welcome, upcoming appointment, recent labs with sparklines (fasting glucose flagged amber), active medications, quick actions, and the longitudinal-feeds and de-identification capability cards. Sidebar shows the five-section taxonomy; full disclaimer top and bottom.](../apps/my-aria/public/my-aria-dashboard.png)
+
 Welcome and last-refresh timestamp at the top. Full-width upcoming appointment card (I removed the fake account balance — it was demo noise pretending to be a feature). Recent labs with Recharts sparklines, glucose flagged amber when it drifts. Active medications. Quick actions to schedule a visit, message a provider, request a refill, or export FHIR JSON. Below that, two capability sections — Longitudinal feeds and De-identification — with honest “planned” badges instead of vapor.
 
 Data today is synthetic fixtures shaped exactly like production. `getDashboardData()` is the only seam; when the email-router writes real JSON beside my health-records cache, the UI does not move. Markdown is for welcome copy and disclaimers only — never for clinical values. The clinical trunk stays FHIR.
