@@ -49,6 +49,8 @@ My Aria’s left navigation is organized by **where data comes from**, not by wh
 
 **Home devices** — One hub page, not five sidebar links. Blood pressure cuffs, scales, glucometers, pulse oximeters, thermometers. Clinically different from wearables: episodic peripherals you use at home, often the numbers your PCP actually quotes back to you. I renamed “Device integration” to **Wearables** under Longitudinal feeds so I would stop conflating a Garmin with an Omron.
 
+![My Aria — Home devices hub: one sidebar link opens five clinical-peripheral categories (blood pressure, weight, glucose, pulse ox, temperature), with a "Connected devices" planned card up top. Wearables stay under Longitudinal feeds.](../apps/my-aria/public/my-aria-home-devices.png)
+
 **Intelligent SDOH** — Air quality and demographics by ZIP (demo fixtures today; AirNow and Census ACS tomorrow), plus **AI chats**: social-determinant signals extracted from agent conversations — transportation gaps, food insecurity, housing instability — with evidence strings and ICD-10 Z codes where they apply. The chat history is a social-determinant data source. Nobody’s portal has a tab for that.
 
 **Intelligent Travel** — Business and personal trips as health perturbations: itineraries and time zones, on-trip vitals vs home baseline, care away from home, destination health briefs, travel journal, return checklist. Seven placeholder routes for now; I know the sidebar is long. Travel trims to three links once I have lived with it for a month. Home devices stayed a single hub so the menu does not scroll forever.
