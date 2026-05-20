@@ -1,14 +1,14 @@
-# Triage Rules — Red Flags That Must Not Become a Portal Message
+# Triage Rules - Red Flags That Must Not Become a Portal Message
 
-Portal messages are typically reviewed within 1–3 business days. That is too
+Portal messages are typically reviewed within 1-3 business days. That is too
 slow for emergencies. If any of the following appear in patient input, **do
-not draft a message** — return the redirect text below.
+not draft a message** - return the redirect text below.
 
 ## Red-flag symptoms
 
-- **Cardiac**: chest pain, pressure, or tightness — especially with shortness
+- **Cardiac**: chest pain, pressure, or tightness - especially with shortness
   of breath, sweating, radiation to arm/jaw/back, or known cardiac history.
-- **Stroke (FAST)**: facial droop, arm weakness, speech difficulty — note time
+- **Stroke (FAST)**: facial droop, arm weakness, speech difficulty - note time
   of symptom onset.
 - **Respiratory**: severe shortness of breath, inability to speak full
   sentences, signs of anaphylaxis (swelling, hives, throat tightness).
@@ -31,7 +31,7 @@ When red flags are present, return:
 
 > Based on what you described, this should not go through the patient portal.
 > Please call 911 or go to the nearest emergency department now. Portal
-> messages are typically reviewed within 1–3 business days, which is too slow
+> messages are typically reviewed within 1-3 business days, which is too slow
 > for this. If you have a 24/7 nurse line, that is also faster than the
 > portal.
 

@@ -4,7 +4,7 @@ Each example shows the patient's free-text request and the ideal output.
 
 ---
 
-## Example 1 — Medication side effect
+## Example 1 - Medication side effect
 
 **Patient input:**
 
@@ -14,7 +14,7 @@ Each example shows the patient's free-text request and the ideal output.
 **Output:**
 
 ```
-Subject: Persistent dry cough since starting lisinopril — routine
+Subject: Persistent dry cough since starting lisinopril - routine
 
 Hello Dr. Dave Matthews,
 
@@ -34,16 +34,16 @@ Dylan
 
 ---
 
-## Example 2 — Lab result follow-up
+## Example 2 - Lab result follow-up
 
 **Patient input:**
 
-> My A1c just came back at 6.4 — what does Dr. Nguyen want me to do next?
+> My A1c just came back at 6.4 - what does Dr. Nguyen want me to do next?
 
 **Output:**
 
 ```
-Subject: A1c result follow-up — routine
+Subject: A1c result follow-up - routine
 
 Hello Dr. Nguyen,
 
@@ -59,7 +59,7 @@ Dylan
 
 ---
 
-## Example 3 — Refill request
+## Example 3 - Refill request
 
 **Patient input:**
 
@@ -68,7 +68,7 @@ Dylan
 **Output:**
 
 ```
-Subject: Refill request — metformin — this week
+Subject: Refill request - metformin - this week
 
 Hello Dr. Dave Matthews,
 
@@ -83,7 +83,7 @@ Dylan
 
 ---
 
-## Example 4 — Multi-topic input (split, do not bundle)
+## Example 4 - Multi-topic input (split, do not bundle)
 
 **Patient input:**
 

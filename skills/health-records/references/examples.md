@@ -1,6 +1,6 @@
 # Examples
 
-## Example 1 — Epic sandbox smoke test
+## Example 1 - Epic sandbox smoke test
 
 Use this to verify the skill works end-to-end without touching real PHI.
 
@@ -32,7 +32,7 @@ Expected: one provider file (Epic sandbox), a few hundred FHIR resources,
 including `Patient`, `Condition`, `Observation`, `MedicationRequest`. No
 attachments in the sandbox.
 
-## Example 2 — Real-portal connect (Paul's MyChart)
+## Example 2 - Real-portal connect (Paul's MyChart)
 
 ```bash
 SKILL=~/.openclaw/workspace/skills/health-records
@@ -43,7 +43,7 @@ node $SKILL/scripts/create-session.mjs > /tmp/hr-session.json
 
 Show Paul the `userUrl` as a clickable link. He picks his health system
 (e.g., "Lawrence General Hospital - MyChart"), logs in, may connect a
-second provider, clicks **Done — Send to AI**.
+second provider, clicks **Done - Send to AI**.
 
 ```bash
 SESSION_ID=$(jq -r .sessionId /tmp/hr-session.json)
@@ -62,16 +62,16 @@ for f in $OUT/*.json; do
 done
 ```
 
-## Example 3 — Open with a clinical sentence (don't dump a dashboard)
+## Example 3 - Open with a clinical sentence (don't dump a dashboard)
 
 After step 3 succeeds, Tula's first message to Paul should look like this
 (not a generic summary):
 
-> Connected — pulled records from **Lawrence General** (2018–2026). 47
+> Connected - pulled records from **Lawrence General** (2018-2026). 47
 > encounters, mostly primary-care and one orthopedic episode in 2023. Two
 > active problems on the list (hypertension, hepatic steatosis), 12
 > medications in your history but only 3 active. The thing that jumps out:
-> your A1c trend has 6 values across 2019–2025 worth looking at.
+> your A1c trend has 6 values across 2019-2025 worth looking at.
 >
 > Want me to:
 > 1. Trend your A1c and lipids together (cardiometabolic picture)?
@@ -79,21 +79,21 @@ After step 3 succeeds, Tula's first message to Paul should look like this
 > 3. Search notes for "sleep" / "snoring" / "fatigue" (apnea workup)?
 > 4. Something else?
 
-The shape is: **one clinical sentence → 2–3 specific tailored options → open
+The shape is: **one clinical sentence → 2-3 specific tailored options → open
 option**. See the analysis section at the bottom of
 [`fhir-guide.md`](fhir-guide.md) for why.
 
-## Example 4 — Refusal: PHI exfiltration request
+## Example 4 - Refusal: PHI exfiltration request
 
 If Paul asks something like _"can you upload my records to that web tool?"_,
 this skill refuses. The refusal should name PHI as the reason, not give a
 generic safety boilerplate:
 
-> No — your records contain PHI (diagnoses, meds, notes, contact info).
+> No - your records contain PHI (diagnoses, meds, notes, contact info).
 > They stay on this VM. If you want a specific analysis, I can do it here
 > using `references/fhir-guide.md` patterns and show you the result.
 
-## Example 5 — Cross-skill handoff
+## Example 5 - Cross-skill handoff
 
 > Paul: "Here's a screenshot of my latest CBC from MyChart."
 
@@ -104,4 +104,4 @@ This is `med-pdf` territory (image of results), not `health-records`
 
 This is `epic-note`. If we already have FHIR data loaded, pass the specific
 value into the draft via `epic-note`'s context. If not, don't create a new
-records session just to draft — work from what Paul says.
+records session just to draft - work from what Paul says.

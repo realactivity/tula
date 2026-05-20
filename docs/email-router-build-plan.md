@@ -1,4 +1,4 @@
-# Email Router — Build Plan
+# Email Router - Build Plan
 
 This doc is the **buildable** counterpart to the architecture in
 [`email-router-design.md`](email-router-design.md) and the M365 setup
@@ -33,7 +33,7 @@ The build plan originally called transport rules "the data security gate"
 deferring them to keep Phase 1 frictionless, on the explicit condition
 below.
 
-**Hard checkpoint — transport rules MUST be installed before:**
+**Hard checkpoint - transport rules MUST be installed before:**
 
 1. The address `aria@realactivity.com` is shared with any human other
    than the owner.
@@ -43,7 +43,7 @@ below.
    pointed at the mailbox.
 
 In practice this means transport rules must ship before end of Phase 3
-(per-content-type handlers writing real FHIR) — because Phase 3 is the
+(per-content-type handlers writing real FHIR) - because Phase 3 is the
 first time it's tempting to do a real-vendor test. Treat this as a
 release gate, not a nice-to-have.
 
@@ -80,15 +80,15 @@ Online permissions in the original guide.)
 
 ## Phases
 
-### Phase 0 — Prerequisites and decisions
+### Phase 0 - Prerequisites and decisions
 
 Before writing any code:
 
-1. **Mailbox identity** — what is `tula@<domain>`?
+1. **Mailbox identity** - what is `tula@<domain>`?
    - Choose: `realactivity.com`? `tula.realactivity.ai`? new domain?
    - Must be Exchange Online, not just an alias on a personal mailbox.
 
-2. **Authorized senders** — who can email Tula?
+2. **Authorized senders** - who can email Tula?
    - At minimum: the user's own work address (`pswider@realactivity.com`).
    - Optionally: caregivers, a spouse, a partner clinic.
    - These go into the Exchange transport rule allowlist.
@@ -98,26 +98,26 @@ Before writing any code:
    - Microsoft Partner benefits (if applicable), OR
    - New Exchange Online subscription ($4 USD/user/month as of 2026).
 
-4. **Storage path** — where do FHIR JSON files live on the VM?
-   - **Option A** — `~/.openclaw/workspace/tula/fhir/` (per the design doc;
+4. **Storage path** - where do FHIR JSON files live on the VM?
+   - **Option A** - `~/.openclaw/workspace/tula/fhir/` (per the design doc;
      keeps tula data adjacent to but separate from agent skills).
-   - **Option B** — `~/.openclaw/workspace/skills/email-router/data/`
+   - **Option B** - `~/.openclaw/workspace/skills/email-router/data/`
      (skill-scoped; gets backed up alongside the skill via `aria-backup.sh`
      unless explicitly excluded).
-   - **Recommend A** — separates content from code. The aria backup
+   - **Recommend A** - separates content from code. The aria backup
      script's exclusion list can grow to keep PHI out of the backup.
 
 5. **Polling cadence**
    - Cron every 60s (per design), OR
    - Openclaw heartbeat (driven by the agent itself, see `AGENTS.md`).
-   - **Recommend cron** — independent of agent state, runs even when the
+   - **Recommend cron** - independent of agent state, runs even when the
      agent is idle.
 
 6. **Multimodal model for photo extraction**
-   - **Claude Sonnet 4.6** (in Tula's primary auth path) — cheapest,
+   - **Claude Sonnet 4.6** (in Tula's primary auth path) - cheapest,
      strong on document OCR.
-   - **Claude Opus 4.7** — strongest, more expensive.
-   - **MedGemma 4B local** — free at runtime, requires GPU on the VM
+   - **Claude Opus 4.7** - strongest, more expensive.
+   - **MedGemma 4B local** - free at runtime, requires GPU on the VM
      (B2s does not have one; would require VM upgrade).
    - **Recommend Sonnet 4.6** for Phase 1; revisit if accuracy is poor.
 
@@ -126,20 +126,20 @@ Before writing any code:
    - I can check the VM side; you confirm the M365 side from the admin
      portal.
 
-### Phase 1 — Email connectivity (no skill yet)
+### Phase 1 - Email connectivity (no skill yet)
 
-1. **Verify VM state** — Node version, `~/.openclaw/workspace/tula/`
+1. **Verify VM state** - Node version, `~/.openclaw/workspace/tula/`
    directory existence.
-2. **M365 mailbox** — ✅ already exists: `aria@realactivity.com`.
-3. ~~**Exchange transport rules**~~ — deferred per the locked-in
+2. **M365 mailbox** - ✅ already exists: `aria@realactivity.com`.
+3. ~~**Exchange transport rules**~~ - deferred per the locked-in
    decisions above. Re-enter the timeline before Phase 3 ships any real
    data.
-4. **Entra ID app registration** — register `Tula Email Agent` per
+4. **Entra ID app registration** - register `Tula Email Agent` per
    setup guide Step 3, but with the **Graph delegated permissions** in
    the table above, not the IMAP/SMTP permissions in the original guide.
    Required Authentication config: **Allow public client flows: Yes**
    (device-code flow won't work without this).
-5. **Smoke-test connectivity** — a small Node project at
+5. **Smoke-test connectivity** - a small Node project at
    [`scripts/email-smoke-test/`](../scripts/email-smoke-test/) that:
    - Authenticates via device code (`@azure/identity`'s
      `DeviceCodeCredential`), prints code + URL.
@@ -154,7 +154,7 @@ No parsing, no skill, no FHIR yet.
 **Estimated effort**: 30-45 minutes (mailbox already exists; transport
 rules deferred; only Entra app registration + smoke-test run remain).
 
-### Phase 2 — Build the `email-router` tula skill
+### Phase 2 - Build the `email-router` tula skill
 
 Follow the [skills development guide](skills-development.md) and the
 [`med-pdf`](../skills/med-pdf/) reference template:
@@ -192,22 +192,22 @@ skills/email-router/
   - Attachment >150MB: skip with notice (Graph API limit)
 
 Eval suite (`evals/email-router/tasks/`):
-- `positive-trigger-1` — lab PDF email
-- `positive-trigger-2` — photo of pill bottle (image attachment)
-- `positive-trigger-3` — appointment confirmation
-- `negative-trigger-1` — non-health newsletter
-- `negative-trigger-2` — phishing-style spam (should never trigger)
-- `phi-boundary` — third-party PHI mention (don't store outside workspace)
-- `safety` — message from sender not on allowlist (should be rejected
+- `positive-trigger-1` - lab PDF email
+- `positive-trigger-2` - photo of pill bottle (image attachment)
+- `positive-trigger-3` - appointment confirmation
+- `negative-trigger-1` - non-health newsletter
+- `negative-trigger-2` - phishing-style spam (should never trigger)
+- `phi-boundary` - third-party PHI mention (don't store outside workspace)
+- `safety` - message from sender not on allowlist (should be rejected
   pre-skill at the transport layer; a defense-in-depth test that the
   skill ALSO checks the sender)
 
 **Deliverable**: aria can be told "process the new emails" and the skill
-polls Graph, classifies, and stages — without yet writing FHIR.
+polls Graph, classifies, and stages - without yet writing FHIR.
 
 **Estimated effort**: 3-4 hours.
 
-### Phase 3 — FHIR storage and per-content-type handlers
+### Phase 3 - FHIR storage and per-content-type handlers
 
 Implement the handlers from `email-router-design.md`. Reuse what we
 already have:
@@ -216,13 +216,13 @@ already have:
 |---|---|---|
 | `laboratory_result` | wraps `skills/med-pdf/scripts/parse_labs.mjs` + adds LOINC mapping + FHIR JSON write | Medium |
 | `imaging_report` | wraps `skills/med-pdf/scripts/parse_imaging.mjs` | Medium |
-| `appointment` | new — extract date/time/provider/location | Small |
-| `prescription` | new — med name, dose, frequency, prescriber | Small |
-| `insurance_eob` | new — store as DocumentReference | Small |
-| `provider_message` | new — store as DocumentReference | Small |
-| `genomic_report` | new — heavy file handling, partial extraction | Medium |
-| `device_reading` | new — many vendors emit FHIR-ish JSON | Small |
-| `photo / image` | new — multimodal call (Claude Sonnet) | Medium |
+| `appointment` | new - extract date/time/provider/location | Small |
+| `prescription` | new - med name, dose, frequency, prescriber | Small |
+| `insurance_eob` | new - store as DocumentReference | Small |
+| `provider_message` | new - store as DocumentReference | Small |
+| `genomic_report` | new - heavy file handling, partial extraction | Medium |
+| `device_reading` | new - many vendors emit FHIR-ish JSON | Small |
+| `photo / image` | new - multimodal call (Claude Sonnet) | Medium |
 
 Two of those handlers are basically free wrappers around the existing
 `med-pdf` skill. This validates the skill graph: `email-router` invokes
@@ -234,9 +234,9 @@ FHIR DiagnosticReport on disk plus a Telegram summary.
 **Estimated effort**: 1-2 days for all handlers. Lab + imaging + photo
 alone is ~half a day.
 
-### Phase 4 — Continuous polling + Telegram notifications
+### Phase 4 - Continuous polling + Telegram notifications
 
-1. **Systemd timer on the VM** (not cron — cron's 60s floor is too slow
+1. **Systemd timer on the VM** (not cron - cron's 60s floor is too slow
    for the locked-in 30s cadence). Pattern:
    ```ini
    # /etc/systemd/system/aria-email-poll.timer
@@ -257,11 +257,11 @@ a Telegram message in <2 minutes with extracted values and trend deltas.
 
 **Estimated effort**: 2-3 hours.
 
-### Phase 5 — Operational polish
+### Phase 5 - Operational polish
 
 - Sender allowlist updates via Telegram ("add caregiver to authorized
   senders" → updates the Exchange transport rule via Graph API).
-- De-identification engine (future per design doc) — strip PHI before
+- De-identification engine (future per design doc) - strip PHI before
   any non-local processing.
 - Confidence-flagged extractions surfaced via Telegram for user
   verification before commit.
@@ -293,7 +293,7 @@ Phase 0 decisions are resolved (see top of doc). Remaining Phase 1 work:
 2. **Run the smoke test** from
    [`scripts/email-smoke-test/`](../scripts/email-smoke-test/) on the
    VM (see its README).
-3. **Authorized sender list** — still owed. Defaults to
+3. **Authorized sender list** - still owed. Defaults to
    `pswider@realactivity.com` only. Needed before transport rules ship
    in Phase 3.
 4. **Phase 2 skill scaffold** once the smoke test passes:

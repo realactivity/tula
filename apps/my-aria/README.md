@@ -1,4 +1,4 @@
-# My Aria — personal patient view
+# My Aria - personal patient view
 
 A MyChart-style personal-portal UI for the Tula health agent.
 

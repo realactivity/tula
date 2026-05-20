@@ -3,13 +3,13 @@
 Use this exact shape for every drafted message:
 
 ```
-Subject: <topic> — <urgency: routine | this week | urgent>
+Subject: <topic> - <urgency: routine | this week | urgent>
 
 Hello Dr. <last name>,
 
 <one-sentence ask>
 
-<2–4 sentences of relevant clinical context: onset, duration, severity,
+<2-4 sentences of relevant clinical context: onset, duration, severity,
 triggers, what's been tried, change since last visit>
 
 <bullet list of pertinent data, only if relevant>

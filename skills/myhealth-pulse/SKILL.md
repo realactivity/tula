@@ -17,7 +17,7 @@ metadata:
 ✅ Use when:
 
 - User says "run myhealth-pulse", "check my health feeds", "daily pulse"
-- Scheduled invocation — daily, weekly, or per-feed cadence from the profile
+- Scheduled invocation - daily, weekly, or per-feed cadence from the profile
 - User asks for mentions, alerts, or a topic digest across configured feeds
 - A new feed adapter was enabled and the user wants a unified view
 
@@ -28,7 +28,7 @@ metadata:
 - User shares a PDF, screenshot, or image → use `med-pdf`
 - User asks about their chart, labs, meds → use `health-records`
 - User wants to draft a clinician message → use `epic-note`
-- User asks for medical advice — decline politely; this is aggregation, not clinical judgment
+- User asks for medical advice - decline politely; this is aggregation, not clinical judgment
 - Anything that would put PHI into an outbound query string
 
 ## Setup
@@ -67,11 +67,11 @@ skip that feed with a one-line note in the output.
 5. **Synthesize.** Render per the output shape in
    [`references/feeds.md`](references/feeds.md#output-shape). End with
    one trailing line listing active adapters:
-   `Powered by myhealth-pulse — feeds: <names>`. Append
+   `Powered by myhealth-pulse - feeds: <names>`. Append
    `(unavailable: <names>)` if any were dropped.
 
 6. **Low-signal case.** If nothing makes the threshold, return one line:
-   `Quiet period in your feeds — nothing above the relevance threshold in the last <window>.`
+   `Quiet period in your feeds - nothing above the relevance threshold in the last <window>.`
    Suggest one not-yet-enabled adapter from
    [`references/feeds.md`](references/feeds.md#roadmap-adapters). Don't
    pad.
@@ -90,7 +90,7 @@ mention alert, low-signal, and partial-run cases.
 The risk surface is what gets *sent*, not what comes back.
 
 - No PHI in outbound queries. Personalization is identity and topic
-  fields in the profile — never anything from `health-records`,
+  fields in the profile - never anything from `health-records`,
   `med-pdf`, or memory notes.
 - Profile lives outside the skill repo. In single-user Tula:
   `~/.openclaw/workspace/memory/profile.yaml`. In multi-tenant runtimes:

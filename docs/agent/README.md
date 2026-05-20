@@ -9,11 +9,11 @@ deploying their own Tula instance has a sane baseline.
 
 | File | Role |
 |---|---|
-| [`AGENTS.md`](AGENTS.md) | The agent's playbook — memory rules, red lines, group-chat etiquette, heartbeat behavior |
-| [`SOUL.md`](SOUL.md) | The agent's personality and values — non-sycophant, opinion-having, resourceful |
-| [`IDENTITY.md`](IDENTITY.md) | The agent's name, vibe, and emoji — currently set to "Tula" |
+| [`AGENTS.md`](AGENTS.md) | The agent's playbook - memory rules, red lines, group-chat etiquette, heartbeat behavior |
+| [`SOUL.md`](SOUL.md) | The agent's personality and values - non-sycophant, opinion-having, resourceful |
+| [`IDENTITY.md`](IDENTITY.md) | The agent's name, vibe, and emoji - currently set to "Tula" |
 | [`HEARTBEAT.md`](HEARTBEAT.md) | Empty-by-default file the agent edits to track recurring tasks |
-| [`TOOLS.md.example`](TOOLS.md.example) | Template for environment-specific notes (cameras, SSH hosts, voice prefs) — copy to `TOOLS.md` and customize |
+| [`TOOLS.md.example`](TOOLS.md.example) | Template for environment-specific notes (cameras, SSH hosts, voice prefs) - copy to `TOOLS.md` and customize |
 | [`coding-agent.md`](coding-agent.md) | How Tula writes code: direct edits vs delegated coding, delegate CLI options (Claude Code / Codex / OpenCode), install + login walkthrough, troubleshooting |
 
 ## How to use these
@@ -34,7 +34,7 @@ You should also create (the agent expects them, but they are personal):
 
 | File | Purpose |
 |---|---|
-| `~/.openclaw/workspace/USER.md` | About the human the agent helps — name, timezone, what to call them, context |
+| `~/.openclaw/workspace/USER.md` | About the human the agent helps - name, timezone, what to call them, context |
 | `~/.openclaw/workspace/MEMORY.md` | The agent's curated long-term memory (only loaded in main session, never in shared contexts) |
 | `~/.openclaw/workspace/memory/` | Daily files (`YYYY-MM-DD.md`) where the agent logs raw context |
 
@@ -43,13 +43,13 @@ personal data.
 
 ## What `AGENTS.md` does
 
-Worth reading even if you're not deploying — it's a useful pattern for any
+Worth reading even if you're not deploying - it's a useful pattern for any
 long-running personal AI agent. Highlights:
 
 - **Session startup ritual**: read `SOUL.md`, `USER.md`, today's `memory/`,
   and `MEMORY.md` (only in main session) before doing anything else.
 - **MEMORY.md security model**: the agent's distilled long-term memory is
-  loaded only in private chats — never in group/shared contexts where it
+  loaded only in private chats - never in group/shared contexts where it
   could leak.
 - **Write it down, no mental notes**: anything the agent should remember
   goes into a file. "Mental notes" don't survive session restarts; files do.
@@ -66,15 +66,15 @@ The shorter, more philosophical companion to `AGENTS.md`. It defines:
 
 - Genuinely helpful, not performatively helpful (skip the "Great question!"
   filler)
-- Has opinions — the agent is allowed to disagree and prefer things
-- Resourceful before asking — read the file, check context, then ask
-- Respects intimacy — the agent is a guest in someone's life
+- Has opinions - the agent is allowed to disagree and prefer things
+- Resourceful before asking - read the file, check context, then ask
+- Respects intimacy - the agent is a guest in someone's life
 
 ## What `IDENTITY.md` does
 
 A short identity card the agent reads at session start. Name, "creature"
 (what kind of agent this is), vibe, emoji. Defaults are set for "Tula" but
-swap freely — this is your agent.
+swap freely - this is your agent.
 
 ## Provenance
 

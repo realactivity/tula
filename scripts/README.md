@@ -56,7 +56,7 @@ ssh <your-openclaw-vm>
 ~/tula/scripts/install-coding-agent.sh --no-enable    # Install only, don't touch openclaw.json
 ```
 
-The script does NOT log you in to the chosen CLI — that step is
+The script does NOT log you in to the chosen CLI - that step is
 interactive and must be done manually after the script finishes. See
 [`docs/agent/coding-agent.md`](../docs/agent/coding-agent.md) for the
 full walkthrough including troubleshooting (workspace device-auth
@@ -73,28 +73,28 @@ secret-pattern scan and an optional `git push`.
 
 This script is what produces the **private** sister repo where the
 operational state of a deployed Tula agent is preserved. It is **not** for
-public data — PHI and personal context never leave the agent host except
+public data - PHI and personal context never leave the agent host except
 into a private remote of your own.
 
 ### Highlights
 
 - `rsync -a --delete` from `~/.openclaw/` to the repo working tree, with an
   exclusion list that mirrors the openclaw threat model:
-  - `agents/main/sessions/` — chat trajectories (large, may include
+  - `agents/main/sessions/` - chat trajectories (large, may include
     credentials in tool output)
-  - `agents/main/agent/auth-profiles.json` — model provider auth tokens
-  - `identity/device-auth.json`, `identity/device.json` — device identity
+  - `agents/main/agent/auth-profiles.json` - model provider auth tokens
+  - `identity/device-auth.json`, `identity/device.json` - device identity
     keypair and operator token
-  - `devices/paired.json` — operator pairing token
-  - `openclaw.json`, `openclaw.json.bak*`, `openclaw.json.last-good` —
+  - `devices/paired.json` - operator pairing token
+  - `openclaw.json`, `openclaw.json.bak*`, `openclaw.json.last-good` -
     main config (contains API keys)
-  - `credentials/` — telegram pairing + allow-from secrets
-  - `exec-approvals.json` — local approval cache
-  - `update-check.json` — regenerable
-  - `logs/` — local logs (may leak data)
-  - `plugin-runtime-deps/` — ~405 MB of redistributable third-party code
-  - `workspace/.filebrowser-admin-password` — admin password
-  - `workspace/.git/` — nested git that would shadow the backup repo
+  - `credentials/` - telegram pairing + allow-from secrets
+  - `exec-approvals.json` - local approval cache
+  - `update-check.json` - regenerable
+  - `logs/` - local logs (may leak data)
+  - `plugin-runtime-deps/` - ~405 MB of redistributable third-party code
+  - `workspace/.filebrowser-admin-password` - admin password
+  - `workspace/.git/` - nested git that would shadow the backup repo
 - Regex-based secret-pattern scan over the staged tree before commit.
   Aborts on hits not in `ALLOWLIST_GLOBS`.
 - One-shot `GITHUB_TOKEN` auth for push (never persisted to `.git/config`).
@@ -121,7 +121,7 @@ GITHUB_TOKEN=ghp_... \
 ./aria-backup.sh
 ```
 
-Read the header of `aria-backup.sh` for the full operating manual — it's
+Read the header of `aria-backup.sh` for the full operating manual - it's
 self-documenting.
 
 ## `aria-cron.sh`
@@ -131,7 +131,7 @@ Non-interactive wrapper around `aria-backup.sh` for cron / systemd timer use.
 Cron's environment is minimal (no PATH past `/usr/bin:/bin`, no shell env
 vars), so this wrapper:
 
-1. Sources `~/.aria-cron-token` (mode 600 enforced) — must define
+1. Sources `~/.aria-cron-token` (mode 600 enforced) - must define
    `GITHUB_TOKEN`.
 2. Sets a sane PATH (`git`, `rsync`, `python3`, `curl` resolve).
 3. Acquires `flock -n /tmp/aria-backup.lock` so a slow run can't overlap
@@ -187,7 +187,7 @@ node smoke-test.mjs
 
 See [`email-smoke-test/README.md`](email-smoke-test/README.md) for the
 full Entra setup walkthrough and troubleshooting. This scaffold is
-throwaway — Phase 2 lifts it into `skills/email-router/scripts/` and
+throwaway - Phase 2 lifts it into `skills/email-router/scripts/` and
 deletes this directory.
 
 ## Provenance

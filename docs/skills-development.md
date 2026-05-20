@@ -13,8 +13,8 @@ agent.
 │   ├── AGENTS.md      │         │   workspace/         │
 │   ├── epic-note/     │ ──────▶ │    skills/           │
 │   ├── med-pdf/       │  rsync  │     ├── epic-note/   │
-│   └── …              │         │     ├── med-pdf/     │
-│                      │         │     └── …            │
+│   └── ...              │         │     ├── med-pdf/     │
+│                      │         │     └── ...            │
 │  evals/              │         │                      │
 │   └── <skill>/       │         │  Agent uses the      │
 │     └── tasks/       │         │  skills at runtime.  │
@@ -28,7 +28,7 @@ agent.
   and tested here. Each skill ships with an evaluation suite under `evals/`.
 - **OpenClaw on the VM** is the runtime. Skills are deployed there as plain
   directories under `~/.openclaw/workspace/skills/`.
-- **Waza** is the local testing tool — it parses `SKILL.md`, scaffolds eval
+- **Waza** is the local testing tool - it parses `SKILL.md`, scaffolds eval
   tasks, executes them against a model, and grades the output. Waza never
   runs on the VM.
 
@@ -48,18 +48,18 @@ before writing a new skill.
 
 ## House Style
 
-Tula skills follow the openclaw canonical style — see `med-pdf` as the
+Tula skills follow the openclaw canonical style - see `med-pdf` as the
 reference template:
 
 - `name` + `description` in frontmatter (single-line)
 - Optional `metadata.openclaw` (single-line JSON) for emoji and gating
 - Body sections in this order:
-  - `## When to Use` — ✅ trigger list
-  - `## When NOT to Use` — ❌ anti-trigger list
-  - `## Workflow` — numbered, agent-directed steps
-  - `## Examples` — linked to `references/examples.md`
-  - `## Privacy` — when PHI or sensitive data is involved
-  - `## Troubleshooting` — common failure modes
+  - `## When to Use` - ✅ trigger list
+  - `## When NOT to Use` - ❌ anti-trigger list
+  - `## Workflow` - numbered, agent-directed steps
+  - `## Examples` - linked to `references/examples.md`
+  - `## Privacy` - when PHI or sensitive data is involved
+  - `## Troubleshooting` - common failure modes
 - Long content lives in `references/` modules linked from `SKILL.md`
 - Scripts live in `scripts/` (Node ESM `.mjs` preferred)
 
@@ -91,14 +91,14 @@ waza check skills/<name>
 #    Targets:
 #      Spec Compliance: 9/9
 #      Links: all valid
-#      Module count: 2–3
+#      Module count: 2-3
 #      Token budget: prefer <500, accept higher if openclaw fidelity demands it
 
 # 4. Scaffold and customize evals
 waza new eval <name>
 #    Edit tasks/*.yaml with realistic scenarios:
-#      - 1–2 positive triggers
-#      - 1–2 negative triggers (anti-trigger / wrong-skill routing)
+#      - 1-2 positive triggers
+#      - 1-2 negative triggers (anti-trigger / wrong-skill routing)
 #      - 1 safety/PHI boundary task if applicable
 
 # 5. Test against the eval
@@ -169,7 +169,7 @@ Useful flags:
 | `--no-pull` | Skip `git pull` (use whatever's checked out) |
 | `--no-verify` | Skip the `openclaw skills list` check |
 
-OpenClaw's skills watcher picks up new/changed skills automatically — no
+OpenClaw's skills watcher picks up new/changed skills automatically - no
 daemon restart needed.
 
 ### Why not rsync from your laptop?
@@ -195,7 +195,7 @@ by only syncing directories under `skills/`.
 
 ## References
 
-- [OpenClaw skill spec](https://github.com/openclaw/openclaw/blob/main/docs/tools/skills.md) — definitive
-- [agentskills.io spec](https://agentskills.io) — what openclaw is compatible with
-- [Microsoft Waza](https://github.com/microsoft/waza) — eval framework used here
-- [`tula/skills/AGENTS.md`](../skills/AGENTS.md) — Tula's own conventions doc
+- [OpenClaw skill spec](https://github.com/openclaw/openclaw/blob/main/docs/tools/skills.md) - definitive
+- [agentskills.io spec](https://agentskills.io) - what openclaw is compatible with
+- [Microsoft Waza](https://github.com/microsoft/waza) - eval framework used here
+- [`tula/skills/AGENTS.md`](../skills/AGENTS.md) - Tula's own conventions doc

@@ -29,12 +29,12 @@ metadata:
 
 - Paul sends a PDF or screenshot → use `med-pdf`
 - Paul wants to draft a clinician message → use `epic-note`
-- Records already pulled this session — read the existing JSON
+- Records already pulled this session - read the existing JSON
 - Anything that would send PHI to an external service
 
 ## Workflow
 
-1. **Create session** — `node {baseDir}/scripts/create-session.mjs`
+1. **Create session** - `node {baseDir}/scripts/create-session.mjs`
    - Outputs JSON: `sessionId`, `userUrl`, `privateKeyJwk`.
    - **Save `privateKeyJwk`** for step 3. Never echo it back.
 
@@ -42,7 +42,7 @@ metadata:
    labeled "Connect your health records". Don't narrate the crypto. Wait
    for Paul to finish the OAuth flow; he may connect multiple providers.
 
-3. **Finalize & decrypt** —
+3. **Finalize & decrypt** -
    `node {baseDir}/scripts/finalize-session.mjs <sessionId> '<privateKeyJwk>' <outDir>`
    - `outDir` inside `~/.openclaw/workspace/`. Suggested:
      `~/.openclaw/workspace/.health-records-cache/<YYYY-MM-DD>/`.
@@ -50,7 +50,7 @@ metadata:
    - One JSON file per provider, slugified by name.
 
 4. **Reason.** Open with one clinical sentence (scope, span, what stands
-   out), then 2–3 specific directions tied to *what's actually there* —
+   out), then 2-3 specific directions tied to *what's actually there* -
    not a generic dashboard. See
    [`references/fhir-guide.md`](references/fhir-guide.md) for resource
    shapes, LOINC codes, and the analysis philosophy.
@@ -70,7 +70,7 @@ walkthrough (`fhircamila / epicepic1`) and a real-portal connect.
 
 ## Privacy
 
-A full FHIR export is more sensitive than any single PDF — diagnoses, meds,
+A full FHIR export is more sensitive than any single PDF - diagnoses, meds,
 notes, contact info, everything in one place.
 
 - Decryption is local. Backend operator cannot read the data (E2E encrypted
@@ -105,7 +105,7 @@ What this skill adds on top:
 - Re-shaping to openclaw skill conventions (frontmatter, progressive
   disclosure into `references/`, body-section order per the repo-level
   `skills/AGENTS.md`).
-- Tula-specific PHI guardrails — refuse external upload, confine outputs
+- Tula-specific PHI guardrails - refuse external upload, confine outputs
   to `~/.openclaw/workspace/`, never echo `privateKeyJwk`.
 - Waza-evaluable test harness under `evals/health-records/`.
 

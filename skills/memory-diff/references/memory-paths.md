@@ -10,7 +10,7 @@ when the same fact appears in multiple places.
 | 1 | `~/.openclaw/workspace/.health-records-cache/<YYYY-MM-DD>/<provider>.json` | FHIR R4 JSON | Highest precedence. Structured, dated, provider-attributed. Read these for labs, conditions, medications, immunizations. |
 | 2 | `~/.openclaw/workspace/.med-pdf-cache/<slug>/` | `labs.json`, `imaging.json`, `text.txt` | Extracted from user-shared PDFs. Use `labs[].abnormal[]` and `imaging.impression[]` as primary signals. |
 | 3 | `~/.openclaw/workspace/memory/<YYYY-MM-DD>.md` | Dated agent notes | Free-text daily notes the agent writes. Scan for headers like `## Labs`, `## Symptoms`, `## Meds`, `## Visits`. |
-| 4 | `~/.openclaw/workspace/MEMORY.md` | Persistent agent memory | Single file. Treat as the "current state" snapshot — active conditions, current meds, known trends. |
+| 4 | `~/.openclaw/workspace/MEMORY.md` | Persistent agent memory | Single file. Treat as the "current state" snapshot - active conditions, current meds, known trends. |
 | 5 | `~/.openclaw/workspace/.myhealth-pulse-cache/<YYYY-MM-DD>.json` | Rendered pulse digest + item URLs | Lowest precedence for clinical facts; highest for "what's relevant in the user's topic world right now". |
 
 ## Window filtering
@@ -31,11 +31,11 @@ use document-internal dates for the dated-within-window check.
 
 ## What NOT to read
 
-- `~/.openclaw/workspace/.openclaw/` — runtime state, not memory.
-- `~/.openclaw/workspace/state/` — session state, not memory.
-- Any file under `~/.openclaw/workspace/skills/` — that's deployed skill
+- `~/.openclaw/workspace/.openclaw/` - runtime state, not memory.
+- `~/.openclaw/workspace/state/` - session state, not memory.
+- Any file under `~/.openclaw/workspace/skills/` - that's deployed skill
   code, not user data.
-- The skill's own cache (`~/.openclaw/workspace/.memory-diff-cache/`) —
+- The skill's own cache (`~/.openclaw/workspace/.memory-diff-cache/`) -
   reading this risks diff-of-diff infinite-loop framing; touch only when
   the user explicitly asks "what changed since my last memory-diff run".
 
@@ -50,5 +50,5 @@ Other skills can invoke `memory-diff` as a sub-step:
 - `myhealth-pulse` daily → "any new pulse-relevant findings in chart
   memory since yesterday's digest"
 
-Each composition is opt-in by the calling skill — `memory-diff` doesn't
+Each composition is opt-in by the calling skill - `memory-diff` doesn't
 push itself into other skills' workflows.

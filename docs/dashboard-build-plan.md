@@ -1,4 +1,4 @@
-# Tula Dashboard — Build Plan
+# Tula Dashboard - Build Plan
 
 Companion to the [email router build plan](email-router-build-plan.md).
 The email router writes structured FHIR JSON; this dashboard reads it and
@@ -12,14 +12,14 @@ phase ordering, and the questions still to answer.
 A Node-based web app running on the OpenClaw VM. Paul opens a URL in any
 browser (laptop, phone, tablet) and sees:
 
-- **Activity feed** — most recent emails processed, newest first, each
+- **Activity feed** - most recent emails processed, newest first, each
   with content type and a one-line summary
-- **Trends** — interactive charts of biomarkers over time
+- **Trends** - interactive charts of biomarkers over time
   (HbA1c, lipid panel, kidney function, vitals)
-- **Documents** — imaging reports, lab panels, EOBs, provider messages
-- **Medications** — current med list with refill status
-- **Appointments** — upcoming visits
-- **Confidence review queue** — extractions the model wasn't sure about,
+- **Documents** - imaging reports, lab panels, EOBs, provider messages
+- **Medications** - current med list with refill status
+- **Appointments** - upcoming visits
+- **Confidence review queue** - extractions the model wasn't sure about,
   awaiting Paul's verification before they commit to canonical FHIR
 
 The dashboard is read-mostly in Phase 1, with a handful of write actions
@@ -99,7 +99,7 @@ VM: ra-agent01
   interface. Access is through Tailscale (preferred) or Cloudflare
   Tunnel. This eliminates an entire class of "exposed health data" risks.
 
-## Stack — recommendation and alternatives
+## Stack - recommendation and alternatives
 
 ### Recommended: SvelteKit + Tailwind CSS + shadcn-svelte
 
@@ -111,7 +111,7 @@ VM: ra-agent01
 | Charts | **LayerChart** or **Apache ECharts** | LayerChart is Svelte-native; ECharts is heavier but more flexible. |
 | Realtime | **SSE** (built into SvelteKit endpoints) | Server-push for new-email notifications. WebSockets would also work but SSE is simpler for one-way push. |
 | Persistence | **None initially** | Reads FHIR JSON from disk. Add SQLite if query volume grows. |
-| Auth | **None — Tailscale handles it** | See "Access" below. |
+| Auth | **None - Tailscale handles it** | See "Access" below. |
 | Deploy | **`@sveltejs/adapter-node`** | Outputs a self-contained Node server we run with `pm2`/`systemd` on the VM. |
 
 ### Why not Next.js?
@@ -154,13 +154,13 @@ VM: ra-agent01
 
 ```
 ┌──────────────────────────────────────────────────────┐
-│ 🩺 Lab panel — Quest Diagnostics       2 minutes ago │
+│ 🩺 Lab panel - Quest Diagnostics       2 minutes ago │
 │ Comprehensive Metabolic Panel + Lipid Panel          │
 │                                                       │
 │   HbA1c           6.4 %   ↓ 0.4 from last visit      │
 │   LDL             102 mg/dL                          │
 │   eGFR            88 mL/min                          │
-│   Fasting Glucose 112 mg/dL  (high — was 99)         │
+│   Fasting Glucose 112 mg/dL  (high - was 99)         │
 │                                                       │
 │  [View full panel] [Compare with last visit]         │
 └──────────────────────────────────────────────────────┘
@@ -181,7 +181,7 @@ Appointments show the next upcoming. Hover/tap reveals details.
 - **Group lab values into clinically meaningful panels.** Don't dump 30
   individual observations; show them inside the panel they came from.
 
-## Access — keep the VM private
+## Access - keep the VM private
 
 Single recommendation, easy alternatives.
 
@@ -197,13 +197,13 @@ Single recommendation, easy alternatives.
 
 ### Alternatives
 
-- **Cloudflare Tunnel + Cloudflare Access** — public hostname behind
+- **Cloudflare Tunnel + Cloudflare Access** - public hostname behind
   Cloudflare Zero Trust. Free for personal use up to 50 users. Slightly
   more setup than Tailscale, supports adding caregivers without VPN
   installs.
-- **Public + Entra ID OAuth** — match the M365 auth, single login across
+- **Public + Entra ID OAuth** - match the M365 auth, single login across
   email-router and dashboard. More setup, but consolidates identity.
-- **Local-only on the VM** — `ssh -L 3001:127.0.0.1:3001 ra-agent01`
+- **Local-only on the VM** - `ssh -L 3001:127.0.0.1:3001 ra-agent01`
   forwards the port to the laptop on demand. Zero infra; bad UX from
   a phone.
 
@@ -211,9 +211,9 @@ Single recommendation, easy alternatives.
 
 The dashboard depends only on:
 
-1. **FHIR JSON file paths** — exactly as the email-router design doc
+1. **FHIR JSON file paths** - exactly as the email-router design doc
    already specifies. Stable, no migration needed.
-2. **A `meta.tula` block in every FHIR resource** — already in the design
+2. **A `meta.tula` block in every FHIR resource** - already in the design
    doc. Provides emailFrom, processedAt, classification metadata, and
    confidence score.
 3. **An optional `state.json`** in `~/.openclaw/workspace/tula/` we'll
@@ -227,7 +227,7 @@ type definitions update once. Single source of truth.
 
 ## Phase plan
 
-### Phase 1 — Walking skeleton
+### Phase 1 - Walking skeleton
 
 - SvelteKit project scaffold with TypeScript + Tailwind + shadcn-svelte
 - Three pages: `/` (activity feed), `/labs/:loinc` (single trend),
@@ -244,7 +244,7 @@ type definitions update once. Single source of truth.
 **Estimated effort**: 4-6 hours (most of it is the design system,
 not the data).
 
-### Phase 2 — Live FHIR reads
+### Phase 2 - Live FHIR reads
 
 - Replace fixtures with real reads from
   `~/.openclaw/workspace/tula/fhir/**/*.json`
@@ -257,7 +257,7 @@ shows it within 2 seconds.
 
 **Estimated effort**: 6-8 hours.
 
-### Phase 3 — Coverage of remaining content types
+### Phase 3 - Coverage of remaining content types
 
 Pages for imaging, medications, appointments, documents, review queue,
 inbox raw. Each is mostly a list view + detail view with the same card
@@ -268,7 +268,7 @@ has a real view.
 
 **Estimated effort**: 1-2 days.
 
-### Phase 4 — Interactions
+### Phase 4 - Interactions
 
 Confidence-review actions: approve, edit, reject. Flag for follow-up.
 Compose Telegram message from a card ("ask Tula about this lab"). Mark
@@ -279,7 +279,7 @@ just a viewer.
 
 **Estimated effort**: 1-2 days.
 
-### Phase 5 — Operational polish
+### Phase 5 - Operational polish
 
 - PWA manifest + service worker for offline read mode
 - Settings UI (allowlist edits, polling cadence, theme)
@@ -304,9 +304,9 @@ just a viewer.
 | Decision | Choice |
 |---|---|
 | Stack | **Next.js 15 + Tailwind CSS v4 + shadcn/ui + Framer Motion** (TypeScript) |
-| Access | **Cloudflare Tunnel + Cloudflare Access (Zero Trust)** — VM invisible to public internet, identity-aware proxy, free for personal up to 50 users, supports caregiver access without VPN install |
-| Name / brand | **aria** (lowercase) — matches the agent runtime; dashboard reachable at `https://aria.<your-cloudflare-domain>/` |
-| Caregivers in Phase 1 | **Yes** — Cloudflare Access policies grant access by email allowlist |
+| Access | **Cloudflare Tunnel + Cloudflare Access (Zero Trust)** - VM invisible to public internet, identity-aware proxy, free for personal up to 50 users, supports caregiver access without VPN install |
+| Name / brand | **aria** (lowercase) - matches the agent runtime; dashboard reachable at `https://aria.<your-cloudflare-domain>/` |
+| Caregivers in Phase 1 | **Yes** - Cloudflare Access policies grant access by email allowlist |
 | Charts library | **Recharts** for default, **Visx** if we need lower-level control |
 | Hostname | Custom domain via Cloudflare Tunnel (e.g., `aria.realactivity.ai`); Cloudflare provides TLS automatically |
 | Repo location | `apps/aria-web/` (monorepo-style; tula skills + scripts + dashboard all in one repo) |
@@ -331,13 +331,13 @@ just a viewer.
 
 Two reasonable orders:
 
-### Option A — Email router first, dashboard after
+### Option A - Email router first, dashboard after
 
 Get data flowing into FHIR. Then build the dashboard against real data.
 Pro: dashboard authors against the actual shape, no fixtures-to-real
 migration. Con: nothing to look at for ~2 weeks.
 
-### Option B — Dashboard skeleton first, then email router, then iterate
+### Option B - Dashboard skeleton first, then email router, then iterate
 
 Build the dashboard against fixtures matching the design doc's FHIR
 shapes. Then build email-router. Both reach completeness around the
@@ -351,9 +351,9 @@ solid and explicit. Drift risk is low. Faster feedback loop.
 
 ## What to do next session
 
-1. Pick stack, access model, branding name (questions 1–4 above).
+1. Pick stack, access model, branding name (questions 1-4 above).
 2. Scaffold SvelteKit (or chosen alternative) into `apps/dashboard/` in
    this repo.
 3. Build Phase 1 walking skeleton against fixtures.
-4. Resume email-router Phase 1 (M365 setup) in parallel — they're
+4. Resume email-router Phase 1 (M365 setup) in parallel - they're
    genuinely independent until Phase 2 of the dashboard.

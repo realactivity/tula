@@ -1,21 +1,21 @@
 # Feed Adapters and Scoring
 
 Each enabled feed is implemented as an *adapter* that conforms to a small
-contract. The skill workflow is feed-agnostic from scoring onward — adding
+contract. The skill workflow is feed-agnostic from scoring onward - adding
 a new feed means adding an adapter entry below, not editing `SKILL.md`.
 
 ## Adapter contract
 
 An adapter is a documented recipe with five parts:
 
-1. **Name** — kebab-case identifier matching a `profile.feeds.enabled` entry.
-2. **Required tool** — what the agent must have available (MCP server,
+1. **Name** - kebab-case identifier matching a `profile.feeds.enabled` entry.
+2. **Required tool** - what the agent must have available (MCP server,
    built-in tool, or callable script).
-3. **Required env / secrets** — env vars or `skills.entries.*.apiKey`
+3. **Required env / secrets** - env vars or `skills.entries.*.apiKey`
    bindings the adapter needs.
-4. **Query template** — how to build the call from profile fields and the
+4. **Query template** - how to build the call from profile fields and the
    active time window.
-5. **Normalized output** — every adapter returns items in the same shape
+5. **Normalized output** - every adapter returns items in the same shape
    so the scoring and synthesis steps are uniform.
 
 ### Normalized item shape
@@ -38,7 +38,7 @@ An adapter is a documented recipe with five parts:
 ```
 
 Adapters that don't have a concept of a signal (e.g., a wearable trend)
-fill `signals` with reasonable proxies — see the per-adapter notes below.
+fill `signals` with reasonable proxies - see the per-adapter notes below.
 
 ## Available adapters
 
@@ -93,7 +93,7 @@ A roadmap adapter becomes a real adapter when its row is moved up into
 ## Scoring
 
 A single rubric applied to every normalized item from every adapter.
-Adapters do not score their own results — they only return `signals`.
+Adapters do not score their own results - they only return `signals`.
 
 | Signal | Points |
 |---|---|
@@ -103,8 +103,8 @@ Adapters do not score their own results — they only return `signals`.
 | `secondary_topic_hits ≥ 1` and no primary hit | +5 |
 | Published in active window | +15 |
 | `from_authority_source == true` | +10 |
-| `negative_term_hits ≥ 1` | −20 |
-| URL already in yesterday's cached digest | −50 |
+| `negative_term_hits ≥ 1` | -20 |
+| URL already in yesterday's cached digest | -50 |
 
 Cap at 100. Floor at 0. Keep items at or above `profile.feeds.thresholds.keep_score` (default 70).
 
@@ -113,10 +113,10 @@ Cap at 100. Floor at 0. Keep items at or above `profile.feeds.thresholds.keep_sc
 When `profile.feeds.tiers` is defined, group output by tier rather than a
 flat score-sorted list:
 
-- `urgent` — direct safety-related findings (new abnormal lab from
+- `urgent` - direct safety-related findings (new abnormal lab from
   `portal-inbox`, an emergency calendar conflict). Always surfaced.
-- `signal` — items ≥ `keep_score` from any adapter.
-- `noise` — items 50–69, collapsed to a one-line count.
+- `signal` - items ≥ `keep_score` from any adapter.
+- `noise` - items 50-69, collapsed to a one-line count.
 
 Until adapters emit tier hints, treat everything as `signal`.
 
@@ -125,7 +125,7 @@ Until adapters emit tier hints, treat everything as `signal`.
 Each kept item renders as:
 
 ```
-**<title>** — source: <adapter-name> · score: <0-100>
+**<title>** - source: <adapter-name> · score: <0-100>
 <url>
 <one-sentence insight tied to the user's topics>
 ```
@@ -133,14 +133,14 @@ Each kept item renders as:
 End the digest with exactly one trailing line listing active adapters:
 
 ```
-Powered by myhealth-pulse — feeds: social-x, web-brave
+Powered by myhealth-pulse - feeds: social-x, web-brave
 ```
 
 If one or more adapters were dropped because their tool wasn't available,
 append `(unavailable: <names>)`:
 
 ```
-Powered by myhealth-pulse — feeds: social-x (unavailable: web-brave)
+Powered by myhealth-pulse - feeds: social-x (unavailable: web-brave)
 ```
 
 ## Adding a new adapter
@@ -151,6 +151,6 @@ Powered by myhealth-pulse — feeds: social-x (unavailable: web-brave)
    in [`profile-schema.md`](profile-schema.md#extending-the-schema).
 3. If it has its own non-trivial signal logic (e.g., a wearable
    abnormality detector), describe it in this file under the adapter's
-   entry. Don't duplicate scoring rules — extend the rubric above if a
+   entry. Don't duplicate scoring rules - extend the rubric above if a
    genuinely new signal type is needed.
 4. The skill `Workflow` in `SKILL.md` doesn't need to change.

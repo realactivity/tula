@@ -22,8 +22,8 @@ The reference template is `med-pdf/`. New skills should follow its shape.
 
 Required:
 
-- `name` — snake_case, single-line
-- `description` — short, action-led, single-line. Lead with a verb. Include
+- `name` - snake_case, single-line
+- `description` - short, action-led, single-line. Lead with a verb. Include
   trigger guidance inline (`USE FOR: ...` / `DO NOT USE FOR: ...`) when
   trigger specificity matters; otherwise keep prose.
 
@@ -43,25 +43,25 @@ is tolerated as long as the JSON parses):
 | `primaryEnv` | Env var associated with `apiKey` |
 | `userInvocable` | Expose as a slash command |
 
-Don't use Waza-only fields like `type` or `license` — they aren't in the
+Don't use Waza-only fields like `type` or `license` - they aren't in the
 agentskills.io / openclaw spec and add noise.
 
 ## Body Sections (openclaw house style)
 
-Match the canonical openclaw skills (e.g., `skills/github`) — in this order:
+Match the canonical openclaw skills (e.g., `skills/github`) - in this order:
 
 1. `# <Skill Name>` (Title Case)
 2. One-line summary
-3. `## When to Use` — `✅` bullet list of trigger conditions
-4. `## When NOT to Use` — `❌` bullet list of anti-triggers
-5. `## Setup` — installation/auth, if applicable
-6. `## Workflow` — numbered, agent-directed steps. This is the operational core.
-7. `## Scripts` (or `## Common Commands`) — per-script details, ideally
+3. `## When to Use` - `✅` bullet list of trigger conditions
+4. `## When NOT to Use` - `❌` bullet list of anti-triggers
+5. `## Setup` - installation/auth, if applicable
+6. `## Workflow` - numbered, agent-directed steps. This is the operational core.
+7. `## Scripts` (or `## Common Commands`) - per-script details, ideally
    linked to a `references/` module if long
-8. `## Examples` — concrete bash, with real paths. Long examples go to
+8. `## Examples` - concrete bash, with real paths. Long examples go to
    `references/examples.md`.
-9. `## Privacy` — PHI/data handling, when relevant
-10. `## Notes` — gotchas, rate limits, alias maintenance
+9. `## Privacy` - PHI/data handling, when relevant
+10. `## Notes` - gotchas, rate limits, alias maintenance
 
 ## Voice
 
@@ -72,9 +72,9 @@ Match the canonical openclaw skills (e.g., `skills/github`) — in this order:
 
 ## Path Conventions
 
-- `{baseDir}` — placeholder for the skill folder path. Use this in
+- `{baseDir}` - placeholder for the skill folder path. Use this in
   instructions when referencing scripts: `node {baseDir}/scripts/foo.mjs`.
-- `~/.openclaw/workspace/` — agent's workspace at runtime.
+- `~/.openclaw/workspace/` - agent's workspace at runtime.
 - Reference modules live in `references/` and are linked with relative
   markdown links: `[scripts](references/scripts.md)`.
 - Skill scripts live in `scripts/`. Prefer Node ESM (`.mjs`) for portability.
@@ -90,14 +90,14 @@ user's identity from traveling with every fork.
 The pattern:
 
 1. **The skill defines a profile schema** in `references/profile-schema.md`
-   — what keys exist, what they mean, what does NOT belong (PHI, real
+   - what keys exist, what they mean, what does NOT belong (PHI, real
    medical history, etc.).
 2. **The skill resolves the profile at runtime** from a documented
    precedence: `skills.entries.<skill>.profile` in `openclaw.json` →
    `<SKILL>_PROFILE` env var → `~/.openclaw/workspace/memory/<file>.yaml`.
 3. **Eval fixtures use a synthetic persona** (e.g., `@drsynth` /
    "Dr. Casey Synth"). No real names, handles, providers, or topics.
-4. **The actual user profile lives outside the repo** — in the workspace
+4. **The actual user profile lives outside the repo** - in the workspace
    memory directory on a personal VM, or in the multi-tenant identity
    store in Aria. Either way, never under version control with the skill.
 
@@ -118,7 +118,7 @@ embedded code in profile values.
 - Aim for SKILL.md under 500 tokens (Waza's hard cap).
 - Push long content into `references/`. The agent reads SKILL.md every
   invocation; it follows links to references only when needed.
-- 2–3 reference modules is the sweet spot.
+- 2-3 reference modules is the sweet spot.
 
 ## Validation
 
@@ -130,10 +130,10 @@ waza check skills/<skill-name>
 
 Acceptable outcomes:
 
-- `Spec Compliance: 9/9 passes` — required.
-- `Token Budget: under 500` — preferred, not required if openclaw fidelity
+- `Spec Compliance: 9/9 passes` - required.
+- `Token Budget: under 500` - preferred, not required if openclaw fidelity
   would suffer.
-- `Compliance Score: Medium-High` or better — preferred.
+- `Compliance Score: Medium-High` or better - preferred.
 
 If Waza flags routing-clarity tags (`**UTILITY SKILL**`, `INVOKES:`) and
 adding them would clash with openclaw's house style, **skip them**. The
@@ -142,7 +142,7 @@ priority rule above governs.
 ## Deployment
 
 Skills are deployed to `~/.openclaw/workspace/skills/` on the VM via
-`scp`/`rsync`. Don't deploy `evals/` — that stays in `tula/` and runs
+`scp`/`rsync`. Don't deploy `evals/` - that stays in `tula/` and runs
 locally.
 
 ## Adding a New Skill

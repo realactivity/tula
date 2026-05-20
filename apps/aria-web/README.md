@@ -1,4 +1,4 @@
-# aria — Tula's web dashboard
+# aria - Tula's web dashboard
 
 Beautiful, modern, mobile-friendly view of all email-ingested health data.
 
@@ -11,7 +11,7 @@ Beautiful, modern, mobile-friendly view of all email-ingested health data.
 
 - **Next.js 15** (App Router, TypeScript)
 - **Tailwind CSS v4** (CSS-first config, OKLCH design tokens)
-- **shadcn/ui-style primitives** (hand-built locally — `components/ui/`)
+- **shadcn/ui-style primitives** (hand-built locally - `components/ui/`)
 - **Framer Motion** for entrance animations and live-update transitions
 - **Recharts** for biomarker trends (Phase 2)
 - **lucide-react** for icons

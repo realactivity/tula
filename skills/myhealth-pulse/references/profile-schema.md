@@ -9,10 +9,10 @@ repo.
 
 Resolution order, first hit wins:
 
-1. `skills.entries.myhealth-pulse.profile` in `openclaw.json` — used by
+1. `skills.entries.myhealth-pulse.profile` in `openclaw.json` - used by
    multi-tenant runtimes to point at a per-tenant profile.
-2. `MYHEALTH_PULSE_PROFILE` env var — absolute path; useful for testing.
-3. `~/.openclaw/workspace/memory/profile.yaml` — default for single-user
+2. `MYHEALTH_PULSE_PROFILE` env var - absolute path; useful for testing.
+3. `~/.openclaw/workspace/memory/profile.yaml` - default for single-user
    Tula.
 
 The same skill code works in personal and enterprise deployments. Only the
@@ -40,7 +40,7 @@ topics:
     - "Topic B"
   secondary:                             # low weight (+5)
     - "Topic C"
-  negative:                              # down-weight, do not hard-filter (−20)
+  negative:                              # down-weight, do not hard-filter (-20)
     - "Term to deprioritize"
 
 feeds:

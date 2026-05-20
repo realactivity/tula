@@ -1,6 +1,6 @@
 # Scripts Reference
 
-All scripts live in `{baseDir}/scripts/`. Run them from anywhere — they take
+All scripts live in `{baseDir}/scripts/`. Run them from anywhere - they take
 absolute paths.
 
 ## extract.mjs
@@ -11,7 +11,7 @@ node {baseDir}/scripts/extract.mjs <input.pdf> [outDir] [--scale=2.0] [--text-on
 
 - Runs `pdfjs-dist` for text extraction AND `@napi-rs/canvas` for page rendering.
 - The `hasText` heuristic in `meta.json` is `>200` non-whitespace characters
-  across the doc. Trust it — it correctly distinguishes text-bearing PDFs
+  across the doc. Trust it - it correctly distinguishes text-bearing PDFs
   (Quest, LabCorp, faxed reports) from image-only ones (MyChart/Epic exports
   where text is rendered as outlined vector paths).
 - `--scale=2.0` is the default page-render scale for OCR. Bump higher for
@@ -35,10 +35,10 @@ node {baseDir}/scripts/extract.mjs <input.pdf> [outDir] [--scale=2.0] [--text-on
 
 ### Output files (in `outDir`)
 
-- `text.txt` — concatenated text (empty if `hasText: false`)
-- `pageN.png` — rendered page images
-- `pageN.text.txt` — per-page extracted text
-- `meta.json` — full extraction metadata
+- `text.txt` - concatenated text (empty if `hasText: false`)
+- `pageN.png` - rendered page images
+- `pageN.text.txt` - per-page extracted text
+- `meta.json` - full extraction metadata
 
 ## parse_labs.mjs
 
@@ -59,7 +59,7 @@ Outputs JSON with `labs[]`, `abnormal[]`, `unmatchedLines[]`, `stats`.
 
 **Always check `unmatchedLines` after a run.** When something looks like a
 labeled numeric value but wasn't matched, add it to the alias dictionary in
-the script. The dictionary is the parser's intelligence — keep it growing.
+the script. The dictionary is the parser's intelligence - keep it growing.
 
 ## parse_imaging.mjs
 

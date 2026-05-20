@@ -1,4 +1,4 @@
-# Coding Agent — How Tula Writes Code
+# Coding Agent - How Tula Writes Code
 
 OpenClaw distinguishes two ways an agent like Tula can write code, and they
 use different models. This doc explains both, and how to enable the
@@ -28,7 +28,7 @@ delegated path.
                                       (Sonnet 4.6)         (gpt-5.5)
 ```
 
-### Path A — Direct edits (always available)
+### Path A - Direct edits (always available)
 
 Tula reads files, edits them, runs commands, and writes new files using
 its built-in `read` / `edit` / `write` / `exec` tools. The model behind
@@ -38,12 +38,12 @@ those tool calls is **Tula's primary model** (`agents.defaults.model` in
 Use this for: small fixes, single-file edits, configuration changes, doc
 updates, anything that fits in a single agent turn.
 
-### Path B — `coding-agent` skill (opt-in delegation)
+### Path B - `coding-agent` skill (opt-in delegation)
 
 OpenClaw ships a bundled skill called `coding-agent`. When invoked, it
 spawns a separate, specialist coding CLI as a background process. The
-spawned CLI does multi-file work — building features, refactoring, PR
-review — using its own model and auth, then returns results to Tula.
+spawned CLI does multi-file work - building features, refactoring, PR
+review - using its own model and auth, then returns results to Tula.
 
 Per the skill's own description, use this for:
 
@@ -71,7 +71,7 @@ installed, openclaw selects per its internal preference order.
 
 **Claude Code** is the path of least resistance for two reasons:
 
-1. Your openclaw agent already authenticates to Anthropic — no new
+1. Your openclaw agent already authenticates to Anthropic - no new
    provider relationship to set up.
 2. The Anthropic OAuth flow doesn't depend on a workspace policy that may
    block device-code authentication (a real problem with corporate
@@ -79,7 +79,7 @@ installed, openclaw selects per its internal preference order.
 
 Sonnet 4.6 is genuinely excellent for coding (benchmark-competitive with
 GPT-5.5 on most coding-focused evals). Use Opus 4.7 only if you find
-Sonnet missing things on real tasks — switch with `/model` in the Claude
+Sonnet missing things on real tasks - switch with `/model` in the Claude
 Code TUI, or pin in `~/.claude/settings.json`.
 
 ## Install
@@ -103,7 +103,7 @@ The script:
    `skills.entries.coding-agent.enabled = true` (with a backup first)
 5. Verifies `openclaw skills list` shows `coding-agent ✓ ready`
 
-## Log in (interactive — manual step)
+## Log in (interactive - manual step)
 
 The script doesn't log you in because OAuth flows are interactive.
 
@@ -160,7 +160,7 @@ invocation language in the agent's response.
 
 When OpenClaw spawns Claude Code as a delegate, Claude Code runs with
 no TTY. Its default permission mode shows an interactive prompt before
-writing any file, which there's no way to answer headlessly — so it
+writing any file, which there's no way to answer headlessly - so it
 silently refuses to act. Symptom: the agent reports it delegated, the
 target directory ends up empty, and you'll see something like
 *"failed to create the app due to permission prompt unavailable in
@@ -198,7 +198,7 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$HOME/b
 ```
 
 If this happens repeatedly, check the tail of `~/.bashrc` for a corrupt
-`export PATH=...` line — particularly one that contains a Windows-style
+`export PATH=...` line - particularly one that contains a Windows-style
 path like `C:\Users\...`. That's a sign someone ran `ssh "<command using
 $HOME>"` from PowerShell where `$HOME` resolved on the *Windows* side
 instead of being passed through to bash.
@@ -224,10 +224,10 @@ The corporate ChatGPT workspace policy disables device-auth. Either:
 
 Either:
 
-- No delegate CLI is installed yet — re-run `install-coding-agent.sh`
-- The skill isn't enabled in `openclaw.json` — re-run the script (it's
+- No delegate CLI is installed yet - re-run `install-coding-agent.sh`
+- The skill isn't enabled in `openclaw.json` - re-run the script (it's
   idempotent)
-- A required binary isn't on the PATH that openclaw sees — check with
+- A required binary isn't on the PATH that openclaw sees - check with
   `bash -l -c 'command -v claude codex'`
 
 ### Agent says it delegated but target directory is empty

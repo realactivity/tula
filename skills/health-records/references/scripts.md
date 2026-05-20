@@ -27,10 +27,10 @@ No positional args. Honors `HEALTH_SKILLZ_BASE_URL` if set; defaults to
 
 ### What to keep
 
-- **`sessionId`** — needed for `finalize-session.mjs`.
-- **`privateKeyJwk`** — needed for decryption. Keep it in agent memory for the
+- **`sessionId`** - needed for `finalize-session.mjs`.
+- **`privateKeyJwk`** - needed for decryption. Keep it in agent memory for the
   session; never write it to a memory file, never echo it back to Paul.
-- **`userUrl`** — show to Paul as a single clickable link.
+- **`userUrl`** - show to Paul as a single clickable link.
 
 ## `finalize-session.mjs`
 
@@ -43,7 +43,7 @@ records into one JSON file per provider.
 node {baseDir}/scripts/finalize-session.mjs <sessionId> '<privateKeyJwk>' <outputDir> [options]
 ```
 
-Quote the JWK — it contains `{}` and quotes that the shell will mangle.
+Quote the JWK - it contains `{}` and quotes that the shell will mangle.
 
 ### Options
 
@@ -98,7 +98,7 @@ Output filenames come from the provider's display name:
 
 ### Exit codes
 
-- `0` — success, all providers written.
-- `1` — bad args, network failure, decryption failure, or timeout.
+- `0` - success, all providers written.
+- `1` - bad args, network failure, decryption failure, or timeout.
 
 Errors print as JSON on stderr (`{"error": "..."}`).

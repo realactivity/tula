@@ -32,7 +32,7 @@ metadata:
 
 ## Workflow
 
-1. **Extract** — `node {baseDir}/scripts/extract.mjs <input.pdf> <outDir>`
+1. **Extract** - `node {baseDir}/scripts/extract.mjs <input.pdf> <outDir>`
    - `outDir` must be inside `~/.openclaw/workspace/`. Suggested:
      `~/.openclaw/workspace/.med-pdf-cache/<slug>/`.
    - Outputs `text.txt`, `pageN.png`, `meta.json`. Stdout JSON has
@@ -49,7 +49,7 @@ metadata:
    - Both can run on a mixed document.
 
 4. **Reason.** Pull abnormal flags, compare to prior values, surface what
-   matters for healthspan — see
+   matters for healthspan - see
    [`references/healthspan-priorities.md`](references/healthspan-priorities.md).
    Don't just summarize.
 
@@ -72,7 +72,7 @@ Medical PDFs contain PHI (name, DOB, MRN, providers).
 
 - Cache stays under `~/.openclaw/workspace/.med-pdf-cache/`. Don't copy out.
 - Never send raw PDFs or PHI to web search or external services.
-- The `image` tool is acceptable — same trust boundary as the assistant.
+- The `image` tool is acceptable - same trust boundary as the assistant.
 - Redact MRN if a summary might leave the workspace.
 
 ## Troubleshooting

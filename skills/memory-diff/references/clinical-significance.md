@@ -11,7 +11,7 @@ is the authority on what constitutes a tier-worthy change.
 be regenerated from a shared rule set the user can tune. For now, edit by
 hand and accept the drift risk.)
 
-## Tier 1 — Signal (always surface)
+## Tier 1 - Signal (always surface)
 
 Changes a user needs to know about today.
 
@@ -23,27 +23,27 @@ Changes a user needs to know about today.
 - **>20% change in any tracked marker** compared to the most recent
   prior value, regardless of whether the value crosses an abnormal
   threshold.
-- **Abnormal-to-normal resolution** of any prior abnormal marker —
+- **Abnormal-to-normal resolution** of any prior abnormal marker -
   celebrate progress.
 - **First-ever** entry of any of: CAC score, Lp(a), apoB, fasting
   insulin, UACR.
 
 ### Medication changes
 
-- **New medication started** — name, dose, indication if available.
-- **Medication discontinued** — name, why (if noted).
-- **Dose change** — old dose → new dose.
+- **New medication started** - name, dose, indication if available.
+- **Medication discontinued** - name, why (if noted).
+- **Dose change** - old dose → new dose.
 
 ### Diagnosis / condition changes
 
-- **New active condition** — added to problem list.
-- **Condition resolved** — moved off active list.
-- **Status change** — "uncontrolled" → "controlled", or vice versa.
+- **New active condition** - added to problem list.
+- **Condition resolved** - moved off active list.
+- **Status change** - "uncontrolled" → "controlled", or vice versa.
 
 ### Imaging / procedure findings
 
 - **New finding mentioned in any imaging report** (CT, MRI, US, X-ray,
-  mammogram, DEXA, echo, PET) — especially nodules, calcifications,
+  mammogram, DEXA, echo, PET) - especially nodules, calcifications,
   steatosis, lymphadenopathy.
 - **Worsening or growth** of a previously-noted finding.
 
@@ -53,7 +53,7 @@ Changes a user needs to know about today.
 - **New referral placed** to a specialist.
 - **New diagnostic order** placed but not yet resulted.
 
-## Tier 2 — Notable (surface unless prompt is narrow)
+## Tier 2 - Notable (surface unless prompt is narrow)
 
 Worth mentioning but not urgent.
 
@@ -65,10 +65,10 @@ Worth mentioning but not urgent.
 - **New pulse-cache entries** matching one of the user's primary topics
   (from `myhealth-pulse` profile).
 - **Routine refill** of an existing medication.
-- **Resolved Tier 2 from a prior diff** — keep visible for one cycle so
+- **Resolved Tier 2 from a prior diff** - keep visible for one cycle so
   the user sees the closure.
 
-## Tier 3 — Noise (collapse to count)
+## Tier 3 - Noise (collapse to count)
 
 Don't list individually; emit a single line like
 `12 routine entries (memory notes, calendar items, low-relevance pulse links)`.
@@ -83,9 +83,9 @@ Don't list individually; emit a single line like
 
 Don't tier these:
 
-- The agent reading or re-organizing memory — that's a meta-event, not a
+- The agent reading or re-organizing memory - that's a meta-event, not a
   health event.
 - Routine cache rebuilds (`.med-pdf-cache/` re-extractions of the same PDF).
-- The same fact appearing in multiple sources within the window — that's a
+- The same fact appearing in multiple sources within the window - that's a
   source overlap, not a new event. Surface once with the highest-precedence
   source.

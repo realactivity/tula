@@ -26,17 +26,17 @@ metadata:
 
 ❌ Don't use when:
 
-- Symptoms suggest an emergency — return the 911 redirect from
+- Symptoms suggest an emergency - return the 911 redirect from
   [`references/triage-rules.md`](references/triage-rules.md), don't draft
 - Generating a clinician-facing note (SOAP, discharge, dictation)
 - Drafting non-clinical letters (insurance, billing)
-- Paul is asking a medical question for advice — that's answered directly,
+- Paul is asking a medical question for advice - that's answered directly,
   not in a portal message
 
 ## Workflow
 
 1. **Triage first.** Scan input for red-flag symptoms. If present, do NOT
-   draft — return the 911 redirect text from
+   draft - return the 911 redirect text from
    [`references/triage-rules.md`](references/triage-rules.md).
 
 2. **Identify the single ask.** If multiple unrelated topics exist, propose
@@ -44,14 +44,14 @@ metadata:
 
 3. **Draft** using the canonical format in
    [`references/portal-message-format.md`](references/portal-message-format.md):
-   `Subject:` line with urgency, greeting, one-sentence ask, 2–4 sentences
+   `Subject:` line with urgency, greeting, one-sentence ask, 2-4 sentences
    of context, optional bullet data, sign-off.
 
 4. **Word budget.** Aim for ≤150 words; hard cap 220. Front-load the ask.
    Plain language. No self-diagnosis, no filler praise, no PHI of others.
 
 5. **Output is copy-paste ready.** No explanations or meta-commentary
-   wrapped around the message — just the message itself.
+   wrapped around the message - just the message itself.
 
 ## Examples
 
@@ -62,7 +62,7 @@ multi-topic split).
 ## Privacy
 
 Portal messages travel through health-system networks under HIPAA. Tula
-generates drafts locally — no PHI leaves the workspace.
+generates drafts locally - no PHI leaves the workspace.
 
 - Don't include PHI of family members or third parties.
 - The draft stays in the conversation. Never auto-send.
