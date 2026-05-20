@@ -1,10 +1,20 @@
 import { chromium } from "playwright";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { parseArgs } from "node:util";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const out = path.join(here, "..", "public", "my-aria-dashboard.png");
-const url = process.env.URL ?? "http://localhost:3002/dashboard";
+
+const { values } = parseArgs({
+  options: {
+    url: { type: "string", short: "u" },
+    out: { type: "string", short: "o" },
+  },
+});
+
+const url = values.url ?? process.env.URL ?? "http://localhost:3002/dashboard";
+const outRel = values.out ?? process.env.OUT ?? "public/my-aria-dashboard.png";
+const out = path.isAbsolute(outRel) ? outRel : path.join(here, "..", outRel);
 
 const browser = await chromium.launch();
 const page = await browser.newPage({
