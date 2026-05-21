@@ -47,6 +47,10 @@ Tula is not:
 
 Tula is designed to support personal health organization, health literacy, caregiver coordination, and patient-facing AI experimentation in a private environment.
 
+## Coverage
+
+Paul Swider on the AI Agent and Copilot Podcast: [OpenClaw-Powered Healthcare Assistant Builds Patient Agency](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) (17 minutes, May 14, 2026).
+
 ## Open-Core Model
 
 Tula and Aria are related but distinct.
@@ -331,10 +335,6 @@ The open and closed split applies to the evaluation infrastructure as well:
 
 - Open in this repo: the eval suites under [`evals/`](evals/), the skill authoring conventions in [`skills/AGENTS.md`](skills/AGENTS.md), the Waza spec gates wired into [CI](.github/workflows/eval-status.yml), and the continuous compliance status at [`docs/evals.md`](docs/evals.md). These are intended as a vendor-neutral starting point for evaluating any patient-facing AI agent. See the draft article [`how-will-you-know-if-your-patient-ai-is-working.md`](articles/how-will-you-know-if-your-patient-ai-is-working.md) for the public framing.
 - Closed in Aria: the continuous-execution layer that runs these evaluations per patient agent at hospital scale, the EHR-fidelity comparison engine that grounds the agent's view against the chart of record, the audit aggregation, and the governance score that composes those signals into a single number a quality officer can act on. See the draft article [`every-patient-ai-needs-two-scores.md`](articles/every-patient-ai-needs-two-scores.md) for the public framing of why the split lands where it does.
-
-## Coverage
-
-Paul Swider on the AI Agent and Copilot Podcast: [OpenClaw-Powered Healthcare Assistant Builds Patient Agency](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) (17 minutes, May 14, 2026).
 
 ## Contributing
 
