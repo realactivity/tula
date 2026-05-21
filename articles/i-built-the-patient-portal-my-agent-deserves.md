@@ -51,9 +51,11 @@ My Aria's left navigation is organized by **where data comes from**, not by whic
 
 ![My Aria - Home devices hub: one sidebar link opens five clinical-peripheral categories (blood pressure, weight, glucose, pulse ox, temperature), with a "Connected devices" planned card up top. Wearables stay under Longitudinal feeds.](../apps/my-aria/public/my-aria-home-devices.png)
 
+**Intelligent Nutrition** - MyFitnessPal feeds the meal log; Tula does the rest. Three slots: Overview (today's calories, macros, fiber, hydration), Food x Glucose (CGM curves overlaid with logged meals), and Diet plan (clinician-recommended pattern scored against actual intake). Food x Glucose earns its own sidebar slot because no patient portal does that correlation.
+
 **Intelligent SDOH** - Air quality and demographics by ZIP (demo fixtures today; AirNow and Census ACS tomorrow), plus **AI chats**: social-determinant signals extracted from agent conversations - transportation gaps, food insecurity, housing instability - with evidence strings and ICD-10 Z codes where they apply. The chat history is a social-determinant data source. Nobody's portal has a tab for that.
 
-**Intelligent Travel** - Business and personal trips as health perturbations: itineraries and time zones, on-trip vitals vs home baseline, care away from home, destination health briefs, travel journal, return checklist. Seven placeholder routes for now; I know the sidebar is long. Travel trims to three links once I have lived with it for a month. Home devices stayed a single hub so the menu does not scroll forever.
+**Intelligent Travel** - Business and personal trips as health perturbations. Three slots: Trips (the hub - itineraries, destination brief, travel journal, and return checklist live one click deep), On-trip health (wearable signals vs home baseline), and Care away from home (urgent care, pharmacy refills, telehealth in the ZIP you are in). Same compression pattern Home devices uses, so the menu does not scroll forever.
 
 Mobile keeps a bottom nav with only the five portal pages. The depth lives on desktop. That is the right trade for a power user building on a VM, with Cloudflare Access for caregivers later.
 
