@@ -28,7 +28,7 @@ export const TRAVEL_PAGES: TravelPageConfig[] = [
     icon: Plane,
     title: "Trips",
     description:
-      "A unified log of business and personal travel — destination, dates, purpose, and links to itinerary, on-trip vitals, and post-trip catch-up. Tag each trip so Tula can compare conference season vs recovery vacations.",
+      "A unified log of business and personal travel - destination, dates, purpose, and links to itinerary, on-trip vitals, and post-trip catch-up. Tag each trip so Tula can compare conference season vs recovery vacations.",
     tracks: [
       "Business vs personal tags",
       "Trip intensity (meetings, miles, time away)",
@@ -56,7 +56,7 @@ export const TRAVEL_PAGES: TravelPageConfig[] = [
     icon: Activity,
     title: "On-trip health",
     description:
-      "Wearable and journal signals while you are away — sleep debt, HRV, steps, stress, diet deviation — compared to your home baseline so you see when travel is helping or hurting recovery.",
+      "Wearable and journal signals while you are away - sleep debt, HRV, steps, stress, diet deviation - compared to your home baseline so you see when travel is helping or hurting recovery.",
     tracks: [
       "Sleep & HRV vs home baseline",
       "Activity and sedentary time (flights, drives)",
@@ -70,7 +70,7 @@ export const TRAVEL_PAGES: TravelPageConfig[] = [
     icon: Stethoscope,
     title: "Care away from home",
     description:
-      "Nearest in-network urgent care, pharmacies that can fill travel emergencies, and telehealth options for the ZIP you are in — plus your travel insurance snapshot when you need it.",
+      "Nearest in-network urgent care, pharmacies that can fill travel emergencies, and telehealth options for the ZIP you are in - plus your travel insurance snapshot when you need it.",
     tracks: [
       "Urgent care & ER proximity",
       "Pharmacy refill routing on the road",
@@ -98,7 +98,7 @@ export const TRAVEL_PAGES: TravelPageConfig[] = [
     icon: NotebookPen,
     title: "Travel journal",
     description:
-      "Agent-captured notes per trip — how you felt, what you ate, caregiver coverage at home, and anything you want Tula to remember when synthesizing your longitudinal record.",
+      "Agent-captured notes per trip - how you felt, what you ate, caregiver coverage at home, and anything you want Tula to remember when synthesizing your longitudinal record.",
     tracks: [
       "Daily check-ins via Telegram",
       "Diet, alcohol, hydration notes",

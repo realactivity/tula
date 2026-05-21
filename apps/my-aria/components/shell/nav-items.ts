@@ -25,7 +25,7 @@ export type NavItem = {
   icon: LucideIcon;
 };
 
-/** Connected patient portals (FHIR) — one or many hospitals; also used by bottom nav on mobile. */
+/** Connected patient portals (FHIR) - one or many hospitals; also used by bottom nav on mobile. */
 export const NAV_ITEMS: NavItem[] = [
   {
     id: "dashboard",
@@ -71,7 +71,7 @@ export type RoadmapNavItem = {
   icon: LucideIcon;
 };
 
-/** Longitudinal feeds — sidebar only (planned capabilities). */
+/** Longitudinal feeds - sidebar only (planned capabilities). */
 export const LONGITUDINAL_NAV_ITEMS: RoadmapNavItem[] = [
   {
     id: "wearables",
@@ -93,7 +93,7 @@ export const LONGITUDINAL_NAV_ITEMS: RoadmapNavItem[] = [
   },
 ];
 
-/** Home clinical peripherals — single hub; categories live on the page. */
+/** Home clinical peripherals - single hub; categories live on the page. */
 export const HOME_DEVICES_NAV_ITEM: RoadmapNavItem = {
   id: "home-devices",
   href: "/home-devices",
@@ -108,7 +108,7 @@ export const DE_IDENTIFICATION_NAV_ITEM: RoadmapNavItem = {
   icon: ShieldCheck,
 };
 
-/** Intelligent SDOH — environmental + conversational determinants. */
+/** Intelligent SDOH - environmental + conversational determinants. */
 export const SDOH_NAV_ITEMS: RoadmapNavItem[] = [
   {
     id: "air-quality",
@@ -124,13 +124,13 @@ export const SDOH_NAV_ITEMS: RoadmapNavItem[] = [
   },
 ];
 
-/** Intelligent Nutrition — MyFitnessPal intake + CGM correlation + clinical diet plan. */
+/** Intelligent Nutrition - MyFitnessPal intake + CGM correlation + clinical diet plan. */
 export const NUTRITION_NAV_ITEMS: RoadmapNavItem[] = NUTRITION_PAGES.map(
   ({ id, href, label, icon }) => ({ id, href, label, icon })
 );
 
 /**
- * Intelligent Travel — health journey across business & personal trips.
+ * Intelligent Travel - health journey across business & personal trips.
  *
  * Sidebar shows the 3 primary surfaces (Trips, On-trip health, Return checklist).
  * The remaining 4 pages (Itineraries, Care-away, Destination brief, Travel journal)

@@ -22,7 +22,7 @@ export default function HomePage() {
 
       <footer className="mt-16 text-xs text-[--color-fg-subtle] flex items-center justify-between">
         <span className="font-mono">
-          aria — single user, local data, private network
+          aria - single user, local data, private network
         </span>
         <span className="font-mono">
           {activityFixtures.length} events

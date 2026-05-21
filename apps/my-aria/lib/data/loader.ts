@@ -6,7 +6,7 @@ import { dashboardFixture } from "./fixtures";
  *
  * Phase 1: returns synthetic fixtures (no PHI).
  * Phase 2: replace with reads from `~/.openclaw/workspace/tula/fhir/`
- *          + the dashboard `state.json`. Same return shape — no UI changes.
+ *          + the dashboard `state.json`. Same return shape - no UI changes.
  */
 export async function getDashboardData(): Promise<DashboardData> {
   // Stamp refreshedAt at request time so the header timestamp is honest.

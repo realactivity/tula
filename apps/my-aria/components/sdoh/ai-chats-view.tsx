@@ -41,8 +41,8 @@ export function AiChatsView() {
           <h1 className="text-2xl font-semibold tracking-tight">AI chats → SDOH</h1>
           <p className="mt-2 max-w-prose text-sm text-[--color-fg-muted]">
             Tula scans your agent chat histories (Telegram, portal drafts, SMS) and
-            extracts social-determinant signals — transportation, food, housing,
-            financial strain, and environmental barriers — for your longitudinal record.
+            extracts social-determinant signals - transportation, food, housing,
+            financial strain, and environmental barriers - for your longitudinal record.
           </p>
         </div>
         <Button
@@ -52,7 +52,7 @@ export function AiChatsView() {
           disabled={scanning}
         >
           <RefreshCw className={`h-4 w-4 ${scanning ? "animate-spin" : ""}`} />
-          {scanning ? "Scanning…" : "Rescan chats"}
+          {scanning ? "Scanning..." : "Rescan chats"}
         </Button>
       </header>
 

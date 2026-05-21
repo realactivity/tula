@@ -6,7 +6,7 @@ function normalizeZip(input: string): string | null {
   return digits.length === 5 ? digits : null;
 }
 
-/** Demo lookup — returns curated fixtures or a synthesized bundle for unknown ZIPs. */
+/** Demo lookup - returns curated fixtures or a synthesized bundle for unknown ZIPs. */
 export function lookupZipSdoh(rawZip: string): ZipSdohBundle | null {
   const zip = normalizeZip(rawZip);
   if (!zip) return null;

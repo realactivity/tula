@@ -81,7 +81,7 @@ export function AirQualityView() {
         <h1 className="text-2xl font-semibold tracking-tight">Air quality &amp; SDOH</h1>
         <p className="mt-2 max-w-prose text-sm text-[--color-fg-muted]">
           Enter a ZIP code to capture local air quality and demographic indicators
-          relevant to social determinants of health. Demo data today — production
+          relevant to social determinants of health. Demo data today - production
           will call AirNow, Census ACS, and CDC PLACES.
         </p>
       </header>

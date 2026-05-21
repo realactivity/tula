@@ -24,7 +24,7 @@
  *     "sessionId":     "abc123...",                       // pass to finalize-session
  *     "userUrl":       "https://.../connect/abc123...",   // show this link to Paul
  *     "pollUrl":       "https://.../api/poll/abc123...",  // diagnostic only
- *     "privateKeyJwk": { "kty": "EC", ... }               // SAVE THIS — needed to decrypt
+ *     "privateKeyJwk": { "kty": "EC", ... }               // SAVE THIS - needed to decrypt
  *   }
  *
  * Errors go to stderr; exit code 1 on failure.

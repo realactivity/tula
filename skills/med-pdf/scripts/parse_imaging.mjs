@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// parse_imaging.mjs — Extract structured sections from radiology / imaging
+// parse_imaging.mjs - Extract structured sections from radiology / imaging
 // reports (CT, MRI, X-ray, ultrasound, mammogram, DEXA, echo).
 //
 // Usage:
@@ -12,7 +12,7 @@
 //                 bones_soft_tissues, upper_abdomen, ... raw },
 //     impression: [string, ...],
 //     orderedBy, resultedOn, status,
-//     patient: { name, dob, mrn },  // PHI — handle locally only
+//     patient: { name, dob, mrn },  // PHI - handle locally only
 //     raw
 //   }
 //
@@ -33,7 +33,7 @@ const SECTION_HEADERS = [
   ['impression', /(?:IMPRESSION|CONCLUSION|ASSESSMENT)\s*:?/i],
   ['recommendations', /RECOMMENDATIONS?\s*:?/i],
   ['addendum', /ADDENDUM\s*:?/i],
-  // Soft stops — used to bound preceding sections, not exposed in output.
+  // Soft stops - used to bound preceding sections, not exposed in output.
   ['_orderedBy', /Ordered\s*By\s*:?/i],
   ['_resultedOn', /Resulted\s*On\s*:?/i],
   ['_status', /Result\s*Status\s*:?/i],
@@ -65,7 +65,7 @@ function readInput(arg) {
   const stat = fs.statSync(p);
   if (stat.isDirectory()) {
     const f = path.join(p, 'text.txt');
-    if (!fs.existsSync(f)) throw new Error(`No text.txt in ${p} — run extract.mjs first`);
+    if (!fs.existsSync(f)) throw new Error(`No text.txt in ${p} - run extract.mjs first`);
     return fs.readFileSync(f, 'utf8');
   }
   return fs.readFileSync(p, 'utf8');
@@ -87,7 +87,7 @@ function splitSections(text) {
     const { key, end } = positions[i];
     const stop = i + 1 < positions.length ? positions[i + 1].start : text.length;
     const body = text.slice(end, stop).trim().replace(/\n{3,}/g, '\n\n');
-    if (key.startsWith('_')) continue; // soft stop — used only to bound text
+    if (key.startsWith('_')) continue; // soft stop - used only to bound text
     if (sections[key]) sections[key] += '\n\n' + body;
     else sections[key] = body;
   }
@@ -121,9 +121,9 @@ function parseImpression(impressionText) {
   const items = [];
   let current = '';
   for (const line of lines) {
-    if (/^(?:\d+\.|\d+\)|[-•*])\s+/.test(line)) {
+    if (/^(?:\d+\.|\d+\)|[-**])\s+/.test(line)) {
       if (current) items.push(current.trim());
-      current = line.replace(/^(?:\d+\.|\d+\)|[-•*])\s+/, '');
+      current = line.replace(/^(?:\d+\.|\d+\)|[-**])\s+/, '');
     } else if (current) {
       current += ' ' + line;
     } else {

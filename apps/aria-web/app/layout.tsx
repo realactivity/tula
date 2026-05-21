@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "aria",
   description:
-    "aria — Tula's web dashboard. Browse health data ingested from email, with live updates.",
+    "aria - Tula's web dashboard. Browse health data ingested from email, with live updates.",
 };
 
 export default function RootLayout({

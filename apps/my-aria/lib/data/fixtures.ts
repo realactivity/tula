@@ -159,7 +159,7 @@ export const recentLabs: LabTrend[] = [
   {
     latest: fastingGlucose,
     history: [96, 99, 102, 105, 108, 110, 109, 112],
-    delta: "trending up — discuss at next visit",
+    delta: "trending up - discuss at next visit",
   },
   {
     latest: egfr,
@@ -283,7 +283,7 @@ export const deIdentification: PlannedCapability = {
   id: "de-identification",
   label: "De-identify your record",
   description:
-    "Remove PHI before sharing with another AI, a researcher, or a caregiver — HIPAA Safe Harbor-style de-identification on your own hardware",
+    "Remove PHI before sharing with another AI, a researcher, or a caregiver - HIPAA Safe Harbor-style de-identification on your own hardware",
   icon: "shield",
   href: "/integrations/de-identification",
 };

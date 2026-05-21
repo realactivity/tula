@@ -96,7 +96,7 @@ export function ActivityCard({ event, index }: { event: ActivityEvent; index: nu
             <div className="flex items-center justify-between gap-2">
               <h3 className="text-base font-semibold tracking-tight truncate">
                 {LABELS[event.contentType]}
-                {event.provider ? <span className="text-[--color-fg-muted] font-normal"> — {event.provider}</span> : null}
+                {event.provider ? <span className="text-[--color-fg-muted] font-normal"> - {event.provider}</span> : null}
               </h3>
               <time
                 className="text-xs text-[--color-fg-subtle] whitespace-nowrap"

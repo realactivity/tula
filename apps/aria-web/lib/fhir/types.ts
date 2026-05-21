@@ -2,7 +2,7 @@
  * Minimal FHIR R4 types tailored to what the email-router writes.
  * Mirrors the schema in docs/email-router-design.md.
  *
- * Only a subset of the FHIR spec is represented — exactly the fields
+ * Only a subset of the FHIR spec is represented - exactly the fields
  * Tula stores. We can extend toward fuller FHIR conformance later.
  */
 

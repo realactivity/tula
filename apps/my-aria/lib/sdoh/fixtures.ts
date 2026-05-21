@@ -33,7 +33,7 @@ const ZIP_02139: ZipSdohBundle = {
     housingInstabilityRisk: "moderate",
   },
   sdohSummary:
-    "ZIP 02139 shows relatively strong economic indicators but elevated rent burden and moderate food-insecurity risk—common in dense college-town markets. Air quality is favorable for outdoor exercise and pulmonary rehab.",
+    "ZIP 02139 shows relatively strong economic indicators but elevated rent burden and moderate food-insecurity risk-common in dense college-town markets. Air quality is favorable for outdoor exercise and pulmonary rehab.",
 };
 
 const ZIP_10001: ZipSdohBundle = {
@@ -168,7 +168,7 @@ export const aiChatsSdohFixture: AiChatsSdohReport = {
     {
       id: "chat-003",
       source: "portal",
-      title: "Draft message — housing follow-up",
+      title: "Draft message - housing follow-up",
       lastMessageAt: "2026-05-12T11:02:00Z",
       excerpt:
         "Draft: I received the 30-day notice and I'm looking for a new apartment. Worried about moving during treatment.",
@@ -187,7 +187,7 @@ export const aiChatsSdohFixture: AiChatsSdohReport = {
       title: "Air quality and outdoor walks",
       lastMessageAt: "2026-05-10T07:55:00Z",
       excerpt:
-        "Smog has been bad this week — I skipped my walks. Is it safe to exercise outside when the air looks hazy?",
+        "Smog has been bad this week - I skipped my walks. Is it safe to exercise outside when the air looks hazy?",
       signals: [
         {
           theme: "Environmental exposure (air quality)",

@@ -1,14 +1,14 @@
 #!/usr/bin/env node
-// extract.mjs — Extract text and rendered page images from a (medical) PDF.
+// extract.mjs - Extract text and rendered page images from a (medical) PDF.
 //
 // Usage:
 //   node extract.mjs <input.pdf> [outDir] [--scale=2.0] [--text-only] [--images-only]
 //
 // Outputs into <outDir> (default: <input>.extracted/):
-//   text.txt              — concatenated text from text-extractable PDFs
-//   pageN.png             — rendered page images (for vision/OCR fallback)
-//   pageN.text.txt        — per-page text
-//   meta.json             — { numPages, hasText, fingerprint, source, ts }
+//   text.txt              - concatenated text from text-extractable PDFs
+//   pageN.png             - rendered page images (for vision/OCR fallback)
+//   pageN.text.txt        - per-page text
+//   meta.json             - { numPages, hasText, fingerprint, source, ts }
 //
 // Strategy:
 //   1) Try pdfjs-dist textContent extraction. If it yields enough characters

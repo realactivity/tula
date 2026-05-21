@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// parse_labs.mjs — Find lab values in extracted text and flag out-of-range.
+// parse_labs.mjs - Find lab values in extracted text and flag out-of-range.
 //
 // Usage:
 //   node parse_labs.mjs <text.txt | extracted-dir>
@@ -106,7 +106,7 @@ const LAB_DICT = [
   { key: 'troponin', aliases: ['troponin', 'troponin i', 'troponin t'], unit: 'ng/L|ng/mL' },
 ];
 
-const RANGE_RE = /(?:reference\s*range|ref\s*range|ref\.?|range)?\s*[:\-]?\s*(?:\(?\s*([<>])?\s*([0-9]+(?:\.[0-9]+)?)\s*[-–to]+\s*([0-9]+(?:\.[0-9]+)?)\s*\)?|\(?\s*<\s*([0-9]+(?:\.[0-9]+)?)\s*\)?|\(?\s*>\s*([0-9]+(?:\.[0-9]+)?)\s*\)?)/i;
+const RANGE_RE = /(?:reference\s*range|ref\s*range|ref\.?|range)?\s*[:\-]?\s*(?:\(?\s*([<>])?\s*([0-9]+(?:\.[0-9]+)?)\s*[--to]+\s*([0-9]+(?:\.[0-9]+)?)\s*\)?|\(?\s*<\s*([0-9]+(?:\.[0-9]+)?)\s*\)?|\(?\s*>\s*([0-9]+(?:\.[0-9]+)?)\s*\)?)/i;
 const VALUE_RE = /([<>]=?)?\s*([0-9]+(?:\.[0-9]+)?)/;
 // Flag must be surrounded by whitespace (not adjacent to /, like in 'U/L'
 // or 'mg/dL'). We require explicit space/tab boundaries on both sides.
@@ -194,7 +194,7 @@ function readInput(arg) {
   const stat = fs.statSync(p);
   if (stat.isDirectory()) {
     const f = path.join(p, 'text.txt');
-    if (!fs.existsSync(f)) throw new Error(`No text.txt in ${p} — run extract.mjs first`);
+    if (!fs.existsSync(f)) throw new Error(`No text.txt in ${p} - run extract.mjs first`);
     return fs.readFileSync(f, 'utf8');
   }
   return fs.readFileSync(p, 'utf8');

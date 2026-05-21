@@ -6,7 +6,7 @@ export default function DeIdentificationPage() {
     <ComingSoon
       icon={ShieldCheck}
       title="De-identification"
-      description="Remove PHI from your records before sharing with another AI, a researcher, or a caregiver — HIPAA Safe Harbor-style de-identification on your own hardware."
+      description="Remove PHI from your records before sharing with another AI, a researcher, or a caregiver - HIPAA Safe Harbor-style de-identification on your own hardware."
     />
   );
 }

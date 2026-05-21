@@ -20,7 +20,7 @@ export const HOME_DEVICE_CATEGORIES: HomeDeviceCategory[] = [
     id: "blood-pressure",
     label: "Blood pressure",
     description:
-      "Cuff readings at home — compare trends with portal vitals and flag white-coat vs sustained hypertension.",
+      "Cuff readings at home - compare trends with portal vitals and flag white-coat vs sustained hypertension.",
     examples: "Omron, Withings BPM, QardioArm, Beurer",
     icon: HeartPulse,
   },
@@ -36,7 +36,7 @@ export const HOME_DEVICE_CATEGORIES: HomeDeviceCategory[] = [
     id: "glucose",
     label: "Glucose & CGM",
     description:
-      "Fingerstick logs and continuous glucose curves when you use a CGM — separate from wearables activity rings.",
+      "Fingerstick logs and continuous glucose curves when you use a CGM - separate from wearables activity rings.",
     examples: "Dexcom, FreeStyle Libre, Contour, OneTouch",
     icon: Droplets,
   },
@@ -52,7 +52,7 @@ export const HOME_DEVICE_CATEGORIES: HomeDeviceCategory[] = [
     id: "temperature",
     label: "Temperature",
     description:
-      "Fever and baseline temperature trends — useful during illness, travel, and treatment cycles.",
+      "Fever and baseline temperature trends - useful during illness, travel, and treatment cycles.",
     examples: "Kinsa, Withings Thermo",
     icon: Thermometer,
   },

@@ -1,4 +1,4 @@
-// auth.mjs — Device-code OAuth against Microsoft Graph using msal-node
+// auth.mjs - Device-code OAuth against Microsoft Graph using msal-node
 // directly with a chmod-600 file cache. No native deps, no keychain
 // daemon, no libsecret. Works on a headless Ubuntu VM out of the box.
 //

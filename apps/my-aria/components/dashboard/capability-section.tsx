@@ -71,7 +71,7 @@ export function DeIdentificationSection({ capability }: { capability: PlannedCap
           <Badge tone="neutral">Planned</Badge>
         </div>
         <p className="mt-1 text-xs text-[--color-fg-subtle]">
-          Share a redacted copy — not about collecting data, about exporting it safely
+          Share a redacted copy - not about collecting data, about exporting it safely
         </p>
       </header>
       <div className="p-3 pt-1">

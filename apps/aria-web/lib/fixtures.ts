@@ -2,7 +2,7 @@ import type { ActivityEvent, Observation } from "./fhir/types";
 
 /**
  * Sample data shaped exactly like what the email-router will write.
- * Everything here is synthetic — no real PHI.
+ * Everything here is synthetic - no real PHI.
  */
 
 const cmpObservations: Observation[] = [
@@ -131,7 +131,7 @@ export const activityFixtures: ActivityEvent[] = [
     contentType: "imaging_report",
     provider: "RadNet",
     emailFrom: "noreply@mychart.example.org",
-    summary: "MRI Brain w/o contrast — no acute findings, follow-up in 6 months.",
+    summary: "MRI Brain w/o contrast - no acute findings, follow-up in 6 months.",
     resourceId: "report-20260315-mri-brain-001",
     impression:
       "1. No acute intracranial abnormality. 2. Stable T2 hyperintense lesions in the left periventricular white matter, unchanged from prior. 3. No evidence of diffusion restriction. Recommend follow-up MRI in 6 months for surveillance.",
@@ -140,7 +140,7 @@ export const activityFixtures: ActivityEvent[] = [
     id: "evt-003",
     at: "2026-03-12T18:04:00Z",
     contentType: "appointment",
-    provider: "Dr. Patel — Internal Medicine",
+    provider: "Dr. Patel - Internal Medicine",
     emailFrom: "scheduling@mychart.example.org",
     summary: "Follow-up appointment scheduled April 8, 2026 at 10:30 AM.",
     resourceId: "appt-20260408-internal-medicine-001",
@@ -151,7 +151,7 @@ export const activityFixtures: ActivityEvent[] = [
     contentType: "prescription",
     provider: "Riverside Pharmacy",
     emailFrom: "prescriptions@riversidepharmacy.example.com",
-    summary: "Lisinopril 10 mg daily — refill ready for pickup.",
+    summary: "Lisinopril 10 mg daily - refill ready for pickup.",
     resourceId: "med-lisinopril-001",
   },
   {

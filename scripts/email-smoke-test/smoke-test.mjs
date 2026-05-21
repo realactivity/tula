@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// smoke-test.mjs — Phase 1 smoke test for the email-router.
+// smoke-test.mjs - Phase 1 smoke test for the email-router.
 //
 // Usage:
 //   TULA_CLIENT_ID=<guid> TULA_TENANT_ID=<guid> node smoke-test.mjs [--auth-only] [--top N]
@@ -10,10 +10,10 @@
 // subject, sender, and received timestamp.
 //
 // Exit codes:
-//   0 — success
-//   2 — bad CLI args
-//   3 — missing env vars
-//   4 — Graph call failed
+//   0 - success
+//   2 - bad CLI args
+//   3 - missing env vars
+//   4 - Graph call failed
 
 import { Client } from '@microsoft/microsoft-graph-client';
 import { buildPca, getAccessToken, GRAPH_SCOPES } from './auth.mjs';
@@ -131,7 +131,7 @@ async function main() {
   for (const msg of items) {
     console.log(formatRow(msg));
   }
-  console.log(`\nOK — ${items.length} message(s) listed.`);
+  console.log(`\nOK - ${items.length} message(s) listed.`);
 }
 
 main().catch((err) => {

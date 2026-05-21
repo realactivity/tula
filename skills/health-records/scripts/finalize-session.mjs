@@ -269,7 +269,7 @@ async function writeStreamToFile(stream, filePath) {
       if (done) break;
       if (!value || value.byteLength === 0) continue;
       total += value.byteLength;
-      // Loop on partial writes — fh.write can write fewer bytes than asked.
+      // Loop on partial writes - fh.write can write fewer bytes than asked.
       let written = 0;
       while (written < value.byteLength) {
         const r = await fh.write(value, written, value.byteLength - written);
@@ -327,7 +327,7 @@ async function readFileToUint8Array(filePath) {
  * For each chunk the backend uses a fresh ECDH ephemeral keypair. We:
  *   1. Import its ephemeral public key.
  *   2. Derive a 256-bit shared secret with our long-lived private key.
- *   3. Use that secret directly as the AES-256 key (no HKDF — that's the
+ *   3. Use that secret directly as the AES-256 key (no HKDF - that's the
  *      protocol spec, intentionally simple; security comes from the
  *      ephemeral keypair + per-chunk IV).
  *   4. AES-GCM decrypt the ciphertext with the chunk's IV.
@@ -368,7 +368,7 @@ async function downloadChunkToFile(sessionId, providerIndex, chunkIndex, chunkPa
   const res = await fetchWithRetry(url, 5);
   if (!res.ok) throw new Error(`Failed to fetch chunk ${chunkIndex}: HTTP ${res.status}`);
   if (res.body) {
-    // Modern fetch gives us a ReadableStream — stream it straight to disk.
+    // Modern fetch gives us a ReadableStream - stream it straight to disk.
     await writeStreamToFile(res.body, chunkPath);
     return;
   }
@@ -443,7 +443,7 @@ async function decryptV3ProviderToFile(sessionId, privateKey, providerMeta, outp
 
       const chunkPath = await pending;
       const ciphertext = await readFileToUint8Array(chunkPath);
-      // Delete the encrypted file as soon as we've loaded it — no point
+      // Delete the encrypted file as soon as we've loaded it - no point
       // keeping PHI ciphertext on disk for longer than necessary.
       await rm(chunkPath, { force: true });
       const plaintext = await decryptChunk(privateKey, ciphertext, nextMeta);
@@ -485,7 +485,7 @@ function slugify(name) {
 
 // Peek at the first 1MB of a decrypted provider file to extract its `name`
 // field (top-level JSON property set by the backend). We avoid JSON.parse on
-// the whole file — providers can be 100MB+.
+// the whole file - providers can be 100MB+.
 async function extractProviderName(filePath) {
   const maxBytes = 1024 * 1024;
   const fh = await open(filePath, 'r');

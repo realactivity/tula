@@ -1,5 +1,5 @@
 /**
- * My Aria — typed data layer.
+ * My Aria - typed data layer.
  *
  * Clinical data flows through FHIR R4 types in `lib/fhir/types.ts`.
  * Patient-portal UX state (balances, quick actions, content copy) lives here.
@@ -44,7 +44,7 @@ export type QuickAction = {
   href: string;
 };
 
-/** Planned capability tile — Tula roadmap items, not live portal tasks. */
+/** Planned capability tile - Tula roadmap items, not live portal tasks. */
 export type PlannedCapability = {
   id: string;
   label: string;

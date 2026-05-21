@@ -9,7 +9,7 @@ export function HomeDevicesHub() {
       <header>
         <h1 className="text-2xl font-semibold tracking-tight">Home devices</h1>
         <p className="mt-2 max-w-prose text-sm text-[--color-fg-muted]">
-          Clinical peripherals you use at home — blood pressure cuffs, scales,
+          Clinical peripherals you use at home - blood pressure cuffs, scales,
           glucometers, pulse oximeters, and thermometers. Distinct from{" "}
           <span className="text-[--color-fg]">Wearables</span> under Longitudinal
           feeds (Garmin, Oura, Apple Health). Readings will land as FHIR
