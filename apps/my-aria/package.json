@@ -9,9 +9,10 @@
     "start": "next start -p 3002",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "screenshot": "npm run screenshot:dashboard && npm run screenshot:home-devices",
+    "screenshot": "npm run screenshot:dashboard && npm run screenshot:home-devices && npm run screenshot:ai-chats",
     "screenshot:dashboard": "node scripts/capture-page.mjs",
-    "screenshot:home-devices": "node scripts/capture-page.mjs --url http://localhost:3002/home-devices --out public/my-aria-home-devices.png"
+    "screenshot:home-devices": "node scripts/capture-page.mjs --url http://localhost:3002/home-devices --out public/my-aria-home-devices.png",
+    "screenshot:ai-chats": "node scripts/capture-page.mjs --url http://localhost:3002/sdoh/ai-chats --out public/my-aria-ai-chats.png"
   },
   "dependencies": {
     "next": "^15.5.0",

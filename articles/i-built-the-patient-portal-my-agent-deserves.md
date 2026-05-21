@@ -55,6 +55,10 @@ My Aria's left navigation is organized by **where data comes from**, not by whic
 
 **Intelligent SDOH** - Air quality and demographics by ZIP (demo fixtures today; AirNow and Census ACS tomorrow), plus **AI chats**: social-determinant signals extracted from agent conversations - transportation gaps, food insecurity, housing instability - with evidence strings and ICD-10 Z codes where they apply. The chat history is a social-determinant data source. Nobody's portal has a tab for that.
 
+![My Aria - AI chats SDOH scan: four Tula threads (Telegram check-ins and a patient-portal draft) yield nine signals - Transportation access (Z59.82), Medication access (Z59.86), Food insecurity (Z59.41), Financial strain (Z59.6), Housing instability (Z59.1), Environmental exposure (Z77.118), each with a confidence flag and an evidence string quoted from the chat.](../apps/my-aria/public/my-aria-ai-chats.png)
+
+Each scanned thread keeps its source (Telegram, portal draft, SMS), a quoted excerpt, and signals with theme, evidence string, confidence, and an ICD-10 Z code where one applies. "I've been taking the bus to chemo because my car broke down" becomes a Z59.82 transportation-access entry in the longitudinal record. The same Tula skill that drafts your portal replies reads them back as structured SDOH - the only practical way to turn lived chat into something a future agent can act on.
+
 **Intelligent Travel** - Business and personal trips as health perturbations. Three slots: Trips (the hub - itineraries, destination brief, travel journal, and return checklist live one click deep), On-trip health (wearable signals vs home baseline), and Care away from home (urgent care, pharmacy refills, telehealth in the ZIP you are in). Same compression pattern Home devices uses, so the menu does not scroll forever.
 
 Mobile keeps a bottom nav with only the five portal pages. The depth lives on desktop. That is the right trade for a power user building on a VM, with Cloudflare Access for caregivers later.
