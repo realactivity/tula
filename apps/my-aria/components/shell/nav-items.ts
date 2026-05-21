@@ -132,12 +132,12 @@ export const NUTRITION_NAV_ITEMS: RoadmapNavItem[] = NUTRITION_PAGES.map(
 /**
  * Intelligent Travel - health journey across business & personal trips.
  *
- * Sidebar shows the 3 primary surfaces (Trips, On-trip health, Return checklist).
- * The remaining 4 pages (Itineraries, Care-away, Destination brief, Travel journal)
+ * Sidebar shows the 3 primary surfaces (Trips, On-trip health, Care away from home).
+ * The remaining 4 pages (Itineraries, Destination brief, Travel journal, Return checklist)
  * still exist at their URLs and are reachable from the Trips hub. Same pattern
  * as Home Devices: one sidebar slot, deeper surface lives on the hub page.
  */
-const PRIMARY_TRAVEL_IDS = ["trips", "on-trip-health", "return"] as const;
+const PRIMARY_TRAVEL_IDS = ["trips", "on-trip-health", "care-away"] as const;
 
 export const TRAVEL_NAV_ITEMS: RoadmapNavItem[] = TRAVEL_PAGES.filter((p) =>
   (PRIMARY_TRAVEL_IDS as readonly string[]).includes(p.id)

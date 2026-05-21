@@ -81,7 +81,7 @@ export default function TripsHubPage() {
       </section>
 
       <p className="text-xs text-[--color-fg-subtle]">
-        On-trip health and the return checklist live in the sidebar; the four
+        On-trip health and care away from home live in the sidebar; the four
         planning surfaces above are deep links from this hub.
       </p>
     </div>
