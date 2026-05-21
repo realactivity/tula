@@ -8,6 +8,7 @@ import {
   LONGITUDINAL_NAV_ITEMS,
   DE_IDENTIFICATION_NAV_ITEM,
   HOME_DEVICES_NAV_ITEM,
+  NUTRITION_NAV_ITEMS,
   SDOH_NAV_ITEMS,
   TRAVEL_NAV_ITEMS,
   type NavItem,
@@ -88,6 +89,17 @@ export function Sidebar() {
           item={HOME_DEVICES_NAV_ITEM}
           active={isActive(pathname, HOME_DEVICES_NAV_ITEM.href)}
         />
+
+        <p className="mt-4 px-3 pb-0.5 text-[11px] font-semibold uppercase tracking-wide text-[--color-fg-subtle]">
+          Intelligent Nutrition
+        </p>
+        {NUTRITION_NAV_ITEMS.map((item) => (
+          <NavLink
+            key={item.href}
+            item={item}
+            active={isActive(pathname, item.href)}
+          />
+        ))}
 
         <p className="mt-4 px-3 pb-0.5 text-[11px] font-semibold uppercase tracking-wide text-[--color-fg-subtle]">
           Intelligent SDOH
