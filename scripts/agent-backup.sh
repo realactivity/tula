@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
 # ---------------------------------------------------------------------------
-# aria-backup.sh — Back up ~/.openclaw to the aria git repo and push.
+# agent-backup.sh — Back up ~/.openclaw to a private git repo and push.
 # ---------------------------------------------------------------------------
 #
 # ============================== AGENTS.md ===================================
-# # aria-backup.sh
+# # agent-backup.sh
 #
 # ## Purpose
 # Idempotent backup of the user's `~/.openclaw/` directory (openclaw config
-# + the "Tula" agent workspace) into a local git repo at `~/aria-repo`, then
+# + the Tula agent workspace) into a local git repo at `~/agent-repo`, then
 # pushed to a private GitHub repo (default: `realactivity/tula-vm-state`).
 #
 # Run it any time you want a fresh snapshot. It is safe to re-run; if nothing
 # changed, it commits nothing and exits 0.
 #
 # ## What it does
-# 1. `rsync -a --delete` from `$ARIA_SOURCE` to `$ARIA_REPO_DIR`, excluding
+# 1. `rsync -a --delete` from `$AGENT_SOURCE` to `$AGENT_REPO_DIR`, excluding
 #    every path in `PURGE` and `PROTECT`. `--delete` keeps the repo in sync
 #    with the source (files deleted in the source are removed from the repo).
-# 2. Explicitly `rm -rf`s every `PURGE` path under `$ARIA_REPO_DIR`. This is
+# 2. Explicitly `rm -rf`s every `PURGE` path under `$AGENT_REPO_DIR`. This is
 #    what handles the case where a previous run committed a secret we now
 #    want to scrub — the rsync `--exclude` alone wouldn't remove it.
 #    `PROTECT` paths (this script, README.md, .gitignore, .git) are NOT
@@ -28,17 +28,17 @@
 #    catches things like a stray Ed25519 key in `identity/device.json`.
 # 4. `git add -A`. If there are no changes, exits 0 cleanly.
 # 5. Otherwise commits as `Backup YYYY-MM-DD HH:MM:SSZ` and pushes to
-#    `$ARIA_REMOTE/$ARIA_BRANCH` (unless `--no-push`).
+#    `$AGENT_REMOTE/$AGENT_BRANCH` (unless `--no-push`).
 #
 # ## Inputs (all optional env vars)
-#   ARIA_SOURCE     Source directory                  (default: $HOME/.openclaw)
-#   ARIA_REPO_DIR   Repo working tree                 (default: $HOME/aria-repo)
-#   ARIA_REMOTE     Git remote name                   (default: origin)
-#   ARIA_BRANCH     Git branch to push                (default: main)
-#   GITHUB_TOKEN    Fine-grained PAT with Contents:write on the repo. If set,
-#                   used as a one-shot push credential and NOT persisted to
-#                   `.git/config`. If unset, the push relies on whatever auth
-#                   the host has (gh, credential helper, SSH, etc.).
+#   AGENT_SOURCE     Source directory                  (default: $HOME/.openclaw)
+#   AGENT_REPO_DIR   Repo working tree                 (default: $HOME/agent-repo)
+#   AGENT_REMOTE     Git remote name                   (default: origin)
+#   AGENT_BRANCH     Git branch to push                (default: main)
+#   GITHUB_TOKEN     Fine-grained PAT with Contents:write on the repo. If set,
+#                    used as a one-shot push credential and NOT persisted to
+#                    `.git/config`. If unset, the push relies on whatever auth
+#                    the host has (gh, credential helper, SSH, etc.).
 #
 # ## Flags
 #   --dry-run       Show planned actions, don't rsync/commit/push
@@ -79,7 +79,7 @@
 # When you discover a new file that shouldn't be backed up:
 #   1. Add the path to the `PURGE` array below (use repo-relative paths,
 #      no trailing slash, no leading slash).
-#   2. Add the same path/pattern to `aria-repo/.gitignore` (so anyone hand-
+#   2. Add the same path/pattern to `agent-repo/.gitignore` (so anyone hand-
 #      committing also gets protection).
 #   3. Re-run the script. Step 2's `rm -rf` will scrub the file from the
 #      working tree if a previous run committed it; the next commit removes
@@ -100,7 +100,7 @@
 # ## Recovering from auth failure on push
 # If push fails with 401/403, the commit is already made locally. Either:
 #   - Set `GITHUB_TOKEN` and re-run with `--no-push` removed, OR
-#   - Configure git auth (e.g. `gh auth login`) and run `git -C $ARIA_REPO_DIR push`.
+#   - Configure git auth (e.g. `gh auth login`) and run `git -C $AGENT_REPO_DIR push`.
 #
 # ## Restoring from this backup
 # `git clone https://github.com/realactivity/tula-vm-state.git`, then copy the directories
@@ -112,10 +112,10 @@ set -euo pipefail
 
 # ---------- configuration --------------------------------------------------
 
-ARIA_SOURCE="${ARIA_SOURCE:-$HOME/.openclaw}"
-ARIA_REPO_DIR="${ARIA_REPO_DIR:-$HOME/aria-repo}"
-ARIA_REMOTE="${ARIA_REMOTE:-origin}"
-ARIA_BRANCH="${ARIA_BRANCH:-main}"
+AGENT_SOURCE="${AGENT_SOURCE:-$HOME/.openclaw}"
+AGENT_REPO_DIR="${AGENT_REPO_DIR:-$HOME/agent-repo}"
+AGENT_REMOTE="${AGENT_REMOTE:-origin}"
+AGENT_BRANCH="${AGENT_BRANCH:-main}"
 
 # Paths split into three buckets:
 #
@@ -157,14 +157,14 @@ PURGE=(
 
 # Nested-.git protection. Any `.git` directory under the source — at any
 # depth — gets excluded from rsync and rm'd from the destination, with one
-# exception: the aria-repo's own `.git/` at the destination root, which
+# exception: the agent-repo's own `.git/` at the destination root, which
 # IS our backup repo. This catches openclaw's coding-agent skill creating
 # `workspace/claude/.git/` (and any future nested checkouts we don't know
 # about), which would otherwise be staged as submodules and break
 # `git add -A` with "does not have a commit checked out".
 
 PROTECT=(
-    'aria-backup.sh'
+    'agent-backup.sh'
     'README.md'
     '.gitignore'
     '.git'
@@ -191,7 +191,7 @@ SECRET_PATTERNS=(
 ALLOWLIST_GLOBS=(
     '.gitignore'                              # contains the literal pattern words
     'README.md'                               # documents what was excluded
-    'aria-backup.sh'                          # this file lists pattern words
+    'agent-backup.sh'                         # this file lists pattern words
     'completions/openclaw.bash'               # CLI flag names like --token
     'completions/openclaw.zsh'                # CLI flag names like --token
     'completions/openclaw.fish'               # CLI flag names like --token
@@ -225,24 +225,24 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-log() { printf '[aria-backup] %s\n' "$*"; }
+log() { printf '[agent-backup] %s\n' "$*"; }
 vlog() { [[ $VERBOSE -eq 1 ]] && log "$*" || true; }
 
 # ---------- preflight ------------------------------------------------------
 
-[[ -d "$ARIA_SOURCE" ]] || { log "source missing: $ARIA_SOURCE"; exit 1; }
-[[ -d "$ARIA_REPO_DIR/.git" ]] || {
-    log "repo missing or not a git repo: $ARIA_REPO_DIR"
-    log "bootstrap with: git init $ARIA_REPO_DIR && cd $ARIA_REPO_DIR && git remote add $ARIA_REMOTE <url>"
+[[ -d "$AGENT_SOURCE" ]] || { log "source missing: $AGENT_SOURCE"; exit 1; }
+[[ -d "$AGENT_REPO_DIR/.git" ]] || {
+    log "repo missing or not a git repo: $AGENT_REPO_DIR"
+    log "bootstrap with: git init $AGENT_REPO_DIR && cd $AGENT_REPO_DIR && git remote add $AGENT_REMOTE <url>"
     exit 1
 }
 
 command -v rsync >/dev/null || { log "rsync not installed"; exit 1; }
 command -v git   >/dev/null || { log "git not installed";   exit 1; }
 
-log "source:   $ARIA_SOURCE"
-log "repo:     $ARIA_REPO_DIR"
-log "remote:   $ARIA_REMOTE/$ARIA_BRANCH"
+log "source:   $AGENT_SOURCE"
+log "repo:     $AGENT_REPO_DIR"
+log "remote:   $AGENT_REMOTE/$AGENT_BRANCH"
 [[ $DRY_RUN -eq 1 ]] && log "mode:     DRY RUN (no writes)"
 
 # ---------- step 1: rsync --------------------------------------------------
@@ -256,8 +256,8 @@ for ex in "${PROTECT[@]}" ; do RSYNC_ARGS+=(--exclude="/$ex"); done
 # at every level, with trailing slash to only match directories.
 RSYNC_ARGS+=(--exclude='.git/')
 
-log "rsync ${ARIA_SOURCE}/ -> ${ARIA_REPO_DIR}/ (purge=${#PURGE[@]}, protect=${#PROTECT[@]}, +nested-git)"
-rsync "${RSYNC_ARGS[@]}" "${ARIA_SOURCE}/" "${ARIA_REPO_DIR}/"
+log "rsync ${AGENT_SOURCE}/ -> ${AGENT_REPO_DIR}/ (purge=${#PURGE[@]}, protect=${#PROTECT[@]}, +nested-git)"
+rsync "${RSYNC_ARGS[@]}" "${AGENT_SOURCE}/" "${AGENT_REPO_DIR}/"
 
 # ---------- step 2: purge secret/junk paths from repo ----------------------
 #
@@ -271,9 +271,9 @@ if [[ $DRY_RUN -eq 0 ]]; then
     for pattern in "${PURGE[@]}"; do
         # Intentionally unquoted on the right-hand side so the shell expands
         # globs against the repo working tree.
-        for target in "$ARIA_REPO_DIR"/$pattern; do
+        for target in "$AGENT_REPO_DIR"/$pattern; do
             if [[ -e "$target" || -L "$target" ]]; then
-                vlog "purging ${target#$ARIA_REPO_DIR/}"
+                vlog "purging ${target#$AGENT_REPO_DIR/}"
                 rm -rf -- "$target"
             fi
         done
@@ -285,9 +285,9 @@ if [[ $DRY_RUN -eq 0 ]]; then
     # discovered nested checkout. `-mindepth 2` protects our OWN .git at
     # the destination root from getting wiped.
     while IFS= read -r -d '' nested; do
-        vlog "purging nested git repo at ${nested#$ARIA_REPO_DIR/}"
+        vlog "purging nested git repo at ${nested#$AGENT_REPO_DIR/}"
         rm -rf -- "$nested"
-    done < <(find "$ARIA_REPO_DIR" -mindepth 2 -type d -name '.git' -prune -print0)
+    done < <(find "$AGENT_REPO_DIR" -mindepth 2 -type d -name '.git' -prune -print0)
 fi
 
 # ---------- step 3: secret scan --------------------------------------------
@@ -336,13 +336,13 @@ elif [[ $DRY_RUN -eq 1 ]]; then
     log "secret scan: skipped in dry-run"
 else
     log "secret scan: running"
-    scan_secrets "$ARIA_REPO_DIR" || exit 2
+    scan_secrets "$AGENT_REPO_DIR" || exit 2
     log "secret scan: clean"
 fi
 
 # ---------- step 4 & 5: commit ---------------------------------------------
 
-cd "$ARIA_REPO_DIR"
+cd "$AGENT_REPO_DIR"
 
 if [[ $DRY_RUN -eq 1 ]]; then
     log "dry-run: would 'git add -A' and commit if there were changes; exiting"
@@ -361,10 +361,10 @@ log "staged changes: ${CHANGES}"
 
 TS=$(date -u '+%Y-%m-%d %H:%M:%SZ')
 COMMIT_MSG="Backup ${TS}"
-GIT_COMMITTER_NAME="${GIT_COMMITTER_NAME:-aria-backup}"
-GIT_COMMITTER_EMAIL="${GIT_COMMITTER_EMAIL:-aria-backup@local}"
-GIT_AUTHOR_NAME="${GIT_AUTHOR_NAME:-aria-backup}"
-GIT_AUTHOR_EMAIL="${GIT_AUTHOR_EMAIL:-aria-backup@local}"
+GIT_COMMITTER_NAME="${GIT_COMMITTER_NAME:-agent-backup}"
+GIT_COMMITTER_EMAIL="${GIT_COMMITTER_EMAIL:-agent-backup@local}"
+GIT_AUTHOR_NAME="${GIT_AUTHOR_NAME:-agent-backup}"
+GIT_AUTHOR_EMAIL="${GIT_AUTHOR_EMAIL:-agent-backup@local}"
 export GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
 
 git commit -q -m "$COMMIT_MSG"
@@ -377,23 +377,23 @@ if [[ $NO_PUSH -eq 1 ]]; then
     exit 0
 fi
 
-REMOTE_URL=$(git remote get-url "$ARIA_REMOTE" 2>/dev/null || true)
-[[ -z "$REMOTE_URL" ]] && { log "remote '$ARIA_REMOTE' not configured"; exit 3; }
+REMOTE_URL=$(git remote get-url "$AGENT_REMOTE" 2>/dev/null || true)
+[[ -z "$REMOTE_URL" ]] && { log "remote '$AGENT_REMOTE' not configured"; exit 3; }
 
-log "push: $ARIA_REMOTE $ARIA_BRANCH ($REMOTE_URL)"
+log "push: $AGENT_REMOTE $AGENT_BRANCH ($REMOTE_URL)"
 
 if [[ -n "${GITHUB_TOKEN:-}" && "$REMOTE_URL" =~ ^https://github\.com/ ]]; then
     # One-shot push using the env-var token. Doesn't touch .git/config so the
     # token is never persisted to disk.
     PUSH_URL="${REMOTE_URL/https:\/\/github.com/https:\/\/x-access-token:${GITHUB_TOKEN}@github.com}"
-    if git push "$PUSH_URL" "$ARIA_BRANCH:$ARIA_BRANCH"; then
+    if git push "$PUSH_URL" "$AGENT_BRANCH:$AGENT_BRANCH"; then
         log "push: ok (via GITHUB_TOKEN, not persisted)"
     else
         log "push: FAILED"
         exit 3
     fi
 else
-    if git push "$ARIA_REMOTE" "$ARIA_BRANCH"; then
+    if git push "$AGENT_REMOTE" "$AGENT_BRANCH"; then
         log "push: ok"
     else
         log "push: FAILED — check git auth (gh auth login, credential helper, or set GITHUB_TOKEN)"

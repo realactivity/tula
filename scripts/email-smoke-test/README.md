@@ -2,7 +2,11 @@
 
 Phase 1 connectivity test for the email-router. Authenticates against
 Microsoft Graph via device-code flow, then lists the 5 most recent
-messages in `aria@realactivity.com`'s INBOX.
+messages in the configured mailbox. The author's deployment targets
+`aria@realactivity.com` on his own Exchange Online tenant; substitute your
+own dedicated health mailbox when you run this. ("Aria" here is the
+display name of that one Exchange mailbox, **not** a Tula brand — see
+[`TRADEMARK.md`](../../TRADEMARK.md).)
 
 This is **throwaway scaffolding**. Phase 2 lifts the auth + polling
 plumbing into `skills/email-router/scripts/` and deletes this directory.

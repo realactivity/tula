@@ -191,7 +191,7 @@ by only syncing directories under `skills/`.
   `~/.openclaw/workspace/.med-pdf-cache/`, `workspace/memory/`, and
   `workspace/MEMORY.md`.
 - Backups of the VM workspace go to a **private** sister repo (not this one)
-  via the `aria-backup.sh` script. See [`scripts/README.md`](../scripts/README.md).
+  via the `agent-backup.sh` script. See [`scripts/README.md`](../scripts/README.md).
 
 ## References
 

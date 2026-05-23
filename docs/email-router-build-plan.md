@@ -7,18 +7,20 @@ It sequences the work into phases, identifies decisions, and lists
 unknowns/risks.
 
 The goal is a TripIt-style health inbox: forward any health email, photo,
-or PDF to a single dedicated address, and the data shows up in aria
-automatically.
+or PDF to a single dedicated address, and the data shows up in your Tula
+workspace automatically.
 
 ## Locked-in decisions (May 2026)
 
-Phase 0 decisions were resolved during the kickoff session. All examples
-below use these values; older illustrative `tula@<domain>` references in
-the design doc and setup guide should be read as `aria@realactivity.com`.
+Phase 0 decisions were resolved during the kickoff session. The examples
+below use the author's own deployment values; older illustrative
+`tula@<domain>` references in the design doc and setup guide should be
+read as `<your-health-mailbox>@<your-domain>` (the author runs the
+mailbox at `aria@realactivity.com` on his own Exchange Online tenant).
 
 | Decision | Value |
 |---|---|
-| Mailbox address | **`aria@realactivity.com`** (mailbox already exists in Exchange Online) |
+| Mailbox address | **`<your-health-mailbox>@<your-domain>`** — any dedicated mailbox in Exchange Online or Microsoft 365. The author runs `aria@realactivity.com` on his own tenant as the canonical example. |
 | M365 license source | **Microsoft Partner benefits** |
 | Exchange transport rules | **DEFERRED** until end-to-end flow works (see safety note below) |
 | FHIR storage path | **`~/.openclaw/workspace/tula/fhir/`** (build plan Option A) |
@@ -35,8 +37,7 @@ below.
 
 **Hard checkpoint - transport rules MUST be installed before:**
 
-1. The address `aria@realactivity.com` is shared with any human other
-   than the owner.
+1. The health mailbox is shared with any human other than the owner.
 2. The address is registered in any vendor portal (MyChart, LabCorp,
    Quest, insurance EOB delivery, etc.) as a destination.
 3. Any inbox auto-forward (from a personal account or otherwise) is
@@ -102,9 +103,9 @@ Before writing any code:
    - **Option A** - `~/.openclaw/workspace/tula/fhir/` (per the design doc;
      keeps tula data adjacent to but separate from agent skills).
    - **Option B** - `~/.openclaw/workspace/skills/email-router/data/`
-     (skill-scoped; gets backed up alongside the skill via `aria-backup.sh`
+     (skill-scoped; gets backed up alongside the skill via `agent-backup.sh`
      unless explicitly excluded).
-   - **Recommend A** - separates content from code. The aria backup
+   - **Recommend A** - separates content from code. The `agent-backup`
      script's exclusion list can grow to keep PHI out of the backup.
 
 5. **Polling cadence**
@@ -130,7 +131,7 @@ Before writing any code:
 
 1. **Verify VM state** - Node version, `~/.openclaw/workspace/tula/`
    directory existence.
-2. **M365 mailbox** - ✅ already exists: `aria@realactivity.com`.
+2. **M365 mailbox** - ✅ already exists on the author's tenant: `aria@realactivity.com`. Substitute your own mailbox for your deployment.
 3. ~~**Exchange transport rules**~~ - deferred per the locked-in
    decisions above. Re-enter the timeline before Phase 3 ships any real
    data.
@@ -202,8 +203,8 @@ Eval suite (`evals/email-router/tasks/`):
   pre-skill at the transport layer; a defense-in-depth test that the
   skill ALSO checks the sender)
 
-**Deliverable**: aria can be told "process the new emails" and the skill
-polls Graph, classifies, and stages - without yet writing FHIR.
+**Deliverable**: the Tula agent can be told "process the new emails" and
+the skill polls Graph, classifies, and stages - without yet writing FHIR.
 
 **Estimated effort**: 3-4 hours.
 
@@ -239,18 +240,18 @@ alone is ~half a day.
 1. **Systemd timer on the VM** (not cron - cron's 60s floor is too slow
    for the locked-in 30s cadence). Pattern:
    ```ini
-   # /etc/systemd/system/aria-email-poll.timer
+   # /etc/systemd/system/tula-email-poll.timer
    [Timer]
    OnBootSec=30s
    OnUnitActiveSec=30s
-   Unit=aria-email-poll.service
+   Unit=tula-email-poll.service
    ```
    The service unit runs the poll script with `flock -n` to prevent
-   overlap if a poll runs long (same protection pattern as `aria-cron.sh`).
+   overlap if a poll runs long (same protection pattern as `agent-cron.sh`).
 2. After each successful classification + extraction, the skill calls
    the agent's existing Telegram channel to post a summary.
-3. Aria's `MEMORY.md` gets longitudinal updates ("HbA1c trending down:
-   6.8 → 6.4 → 6.2").
+3. The agent's `MEMORY.md` gets longitudinal updates ("HbA1c trending
+   down: 6.8 → 6.4 → 6.2").
 
 **Deliverable**: end-to-end TripIt-style flow. Forward a lab PDF, get
 a Telegram message in <2 minutes with extracted values and trend deltas.
@@ -278,7 +279,7 @@ a Telegram message in <2 minutes with extracted values and trend deltas.
 | LLM classification mis-routes a sensitive email | Medium | Confidence threshold + Telegram review; transport rule is the hard boundary |
 | Multimodal cost on photo path balloons | Low | Per-call cost tracker, monthly budget cap, fall-back to OCR-only if budget exceeded |
 | Prompt injection from a malicious lab PDF | Medium | Outbound transport rule prevents data exfiltration; LLM prompts use clear separation between instructions and content |
-| Race between cron tick and skill in-progress | Low | `flock` (same pattern as `aria-cron.sh`) |
+| Race between cron tick and skill in-progress | Low | `flock` (same pattern as `agent-cron.sh`) |
 
 ## What to do next session
 

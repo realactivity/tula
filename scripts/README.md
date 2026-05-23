@@ -63,9 +63,7 @@ full walkthrough including troubleshooting (workspace device-auth
 policy blocks, OAuth state mismatch over SSH tunnel, broken interactive
 PATH).
 
-## `aria-backup.sh`
-
-## `aria-backup.sh`
+## `agent-backup.sh`
 
 Idempotent backup of an agent host's `~/.openclaw/` directory (openclaw
 config + the Tula agent workspace) into a local git repo, with a
@@ -103,40 +101,40 @@ into a private remote of your own.
 ### Usage
 
 ```bash
-# Default: snapshot ~/.openclaw → ~/aria-repo, commit, push to origin/main
-./aria-backup.sh
+# Default: snapshot ~/.openclaw → ~/agent-repo, commit, push to origin/main
+./agent-backup.sh
 
 # Preview only
-./aria-backup.sh --dry-run
+./agent-backup.sh --dry-run
 
 # Stage + commit but don't push
-./aria-backup.sh --no-push
+./agent-backup.sh --no-push
 
 # Override defaults via env vars
-ARIA_SOURCE=$HOME/.openclaw \
-ARIA_REPO_DIR=$HOME/aria-repo \
-ARIA_REMOTE=origin \
-ARIA_BRANCH=main \
+AGENT_SOURCE=$HOME/.openclaw \
+AGENT_REPO_DIR=$HOME/agent-repo \
+AGENT_REMOTE=origin \
+AGENT_BRANCH=main \
 GITHUB_TOKEN=ghp_... \
-./aria-backup.sh
+./agent-backup.sh
 ```
 
-Read the header of `aria-backup.sh` for the full operating manual - it's
+Read the header of `agent-backup.sh` for the full operating manual - it's
 self-documenting.
 
-## `aria-cron.sh`
+## `agent-cron.sh`
 
-Non-interactive wrapper around `aria-backup.sh` for cron / systemd timer use.
+Non-interactive wrapper around `agent-backup.sh` for cron / systemd timer use.
 
 Cron's environment is minimal (no PATH past `/usr/bin:/bin`, no shell env
 vars), so this wrapper:
 
-1. Sources `~/.aria-cron-token` (mode 600 enforced) - must define
+1. Sources `~/.agent-cron-token` (mode 600 enforced) - must define
    `GITHUB_TOKEN`.
 2. Sets a sane PATH (`git`, `rsync`, `python3`, `curl` resolve).
-3. Acquires `flock -n /tmp/aria-backup.lock` so a slow run can't overlap
+3. Acquires `flock -n /tmp/agent-backup.lock` so a slow run can't overlap
    the next cron tick.
-4. Logs stdout+stderr to `~/aria-backup.log`, truncating when the file
+4. Logs stdout+stderr to `~/agent-backup.log`, truncating when the file
    exceeds 1 MiB.
 5. Exits with the backup script's exit code so cron MTAs can alert.
 
@@ -144,30 +142,30 @@ vars), so this wrapper:
 
 ```cron
 CRON_TZ=America/New_York
-0 3 * * * /home/azureuser/aria-repo/scripts/aria-cron.sh
+0 3 * * * /home/azureuser/agent-repo/scripts/agent-cron.sh
 ```
 
 ### One-shot manual test
 
 ```bash
-~/aria-repo/scripts/aria-cron.sh && tail -n 30 ~/aria-backup.log
+~/agent-repo/scripts/agent-cron.sh && tail -n 30 ~/agent-backup.log
 ```
 
 ## Setup the first time
 
 ```bash
-# 1. Create a fine-grained PAT with Contents:write on your private aria repo.
-# 2. Drop it in ~/.aria-cron-token
-echo 'GITHUB_TOKEN=ghp_...' > ~/.aria-cron-token
-chmod 600 ~/.aria-cron-token
+# 1. Create a fine-grained PAT with Contents:write on your private backup repo.
+# 2. Drop it in ~/.agent-cron-token
+echo 'GITHUB_TOKEN=ghp_...' > ~/.agent-cron-token
+chmod 600 ~/.agent-cron-token
 
 # 3. Initialize the repo working tree (one time)
-mkdir -p ~/aria-repo && cd ~/aria-repo
+mkdir -p ~/agent-repo && cd ~/agent-repo
 git init -b main
-git remote add origin https://github.com/<you>/aria.git
+git remote add origin https://github.com/<you>/tula-vm-state.git
 
 # 4. First snapshot
-./aria-backup.sh
+./agent-backup.sh
 ```
 
 ## `email-smoke-test/`
@@ -192,6 +190,9 @@ deletes this directory.
 
 ## Provenance
 
-The backup scripts originated in a private operational repo. They are
-reproduced here so that anyone running a Tula agent can use the same
-backup pattern for their own private snapshot repo.
+The `agent-backup.sh` / `agent-cron.sh` scripts originated in a private
+operational repo (then named `aria-*`). They are reproduced here so that
+anyone running a Tula agent can use the same backup pattern for their own
+private snapshot repo. The renamed names align with the open
+[`TRADEMARK.md`](../TRADEMARK.md) policy: the open repo uses Tula /
+"agent" wording; "Aria" names RealActivity's separate commercial platform.
