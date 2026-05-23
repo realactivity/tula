@@ -321,7 +321,7 @@ export const quickActions: QuickAction[] = [
 
 export const dashboardFixture: DashboardData = {
   greeting: "Good afternoon",
-  patientFirstName: "Paul",
+  patientFirstName: "Dylan",
   upcomingAppointment,
   recentLabs,
   activeMedications,
