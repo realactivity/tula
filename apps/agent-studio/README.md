@@ -1,11 +1,20 @@
-# aria - Tula's web dashboard
+# Agent Studio - Tula's web activity feed
 
-Beautiful, modern, mobile-friendly view of all email-ingested health data.
+Beautiful, modern, mobile-friendly view of all email-ingested health data
+for your Tula agent.
 
 > **Status:** Phase 1 walking skeleton. Renders fixture data only. The
 > live `~/.openclaw/workspace/tula/fhir/` reads, SSE updates, and
 > per-content-type detail pages come in Phase 2+ once the email-router
 > skill starts producing FHIR.
+
+## What this app is
+
+- An activity-feed view of every resource your Tula agent has ingested:
+  lab panels, imaging reports, appointments, prescriptions, EOBs.
+- Sibling app to [`apps/my-aria/`](../my-aria/). Agent Studio is the
+  newest-first activity log. My Aria is the curated patient-portal
+  dashboard. Both read the same on-disk FHIR layer.
 
 ## Stack
 
@@ -20,7 +29,7 @@ Beautiful, modern, mobile-friendly view of all email-ingested health data.
 ## Run locally
 
 ```bash
-cd apps/aria-web
+cd apps/agent-studio
 npm install
 npm run dev
 # open http://localhost:3000
@@ -70,7 +79,14 @@ for the full roadmap and locked-in decisions.
 
 ## Access (production deployment)
 
-The dashboard is designed to run on the OpenClaw VM bound to
+Agent Studio is designed to run on the OpenClaw VM bound to
 `127.0.0.1:3001`, never on a public interface. Reach it from any device
 via Cloudflare Tunnel + Cloudflare Access. See the build plan for the
 deployment recipe.
+
+## Trademark
+
+"Agent Studio" is a working name for this open-source app inside the
+Tula repo. "Tula" is a trademark of RealActivity. "Aria" is the name of
+RealActivity's separate, commercial hospital-scale platform and is **not**
+this app. See [`TRADEMARK.md`](../../TRADEMARK.md).

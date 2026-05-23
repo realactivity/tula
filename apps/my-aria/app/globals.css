@@ -25,7 +25,7 @@
   --color-info: oklch(0.62 0.13 240);
   --color-info-soft: oklch(0.30 0.06 240);
 
-  /* Flag tones — preserved from aria-web for shared FHIR semantics */
+  /* Flag tones — preserved from agent-studio for shared FHIR semantics */
   --color-flag-high: oklch(0.74 0.18 22);
   --color-flag-low: oklch(0.78 0.14 250);
   --color-flag-ok: oklch(0.78 0.14 165);

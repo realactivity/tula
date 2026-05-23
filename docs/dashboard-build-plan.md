@@ -189,8 +189,8 @@ Single recommendation, easy alternatives.
 
 - Install Tailscale on the VM and on Paul's laptop/phone (~5 min total).
 - Bind dashboard to `127.0.0.1:3001`. Tailscale's userspace networking
-  exposes it to the tailnet via `aria-agent01.tail<id>.ts.net:3001` (or a
-  MagicDNS name like `https://tula.aria-agent01.<tailnet>.ts.net`).
+  exposes it to the tailnet via `tula-host01.tail<id>.ts.net:3001` (or a
+  MagicDNS name like `https://studio.tula-host01.<tailnet>.ts.net`).
 - Tailscale ACLs lock it to Paul's identity; no public surface.
 - Tailscale Funnel is available if Paul *wants* a public URL later, but
   for personal health data the tailnet-only mode is the right default.
@@ -291,7 +291,7 @@ just a viewer.
 
 | Risk | Likelihood | Mitigation |
 |---|---|---|
-| FHIR JSON layout drifts during email-router build | High | Define TypeScript types in `tula/types.ts` in the dashboard repo; both router and dashboard import from there. Single source of truth. |
+| FHIR JSON layout drifts during email-router build | High | Define TypeScript types in `lib/fhir/types.ts` in `apps/agent-studio/`; both router and dashboard import from there. Single source of truth. |
 | File-watcher misses events under heavy write load | Low (personal volume) | Fall back to a 60s polling tick if no inotify event seen in 5 min |
 | LayerChart/ECharts performance on 5+ years of biomarker history | Low | Virtualize / chunk. Page-level data limit. |
 | Tailscale free tier limits | Very low (personal use) | Free for ≤3 users / ~100 devices |
@@ -305,11 +305,11 @@ just a viewer.
 |---|---|
 | Stack | **Next.js 15 + Tailwind CSS v4 + shadcn/ui + Framer Motion** (TypeScript) |
 | Access | **Cloudflare Tunnel + Cloudflare Access (Zero Trust)** - VM invisible to public internet, identity-aware proxy, free for personal up to 50 users, supports caregiver access without VPN install |
-| Name / brand | **aria** (lowercase) - matches the agent runtime; dashboard reachable at `https://aria.<your-cloudflare-domain>/` |
+| Name / brand | **agent-studio** (lowercase) - Tula's activity-feed UI; dashboard reachable at `https://studio.<your-cloudflare-domain>/`. The "Aria" name is reserved for RealActivity's separate commercial platform (see [`TRADEMARK.md`](../TRADEMARK.md)). |
 | Caregivers in Phase 1 | **Yes** - Cloudflare Access policies grant access by email allowlist |
 | Charts library | **Recharts** for default, **Visx** if we need lower-level control |
-| Hostname | Custom domain via Cloudflare Tunnel (e.g., `aria.realactivity.ai`); Cloudflare provides TLS automatically |
-| Repo location | `apps/aria-web/` (monorepo-style; tula skills + scripts + dashboard all in one repo) |
+| Hostname | Custom domain via Cloudflare Tunnel (e.g., `studio.realactivity.ai`); Cloudflare provides TLS automatically |
+| Repo location | `apps/agent-studio/` (monorepo-style; tula skills + scripts + dashboard all in one repo) |
 
 ### Why these choices
 
@@ -323,9 +323,10 @@ just a viewer.
   Access is the canonical Zero Trust pattern: VM stays private, public
   hostname is gated by identity-aware proxy with email/SSO auth. Free
   for personal use.
-- **Name**: aligning with the operational identity (`aria-repo`,
-  `aria-backup.sh`, the agent's runtime name) keeps mental model
-  consistent. Tula stays the agent persona/product name.
+- **Name**: aligning with the operational identity (`agent-repo`,
+  `agent-backup.sh`, the agent's runtime) keeps mental model consistent.
+  Tula stays the agent persona/product name; "agent-studio" is the
+  open-source UI surface for the activity feed.
 
 ## Sequencing with the email-router work
 
@@ -352,7 +353,7 @@ solid and explicit. Drift risk is low. Faster feedback loop.
 ## What to do next session
 
 1. Pick stack, access model, branding name (questions 1-4 above).
-2. Scaffold SvelteKit (or chosen alternative) into `apps/dashboard/` in
+2. Scaffold Next.js (or chosen alternative) into `apps/agent-studio/` in
    this repo.
 3. Build Phase 1 walking skeleton against fixtures.
 4. Resume email-router Phase 1 (M365 setup) in parallel - they're

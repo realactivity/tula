@@ -1,8 +1,8 @@
 {
-  "name": "aria-web",
+  "name": "agent-studio",
   "version": "0.1.0",
   "private": true,
-  "description": "aria — Tula's web dashboard. Browse health data ingested from email, with live updates.",
+  "description": "Agent Studio — Tula's web activity feed. Browse health data ingested from email, with live updates.",
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",

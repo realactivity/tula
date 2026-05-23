@@ -55,7 +55,7 @@ components/
   viz/                    # trend-sparkline
   ui/                     # card, badge, button
 lib/
-  fhir/types.ts           # FHIR R4 subset (shared shape with aria-web)
+  fhir/types.ts           # FHIR R4 subset (shared shape with agent-studio)
   data/
     types.ts              # FHIR re-exports + UX-only types
     fixtures.ts           # synthetic FHIR-shaped data (no PHI)
@@ -73,13 +73,13 @@ data/
 All colors flow from CSS variables defined in `app/globals.css` under
 `@theme`. Never hardcode hex. The accent token is burgundy
 (`oklch(0.46 0.16 18)` ≈ `#9B1C2C`); informational tone is clinical blue;
-flag tones come from the shared aria-web palette so observations render
-consistently across both apps.
+flag tones come from the shared `agent-studio` palette so observations
+render consistently across both apps.
 
-## Relationship to `apps/aria-web`
+## Relationship to `apps/agent-studio`
 
-Both apps share the FHIR types in `lib/fhir/types.ts`. `aria-web` is the
-ingestion-feed view (newest-first activity log). `my-aria` is the
+Both apps share the FHIR types in `lib/fhir/types.ts`. `agent-studio` is
+the ingestion-feed view (newest-first activity log). `my-aria` is the
 patient-portal view (curated dashboard sections, sparklines, quick
 actions). They will eventually read from the same on-disk FHIR layer.
 

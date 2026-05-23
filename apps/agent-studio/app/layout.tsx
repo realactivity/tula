@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "aria",
+  title: "Agent Studio",
   description:
-    "aria - Tula's web dashboard. Browse health data ingested from email, with live updates.",
+    "Agent Studio — Tula's web activity feed. Browse health data ingested from email, with live updates.",
 };
 
 export default function RootLayout({
