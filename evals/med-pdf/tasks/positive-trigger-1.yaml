@@ -3,7 +3,7 @@ name: Lab PDF (text-extractable)
 description: |
   Paul mentions a LabCorp panel without attaching a file. The skill should
   recognize the lab-parsing trigger and either describe the workflow or ask
-  for the PDF — NOT pivot to generic advice or refuse. We test trigger
+  for the PDF - NOT pivot to generic advice or refuse. We test trigger
   recognition + workflow vocabulary, since no real fixture is attached.
 tags:
   - positive-trigger

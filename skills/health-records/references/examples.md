@@ -79,7 +79,7 @@ After step 3 succeeds, Tula's first message to Paul should look like this
 > 3. Search notes for "sleep" / "snoring" / "fatigue" (apnea workup)?
 > 4. Something else?
 
-The shape is: **one clinical sentence → 2-3 specific tailored options → open
+The shape is: **one clinical sentence -> 2-3 specific tailored options -> open
 option**. See the analysis section at the bottom of
 [`fhir-guide.md`](fhir-guide.md) for why.
 

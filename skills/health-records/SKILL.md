@@ -27,8 +27,8 @@ metadata:
 
 ❌ Don't use when:
 
-- Paul sends a PDF or screenshot → use `med-pdf`
-- Paul wants to draft a clinician message → use `epic-note`
+- Paul sends a PDF or screenshot -> use `med-pdf`
+- Paul wants to draft a clinician message -> use `epic-note`
 - Records already pulled this session - read the existing JSON
 - Anything that would send PHI to an external service
 
@@ -86,12 +86,12 @@ notes, contact info, everything in one place.
 
 ## Troubleshooting
 
-- **Timeout** → Paul didn't finish in the browser. Re-run from step 1.
-- **Decryption fails** → wrong/truncated `privateKeyJwk`. Start over.
-- **Provider file >50MB** → long history. Use `fhir-guide.md` search
+- **Timeout** -> Paul didn't finish in the browser. Re-run from step 1.
+- **Decryption fails** -> wrong/truncated `privateKeyJwk`. Start over.
+- **Provider file >50MB** -> long history. Use `fhir-guide.md` search
   patterns; never `JSON.parse` the whole file into chat context.
-- **`fetch is not defined`** → need Node 18+ (Node 22 verified).
-- **Backend down** → run `check-backend.mjs`; set `HEALTH_SKILLZ_BASE_URL` to a reachable self-hosted instance.
+- **`fetch is not defined`** -> need Node 18+ (Node 22 verified).
+- **Backend down** -> run `check-backend.mjs`; set `HEALTH_SKILLZ_BASE_URL` to a reachable self-hosted instance.
 
 ## Acknowledgments
 

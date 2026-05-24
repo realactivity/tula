@@ -118,8 +118,8 @@ See [`fhir-guide.md`](fhir-guide.md). One file per provider, each with:
 
 Output filenames come from the provider's display name:
 
-- `"UnityPoint Health"` → `unitypoint-health.json`
-- `"Mayo Clinic"` → `mayo-clinic.json`
+- `"UnityPoint Health"` -> `unitypoint-health.json`
+- `"Mayo Clinic"` -> `mayo-clinic.json`
 - Collisions (two providers with same name) get `-2`, `-3` suffixes.
 - Empty/missing name falls back to `provider-N.json`.
 

@@ -17,12 +17,12 @@ when the same fact appears in multiple places.
 
 The skill operates on a time window resolved from the prompt:
 
-- "last week" → 7d
-- "last month" → 30d
-- "since <ISO date>" → that date
-- "since I started <med>" → scan source #3 and #4 for the start date of
+- "last week" -> 7d
+- "last month" -> 30d
+- "since <ISO date>" -> that date
+- "since I started <med>" -> scan source #3 and #4 for the start date of
   that med; window = (start_date, now)
-- "since my <provider> visit" → scan source #3 and #4 for the most recent
+- "since my <provider> visit" -> scan source #3 and #4 for the most recent
   visit to that provider; window = (visit_date, now)
 
 For sources #1 and #5, dated directories/files make windowing trivial. For
@@ -43,11 +43,11 @@ use document-internal dates for the dated-within-window check.
 
 Other skills can invoke `memory-diff` as a sub-step:
 
-- `health-records` after a fresh pull → "what changed in this pull vs.
+- `health-records` after a fresh pull -> "what changed in this pull vs.
   the prior one in `.health-records-cache/`"
-- `med-pdf` after parsing → "how do today's labs compare to the most
+- `med-pdf` after parsing -> "how do today's labs compare to the most
   recent prior values in memory"
-- `myhealth-pulse` daily → "any new pulse-relevant findings in chart
+- `myhealth-pulse` daily -> "any new pulse-relevant findings in chart
   memory since yesterday's digest"
 
 Each composition is opt-in by the calling skill - `memory-diff` doesn't

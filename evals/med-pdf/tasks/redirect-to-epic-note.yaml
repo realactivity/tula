@@ -2,7 +2,7 @@ id: redirect-to-epic-note-001
 name: Authoring request should redirect, not parse
 description: |
   Paul asks Tula to draft a clinical message. This is an authoring task,
-  not a parsing task — med-pdf should NOT invoke its parsing workflow.
+  not a parsing task - med-pdf should NOT invoke its parsing workflow.
   The agent should defer to the epic-note skill (or note that med-pdf is
   the wrong tool here).
 tags:

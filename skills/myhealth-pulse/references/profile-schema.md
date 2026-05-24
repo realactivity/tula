@@ -69,8 +69,8 @@ The profile is for query-side personalization only. The following live
 elsewhere and **must never appear in the profile**, because they would
 end up in outbound query strings:
 
-- Real medical history, conditions, medications, allergies → `health-records` workspace memory
-- Lab values, imaging findings → `med-pdf` workspace memory
+- Real medical history, conditions, medications, allergies -> `health-records` workspace memory
+- Lab values, imaging findings -> `med-pdf` workspace memory
 - Provider names, clinician identifiers, MRN, insurance IDs
 - Family member identity or relationships
 - Real-world location more precise than country/region

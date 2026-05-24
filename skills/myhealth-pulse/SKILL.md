@@ -25,9 +25,9 @@ metadata:
 
 ❌ Don't use when:
 
-- User shares a PDF, screenshot, or image → use `med-pdf`
-- User asks about their chart, labs, meds → use `health-records`
-- User wants to draft a clinician message → use `epic-note`
+- User shares a PDF, screenshot, or image -> use `med-pdf`
+- User asks about their chart, labs, meds -> use `health-records`
+- User wants to draft a clinician message -> use `epic-note`
 - User asks for medical advice - decline politely; this is aggregation, not clinical judgment
 - Anything that would put PHI into an outbound query string
 
@@ -35,13 +35,13 @@ metadata:
 
 **Profile.** Resolve from the precedence in
 [`references/profile-schema.md`](references/profile-schema.md#where-the-profile-lives)
-(skill config → env var → `~/.openclaw/workspace/memory/profile.yaml`).
+(skill config -> env var -> `~/.openclaw/workspace/memory/profile.yaml`).
 The skill never contains the profile. If none resolves, return one line
 saying so and stop. Don't fabricate.
 
 **Feed adapters.** Each `profile.feeds.enabled` entry maps to an adapter
 in [`references/feeds.md`](references/feeds.md#available-adapters). The
-agent must have the adapter's underlying tool available. Missing tool →
+agent must have the adapter's underlying tool available. Missing tool ->
 skip that feed with a one-line note in the output.
 
 ## Workflow
@@ -103,11 +103,11 @@ The risk surface is what gets *sent*, not what comes back.
 
 ## Troubleshooting
 
-- **No profile resolves** → stop, name the three paths checked, exit.
-- **One adapter errored** → partial digest with a one-line note
+- **No profile resolves** -> stop, name the three paths checked, exit.
+- **One adapter errored** -> partial digest with a one-line note
   (`feeds: social-x (web-brave unavailable)`). Don't fail the whole run.
-- **All items <threshold** → low-signal output (Workflow step 6).
-- **Adding a feed** → document the adapter in
+- **All items <threshold** -> low-signal output (Workflow step 6).
+- **Adding a feed** -> document the adapter in
   [`references/feeds.md`](references/feeds.md#adding-a-new-adapter),
   add it to `profile.feeds.enabled`, ensure the tool is available.
   SKILL.md doesn't change.

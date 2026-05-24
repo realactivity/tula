@@ -71,11 +71,11 @@ generates drafts locally - no PHI leaves the workspace.
 
 ## Troubleshooting
 
-- **No clinician name given** → use `Hello [Care Team],`.
-- **Vague input** → ask one clarifying question (onset, severity, which
+- **No clinician name given** -> use `Hello [Care Team],`.
+- **Vague input** -> ask one clarifying question (onset, severity, which
   clinician), then draft.
-- **Paul asks for medical advice** → decline politely; this skill drafts
+- **Paul asks for medical advice** -> decline politely; this skill drafts
   messages *to* clinicians, not answers from them.
-- **Multi-topic input** → propose separate messages, don't bundle.
-- **Emergency-flavored prompt** → return triage redirect; never wrap a
+- **Multi-topic input** -> propose separate messages, don't bundle.
+- **Emergency-flavored prompt** -> return triage redirect; never wrap a
   drafted message around it.

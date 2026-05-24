@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ---------------------------------------------------------------------------
-# agent-backup.sh — Back up ~/.openclaw to a private git repo and push.
+# agent-backup.sh - Back up ~/.openclaw to a private git repo and push.
 # ---------------------------------------------------------------------------
 #
 # ============================== AGENTS.md ===================================
@@ -20,7 +20,7 @@
 #    with the source (files deleted in the source are removed from the repo).
 # 2. Explicitly `rm -rf`s every `PURGE` path under `$AGENT_REPO_DIR`. This is
 #    what handles the case where a previous run committed a secret we now
-#    want to scrub — the rsync `--exclude` alone wouldn't remove it.
+#    want to scrub - the rsync `--exclude` alone wouldn't remove it.
 #    `PROTECT` paths (this script, README.md, .gitignore, .git) are NOT
 #    touched so the repo's metadata survives.
 # 3. Runs a regex-based secret-pattern scan over the staged tree. Any hit
@@ -43,31 +43,31 @@
 # ## Flags
 #   --dry-run       Show planned actions, don't rsync/commit/push
 #   --no-push       Stage + commit locally only
-#   --no-scan       Skip the secret scan (DANGEROUS — only use for debugging)
+#   --no-scan       Skip the secret scan (DANGEROUS - only use for debugging)
 #   -v|--verbose    Verbose rsync + git output
 #   -h|--help       Print this header and exit
 #
 # ## Exit codes
 #   0  Success (whether or not there were changes)
 #   1  Generic error
-#   2  Secret-pattern scan failed — see stderr for offending file(s)
+#   2  Secret-pattern scan failed - see stderr for offending file(s)
 #   3  Push failed (commit was made; resolve auth and retry `git push`)
 #
-# ## Exclusions (mirrors the repo's `.gitignore` — keep both in sync)
+# ## Exclusions (mirrors the repo's `.gitignore` - keep both in sync)
 #   credentials/                          telegram pairing secrets
 #   plugin-runtime-deps/                  ~405MB redistributable third-party code
 #   logs/                                 local logs, may leak data
 #   exec-approvals.json                   local approval cache
 #   update-check.json                     regenerable
 #       openclaw.json*                        live config, every .bak variant, and
-#                                         .last-good — all carry API keys
+#                                         .last-good - all carry API keys
 #   agents/main/sessions/                 chat trajectories, large + leak risk
 #   agents/main/agent/auth-profiles.json  model provider auth tokens
 #   identity/device-auth.json             operator token
 #   identity/device.json                  device Ed25519 keypair (private key)
 #   devices/paired.json                   operator token
 #   workspace/.filebrowser-admin-password admin password
-#   **/.git/  (any depth, except root)    nested git repos — would either
+#   **/.git/  (any depth, except root)    nested git repos - would either
 #                                         shadow our repo or be treated as
 #                                         submodules with no commits checked
 #                                         out, breaking `git add -A`
@@ -85,7 +85,7 @@
 #      working tree if a previous run committed it; the next commit removes
 #      it from the tree on the remote.
 #   4. For secrets that have already been pushed: also rotate the secret
-#      upstream and (optionally) run a history rewrite — for a low-volume
+#      upstream and (optionally) run a history rewrite - for a low-volume
 #      repo like this, the cleanest path is `git filter-repo --invert-paths
 #      --path <bad-file>` followed by a force-push (and rotate any token
 #      that was used to push, since force-push needs write access).
@@ -119,11 +119,11 @@ AGENT_BRANCH="${AGENT_BRANCH:-main}"
 
 # Paths split into three buckets:
 #
-#   PURGE  — Skipped from source AND removed from the repo working tree if
+#   PURGE  - Skipped from source AND removed from the repo working tree if
 #            already present. Use for secrets and junk we don't want sitting
 #            in the repo even from a previous bad run.
 #
-#   PROTECT — Skipped from source AND preserved in the repo. Use for
+#   PROTECT - Skipped from source AND preserved in the repo. Use for
 #             repo-only files (this script, README, .gitignore, .git itself)
 #             that don't live at the source.
 #
@@ -131,7 +131,7 @@ AGENT_BRANCH="${AGENT_BRANCH:-main}"
 # them); after rsync, we explicitly `rm -rf` PURGE entries at the destination
 # to clean up stragglers from older runs that didn't have them excluded yet.
 #
-# Glob characters (`*`, `?`, `[...]`) ARE supported in PURGE entries — rsync
+# Glob characters (`*`, `?`, `[...]`) ARE supported in PURGE entries - rsync
 # handles them natively in `--exclude` patterns, and the post-rsync purge
 # step below uses `shopt -s nullglob` for the matching shell expansion.
 # Keep patterns anchored to the repo root (no leading slash; the loops add
@@ -147,7 +147,7 @@ PURGE=(
     'exec-approvals.json'
     'openclaw.json*'                       # covers .json, .json.bak, .json.bak.<n>,
                                            # .json.bak.<timestamp>, .json.bak.<name>,
-                                           # .json.last-good — all hold API keys.
+                                           # .json.last-good - all hold API keys.
     'workspace/.filebrowser-admin-password'
     # noise / regenerable
     'logs'
@@ -155,8 +155,8 @@ PURGE=(
     'plugin-runtime-deps'
 )
 
-# Nested-.git protection. Any `.git` directory under the source — at any
-# depth — gets excluded from rsync and rm'd from the destination, with one
+# Nested-.git protection. Any `.git` directory under the source - at any
+# depth - gets excluded from rsync and rm'd from the destination, with one
 # exception: the agent-repo's own `.git/` at the destination root, which
 # IS our backup repo. This catches openclaw's coding-agent skill creating
 # `workspace/claude/.git/` (and any future nested checkouts we don't know
@@ -252,7 +252,7 @@ RSYNC_ARGS=(-a --delete)
 [[ $DRY_RUN -eq 1 ]] && RSYNC_ARGS+=(--dry-run)
 for ex in "${PURGE[@]}"   ; do RSYNC_ARGS+=(--exclude="/$ex"); done
 for ex in "${PROTECT[@]}" ; do RSYNC_ARGS+=(--exclude="/$ex"); done
-# Nested .git at ANY depth — unanchored (no leading `/`) so rsync matches
+# Nested .git at ANY depth - unanchored (no leading `/`) so rsync matches
 # at every level, with trailing slash to only match directories.
 RSYNC_ARGS+=(--exclude='.git/')
 
@@ -264,7 +264,7 @@ rsync "${RSYNC_ARGS[@]}" "${AGENT_SOURCE}/" "${AGENT_REPO_DIR}/"
 # `shopt -s nullglob` makes globs that match nothing expand to zero args
 # (rather than the literal pattern string), so the loop body skips cleanly
 # for entries that don't exist on this run. Literal (non-glob) paths still
-# work — they expand to themselves when present, and to nothing when not.
+# work - they expand to themselves when present, and to nothing when not.
 
 if [[ $DRY_RUN -eq 0 ]]; then
     shopt -s nullglob
@@ -396,7 +396,7 @@ else
     if git push "$AGENT_REMOTE" "$AGENT_BRANCH"; then
         log "push: ok"
     else
-        log "push: FAILED — check git auth (gh auth login, credential helper, or set GITHUB_TOKEN)"
+        log "push: FAILED - check git auth (gh auth login, credential helper, or set GITHUB_TOKEN)"
         exit 3
     fi
 fi

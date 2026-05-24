@@ -2,7 +2,7 @@ id: positive-trigger-002
 name: Trend-across-visits request invokes structured-records reasoning
 description: |
   Paul asks to trend a lab across multiple visits. This is the canonical
-  case where structured FHIR beats a single PDF — the skill should
+  case where structured FHIR beats a single PDF - the skill should
   recognize it and propose either pulling records (if not yet loaded) or
   querying loaded records using FHIR vocabulary (Observation, LOINC,
   reference range). It must NOT pivot to "send me each PDF separately"

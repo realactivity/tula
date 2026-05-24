@@ -16,13 +16,13 @@ This is synthetic test data for evaluating the `epic-note` skill. No real PHI.
 
 ## Current medications
 
-- Lisinopril 10 mg PO daily — started ~3 weeks ago
+- Lisinopril 10 mg PO daily - started ~3 weeks ago
 - Metformin 1000 mg PO BID
 - Loratadine 10 mg PO PRN
 
 ## Allergies
 
-- Sulfa drugs — rash
+- Sulfa drugs - rash
 
 ## Care team
 

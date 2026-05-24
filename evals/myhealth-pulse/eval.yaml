@@ -6,7 +6,7 @@ description: |
   med-pdf / epic-note / health-records when those are the right tools.
 
   Top-level graders apply to every task. Task-level graders fire only for
-  that task — digest-format graders belong on the happy-path tasks only;
+  that task - digest-format graders belong on the happy-path tasks only;
   anti-trigger tasks intentionally don't produce a digest.
 skill: myhealth-pulse
 version: "1.0"

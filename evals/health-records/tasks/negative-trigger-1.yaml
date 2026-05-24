@@ -2,7 +2,7 @@ id: negative-trigger-001
 name: Non-records prompt should not invoke health-records
 description: |
   Paul asks a general lifestyle question with no portal/FHIR context.
-  health-records should NOT trigger — no create-session, no userUrl,
+  health-records should NOT trigger - no create-session, no userUrl,
   no SMART-on-FHIR dance. A casual answer is fine; we just don't want
   the skill activating spuriously.
 tags:
@@ -10,7 +10,7 @@ tags:
   - anti-trigger
 inputs:
   prompt: |
-    Quick one — is it better to walk before or after dinner for blood
+    Quick one - is it better to walk before or after dinner for blood
     sugar control?
 expected:
   output_not_contains:

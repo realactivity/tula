@@ -4,7 +4,7 @@ description: |
   User asks for a normal daily pulse. Skill should load the profile from
   the fixture, resolve enabled adapters (social-x + web-brave), call them,
   score results against the profile's topics, and emit a digest in the
-  documented shape with the trailing "Powered by myhealth-pulse — feeds:
+  documented shape with the trailing "Powered by myhealth-pulse - feeds:
   ..." line that names at least one active adapter.
 tags:
   - basic
