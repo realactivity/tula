@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ---------------------------------------------------------------------------
-# deploy-skills.sh — Deploy Tula skills from a local tula clone to OpenClaw.
+# deploy-skills.sh - Deploy Tula skills from a local tula clone to OpenClaw.
 # ---------------------------------------------------------------------------
 #
 # ============================== AGENTS.md ===================================
@@ -12,7 +12,7 @@
 # OpenClaw is installed, *not* on a developer workstation.
 #
 # OpenClaw's skills watcher picks up changes on the next session, so a
-# successful run is enough — no daemon restart required.
+# successful run is enough - no daemon restart required.
 #
 # ## What it does
 # 1. (Optional) `git pull --ff-only` in the tula clone so you're deploying
@@ -23,7 +23,7 @@
 # 3. (Optional) Run `openclaw skills list` and look up each deployed skill
 #    in the name column (awk -F'│' on column 3) to confirm `✓ ready`.
 #
-# Note: `tula/skills/AGENTS.md` is NOT a skill — it's the conventions doc —
+# Note: `tula/skills/AGENTS.md` is NOT a skill - it's the conventions doc -
 # so it's filtered out.
 #
 # ## Usage
@@ -41,7 +41,7 @@
 # ## Exit codes
 #   0  Success (all requested skills deployed and verified)
 #   1  Generic error (missing repo, rsync failure, etc.)
-#   2  Verification failed — at least one skill didn't show as `✓ ready`
+#   2  Verification failed - at least one skill didn't show as `✓ ready`
 #
 # ## First-time setup on a new VM
 #   1. Clone tula somewhere stable:
@@ -157,7 +157,7 @@ fi
 
 if (( DO_VERIFY && DRY_RUN == 0 )); then
     if ! command -v openclaw >/dev/null 2>&1; then
-        echo "[deploy-skills] WARN: openclaw not on PATH — skipping verification"
+        echo "[deploy-skills] WARN: openclaw not on PATH - skipping verification"
         exit 0
     fi
 

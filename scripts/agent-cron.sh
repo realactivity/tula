@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ---------------------------------------------------------------------------
-# agent-cron.sh — non-interactive wrapper around agent-backup.sh.
+# agent-cron.sh - non-interactive wrapper around agent-backup.sh.
 # ---------------------------------------------------------------------------
 #
 # ============================== AGENTS.md ===================================
@@ -8,8 +8,8 @@
 #
 # ## Purpose
 # Glue script that lets `agent-backup.sh` run safely from cron (or any other
-# non-interactive scheduler). Cron's environment is minimal — no PATH past
-# /usr/bin:/bin, no env vars from your shell — so we explicitly source the
+# non-interactive scheduler). Cron's environment is minimal - no PATH past
+# /usr/bin:/bin, no env vars from your shell - so we explicitly source the
 # token, set PATH, acquire a lock, and log everything.
 #
 # Cron should call THIS script, not `agent-backup.sh` directly.
@@ -27,7 +27,7 @@
 #   (or any external monitor) can spot non-zero exits and alert.
 #
 # ## Inputs
-# - `~/.agent-cron-token` — required. A `KEY=VALUE` file. Must define
+# - `~/.agent-cron-token` - required. A `KEY=VALUE` file. Must define
 #   `GITHUB_TOKEN=<fine-grained-PAT>`. Mode must be 600 (this script will
 #   refuse to source it otherwise).
 # - All env vars consumed by `agent-backup.sh` are honored if exported here
@@ -77,7 +77,7 @@ fi
 exec >>"$LOG_FILE" 2>&1
 echo ""
 echo "============================================================"
-echo "[agent-cron] $(date -u '+%Y-%m-%d %H:%M:%SZ') — start"
+echo "[agent-cron] $(date -u '+%Y-%m-%d %H:%M:%SZ') - start"
 echo "============================================================"
 
 # ---------- preflight ------------------------------------------------------
@@ -116,6 +116,6 @@ fi
 
 # ---------- run under flock ------------------------------------------------
 
-# `flock -n` returns immediately if the lock is held; perfect for cron — the
+# `flock -n` returns immediately if the lock is held; perfect for cron - the
 # next tick will retry rather than queueing up backups.
 exec flock -n "$LOCK_FILE" "$BACKUP_SCRIPT" "$@"

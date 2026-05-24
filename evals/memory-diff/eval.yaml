@@ -7,7 +7,7 @@ description: |
   sibling skills.
 
   Top-level graders apply to every task. Task-level graders fire only for
-  that task — tier-shape graders belong on the happy-path tasks; the
+  that task - tier-shape graders belong on the happy-path tasks; the
   anti-trigger task intentionally doesn't produce a diff.
 skill: memory-diff
 version: "1.0"

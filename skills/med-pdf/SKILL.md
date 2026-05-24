@@ -27,7 +27,7 @@ metadata:
 ❌ Don't use when:
 
 - The PDF is non-medical (insurance, EOB, billing)
-- Paul wants to author a clinical message → use `epic-note`
+- Paul wants to author a clinical message -> use `epic-note`
 - Anything that would send PHI outside the workspace
 
 ## Workflow
@@ -39,13 +39,13 @@ metadata:
      `numPages`, `hasText`, `textChars`.
 
 2. **Branch on `hasText`:**
-   - `true` → skip OCR, feed `text.txt` to parsers.
-   - `false` → image-only (MyChart/Epic). Use the `image` tool on
+   - `true` -> skip OCR, feed `text.txt` to parsers.
+   - `false` -> image-only (MyChart/Epic). Use the `image` tool on
      `pageN.png` for verbatim transcription. Save as `text.txt`, continue.
 
 3. **Parse:**
-   - Imaging → `node {baseDir}/scripts/parse_imaging.mjs <outDir>`
-   - Labs → `node {baseDir}/scripts/parse_labs.mjs <outDir>`
+   - Imaging -> `node {baseDir}/scripts/parse_imaging.mjs <outDir>`
+   - Labs -> `node {baseDir}/scripts/parse_labs.mjs <outDir>`
    - Both can run on a mixed document.
 
 4. **Reason.** Pull abnormal flags, compare to prior values, surface what
@@ -77,10 +77,10 @@ Medical PDFs contain PHI (name, DOB, MRN, providers).
 
 ## Troubleshooting
 
-- `parse_labs.mjs` returns mostly `unmatchedLines` → text wasn't transcribed
+- `parse_labs.mjs` returns mostly `unmatchedLines` -> text wasn't transcribed
   well. Re-run `extract.mjs` with `--scale=3.0` and re-OCR.
-- A labeled value sits in `unmatchedLines` → add an alias to the dictionary
+- A labeled value sits in `unmatchedLines` -> add an alias to the dictionary
   in `parse_labs.mjs`. See
   [`references/scripts.md`](references/scripts.md#maintaining-the-dictionary).
-- `hasText: true` but parsing yields garbage → PDF has hidden Unicode
+- `hasText: true` but parsing yields garbage -> PDF has hidden Unicode
   ligatures; force OCR with `--images-only`.

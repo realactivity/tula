@@ -93,8 +93,8 @@ The pattern:
    - what keys exist, what they mean, what does NOT belong (PHI, real
    medical history, etc.).
 2. **The skill resolves the profile at runtime** from a documented
-   precedence: `skills.entries.<skill>.profile` in `openclaw.json` →
-   `<SKILL>_PROFILE` env var → `~/.openclaw/workspace/memory/<file>.yaml`.
+   precedence: `skills.entries.<skill>.profile` in `openclaw.json` ->
+   `<SKILL>_PROFILE` env var -> `~/.openclaw/workspace/memory/<file>.yaml`.
 3. **Eval fixtures use a synthetic persona** (e.g., `@drsynth` /
    "Dr. Casey Synth"). No real names, handles, providers, or topics.
 4. **The actual user profile lives outside the repo** - in the workspace

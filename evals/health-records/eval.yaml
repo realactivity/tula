@@ -2,7 +2,7 @@ name: health-records-eval
 description: |
   Evaluation suite for the health-records skill. Verifies the agent
   recognizes patient-portal / FHIR pull requests, drives the
-  create-session → show-link → finalize workflow, declines non-records
+  create-session -> show-link -> finalize workflow, declines non-records
   prompts, respects PHI boundaries, and hands off to med-pdf / epic-note
   when those are the right tools.
 skill: health-records

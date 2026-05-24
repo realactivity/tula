@@ -1,6 +1,6 @@
 # Synthetic profile for myhealth-pulse evals.
 # Stands in for ~/.openclaw/workspace/memory/profile.yaml during test runs.
-# Persona: Dylan Meyer — fictional 51-year-old with a professional
+# Persona: Dylan Meyer - fictional 51-year-old with a professional
 # interest in clinical AI / health-data interoperability. No real PII.
 
 version: 1

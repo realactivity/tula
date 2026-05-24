@@ -12,7 +12,7 @@ tags:
   - image-only
 inputs:
   prompt: |
-    Here's the CT chest report I got from MyChart. The PDF looks weird —
+    Here's the CT chest report I got from MyChart. The PDF looks weird -
     when I tried to copy text it didn't work. Can you read it and tell me
     what the impression says?
 expected:

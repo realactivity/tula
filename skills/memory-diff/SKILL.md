@@ -26,10 +26,10 @@ metadata:
 
 ❌ Don't use when:
 
-- User wants news or social signal → use `myhealth-pulse`
-- User shares a PDF, screenshot, or image → use `med-pdf`
-- User asks for raw chart data → use `health-records`
-- User wants to draft a clinician message → use `epic-note`
+- User wants news or social signal -> use `myhealth-pulse`
+- User shares a PDF, screenshot, or image -> use `med-pdf`
+- User asks for raw chart data -> use `health-records`
+- User wants to draft a clinician message -> use `epic-note`
 - User asks for medical advice - decline politely; this reads memory, not clinical judgment
 
 ## Setup
@@ -97,12 +97,12 @@ since-a-med-change, post-visit, and empty-window outputs.
 
 ## Troubleshooting
 
-- **Ambiguous anchor** → ask one clarifying question, then proceed. Don't
+- **Ambiguous anchor** -> ask one clarifying question, then proceed. Don't
   guess.
-- **Conflicting facts across sources** → surface both with source
+- **Conflicting facts across sources** -> surface both with source
   attribution. Don't silently pick a winner.
-- **Cache directory missing on first run** → create it, no error.
-- **Tuning the tiers** → in v1, thresholds live in
+- **Cache directory missing on first run** -> create it, no error.
+- **Tuning the tiers** -> in v1, thresholds live in
   [`references/clinical-significance.md`](references/clinical-significance.md).
   A forthcoming user dashboard app will let the user tune these through a
   profile mechanism (same shape as

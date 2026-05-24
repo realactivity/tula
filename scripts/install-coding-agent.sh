@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ---------------------------------------------------------------------------
-# install-coding-agent.sh — Set up OpenClaw's coding-agent delegate.
+# install-coding-agent.sh - Set up OpenClaw's coding-agent delegate.
 # ---------------------------------------------------------------------------
 #
 # ============================== AGENTS.md ===================================
@@ -10,15 +10,15 @@
 # Install a coding delegate CLI (Claude Code or Codex) on an OpenClaw VM
 # and enable the bundled `coding-agent` skill in `openclaw.json`. After
 # this script runs, the agent can spawn the chosen CLI for multi-file
-# coding work — refactors, building features, PR review, etc.
+# coding work - refactors, building features, PR review, etc.
 #
 # This script does NOT log you in to the chosen CLI. That step is
 # interactive and must be done manually after the script finishes.
 #
 # ## What it does
 # 1. `sudo npm install -g <package>` for the chosen CLI:
-#      - claude  → @anthropic-ai/claude-code
-#      - codex   → @openai/codex
+#      - claude  -> @anthropic-ai/claude-code
+#      - codex   -> @openai/codex
 # 2. Verifies the binary is on PATH and prints its version.
 # 3. (codex only) Drops `model = "gpt-5.5"` into `~/.codex/config.toml`.
 # 4. (claude only) Merges `permissions.defaultMode = "bypassPermissions"`
@@ -38,7 +38,7 @@
 #   install-coding-agent.sh --no-enable     Install only, don't touch openclaw.json
 #   install-coding-agent.sh --help          Print this header and exit
 #
-# ## After this script — manual login
+# ## After this script - manual login
 # Claude Code:
 #   claude
 #   /login   (inside the TUI; follow Anthropic OAuth in your browser)
@@ -53,17 +53,17 @@
 # OAuth screen, or use Claude Code instead.
 #
 # ## Why pick which?
-# - **Claude Code** — uses Anthropic OAuth, defaults to Claude Sonnet 4.6
+# - **Claude Code** - uses Anthropic OAuth, defaults to Claude Sonnet 4.6
 #   for coding (or Opus 4.7 if you `/model`-switch). Smoothest if your
 #   OpenClaw agent is already on Anthropic auth.
-# - **Codex** — uses ChatGPT OAuth or device-auth, defaults to gpt-5.5 in
+# - **Codex** - uses ChatGPT OAuth or device-auth, defaults to gpt-5.5 in
 #   the config we drop. Strongest agentic coding benchmarks; needs an
 #   active ChatGPT subscription that allows the device flow.
 #
 # ## Exit codes
 #   0  Success
 #   1  Generic error (npm install failed, openclaw.json missing, etc.)
-#   2  Verification failed — coding-agent didn't show as ✓ ready
+#   2  Verification failed - coding-agent didn't show as ✓ ready
 # ============================ END AGENTS.md =================================
 
 set -euo pipefail
@@ -113,7 +113,7 @@ fi
 
 echo "[install-coding-agent] installing $PKG ..."
 if command -v "$BIN" >/dev/null 2>&1; then
-    echo "[install-coding-agent] $BIN already on PATH ($(command -v "$BIN")) — re-running install to update"
+    echo "[install-coding-agent] $BIN already on PATH ($(command -v "$BIN")) - re-running install to update"
 fi
 sudo npm install -g "$PKG"
 
@@ -134,7 +134,7 @@ if [[ "$CLI" == "codex" ]]; then
 model = "gpt-5.5"
 TOML
     else
-        echo "[install-coding-agent] $cfg already has a model setting — leaving alone"
+        echo "[install-coding-agent] $cfg already has a model setting - leaving alone"
     fi
 fi
 
@@ -163,7 +163,7 @@ if changed:
     print("    permissions.defaultMode = bypassPermissions")
     print("    permissions.skipDangerousModePermissionPrompt = true")
 else:
-    print("    already configured — no change")
+    print("    already configured - no change")
 PY
 fi
 
@@ -184,7 +184,7 @@ with cfg_path.open() as f:
 
 ca = cfg.setdefault("skills", {}).setdefault("entries", {}).setdefault("coding-agent", {})
 if ca.get("enabled") is True:
-    print("    already enabled — no change")
+    print("    already enabled - no change")
     sys.exit(0)
 
 shutil.copy2(cfg_path, bak_path)
@@ -207,7 +207,7 @@ if (( DO_ENABLE )) && command -v openclaw >/dev/null 2>&1; then
     if openclaw skills list 2>&1 | grep -E 'coding-agent' | grep -q '✓ ready'; then
         echo "    ✓ coding-agent (ready)"
     else
-        echo "    ⚠ coding-agent did not show as ✓ ready — check openclaw skills list manually"
+        echo "    ⚠ coding-agent did not show as ✓ ready - check openclaw skills list manually"
         exit 2
     fi
 fi

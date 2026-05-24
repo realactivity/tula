@@ -12,9 +12,9 @@ Input: `What's changed in my health since last week?`
 ```
 **Tier 1 - Signal**
 
-- **HbA1c improved 6.0 → 5.8** (memory/2026-05-10.md) - first sub-6.0
+- **HbA1c improved 6.0 -> 5.8** (memory/2026-05-10.md) - first sub-6.0
   reading since tracking began. Lifestyle changes working.
-- **Home BP trending down** - 138/88 → 122/78 across 10 days
+- **Home BP trending down** - 138/88 -> 122/78 across 10 days
   (memory/2026-05-10.md, MEMORY.md). Lisinopril effect or measurement
   noise; one more week will tell.
 
@@ -39,10 +39,10 @@ Input: `What's changed since I started lisinopril?`
 ```
 **Tier 1 - Signal**
 
-- **Home BP dropped** 138/88 (2026-04-30, day-of-start) → 122/78
-  (2026-05-10) → 120/76 (2026-05-16). 18-point systolic drop over 2.5
+- **Home BP dropped** 138/88 (2026-04-30, day-of-start) -> 122/78
+  (2026-05-10) -> 120/76 (2026-05-16). 18-point systolic drop over 2.5
   weeks (memory/, MEMORY.md).
-- **HbA1c improved** 6.0 (2026-04-25, pre-lisinopril) → 5.8 (2026-05-10).
+- **HbA1c improved** 6.0 (2026-04-25, pre-lisinopril) -> 5.8 (2026-05-10).
   Likely lifestyle-driven; lisinopril doesn't affect glucose.
 - **No reported side effects** in any memory note since start.
 

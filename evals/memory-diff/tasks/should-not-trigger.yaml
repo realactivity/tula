@@ -4,7 +4,7 @@ description: |
   User asks a news/topic question that is myhealth-pulse territory, not
   memory-diff. Skill should NOT emit a memory diff. The agent should
   either invoke myhealth-pulse or reply with a short routing note that
-  names myhealth-pulse — never produce a "Powered by memory-diff"
+  names myhealth-pulse - never produce a "Powered by memory-diff"
   envelope for a non-memory question.
 tags:
   - anti-trigger
@@ -16,5 +16,5 @@ inputs:
 expected:
   output_not_contains:
     - "Powered by memory-diff"
-    - "Tier 1 — Signal"
-    - "Tier 2 — Notable"
+    - "Tier 1 - Signal"
+    - "Tier 2 - Notable"

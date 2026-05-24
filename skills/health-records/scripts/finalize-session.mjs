@@ -44,7 +44,7 @@
  * ── Memory discipline ──────────────────────────────────────────────────────
  *
  *   We never hold a whole provider's decrypted JSON in RAM. Chunks land on
- *   disk as encrypted blobs, then stream through decrypt → gunzip → file.
+ *   disk as encrypted blobs, then stream through decrypt -> gunzip -> file.
  *   This matters because a heavy user can have 300MB+ of FHIR data once
  *   decompressed, and we run on a 2GB Azure VM.
  *
@@ -379,7 +379,7 @@ async function downloadChunkToFile(sessionId, providerIndex, chunkIndex, chunkPa
 // ── Per-provider pipeline ──────────────────────────────────────────────────
 
 /**
- * Download → decrypt → gunzip → write one provider's JSON to disk.
+ * Download -> decrypt -> gunzip -> write one provider's JSON to disk.
  *
  * Concurrency model:
  *   - Up to `prefetchChunks` downloads are in-flight at any moment.

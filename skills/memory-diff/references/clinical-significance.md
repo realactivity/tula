@@ -32,13 +32,13 @@ Changes a user needs to know about today.
 
 - **New medication started** - name, dose, indication if available.
 - **Medication discontinued** - name, why (if noted).
-- **Dose change** - old dose → new dose.
+- **Dose change** - old dose -> new dose.
 
 ### Diagnosis / condition changes
 
 - **New active condition** - added to problem list.
 - **Condition resolved** - moved off active list.
-- **Status change** - "uncontrolled" → "controlled", or vice versa.
+- **Status change** - "uncontrolled" -> "controlled", or vice versa.
 
 ### Imaging / procedure findings
 

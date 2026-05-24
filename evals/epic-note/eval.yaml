@@ -6,7 +6,7 @@ description: |
 
   Top-level graders apply to every task. Task-level graders (in each
   tasks/*.yaml) fire only for that task. Format graders (Subject/greeting/
-  signoff) belong at the task level on `basic-usage` only — other tasks
+  signoff) belong at the task level on `basic-usage` only - other tasks
   intentionally don't produce a portal message.
 skill: epic-note
 version: "1.0"

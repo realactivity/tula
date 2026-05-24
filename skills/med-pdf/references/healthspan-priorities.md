@@ -36,14 +36,14 @@ These move the needle on healthspan and are often missed in routine "everything 
 - **B12 <400 pg/mL** - even within "normal" 200-900, low end is suboptimal especially over 50.
 
 ### Cancer screening flags
-- Any nodule >6mm in lung, kidney, liver, thyroid → follow-up protocol depends on Fleischner / size / location.
+- Any nodule >6mm in lung, kidney, liver, thyroid -> follow-up protocol depends on Fleischner / size / location.
 - PSA velocity matters more than absolute value.
 
 ## Tier 2 - Worth Mentioning
 
-- Hepatic steatosis mentioned on imaging → metabolic workup.
+- Hepatic steatosis mentioned on imaging -> metabolic workup.
 - Coronary calcifications even when "mild."
-- Diverticulosis → fiber/hydration counsel, not urgent.
+- Diverticulosis -> fiber/hydration counsel, not urgent.
 - Skin/subcutaneous nodules - note for tracking, generally cosmetic.
 - Degenerative spine changes - age-appropriate above 40, mention only if pain or progression.
 

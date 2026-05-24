@@ -1,8 +1,8 @@
 name: med-pdf-eval
 description: |
   Evaluation suite for the med-pdf skill. Verifies the agent recognizes
-  medical PDF requests, follows the extract → branch-on-hasText → parse →
-  reason → persist workflow, declines non-medical PDFs, and respects PHI
+  medical PDF requests, follows the extract -> branch-on-hasText -> parse ->
+  reason -> persist workflow, declines non-medical PDFs, and respects PHI
   boundaries.
 skill: med-pdf
 version: "1.0"

@@ -4,7 +4,7 @@ description: |
   Patient bundles three unrelated questions (refill, lab result, new symptom).
   Skill should NOT cram everything into one message. It should propose
   separate messages or ask the patient which to send first / which is most
-  urgent. The correct behavior is splitting, not bundling — so this task
+  urgent. The correct behavior is splitting, not bundling - so this task
   intentionally does NOT use the portal-format graders.
 tags:
   - edge-case
