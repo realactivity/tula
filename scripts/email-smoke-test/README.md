@@ -5,7 +5,7 @@ Microsoft Graph via device-code flow, then lists the 5 most recent
 messages in the configured mailbox. The author's deployment targets
 `aria@realactivity.com` on his own Exchange Online tenant; substitute your
 own dedicated health mailbox when you run this. ("Aria" here is the
-display name of that one Exchange mailbox, **not** a Tula brand — see
+display name of that one Exchange mailbox, **not** a Tula brand; see
 [`TRADEMARK.md`](../../TRADEMARK.md).)
 
 This is **throwaway scaffolding**. Phase 2 lifts the auth + polling
@@ -16,7 +16,7 @@ for the broader plan.
 
 ## Prerequisites
 
-- Ubuntu VM with Node ≥ 22.16 (the OpenClaw VM already satisfies this -
+- Ubuntu VM with Node >= 22.16 (the OpenClaw VM already satisfies this -
   it ships with Node 24 per `docs/deployment-guide.md` Step 3).
 - `aria@realactivity.com` mailbox in Exchange Online (already created).
 - An **Entra ID app registration** with the right Graph permissions.
@@ -28,7 +28,7 @@ Do this in the M365 admin Web UI; cannot be automated from here.
 1. Sign in at <https://entra.microsoft.com> with an account that has
    Application Administrator (or Global Administrator) rights on the
    tenant that owns `realactivity.com`.
-2. **Identity → Applications → App registrations → New registration.**
+2. **Identity -> Applications -> App registrations -> New registration.**
    - Name: `Tula Email Agent`
    - Supported account types: **Single tenant**
    - Redirect URI: leave blank (device-code flow doesn't need one)
@@ -37,10 +37,10 @@ Do this in the M365 admin Web UI; cannot be automated from here.
    them as environment variables on the VM:
    - **Application (client) ID**
    - **Directory (tenant) ID**
-4. **Authentication** blade → scroll to **Advanced settings** → set
+4. **Authentication** blade -> scroll to **Advanced settings** -> set
    **Allow public client flows: Yes**. Save. Without this, device-code
    flow fails with `AADSTS7000218`.
-5. **API permissions** blade → **Add a permission → Microsoft Graph →
+5. **API permissions** blade -> **Add a permission -> Microsoft Graph ->
    Delegated permissions**, then add all four:
    - `Mail.Read`
    - `Mail.ReadWrite`
@@ -122,7 +122,7 @@ node smoke-test.mjs --auth-only  # just refresh tokens, skip Graph call
 | Symptom | Likely cause |
 |---|---|
 | `TULA_CLIENT_ID is not set.` | Forgot to `export` the env vars. They're per-shell - add to `~/.bashrc` or a `.env` loader if you want them sticky. |
-| `AADSTS7000218: ... must have client_secret or use public_client` | Authentication blade → "Allow public client flows" wasn't set to Yes. |
+| `AADSTS7000218: ... must have client_secret or use public_client` | Authentication blade -> "Allow public client flows" wasn't set to Yes. |
 | `AADSTS65001: The user or administrator has not consented` | Admin consent step on the API permissions blade was skipped. |
 | `AADSTS50020: User account ... does not exist in tenant` | You signed in as a personal Microsoft account on the device-code page. Sign in as `aria@realactivity.com` (or whatever account owns the mailbox in this tenant). |
 | `Error: ENOENT ~/.tula/...` | Permission issue writing the cache; ensure `~/.tula/` is owned by the current user and is mode 700. |

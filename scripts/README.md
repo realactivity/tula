@@ -101,7 +101,7 @@ into a private remote of your own.
 ### Usage
 
 ```bash
-# Default: snapshot ~/.openclaw → ~/agent-repo, commit, push to origin/main
+# Default: snapshot ~/.openclaw -> ~/agent-repo, commit, push to origin/main
 ./agent-backup.sh
 
 # Preview only

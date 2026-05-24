@@ -81,7 +81,7 @@ waza new skill <name>
 
 # 2. Refactor SKILL.md to match med-pdf house style
 #    - drop license: field
-#    - swap ## Trigger phrases → ## When to Use ✅
+#    - swap ## Trigger phrases -> ## When to Use ✅
 #    - add ## When NOT to Use ❌, ## Privacy, ## Troubleshooting
 #    - move long content into references/
 #    - add metadata.openclaw.requires.bins if scripts need them

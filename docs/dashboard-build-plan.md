@@ -91,7 +91,7 @@ VM: ra-agent01
 - **The dashboard never talks to the email router directly.** They share
   the FHIR filesystem. The router writes; the dashboard reads. This
   keeps both sides simple and lets either evolve independently.
-- **inotify (Linux file watcher) → SSE.** When the email-router writes a
+- **inotify (Linux file watcher) -> SSE.** When the email-router writes a
   new FHIR file, an inotify event triggers the dashboard server to push
   an SSE message. The browser appends the new card to the activity feed
   with no refresh needed.
@@ -139,7 +139,7 @@ VM: ra-agent01
 ```
 /                    Activity feed (newest 50 events, infinite scroll)
 /labs                Lab observations, grouped by panel and date
-/labs/:loinc         Single biomarker trend (e.g., /labs/4548-4 → HbA1c)
+/labs/:loinc         Single biomarker trend (e.g., /labs/4548-4 -> HbA1c)
 /imaging             Imaging studies list
 /imaging/:id         Single report with key findings
 /medications         Active medications + history
@@ -157,7 +157,7 @@ VM: ra-agent01
 │ 🩺 Lab panel - Quest Diagnostics       2 minutes ago │
 │ Comprehensive Metabolic Panel + Lipid Panel          │
 │                                                       │
-│   HbA1c           6.4 %   ↓ 0.4 from last visit      │
+│   HbA1c           6.4 %   v 0.4 from last visit      │
 │   LDL             102 mg/dL                          │
 │   eGFR            88 mL/min                          │
 │   Fasting Glucose 112 mg/dL  (high - was 99)         │
@@ -248,7 +248,7 @@ not the data).
 
 - Replace fixtures with real reads from
   `~/.openclaw/workspace/tula/fhir/**/*.json`
-- inotify watcher → SSE channel to push new resources as they're written
+- inotify watcher -> SSE channel to push new resources as they're written
 - Activity feed updates without reload
 - Trend page renders real lab history
 
@@ -294,9 +294,9 @@ just a viewer.
 | FHIR JSON layout drifts during email-router build | High | Define TypeScript types in `lib/fhir/types.ts` in `apps/agent-studio/`; both router and dashboard import from there. Single source of truth. |
 | File-watcher misses events under heavy write load | Low (personal volume) | Fall back to a 60s polling tick if no inotify event seen in 5 min |
 | LayerChart/ECharts performance on 5+ years of biomarker history | Low | Virtualize / chunk. Page-level data limit. |
-| Tailscale free tier limits | Very low (personal use) | Free for ≤3 users / ~100 devices |
+| Tailscale free tier limits | Very low (personal use) | Free for <=3 users / ~100 devices |
 | Dashboard process crash | Medium | `systemd Restart=on-failure` |
-| Beautiful UI ≠ accessible UI | Medium | shadcn primitives are a11y by default; verify with axe in CI |
+| Beautiful UI != accessible UI | Medium | shadcn primitives are a11y by default; verify with axe in CI |
 | FHIR file lock contention between router writes and dashboard reads | Low | Atomic write (write to .tmp + rename) on router side; dashboard tolerates partial reads gracefully |
 
 ## Locked-in decisions

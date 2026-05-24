@@ -72,7 +72,7 @@ data/
 
 All colors flow from CSS variables defined in `app/globals.css` under
 `@theme`. Never hardcode hex. The accent token is burgundy
-(`oklch(0.46 0.16 18)` ≈ `#9B1C2C`); informational tone is clinical blue;
+(`oklch(0.46 0.16 18)` ~ `#9B1C2C`); informational tone is clinical blue;
 flag tones come from the shared `agent-studio` palette so observations
 render consistently across both apps.
 

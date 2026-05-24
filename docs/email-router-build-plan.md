@@ -20,7 +20,7 @@ mailbox at `aria@realactivity.com` on his own Exchange Online tenant).
 
 | Decision | Value |
 |---|---|
-| Mailbox address | **`<your-health-mailbox>@<your-domain>`** — any dedicated mailbox in Exchange Online or Microsoft 365. The author runs `aria@realactivity.com` on his own tenant as the canonical example. |
+| Mailbox address | **`<your-health-mailbox>@<your-domain>`**, any dedicated mailbox in Exchange Online or Microsoft 365. The author runs `aria@realactivity.com` on his own tenant as the canonical example. |
 | M365 license source | **Microsoft Partner benefits** |
 | Exchange transport rules | **DEFERRED** until end-to-end flow works (see safety note below) |
 | FHIR storage path | **`~/.openclaw/workspace/tula/fhir/`** (build plan Option A) |
@@ -61,7 +61,7 @@ inside a tula skill. Reasons:
   attachment downloads, refresh tokens, retries, and throttling.
 - No need to install/maintain a separate Rust binary.
 - Future-friendly: Microsoft Graph supports subscription webhooks; we can
-  upgrade from polling → push later without changing the rest of the
+  upgrade from polling -> push later without changing the rest of the
   pipeline.
 
 We will keep `email-router-setup-guide.md` for the M365 / Entra ID /
@@ -162,17 +162,17 @@ Follow the [skills development guide](skills-development.md) and the
 
 ```
 skills/email-router/
-├── SKILL.md                                ← openclaw house style
+├── SKILL.md                                <- openclaw house style
 ├── references/
-│   ├── classification-prompt.md            ← from email-router-design.md
-│   ├── loinc-codes.md                      ← LOINC table from design doc
-│   ├── fhir-shapes.md                      ← Observation/DiagnosticReport
-│   └── content-types.md                    ← per-type handler details
+│   ├── classification-prompt.md            <- from email-router-design.md
+│   ├── loinc-codes.md                      <- LOINC table from design doc
+│   ├── fhir-shapes.md                      <- Observation/DiagnosticReport
+│   └── content-types.md                    <- per-type handler details
 └── scripts/
-    ├── poll.mjs                            ← Graph fetch new messages
-    ├── classify.mjs                        ← Claude classification
-    ├── dispatch.mjs                        ← route by content_type
-    └── auth.mjs                            ← device-code OAuth + refresh
+    ├── poll.mjs                            <- Graph fetch new messages
+    ├── classify.mjs                        <- Claude classification
+    ├── dispatch.mjs                        <- route by content_type
+    └── auth.mjs                            <- device-code OAuth + refresh
 ```
 
 `SKILL.md` shape:
@@ -188,7 +188,7 @@ skills/email-router/
   5. Run `dispatch.mjs` to invoke the per-type handler
   6. Mark seen, move to `Processed` folder
 - TROUBLESHOOTING:
-  - Graph 401: token expired → run device-code flow again
+  - Graph 401: token expired -> run device-code flow again
   - Rate-limit (429): exponential backoff
   - Attachment >150MB: skip with notice (Graph API limit)
 
@@ -251,7 +251,7 @@ alone is ~half a day.
 2. After each successful classification + extraction, the skill calls
    the agent's existing Telegram channel to post a summary.
 3. The agent's `MEMORY.md` gets longitudinal updates ("HbA1c trending
-   down: 6.8 → 6.4 → 6.2").
+   down: 6.8 -> 6.4 -> 6.2").
 
 **Deliverable**: end-to-end TripIt-style flow. Forward a lab PDF, get
 a Telegram message in <2 minutes with extracted values and trend deltas.
@@ -261,7 +261,7 @@ a Telegram message in <2 minutes with extracted values and trend deltas.
 ### Phase 5 - Operational polish
 
 - Sender allowlist updates via Telegram ("add caregiver to authorized
-  senders" → updates the Exchange transport rule via Graph API).
+  senders" -> updates the Exchange transport rule via Graph API).
 - De-identification engine (future per design doc) - strip PHI before
   any non-local processing.
 - Confidence-flagged extractions surfaced via Telegram for user
@@ -285,8 +285,8 @@ a Telegram message in <2 minutes with extracted values and trend deltas.
 
 Phase 0 decisions are resolved (see top of doc). Remaining Phase 1 work:
 
-1. **Register the Entra ID app** at https://entra.microsoft.com →
-   App registrations → New registration. Single-tenant. Allow public
+1. **Register the Entra ID app** at https://entra.microsoft.com ->
+   App registrations -> New registration. Single-tenant. Allow public
    client flows = **Yes**. Add **delegated** Graph permissions:
    `Mail.Read`, `Mail.ReadWrite`, `User.Read`, `offline_access`. Grant
    admin consent. Record the Application (client) ID and Directory
