@@ -15,26 +15,51 @@ import { parseArgs } from "node:util";
 import { fileURLToPath } from "node:url";
 
 const REPLACEMENTS = [
-  ["\u2014", "-"], // em dash —
-  ["\u2013", "-"], // en dash –
-  ["\u2212", "-"], // minus −
-  ["\u201C", '"'], // left double quote “
-  ["\u201D", '"'], // right double quote ”
-  ["\u201E", '"'], // double low-9 quote „
-  ["\u2018", "'"], // left single quote ‘
-  ["\u2019", "'"], // right single quote ’
-  ["\u201A", "'"], // single low-9 quote ‚
-  ["\u2026", "..."], // ellipsis …
+  ["\u2014", "-"], // em dash
+  ["\u2013", "-"], // en dash
+  ["\u2212", "-"], // minus sign
+  ["\u2010", "-"], // hyphen U+2010
+  ["\u2011", "-"], // non-breaking hyphen
+  ["\u2012", "-"], // figure dash
+  ["\u2015", "-"], // horizontal bar
+  ["\u201C", '"'], // left double quote
+  ["\u201D", '"'], // right double quote
+  ["\u201E", '"'], // double low-9 quote
+  ["\u2018", "'"], // left single quote
+  ["\u2019", "'"], // right single quote
+  ["\u201A", "'"], // single low-9 quote
+  ["\u2026", "..."], // ellipsis
+  ["\u2192", "->"], // right arrow
+  ["\u2190", "<-"], // left arrow
+  ["\u2191", "^"], // up arrow
+  ["\u2193", "v"], // down arrow
   ["\u00A0", " "], // non-breaking space
   ["\u2009", " "], // thin space
   ["\u200B", ""], // zero-width space
   ["\u200C", ""], // zero-width non-joiner
   ["\u200D", ""], // zero-width joiner
   ["\uFEFF", ""], // BOM
-  ["\u2022", "*"], // bullet •
+  ["\u2022", "*"], // bullet
+  ["\u2032", "'"], // prime
+  ["\u2033", '"'], // double prime
+  ["\u2039", "<"], // left single angle quote
+  ["\u203A", ">"], // right single angle quote
+  ["\u00AB", '"'], // left double angle quote
+  ["\u00BB", '"'], // right double angle quote
 ];
 
-const DEFAULT_EXTS = ["md", "mdx", "ts", "tsx", "js", "jsx", "mjs", "cjs"];
+const DEFAULT_EXTS = [
+  "md", "mdx",
+  "ts", "tsx", "js", "jsx", "mjs", "cjs",
+  "yaml", "yml",
+  "sh",
+  "json", "jsonc",
+  "css", "scss",
+  "html", "htm",
+  "py",
+  "toml", "ini",
+  "txt",
+];
 
 const SKIP_DIRS = new Set([
   "node_modules",
