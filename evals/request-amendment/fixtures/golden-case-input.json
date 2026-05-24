@@ -1,0 +1,14 @@
+{
+  "patientName": "Alex Morgan",
+  "dateOfService": "2026-03-14",
+  "department": "Internal Medicine",
+  "recordTitle": "Follow-up Progress Note",
+  "targetExcerpt": "Current meds: lisinopril 40 mg daily.",
+  "patientStatement": "I take lisinopril 10 mg daily, not 40 mg.",
+  "supportingEvidence": "My home medication bottle and portal med list both show 10 mg daily.",
+  "proposedAmendment": "Please amend medication dosage to lisinopril 10 mg daily and append this patient statement.",
+  "issueType": "medication/allergy issue",
+  "providerOffice": "Health Information Management",
+  "receiptDate": "2026-05-23",
+  "fhirDraftEnabled": true
+}

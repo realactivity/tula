@@ -1,0 +1,28 @@
+id: positive-factual-correction-001
+name: Positive Trigger - straightforward factual correction
+description: |
+  Patient says a note lists the wrong medication dose. Skill should produce
+  an evidence-separated amendment package and neutral provider-facing language.
+tags:
+  - positive-trigger
+  - factual-error
+inputs:
+  prompt: |
+    My visit note says lisinopril 40 mg daily, but I take 10 mg daily.
+    Help me request a correction.
+expected:
+  outcomes:
+    - type: task_completed
+  output_contains:
+    - "correction"
+graders:
+  - type: text
+    name: includes_evidence_separation
+    config:
+      regex_match:
+        - "(?i)(patient[_ ]says|record[_ ]shows|supporting[_ ]evidence|proposed[_ ]amendment)"
+  - type: text
+    name: asks_for_missing_intake_or_timeline
+    config:
+      regex_match:
+        - "(?i)(visit date|note date|record|60-day|deadline|help you request)"

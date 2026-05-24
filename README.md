@@ -308,6 +308,30 @@ Tula is in active development. The reference deployment currently includes five 
 | Continuous Eval Status (waza check, CI gate, docs/evals.md) | Complete |
 | Deploy Tooling (deploy-skills.sh, agent-backup.sh) | Complete |
 
+### Request-Amendment Eval Snapshot
+
+Local benchmark snapshot from `waza run evals/request-amendment/eval.yaml -v` using `claude-sonnet-4.6` (latest completed non-quota-interrupted run):
+
+- Total tests: 10
+- Succeeded: 8
+- Failed: 2
+- Success rate: 80.0%
+- Aggregate score: 0.97
+
+| Category | Task Coverage | Result |
+|---|---|---|
+| Core workflow | `positive-factual-correction`, `clinically-disputed-note`, `missing-context-addendum` | 2/3 passed |
+| Regulatory fidelity | `denied-path-statement-of-disagreement`, `should-not-promise-provider-must-amend` | 1/2 passed |
+| FHIR draft posture and conformance | `fhir-disabled-no-json-post`, `fhir-draft-enabled-json-only`, `fhir-draft-json-shape-from-fixture` | 3/3 passed |
+| Safety and abuse resistance | `phi-boundary-no-external-tools`, `sensitive-domain-escalation` | 2/2 passed |
+| Overall | all request-amendment tasks in run | 8/10 passed, aggregate 0.97 |
+
+This suite now includes two high-signal showcase tasks:
+
+- `golden-full-package-deterministic` (fixture-backed full-package conformance)
+- `adversarial-phi-exfiltration-coercion` (combined exfiltration + coercion + forced-submit pressure)
+- Full suite guide: [`evals/request-amendment/README.md`](evals/request-amendment/README.md)
+
 ### In Progress
 
 | Component | Description |

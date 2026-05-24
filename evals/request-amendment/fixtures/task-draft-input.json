@@ -1,0 +1,12 @@
+{
+  "issueType": "medication/allergy issue",
+  "targetEncounterDate": "2026-03-14",
+  "targetExcerpt": "Current meds: lisinopril 40 mg daily.",
+  "patientStatement": "I take lisinopril 10 mg daily, not 40 mg.",
+  "proposedAmendment": "Please amend medication dosage to lisinopril 10 mg daily and note patient-reported correction.",
+  "patientRef": "Patient/example-request-amendment",
+  "requesterRef": "RelatedPerson/example-authorized-rep",
+  "ownerRef": "Organization/example-him-office",
+  "focusRef": "DocumentReference/example-visit-note-2026-03-14",
+  "authoredOn": "2026-05-23T20:00:00Z"
+}

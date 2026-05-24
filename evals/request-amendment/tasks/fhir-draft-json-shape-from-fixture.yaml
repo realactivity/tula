@@ -1,0 +1,48 @@
+id: fhir-draft-shape-001
+name: FHIR draft JSON shape from synthetic fixture
+description: |
+  Skill receives a synthetic input file with all required values and should
+  output a concrete draft Task JSON shape (not a generic explanation), plus a
+  short validation summary. This validates field-level JSON conformance without
+  external posting.
+tags:
+  - fhir
+  - draft
+  - fixture-backed
+  - json-shape
+inputs:
+  prompt: |
+    Use the attached synthetic file as complete input for a draft amendment Task.
+    Do not ask follow-up questions. Return:
+    1) draft Task JSON
+    2) a short validation summary
+    Keep this draft-only and do not submit/post anything.
+  files:
+    - path: task-draft-input.json
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: has_required_task_json_shape
+    config:
+      regex_match:
+        - "(?i)\"resourceType\"\\s*:\\s*\"Task\""
+        - "(?i)\"status\"\\s*:\\s*\"draft\""
+        - "(?i)\"intent\"\\s*:\\s*\"proposal\""
+        - "(?i)\"for\"\\s*:"
+        - "(?i)\"requester\"\\s*:"
+        - "(?i)\"owner\"\\s*:"
+        - "(?i)\"focus\"\\s*:"
+        - "(?i)\"input\"\\s*:"
+        - "(?i)\"authoredOn\"\\s*:"
+  - type: text
+    name: includes_validation_summary
+    config:
+      regex_match:
+        - "(?i)(validation|valid|errors|warnings)"
+  - type: text
+    name: draft_only_posture
+    config:
+      regex_match:
+        - "(?i)(draft|not posted|not submitted|local validation|prepare)"

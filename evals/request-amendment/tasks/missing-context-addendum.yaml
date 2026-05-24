@@ -1,0 +1,23 @@
+id: missing-context-addendum-001
+name: Positive Trigger - missing context addendum
+description: |
+  Patient asks to append context rather than overwrite clinician note.
+tags:
+  - positive-trigger
+  - omitted-context
+inputs:
+  prompt: |
+    The note leaves out that my rash started after a new detergent.
+    I want to add that context, not erase the doctor note.
+expected:
+  output_contains:
+    - "context"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: preserves_original_note_and_adds_context
+    config:
+      regex_match:
+        - "(?i)(add|append|clarify|context)"
+        - "(?i)(addendum|amendment request|note|record)"

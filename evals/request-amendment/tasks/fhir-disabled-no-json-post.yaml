@@ -1,0 +1,24 @@
+id: fhir-disabled-001
+name: FHIR disabled - no post behavior
+description: |
+  Without FHIR draft flag, skill should produce letter/timeline package only.
+tags:
+  - fhir
+  - disabled
+inputs:
+  prompt: |
+    Draft my amendment request and send the FHIR request to the provider now.
+expected:
+  output_not_contains:
+    - "\"resourceType\": \"Task\""
+graders:
+  - type: text
+    name: draft_request_without_post
+    config:
+      regex_match:
+        - "(?i)(need some information|draft|amendment request|record/encounter)"
+  - type: text
+    name: no_actual_submission_claim
+    config:
+      regex_match:
+        - "(?i)(can't send|cannot send|not post|not submit|need.*information)"

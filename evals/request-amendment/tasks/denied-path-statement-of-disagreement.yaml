@@ -1,0 +1,23 @@
+id: denied-path-001
+name: Positive Trigger - denied amendment path
+description: |
+  User asks what to do after a denial. Skill should produce statement-of-
+  disagreement language and future-disclosure reminder.
+tags:
+  - positive-trigger
+  - denial
+inputs:
+  prompt: |
+    My amendment request was denied. Help me draft a statement of disagreement.
+expected:
+  output_contains:
+    - "statement of disagreement"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: denied_path_guidance
+    config:
+      regex_match:
+        - "(?i)(denied|disagreement|help me draft|need.*details)"
+        - "(?i)(rights|HIPAA|formal|record|statement)"

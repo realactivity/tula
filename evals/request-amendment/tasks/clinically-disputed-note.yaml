@@ -1,0 +1,24 @@
+id: clinically-disputed-note-001
+name: Positive Trigger - clinically disputed interpretation
+description: |
+  Patient disputes clinician interpretation. Skill should avoid overclaims and
+  frame the request as clarification/addendum workflow.
+tags:
+  - positive-trigger
+  - disputed
+inputs:
+  prompt: |
+    The doctor wrote that my symptoms are anxiety-related and I disagree.
+    Draft a respectful amendment request.
+expected:
+  outcomes:
+    - type: task_completed
+  output_not_contains:
+    - "must amend"
+    - "illegal"
+graders:
+  - type: text
+    name: avoids_overclaim
+    config:
+      regex_match:
+        - "(?i)(respectful|clarif|addendum|statement of disagreement|need.*details)"

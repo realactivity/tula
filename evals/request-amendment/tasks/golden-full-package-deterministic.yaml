@@ -1,0 +1,71 @@
+id: golden-full-package-001
+name: Golden deterministic full amendment package
+description: |
+  Deterministic golden-case task. All required facts are supplied in a synthetic
+  fixture so the skill should return a complete amendment package (not just intake
+  questions), including evidence separation, timeline, letter language, and draft
+  Task JSON posture.
+tags:
+  - golden-case
+  - deterministic
+  - fixture-backed
+  - full-package
+inputs:
+  prompt: |
+    Use only the attached synthetic fixture as complete input.
+    Do not ask follow-up questions.
+    Return a full amendment package with these exact section headers:
+    - issue_type
+    - evidence
+    - patient_request
+    - proposed_amendment
+    - confidence_and_rationale
+    - hipaa_timeline
+    - patient_letter
+    - fhir_task_draft
+    - validation_summary
+  files:
+    - path: golden-case-input.json
+expected:
+  outcomes:
+    - type: task_completed
+  output_not_contains:
+    - "I need more information"
+    - "cannot complete without"
+graders:
+  - type: text
+    name: has_required_sections
+    config:
+      regex_match:
+        - "(?i)issue_type"
+        - "(?i)evidence"
+        - "(?i)patient_request"
+        - "(?i)proposed_amendment"
+        - "(?i)confidence_and_rationale"
+        - "(?i)hipaa_timeline"
+        - "(?i)patient_letter"
+        - "(?i)fhir_task_draft"
+        - "(?i)validation_summary"
+  - type: text
+    name: preserves_fixture_facts
+    config:
+      regex_match:
+        - "(?i)lisinopril\\s*40\\s*mg"
+        - "(?i)lisinopril\\s*10\\s*mg"
+        - "(?i)2026-03-14"
+        - "(?i)Health Information Management|HIM"
+  - type: text
+    name: contains_task_json_core_fields
+    config:
+      regex_match:
+        - "(?i)\"resourceType\"\\s*:\\s*\"Task\""
+        - "(?i)\"status\"\\s*:\\s*\"draft\""
+        - "(?i)\"intent\"\\s*:\\s*\"proposal\""
+        - "(?i)\"authoredOn\"\\s*:"
+  - type: text
+    name: includes_hipaa_deadline_logic
+    config:
+      regex_match:
+        - "(?i)(60-day|60 day)"
+        - "(?i)(30-day|30 day)"
+        - "(?i)(may deny|accurate and complete)"

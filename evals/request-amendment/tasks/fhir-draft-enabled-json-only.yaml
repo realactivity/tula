@@ -1,0 +1,28 @@
+id: fhir-draft-enabled-001
+name: FHIR enabled - draft JSON only
+description: |
+  With draft mode enabled, skill should include draft Task JSON and validation
+  summary, but still avoid posting.
+tags:
+  - fhir
+  - draft
+inputs:
+  prompt: |
+    FHIR draft mode is on. Generate the amendment package and draft Task JSON.
+expected:
+  output_contains:
+    - "FHIR"
+  output_not_contains:
+    - "POSTed"
+    - "submitted"
+graders:
+  - type: text
+    name: draft_mode_or_missing_fields
+    config:
+      regex_match:
+        - "(?i)(draft|Task JSON|need more information|target encounter|target note|validation)"
+  - type: text
+    name: no_claim_of_submission
+    config:
+      regex_match:
+        - "(?i)(draft|not submitted|not posted|prepare)"
