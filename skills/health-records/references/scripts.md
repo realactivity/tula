@@ -1,5 +1,32 @@
 # Scripts
 
+## `check-backend.mjs`
+
+Pre-flight connectivity check before starting a SMART session.
+
+### Invocation
+
+```bash
+node {baseDir}/scripts/check-backend.mjs
+```
+
+Checks:
+
+- `GET /health`
+- `GET /api/vendors`
+
+Output:
+
+```json
+{
+  "baseUrl": "https://example",
+  "health": { "ok": true, "status": 200 },
+  "vendors": { "ok": true, "status": 200, "count": 5 }
+}
+```
+
+Returns non-zero if either endpoint fails.
+
 ## `create-session.mjs`
 
 Generates an ECDH P-256 keypair locally and registers a session with the

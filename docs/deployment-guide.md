@@ -432,6 +432,7 @@ With your agent running and accessible through Telegram, consider the following:
 3. **Set up scheduled tasks** using OpenClaw's cron system for daily check-ins, weekly research synthesis, and automated health summaries.
 4. **Configure healthcare AI models** for medical image interpretation, laboratory report extraction, and medical speech recognition. Tula supports purpose-built healthcare models from Google (MedGemma, MedASR) and Microsoft (MedImageInsight, CXRReportGen). See the [model routing reference](model-routing.md) for configuration details.
 5. **Review security hardening** including firewall configuration (`ufw`), fail2ban for brute-force protection, and Tailscale for private VPN access.
+6. **Host the health-records REST backend locally on the VM** if you want full endpoint ownership. See [`health-skillz-vm-hosting.md`](health-skillz-vm-hosting.md) and the scripts in [`../scripts/`](../scripts/README.md).
 
 ---
 

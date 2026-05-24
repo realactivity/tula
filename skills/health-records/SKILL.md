@@ -34,28 +34,32 @@ metadata:
 
 ## Workflow
 
-1. **Create session** - `node {baseDir}/scripts/create-session.mjs`
+1. **Check backend first** - `node {baseDir}/scripts/check-backend.mjs`
+   - Confirms `/health` and `/api/vendors` are reachable.
+   - If self-hosted, set `HEALTH_SKILLZ_BASE_URL` before this step.
+
+2. **Create session** - `node {baseDir}/scripts/create-session.mjs`
    - Outputs JSON: `sessionId`, `userUrl`, `privateKeyJwk`.
    - **Save `privateKeyJwk`** for step 3. Never echo it back.
 
-2. **Show the link.** Present `userUrl` to Paul as a single markdown link
+3. **Show the link.** Present `userUrl` to Paul as a single markdown link
    labeled "Connect your health records". Don't narrate the crypto. Wait
    for Paul to finish the OAuth flow; he may connect multiple providers.
 
-3. **Finalize & decrypt** -
+4. **Finalize & decrypt** -
    `node {baseDir}/scripts/finalize-session.mjs <sessionId> '<privateKeyJwk>' <outDir>`
    - `outDir` inside `~/.openclaw/workspace/`. Suggested:
      `~/.openclaw/workspace/.health-records-cache/<YYYY-MM-DD>/`.
    - NDJSON progress on stdout; final line is `{"status":"done",...}`.
    - One JSON file per provider, slugified by name.
 
-4. **Reason.** Open with one clinical sentence (scope, span, what stands
+5. **Reason.** Open with one clinical sentence (scope, span, what stands
    out), then 2-3 specific directions tied to *what's actually there* -
    not a generic dashboard. See
    [`references/fhir-guide.md`](references/fhir-guide.md) for resource
    shapes, LOINC codes, and the analysis philosophy.
 
-5. **Persist.** Update `MEMORY.md` with new facts (active conditions,
+6. **Persist.** Update `MEMORY.md` with new facts (active conditions,
    current meds, key lab trends). Records JSON stays in the cache dir.
 
 ## Scripts
@@ -87,7 +91,7 @@ notes, contact info, everything in one place.
 - **Provider file >50MB** → long history. Use `fhir-guide.md` search
   patterns; never `JSON.parse` the whole file into chat context.
 - **`fetch is not defined`** → need Node 18+ (Node 22 verified).
-- **Backend down** → set `HEALTH_SKILLZ_BASE_URL` to a self-hosted instance.
+- **Backend down** → run `check-backend.mjs`; set `HEALTH_SKILLZ_BASE_URL` to a reachable self-hosted instance.
 
 ## Acknowledgments
 

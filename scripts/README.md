@@ -188,6 +188,65 @@ full Entra setup walkthrough and troubleshooting. This scaffold is
 throwaway - Phase 2 lifts it into `skills/email-router/scripts/` and
 deletes this directory.
 
+## `health-skillz-vm-preflight.sh`
+
+Read-only prerequisite check for hosting `jmandel/health-skillz` on the same
+OpenClaw VM.
+
+Checks:
+
+- required binaries (`node`, `bun`, `zip`, `git`, `systemctl`, `curl`)
+- Node major version (>=20)
+- local port availability
+- optional Tailscale status
+- `BASE_URL` sanity (if provided)
+
+```bash
+cd ~/tula
+chmod +x scripts/health-skillz-vm-preflight.sh
+BASE_URL="https://<your-hostname>" scripts/health-skillz-vm-preflight.sh
+```
+
+## `install-health-skillz-vm.sh`
+
+VM-side installer for running `health-skillz` locally under systemd and wiring
+config for your OpenClaw deployment.
+
+It clones/pulls the upstream repo, builds brands/JWKS assets, writes
+`config.openclaw.json`, creates `/etc/systemd/system/health-skillz.service`,
+starts the service, and checks `/health`.
+
+```bash
+cd ~/tula
+chmod +x scripts/install-health-skillz-vm.sh
+BASE_URL="https://<your-hostname>" \
+CLIENT_ID="<epic-client-id>" \
+scripts/install-health-skillz-vm.sh
+```
+
+See [`docs/health-skillz-vm-hosting.md`](../docs/health-skillz-vm-hosting.md)
+for full flow, acceptance checks, and rollback guidance.
+
+## `set-openclaw-health-skillz-env.sh`
+
+Persist `HEALTH_SKILLZ_BASE_URL` for the `openclaw` systemd daemon via a
+drop-in override so the value survives daemon restarts and host reboots.
+
+```bash
+cd ~/tula
+chmod +x scripts/set-openclaw-health-skillz-env.sh
+scripts/set-openclaw-health-skillz-env.sh "https://<your-hostname>"
+```
+
+This writes:
+
+- `/etc/systemd/system/openclaw.service.d/10-health-skillz-base-url.conf`
+
+Then runs:
+
+- `systemctl daemon-reload`
+- `systemctl restart openclaw`
+
 ## Provenance
 
 The `agent-backup.sh` / `agent-cron.sh` scripts originated in a private

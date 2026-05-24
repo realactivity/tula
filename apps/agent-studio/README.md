@@ -77,6 +77,22 @@ that pushes new resources as they're written.
 See [`docs/dashboard-build-plan.md`](../../docs/dashboard-build-plan.md)
 for the full roadmap and locked-in decisions.
 
+## Health-records compatibility endpoints
+
+As a first incremental port step, Agent Studio exposes low-risk read endpoints
+that proxy the current health-records backend:
+
+- `GET /api/health-records/health` -> upstream `/health`
+- `GET /api/health-records/vendors` -> upstream `/api/vendors`
+
+Set upstream with:
+
+```bash
+HEALTH_SKILLZ_BASE_URL="https://<your-vm-hostname>"
+```
+
+If unset, routes fall back to `https://health-skillz.joshuamandel.com`.
+
 ## Access (production deployment)
 
 Agent Studio is designed to run on the OpenClaw VM bound to
