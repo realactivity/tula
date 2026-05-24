@@ -6,7 +6,7 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
 
-  /* Surfaces — dark-first, MyChart-inspired clinical calm */
+  /* Surfaces: dark-first, MyChart-inspired clinical calm */
   --color-bg: oklch(0.16 0.005 264);
   --color-bg-elevated: oklch(0.20 0.006 264);
   --color-bg-card: oklch(0.22 0.007 264);
@@ -15,17 +15,17 @@
   --color-fg-subtle: oklch(0.55 0.010 264);
   --color-border: oklch(0.30 0.008 264);
 
-  /* Brand accent — burgundy (~#9B1C2C) */
+  /* Brand accent: burgundy (~#9B1C2C) */
   --color-accent: oklch(0.46 0.16 18);
   --color-accent-hover: oklch(0.52 0.17 18);
   --color-accent-fg: oklch(0.98 0.002 264);
   --color-accent-soft: oklch(0.36 0.08 18);
 
-  /* Informational — clinical blue (for appointments, balance, neutral status) */
+  /* Informational: clinical blue (for appointments, balance, neutral status) */
   --color-info: oklch(0.62 0.13 240);
   --color-info-soft: oklch(0.30 0.06 240);
 
-  /* Flag tones — preserved from agent-studio for shared FHIR semantics */
+  /* Flag tones: preserved from agent-studio for shared FHIR semantics */
   --color-flag-high: oklch(0.74 0.18 22);
   --color-flag-low: oklch(0.78 0.14 250);
   --color-flag-ok: oklch(0.78 0.14 165);

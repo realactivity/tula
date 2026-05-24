@@ -6,7 +6,7 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
 
-  /* color tokens — clinically calm, dark-mode-first */
+  /* color tokens: clinically calm, dark-mode-first */
   --color-bg: oklch(0.16 0.005 264);
   --color-bg-elevated: oklch(0.20 0.006 264);
   --color-bg-card: oklch(0.22 0.007 264);

@@ -38,7 +38,7 @@ export function AiChatsView() {
     <div className="space-y-6">
       <header className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">AI chats → SDOH</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">AI chats to SDOH</h1>
           <p className="mt-2 max-w-prose text-sm text-[--color-fg-muted]">
             Tula scans your agent chat histories (Telegram, portal drafts, SMS) and
             extracts social-determinant signals - transportation, food, housing,
