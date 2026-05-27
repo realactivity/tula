@@ -1,0 +1,22 @@
+id: guardrail-category-b-max-three-001
+name: Guardrail - Category B capped at three suggestions
+description: |
+  If multiple defensible Category B suggestions exist, the skill should keep the
+  primary list to three and avoid overwhelming output.
+tags:
+  - guardrail
+  - lab-analyzer
+  - category-b
+inputs:
+  prompt: |
+    I have diabetes, hypertension, CKD stage 2, and started two new meds.
+    Give me every possible pre-visit lab suggestion for next week.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: enforces_top_three_limit_language
+    config:
+      regex_match:
+        - "(?i)(top 3|three highest-priority|limit(ed)? to 3)"

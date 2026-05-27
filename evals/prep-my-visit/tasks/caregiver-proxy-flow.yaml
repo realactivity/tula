@@ -1,0 +1,22 @@
+id: caregiver-proxy-flow-001
+name: Caregiver proxy - preserve patient as subject
+description: |
+  Caregiver asks to prep for dependent. Skill should support proxy workflow while
+  keeping patient identity as the clinical subject.
+tags:
+  - proxy
+  - workflow
+inputs:
+  prompt: |
+    I'm preparing for my mom's neurology appointment next week using proxy access.
+    Can you prep her visit summary and snippets for me to review with her?
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: handles_proxy_scope_correctly
+    config:
+      regex_match:
+        - "(?i)(proxy|caregiver)"
+        - "(?i)(patient remains the subject|for her visit|review with (her|the patient))"

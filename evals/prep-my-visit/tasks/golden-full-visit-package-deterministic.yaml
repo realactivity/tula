@@ -1,0 +1,59 @@
+id: golden-full-visit-package-001
+name: Golden deterministic full visit prep package
+description: |
+  Deterministic golden scenario using a complete synthetic fixture. Skill should
+  return a full prep package with explicit section headers and constrained safety
+  posture without asking follow-up questions.
+tags:
+  - golden-case
+  - deterministic
+  - fixture-backed
+  - full-package
+inputs:
+  prompt: |
+    Use only the attached synthetic fixture as complete input.
+    Do not ask follow-up questions.
+    Return a full prep package with these exact section headers:
+    - visit_context
+    - patient_story
+    - previsit_lab_opportunities
+    - ips_sections
+    - provider_bluf
+    - patient_companion
+    - portal_snippet
+    - safety_checks
+    - unresolved_items
+  files:
+    - path: golden-visit-input.json
+expected:
+  outcomes:
+    - type: task_completed
+  output_not_contains:
+    - "I need more information"
+    - "cannot complete without"
+graders:
+  - type: text
+    name: has_required_headers
+    config:
+      regex_match:
+        - "(?i)visit_context"
+        - "(?i)patient_story"
+        - "(?i)previsit_lab_opportunities"
+        - "(?i)ips_sections"
+        - "(?i)provider_bluf"
+        - "(?i)patient_companion"
+        - "(?i)portal_snippet"
+        - "(?i)safety_checks"
+        - "(?i)unresolved_items"
+  - type: text
+    name: preserves_fixture_core_facts
+    config:
+      regex_match:
+        - "(?i)Dr\\. Singh"
+        - "(?i)A1c"
+        - "(?i)statin"
+  - type: text
+    name: keeps_discuss_with_doctor_language
+    config:
+      regex_match:
+        - "(?i)(ask your doctor|discuss with your doctor)"

@@ -1,0 +1,24 @@
+id: redirect-to-med-pdf-001
+name: Anti-trigger - standalone PDF parsing should route away
+description: |
+  User asks for pure medical PDF parsing without visit-prep intent. prep-my-visit
+  should route to med-pdf instead of running visit workflow.
+tags:
+  - negative-trigger
+  - routing
+inputs:
+  prompt: |
+    I only need you to parse this lab PDF and extract all values to JSON.
+    No visit prep needed.
+expected:
+  outcomes:
+    - type: task_completed
+  output_not_contains:
+    - "T-14"
+    - "Patient Story"
+graders:
+  - type: text
+    name: routes_to_med_pdf
+    config:
+      regex_match:
+        - "(?i)(med-pdf|different skill|parsing workflow)"

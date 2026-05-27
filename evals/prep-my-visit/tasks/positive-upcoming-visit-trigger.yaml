@@ -1,0 +1,24 @@
+id: positive-upcoming-visit-trigger-001
+name: Positive trigger - upcoming specialist visit prep
+description: |
+  User asks for visit preparation. Skill should run prep workflow, not generic
+  health advice and not a different skill.
+tags:
+  - positive-trigger
+  - workflow
+  - visit-prep
+inputs:
+  prompt: |
+    Prep me for my cardiology follow-up next Tuesday. I want to walk in with a
+    clear summary and know what questions to ask.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: covers_core_prep_workflow
+    config:
+      regex_match:
+        - "(?i)(goals|patient story)"
+        - "(?i)(summary|brief|IPS)"
+        - "(?i)(labs?|pre-visit)"
