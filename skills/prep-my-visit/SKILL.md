@@ -5,7 +5,6 @@ metadata:
   {
     "openclaw":
       {
-        "emoji": "🧭",
         "requires": { "bins": ["node"] }
       }
   }
@@ -17,7 +16,7 @@ Prepare an IPS-aligned pre-visit package.
 
 ## When to Use
 
-✅ Use when:
+Use when:
 
 - Upcoming visit prep request from patient or caregiver
 - Pre-visit lab question for an upcoming appointment
@@ -25,7 +24,7 @@ Prepare an IPS-aligned pre-visit package.
 
 ## When NOT to Use
 
-❌ Don't use when:
+Don't use when:
 
 - Any diagnosis, treatment, or medication-change request
 - Billing/insurance/prior-auth/EOB request
