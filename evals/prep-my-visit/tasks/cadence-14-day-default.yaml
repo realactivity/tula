@@ -1,0 +1,23 @@
+id: cadence-14-day-default-001
+name: Cadence - default 14-day timeline behavior
+description: |
+  Skill should present the default timeline checkpoints for a standard upcoming
+  visit rather than only day-of guidance.
+tags:
+  - cadence
+  - workflow
+inputs:
+  prompt: |
+    My annual PCP visit is in two weeks. Show me the prep cadence you follow.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: mentions_key_timeline_points
+    config:
+      regex_match:
+        - "(?i)T-14"
+        - "(?i)T-3|draft"
+        - "(?i)T-1|final"
+        - "(?i)T\\+1|post-visit"

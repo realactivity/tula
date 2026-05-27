@@ -1,0 +1,23 @@
+id: positive-standing-order-category-a-001
+name: Category A - standing order pending completion
+description: |
+  User context implies an outstanding physician order. Skill should surface it as
+  a high-confidence standing-order opportunity and suggest completion.
+tags:
+  - positive-trigger
+  - lab-analyzer
+  - category-a
+inputs:
+  prompt: |
+    My endocrinologist ordered an A1c months ago and I never got around to it.
+    I see my PCP next week. What should I do before the visit?
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: identifies_standing_order_path
+    config:
+      regex_match:
+        - "(?i)(standing order|already ordered|pending)"
+        - "(?i)(complete|get it done|before (the )?visit)"

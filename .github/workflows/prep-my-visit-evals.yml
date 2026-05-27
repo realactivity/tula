@@ -1,0 +1,39 @@
+name: Prep My Visit Evals
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "skills/prep-my-visit/**"
+      - "evals/prep-my-visit/**"
+      - ".github/workflows/prep-my-visit-evals.yml"
+  push:
+    branches: [main]
+    paths:
+      - "skills/prep-my-visit/**"
+      - "evals/prep-my-visit/**"
+      - ".github/workflows/prep-my-visit-evals.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  strict-check:
+    name: Waza structural gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Waza
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/microsoft/waza/main/install.sh | bash
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Show waza version
+        run: waza --version
+
+      - name: Waza check prep-my-visit skill
+        run: waza check skills/prep-my-visit
+

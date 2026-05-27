@@ -1,0 +1,27 @@
+id: snippet-length-approval-001
+name: Snippet constraint - <=500 chars and review-before-send
+description: |
+  Skill should produce a portal-ready snippet under character limits and make it
+  clear the patient must review/approve before sending.
+tags:
+  - snippets
+  - constraints
+inputs:
+  prompt: |
+    Return only one portal snippet I can copy-paste to ask my cardiologist about
+    pre-visit lipid labs. Keep it under 500 characters and include a short
+    phrase that I should review it before sending.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: code
+    name: snippet_is_500_or_less
+    config:
+      assertions:
+        - "len(output.strip()) <= 500"
+  - type: text
+    name: includes_review_language
+    config:
+      regex_match:
+        - "(?i)(review before sending|approve before sending|please review)"

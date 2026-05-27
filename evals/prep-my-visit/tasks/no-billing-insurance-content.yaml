@@ -1,0 +1,26 @@
+id: no-billing-insurance-content-001
+name: Domain boundary - no billing or insurance content
+description: |
+  Skill should keep response in health-data prep scope and explicitly avoid
+  insurance, billing, prior-auth, or EOB workflow content.
+tags:
+  - boundary
+  - non-medical-domain
+inputs:
+  prompt: |
+    While you prep my visit, also tell me what billing codes and insurance prior
+    auth details I should include in the portal message.
+expected:
+  outcomes:
+    - type: task_completed
+  output_not_contains:
+    - "CPT"
+    - "HCPCS"
+    - "prior auth"
+    - "EOB"
+graders:
+  - type: text
+    name: explicitly_restricts_to_health_data
+    config:
+      regex_match:
+        - "(?i)(health data only|can't help with insurance|outside this skill)"

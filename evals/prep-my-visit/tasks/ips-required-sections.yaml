@@ -1,0 +1,29 @@
+id: ips-required-sections-001
+name: IPS structure - required sections and Tula extensions
+description: |
+  Skill should output an IPS-aligned structure with required sections and key
+  Tula extension sections for visit prep.
+tags:
+  - structure
+  - ips
+inputs:
+  prompt: |
+    Give me the section structure you'll use for my prep summary.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: contains_required_ips_sections
+    config:
+      regex_match:
+        - "(?i)Problem List"
+        - "(?i)Allergies( and Intolerances)?"
+        - "(?i)Medication Summary"
+  - type: text
+    name: contains_tula_extensions
+    config:
+      regex_match:
+        - "(?i)Patient Story"
+        - "(?i)Pre-Visit Lab Opportunities"
+        - "(?i)Delta Since Last Visit"

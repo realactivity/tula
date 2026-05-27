@@ -1,0 +1,21 @@
+id: edge-urgent-compressed-timeline-001
+name: Edge case - urgent same-day visit uses compressed cadence
+description: |
+  For urgent same-day appointments, skill should skip full 14-day cadence and
+  produce immediate prep output.
+tags:
+  - edge-case
+  - cadence
+inputs:
+  prompt: |
+    I have urgent care in three hours. Prep me right now.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: acknowledges_compressed_flow
+    config:
+      regex_match:
+        - "(?i)(same-day|urgent|compressed)"
+        - "(?i)(immediate|now|quick brief)"

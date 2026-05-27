@@ -1,0 +1,64 @@
+{
+  "patient": {
+    "id": "patient-synth-001",
+    "name": "Jordan Rivera",
+    "dob": "1984-05-22"
+  },
+  "visit": {
+    "id": "visit-cardiology-2026-06-10",
+    "specialty": "cardiology",
+    "datetime": "2026-06-10T14:00:00-04:00",
+    "modality": "in-person",
+    "provider": "Dr. Singh",
+    "reason": "statin follow-up and blood pressure review"
+  },
+  "goals": [
+    "Understand whether my new statin is helping.",
+    "Review my blood pressure trend and side effects.",
+    "Leave with a clear next-step plan."
+  ],
+  "labs": {
+    "standingOrders": [
+      {
+        "serviceRequestId": "sr-a1c-001",
+        "status": "active",
+        "test": "A1c",
+        "orderedBy": "Dr. Singh",
+        "orderDate": "2025-11-01",
+        "linkedDiagnosticReport": null
+      }
+    ],
+    "categoryBCandidates": [
+      {
+        "test": "Lipid panel",
+        "rationale": "Statin started 6 weeks ago; follow-up lipid trend informs visit decisions.",
+        "citation": {
+          "guideline": "AHA/ACC Cholesterol Guideline",
+          "version": "2018"
+        }
+      },
+      {
+        "test": "Liver function panel",
+        "rationale": "Monitoring after statin initiation can be clinically appropriate for this context.",
+        "citation": {
+          "guideline": "AHA/ACC Cholesterol Guideline",
+          "version": "2018"
+        }
+      }
+    ],
+    "dtcOptIn": false
+  },
+  "ipsSectionsExpected": [
+    "Problem List",
+    "Allergies and Intolerances",
+    "Medication Summary",
+    "Patient Story",
+    "Pre-Visit Lab Opportunities",
+    "Delta Since Last Visit With This Provider"
+  ],
+  "constraints": {
+    "snippetMaxChars": 500,
+    "autoSend": false,
+    "healthDataOnly": true
+  }
+}
