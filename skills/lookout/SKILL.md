@@ -1,6 +1,6 @@
 ---
 name: lookout
-description: "Personalized ambient health awareness. Pulls environmental, public-health, and place-based data for Paul's location and triages it against his longitudinal record, surfacing only what matters. USE FOR: 'lookout for me' briefings, ambient/air/UV/weather/pressure checks, place-based resource queries, travel-mode 'what's [ZIP] like for me'. DO NOT USE FOR: diagnosing, recommending or changing treatment, billing/payor/coding content, or sending PHI to any environmental provider."
+description: "Personalized ambient health awareness. Pulls environmental, public-health, and place-based data for the user's location and triages it against their longitudinal record, surfacing only what matters. USE FOR: 'lookout for me' briefings, ambient/air/UV/weather/pressure checks, place-based resource queries, travel-mode 'what's [ZIP] like for me'. DO NOT USE FOR: diagnosing, recommending or changing treatment, billing/payor/coding content, or sending PHI to any environmental provider."
 metadata:
   {
     "openclaw":
@@ -13,24 +13,24 @@ metadata:
 
 # Lookout
 
-Ambient health radar. Lookout reads where Paul is right now, fuses environmental + place + neighborhood SDoH data with his FHIR record, and surfaces only the items that matter for *him*. A weather app says "AQI 142." Lookout says "ozone is high, you have asthma on file, want an indoor option?"
+Ambient health radar. Lookout reads where the user is right now, fuses environmental + place + neighborhood SDoH data with their FHIR record, and surfaces only the items that matter for *them*. A weather app says "AQI 142." Lookout says "ozone is high, you have asthma on file, want an indoor option?"
 
 ## When to Use
 
 ✅ Use when:
 
-- Paul says "lookout for me" or any natural variant ("how's the air today?", "where can I work out right now?", "anything I should know today?", "what's [ZIP] like for me?")
+- The user says "lookout for me" or any natural variant ("how's the air today?", "where can I work out right now?", "anything I should know today?", "what's [ZIP] like for me?")
 - The configured daily briefing time fires
-- Paul asks about open-now resources (gym, pharmacy, urgent care, grocery, park) tied to his health
-- Paul asks about a neighborhood's SDoH overlay for travel or relocation
+- The user asks about open-now resources (gym, pharmacy, urgent care, grocery, park) tied to their health
+- The user asks about a neighborhood's SDoH overlay for travel or relocation
 
 ## When NOT to Use
 
 ❌ Don't use when:
 
-- Paul wants a clinical interpretation of a PDF → use `med-pdf`
-- Paul wants to connect/refresh his patient portal → use `health-records`
-- Paul wants a drafted clinician message → use `epic-note`
+- The user wants a clinical interpretation of a PDF → use `med-pdf`
+- The user wants to connect/refresh their patient portal → use `health-records`
+- The user wants a drafted clinician message → use `epic-note`
 - A request would diagnose, recommend treatment, or adjust a medication
 - A request would produce billing, payor, prior-auth, EOB, or coding content (CPT/HCPCS/HCC). SDoH Z codes are the only codes used, and only as clinical context.
 

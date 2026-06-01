@@ -1,6 +1,6 @@
 ---
 name: epic-note
-description: "Drafts a concise patient-portal message Paul can copy-paste to a clinician via Epic MyChart, Oracle Health HealtheLife, or similar. USE FOR: symptom reports, refill requests, lab/result follow-ups, visit follow-ups, asking a single clear question. DO NOT USE FOR: clinical notes, SOAP/discharge documentation, insurance or billing letters, or answering the patient's medical question."
+description: "Drafts a concise patient-portal message the user can copy-paste to a clinician via Epic MyChart, Oracle Health HealtheLife, or similar. USE FOR: symptom reports, refill requests, lab/result follow-ups, visit follow-ups, asking a single clear question. DO NOT USE FOR: clinical notes, SOAP/discharge documentation, insurance or billing letters, or answering the patient's medical question."
 metadata:
   {
     "openclaw":
@@ -16,7 +16,7 @@ metadata:
 
 ✅ Use when:
 
-- Paul asks for help drafting a message to his PCP or specialist
+- The user asks for help drafting a message to their PCP or specialist
 - Reporting a new or worsening symptom
 - Asking about a recent test or lab result
 - Requesting a medication refill
@@ -30,7 +30,7 @@ metadata:
   [`references/triage-rules.md`](references/triage-rules.md), don't draft
 - Generating a clinician-facing note (SOAP, discharge, dictation)
 - Drafting non-clinical letters (insurance, billing)
-- Paul is asking a medical question for advice - that's answered directly,
+- The user is asking a medical question for advice - that's answered directly,
   not in a portal message
 
 ## Workflow
@@ -40,7 +40,7 @@ metadata:
    [`references/triage-rules.md`](references/triage-rules.md).
 
 2. **Identify the single ask.** If multiple unrelated topics exist, propose
-   separate messages and ask Paul which to send first.
+   separate messages and ask the user which to send first.
 
 3. **Draft** using the canonical format in
    [`references/portal-message-format.md`](references/portal-message-format.md):
@@ -74,7 +74,7 @@ generates drafts locally - no PHI leaves the workspace.
 - **No clinician name given** → use `Hello [Care Team],`.
 - **Vague input** → ask one clarifying question (onset, severity, which
   clinician), then draft.
-- **Paul asks for medical advice** → decline politely; this skill drafts
+- **The user asks for medical advice** → decline politely; this skill drafts
   messages *to* clinicians, not answers from them.
 - **Multi-topic input** → propose separate messages, don't bundle.
 - **Emergency-flavored prompt** → return triage redirect; never wrap a

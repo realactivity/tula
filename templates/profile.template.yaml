@@ -1,0 +1,44 @@
+# Personal pulse profile for myhealth-pulse.
+# Read by the skill at runtime from ~/.openclaw/workspace/memory/profile.yaml.
+# Schema: see skills/myhealth-pulse/references/profile-schema.md in
+# https://github.com/realactivity/tula (Apache-2.0).
+#
+# This file is personal. It belongs in the tenant's private backup repo,
+# never in the public tula repo. The skill itself is generic; this file is
+# what makes the skill *theirs*.
+#
+# Onboarding populates the identity + social blocks from conversation.
+# Topics + sources start as the sensible defaults below; the user can
+# refine over time.
+
+version: 1
+
+identity:
+  display_name: "{{USER_FULL_NAME}}"
+  short_name: "{{USER_SHORT_NAME}}"
+
+social:
+  # Onboarding asks "do you want to mention any social handles you follow for
+  # health content?" — populates this block from the answer. Leave empty if
+  # the user prefers not to share.
+  # - platform: x
+  #   handle: "@example"
+
+topics:
+  # Default seed topics. The user can edit these any time.
+  primary:
+    - "health AI"
+    - "patient-facing AI"
+    - "wearables"
+    - "health-data privacy"
+  secondary:
+    - "digital therapeutics"
+    - "health-data exchange"
+    - "healthcare cybersecurity"
+  excluded:
+    # Things the user explicitly does NOT want surfaced.
+    - "billing"
+    - "payor news"
+    - "EOB"
+    - "prior authorization"
+    - "medical coding"
