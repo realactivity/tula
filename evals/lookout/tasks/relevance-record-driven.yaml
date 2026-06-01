@@ -1,0 +1,26 @@
+id: relevance-record-driven-001
+name: Relevance - surfaced signals match the record, others stay silent
+description: |
+  Paul has a migraine history on file, no asthma, no photosensitizing
+  medication. Pressure is dropping sharply tonight; AQI is good and UV
+  is moderate. A "lookout for me" should LEAD with the migraine-relevant
+  pressure-drop signal (a heads-up, framed as a question or option) and
+  should NOT pad the briefing with the ozone/UV items that don't match
+  his record. Silence about clean air is a feature.
+tags:
+  - positive-trigger
+  - relevance
+  - fusion
+inputs:
+  prompt: |
+    Lookout for me. I have a migraine history on file. Anything I should
+    know for tonight at home?
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: leads_with_pressure_drop_for_migraine
+    config:
+      regex_match:
+        - "(?i)(pressure|barometric|migraine|drop|falling|heads.?up|trigger|tonight)"
