@@ -1,6 +1,6 @@
 ---
 name: health-records
-description: "Pulls Paul's medical records from patient portals (Epic MyChart, Oracle/Cerner) via end-to-end-encrypted SMART on FHIR, into per-provider JSON files Tula can reason over. USE FOR: connecting or refreshing records, trending labs across visits, listing meds/conditions/allergies, searching clinical notes. DO NOT USE FOR: parsing a PDF (use med-pdf), drafting clinician messages (use epic-note), or sending PHI outside the workspace."
+description: "Pulls the user's medical records from patient portals (Epic MyChart, Oracle/Cerner) via end-to-end-encrypted SMART on FHIR, into per-provider JSON files Tula can reason over. USE FOR: connecting or refreshing records, trending labs across visits, listing meds/conditions/allergies, searching clinical notes. DO NOT USE FOR: parsing a PDF (use med-pdf), drafting clinician messages (use epic-note), or sending PHI outside the workspace."
 metadata:
   {
     "openclaw":
@@ -18,7 +18,7 @@ metadata:
 
 ✅ Use when:
 
-- Paul asks to connect, link, refresh, or pull records from a patient portal
+- The user asks to connect, link, refresh, or pull records from a patient portal
 - Trending a lab, vital, or medication across multiple visits
 - "What does my chart say about X" (problems, meds, allergies, immunizations)
 - Searching clinical notes for a topic, symptom, or referral
@@ -27,8 +27,8 @@ metadata:
 
 ❌ Don't use when:
 
-- Paul sends a PDF or screenshot → use `med-pdf`
-- Paul wants to draft a clinician message → use `epic-note`
+- The user sends a PDF or screenshot → use `med-pdf`
+- The user wants to draft a clinician message → use `epic-note`
 - Records already pulled this session - read the existing JSON
 - Anything that would send PHI to an external service
 
@@ -38,9 +38,9 @@ metadata:
    - Outputs JSON: `sessionId`, `userUrl`, `privateKeyJwk`.
    - **Save `privateKeyJwk`** for step 3. Never echo it back.
 
-2. **Show the link.** Present `userUrl` to Paul as a single markdown link
+2. **Show the link.** Present `userUrl` to the user as a single markdown link
    labeled "Connect your health records". Don't narrate the crypto. Wait
-   for Paul to finish the OAuth flow; he may connect multiple providers.
+   for the user to finish the OAuth flow; they may connect multiple providers.
 
 3. **Finalize & decrypt** -
    `node {baseDir}/scripts/finalize-session.mjs <sessionId> '<privateKeyJwk>' <outDir>`
@@ -77,12 +77,12 @@ notes, contact info, everything in one place.
   under a key only this skill holds).
 - Cache stays under `~/.openclaw/workspace/.health-records-cache/`. Never
   copy out, paste into web tools, or include in summaries leaving the workspace.
-- Never echo `privateKeyJwk` to Paul or to memory files. Treat as a password.
+- Never echo `privateKeyJwk` to the user or to memory files. Treat as a password.
 - If a summary must leave the workspace, redact MRN and provider IDs.
 
 ## Troubleshooting
 
-- **Timeout** → Paul didn't finish in the browser. Re-run from step 1.
+- **Timeout** → the user didn't finish in the browser. Re-run from step 1.
 - **Decryption fails** → wrong/truncated `privateKeyJwk`. Start over.
 - **Provider file >50MB** → long history. Use `fhir-guide.md` search
   patterns; never `JSON.parse` the whole file into chat context.
