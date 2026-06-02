@@ -15,6 +15,7 @@
     {
       "test": "Hemoglobin A1c",
       "rationale": "Last A1c was 7.4% six months ago and several medications affect glucose control.",
+      "flag": "High",
       "guidance": "Ask your doctor whether a repeat A1c before the visit would help guide diabetes management.",
       "citation": { "guideline": "American Diabetes Association Standards of Care", "version": "2024" },
       "snippet": "Before my cardiology follow-up, I would like to discuss whether a repeat hemoglobin A1c would be useful. Draft - review and approve before sending."

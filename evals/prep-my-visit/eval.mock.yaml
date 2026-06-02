@@ -1,0 +1,27 @@
+name: prep-my-visit-eval-mock
+description: |
+  No-quota structural smoke suite for prep-my-visit. Runs on the mock engine
+  so the eval harness, skill loading, task discovery, and grader wiring can be
+  validated without live model quota. This is structural and policy plumbing
+  validation, NOT live-model behavioral certification - use eval.yaml on
+  copilot-sdk for that.
+skill: prep-my-visit
+version: "1.0"
+config:
+  trials_per_task: 1
+  timeout_seconds: 60
+  parallel: false
+  executor: mock
+metrics:
+  - name: harness_wiring
+    weight: 1.0
+    threshold: 1.0
+    description: Did the harness load the skill, run tasks, and apply graders?
+graders:
+  - type: code
+    name: not_empty
+    config:
+      assertions:
+        - "len(output.strip()) > 0"
+tasks:
+  - "tasks-mock/*.yaml"

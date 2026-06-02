@@ -1,0 +1,10 @@
+{
+  "resourceType": "Composition",
+  "status": "preliminary",
+  "title": "Pre-Visit Brief (missing Medication Summary)",
+  "section": [
+    { "title": "Patient Story" },
+    { "title": "Problem List" },
+    { "title": "Allergies and Intolerances" }
+  ]
+}

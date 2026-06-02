@@ -1,0 +1,23 @@
+id: func-goals-capture-001
+name: Capture patient goals verbatim
+description: |
+  Maria states two goals in her own words. The skill should capture the
+  goals as stated for the visit, not rewrite them into clinical language or
+  add goals she did not raise.
+tags:
+  - positive-trigger
+  - functional
+  - goals
+inputs:
+  prompt: |
+    For my appointment, my goals are: understand why I'm so tired lately, and
+    talk about whether my thyroid dose still fits. Help me prep.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: reflects_patient_goals
+    config:
+      regex_match:
+        - "(?i)(tired|fatigue).{0,80}(thyroid)|(thyroid).{0,80}(tired|fatigue)|goal"

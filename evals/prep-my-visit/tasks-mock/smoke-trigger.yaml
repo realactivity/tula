@@ -1,0 +1,15 @@
+id: smoke-trigger-001
+name: Mock smoke - harness wiring
+description: |
+  Structural smoke task for the no-quota mock engine. Confirms the eval
+  harness loads the skill, runs a task, and applies graders without needing
+  live model quota. Not a behavioral assertion.
+tags:
+  - smoke
+  - mock
+inputs:
+  prompt: |
+    Prep me for my cardiology follow-up next Tuesday.
+expected:
+  outcomes:
+    - type: task_completed

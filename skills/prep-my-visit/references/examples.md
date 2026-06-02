@@ -51,3 +51,15 @@ Expected behavior:
 - frame as discuss-with-doctor only
 - include named, dated citation
 - generate portal-ready snippet under size limits
+
+## Sample fixtures
+
+Render-ready IPS Bundle + lab-opportunity pairs used by the eval suite and for
+local `render_visit_brief.py` demos:
+
+- Cardiology follow-up: [`examples/cardiology-followup.json`](examples/cardiology-followup.json) +
+  [`examples/cardiology-followup.labs.json`](examples/cardiology-followup.labs.json)
+- PCP annual: [`examples/pcp-annual.json`](examples/pcp-annual.json) +
+  [`examples/pcp-annual.labs.json`](examples/pcp-annual.labs.json)
+- Urgent same-day: [`examples/urgent-same-day.json`](examples/urgent-same-day.json) +
+  [`examples/urgent-same-day.labs.json`](examples/urgent-same-day.labs.json)

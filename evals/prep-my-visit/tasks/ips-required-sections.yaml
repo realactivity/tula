@@ -1,0 +1,24 @@
+id: ips-required-sections-001
+name: IPS required sections present
+description: |
+  The provider brief is IPS-aligned. When asked what the summary covers, the
+  skill should reflect the required IPS sections (problem list, allergies,
+  medications) rather than an ad hoc structure.
+tags:
+  - ips
+  - fhir
+  - structure
+inputs:
+  prompt: |
+    What clinical sections will my pre-visit provider summary include?
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: required_ips_sections
+    config:
+      regex_match:
+        - "(?i)(problem list|problem)"
+        - "(?i)(allerg)"
+        - "(?i)(medication)"

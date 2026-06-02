@@ -15,10 +15,12 @@ entry) and one lab-opportunities JSON, and writes two typeset PDFs:
      checklist, discuss-with-doctor lab questions, and optional portal
      snippet drafts marked "review before sending".
 
-Branding is My Aria, not Epic. The wordmark renders as styled text
-("My Aria", with "Aria" in the Aria burgundy). No Epic logo, no MyChart
-logo, no Epic blue, no text suggesting an Epic-affiliated origin. This is
-defensible structural homage to a familiar clinical document, not a copy.
+Branding is My Aria, not Epic. The wordmark renders as uniform styled text
+("My Aria", single ink color - no two-tone). Burgundy is reserved for the
+header accent rule, "High" pills, the patient-story rule, and the review
+callout. No Epic logo, no MyChart logo, no Epic blue, no text suggesting an
+Epic-affiliated origin. This is defensible structural homage to a familiar
+clinical document, not a copy.
 
 Typesetting is HTML + CSS rendered by WeasyPrint (no headless browser).
 Type is a sans-serif clinical stack (the same family the Aria app uses):
@@ -60,14 +62,19 @@ DOC_VERSION = "v1.0"
 # Aria brand palette, resolved from apps/my-aria/app/globals.css light-mode
 # tokens to print-safe hex (WeasyPrint 61 oklch support is uneven; hex is
 # exact and portable). Burgundy is the single accent.
-BURGUNDY = "#9B1C2C"        # --color-accent  oklch(0.46 0.16 18)
-BURGUNDY_TINT = "#F6EBEC"   # --color-accent-soft wash, header/footer band
+BURGUNDY = "#9B1C2C"        # --color-accent  oklch(0.46 0.16 18). SPARING:
+                            # only the header accent rule, lab High pill,
+                            # patient-story left-rule, and review callout.
 INFO_BLUE = "#2F6FB0"       # --color-info, appointment metadata only
 INK = "#1E2227"             # --color-fg  oklch(0.20 0.010 264)
 MUTED = "#646A72"           # --color-fg-muted
 SUBTLE = "#8A9099"          # --color-fg-subtle
 HAIR = "#E3E5E8"            # --color-border oklch(0.91 0.005 264)
 STRIPE = "#F5F6F7"          # table zebra row
+BAND_GRAY = "#F4F4F6"       # header / section-bar / footer band (achromatic)
+RULE_GRAY = "#C9CCD1"       # section-bar edge + table header underline
+MONO = ('"DejaVu Sans Mono", ui-monospace, SFMono-Regular, Menlo, '
+        'Consolas, "Liberation Mono", monospace')
 
 
 # --------------------------------------------------------------------------
@@ -379,13 +386,14 @@ def base_css(band_h: str, side: str, foot_h: str, body_size: str, gap: str) -> s
     return f"""
 @page {{
   size: Letter;
-  margin: 0 0 26pt 0;
+  margin: {band_h} 0 {foot_h} 0;
   @bottom-center {{
     content: "Page " counter(page) " of " counter(pages);
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 7pt;
-    letter-spacing: 0.10em;
+    font-family: {MONO};
+    font-size: 6.8pt;
+    letter-spacing: 0.01em;
     color: {SUBTLE};
+    vertical-align: middle;
   }}
 }}
 * {{ box-sizing: border-box; }}
@@ -401,26 +409,31 @@ body {{
   widows: 3;
 }}
 
-/* --- repeating header / footer bands ------------------------------- */
+/* --- repeating header / footer bands (running elements) ------------ */
 .band {{
-  position: fixed;
-  left: 0; right: 0;
-  background: {BURGUNDY_TINT};
+  background: {BAND_GRAY};
   padding: 0 {side};
+  box-sizing: border-box;
 }}
 .band-top {{
-  top: 0;
+  position: fixed;
+  top: -{band_h};          /* rise into the reserved top margin */
+  left: 0; right: 0;       /* L/R page margins are 0 -> full bleed */
   height: {band_h};
-  border-bottom: 2.5pt solid {BURGUNDY};
+  border-bottom: 2.5pt solid {BURGUNDY};   /* the single accent rule */
 }}
 .band-top table {{ width: 100%; height: {band_h}; border-collapse: collapse; }}
 .band-top td {{ vertical-align: middle; }}
 .band-bottom {{
-  bottom: 0;
+  position: fixed;
+  bottom: -{foot_h};       /* drop into the reserved bottom margin */
+  left: 0; right: 0;
   height: {foot_h};
-  border-top: 1pt solid {BURGUNDY};
-  font-size: 7pt;
-  color: {MUTED};
+  border-top: 0.75pt solid {HAIR};
+  font-family: {MONO};
+  font-size: 6.8pt;
+  letter-spacing: 0.01em;
+  color: {SUBTLE};
 }}
 .band-bottom table {{ width: 100%; height: {foot_h}; border-collapse: collapse; }}
 .band-bottom td {{ vertical-align: middle; }}
@@ -430,15 +443,14 @@ body {{
   letter-spacing: -0.01em;
   line-height: 1;
 }}
-.wordmark .one {{ color: {INK}; font-weight: 600; }}
-.wordmark .two {{ color: {BURGUNDY}; }}
+.wordmark .one {{ color: {INK}; font-weight: 700; }}
+.wordmark .two {{ color: {INK}; font-weight: 700; }}  /* uniform wordmark */
 .doc-subtitle {{
-  font-size: 8pt;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-family: {MONO};
+  font-size: 7.5pt;
+  letter-spacing: 0.04em;
   color: {MUTED};
-  margin-top: 4pt;
-  font-weight: 600;
+  margin-top: 5pt;
 }}
 .idblock {{ text-align: right; font-size: 8.5pt; line-height: 1.5; color: {INK}; }}
 .idblock .pname {{ font-weight: 700; font-size: 11pt; }}
@@ -448,15 +460,16 @@ body {{
 
 /* --- content frame -------------------------------------------------- */
 .content {{
-  padding: calc({band_h} + 18pt) {side} calc({foot_h} + 18pt) {side};
+  padding: 16pt {side} 14pt {side};
 }}
 
 /* --- section header bars -------------------------------------------- */
 .sec {{ break-inside: avoid; margin-top: {gap}; }}
 .sec.first {{ margin-top: 0; }}
 .bar {{
-  background: {BURGUNDY};
-  color: #fff;
+  background: {BAND_GRAY};
+  color: {INK};
+  border-left: 3pt solid {RULE_GRAY};
   font-size: 8.5pt;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -472,7 +485,7 @@ body {{
 }}
 .goals-strip {{
   background: {STRIPE};
-  border-left: 3pt solid {BURGUNDY};
+  border-left: 3pt solid {RULE_GRAY};
   padding: 9pt 14pt;
 }}
 .goals-strip ul {{ margin: 0; padding-left: 16pt; }}
@@ -493,7 +506,7 @@ table.clin th {{
   background: #fff; text-align: left;
   font-size: 7.5pt; letter-spacing: 0.07em; text-transform: uppercase;
   color: {MUTED}; font-weight: 700;
-  padding: 5pt 8pt; border-bottom: 1.5pt solid {BURGUNDY};
+  padding: 5pt 8pt; border-bottom: 1pt solid {RULE_GRAY};
 }}
 table.clin td {{
   padding: 5pt 8pt; border-bottom: 0.5pt solid {HAIR}; vertical-align: top;
@@ -508,7 +521,13 @@ ul.tight {{ margin: 0; padding-left: 16pt; }}
 ul.tight li {{ margin: 4pt 0; line-height: 1.4; }}
 .lab-cat {{
   font-size: 7.5pt; font-weight: 700; letter-spacing: 0.10em;
-  text-transform: uppercase; color: {BURGUNDY}; margin: 0 0 5pt 0;
+  text-transform: uppercase; color: {MUTED}; margin: 0 0 5pt 0;
+}}
+.pill {{
+  display: inline-block; background: {BURGUNDY}; color: #fff;
+  font-size: 6.5pt; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 1pt 5pt; border-radius: 7pt;
+  margin-left: 5pt; vertical-align: middle;
 }}
 .lab-cat.b {{ margin-top: 9pt; }}
 .cite {{ color: {MUTED}; font-size: 8pt; }}
@@ -517,7 +536,7 @@ ul.tight li {{ margin: 4pt 0; line-height: 1.4; }}
 
 /* --- patient-facing extras ----------------------------------------- */
 .snippet {{
-  border: 1pt solid {HAIR}; border-left: 3pt solid {BURGUNDY};
+  border: 1pt solid {HAIR};
   background: {STRIPE}; padding: 9pt 12pt; margin: 8pt 0;
   font-size: 9.5pt; line-height: 1.5;
 }}
@@ -587,7 +606,8 @@ def _lab_item(x: dict) -> str:
             cite_s += f", {esc(cite['version'])}"
         cite_s += ")</span>"
     q = x.get("guidance") or x.get("rationale") or x.get("test", "")
-    return f'<div class="lab-item"><span class="q">{esc(q)}</span>{cite_s}</div>'
+    pill = f'<span class="pill">{esc(x["flag"])}</span>' if x.get("flag") else ""
+    return f'<div class="lab-item"><span class="q">{esc(q)}</span>{pill}{cite_s}</div>'
 
 
 # --------------------------------------------------------------------------
@@ -595,7 +615,7 @@ def _lab_item(x: dict) -> str:
 # --------------------------------------------------------------------------
 
 def build_provider_html(b: Brief, generated: str) -> str:
-    css = base_css(band_h="86pt", side="46pt", foot_h="30pt", body_size="10pt", gap="13pt")
+    css = base_css(band_h="108pt", side="46pt", foot_h="30pt", body_size="10pt", gap="13pt")
 
     clin = b.clinician()
     if clin and b.clinician_specialty():
@@ -703,8 +723,12 @@ def build_provider_html(b: Brief, generated: str) -> str:
                 line += f" ({'; '.join(tail)})"
             if x.get("action"):
                 line += f" - {x['action']}"
-            a_items.append(line)
-        lab_html.append(_ul(a_items))
+            pill = f'  <span class="pill">{esc(x["flag"])}</span>' if x.get("flag") else ""
+            a_items.append(esc(line) + pill)
+        # a_items hold escaped text plus trusted pill markup; emit raw <li>.
+        lab_html.append(
+            '<ul class="tight">' + "".join(f"<li>{i}</li>" for i in a_items) + "</ul>"
+        )
     cat_b = b.category_b()
     if cat_b:
         cls = "lab-cat b" if cat_a else "lab-cat"
@@ -748,7 +772,7 @@ def build_provider_html(b: Brief, generated: str) -> str:
 # --------------------------------------------------------------------------
 
 def build_patient_html(b: Brief, generated: str) -> str:
-    css = base_css(band_h="86pt", side="54pt", foot_h="30pt", body_size="10.5pt", gap="16pt")
+    css = base_css(band_h="94pt", side="54pt", foot_h="30pt", body_size="10.5pt", gap="16pt")
 
     id_rows = [f'<div class="pname">For {esc(b.patient_name())}</div>']
     if b.visit_when():

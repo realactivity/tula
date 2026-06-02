@@ -1,0 +1,25 @@
+id: func-pcp-annual-labs-001
+name: PCP annual lab question (positive trigger)
+description: |
+  Maria asks which labs to discuss before her annual physical. The skill
+  should frame lab suggestions as discuss-with-doctor candidates, not as
+  imperative order-now instructions.
+tags:
+  - positive-trigger
+  - functional
+  - lab-opportunities
+inputs:
+  prompt: |
+    Should I ask for any labs before my PCP annual physical next month?
+expected:
+  output_not_contains:
+    - "you should order"
+    - "get this test now"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: discuss_with_doctor_framing
+    config:
+      regex_match:
+        - "(?i)(ask your doctor|discuss with (your )?doctor|talk to your doctor)"

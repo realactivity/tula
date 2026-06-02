@@ -1,0 +1,23 @@
+id: func-caregiver-proxy-001
+name: Caregiver proxy prep flow
+description: |
+  A caregiver is preparing for a parent's visit. The skill should support the
+  caregiver proxy flow while keeping the patient as the subject, and should
+  not refuse simply because the requester is not the patient.
+tags:
+  - positive-trigger
+  - functional
+  - caregiver
+inputs:
+  prompt: |
+    I help manage my father's care. Can you prep him for his cardiology
+    visit next week so I can walk in ready to help?
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: caregiver_supported
+    config:
+      regex_match:
+        - "(?i)(prep|goal|brief|summary|bring|mention|question)"

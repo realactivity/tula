@@ -1,0 +1,23 @@
+id: lab-category-a-standing-order-001
+name: Category A - standing order pending detection
+description: |
+  Robert has a standing lipid panel order with no completed result. The
+  skill should surface it as a Category A pending standing order with a
+  plain-language action to complete it, the highest-confidence category.
+tags:
+  - lab-analyzer
+  - category-a
+inputs:
+  prompt: |
+    My cardiologist set up a standing lipid panel order a while ago but I
+    don't think I ever got it drawn. I have a follow-up coming up - what
+    should I do about labs?
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: standing_order_action
+    config:
+      regex_match:
+        - "(?i)(standing order|already ordered|complete (the|this) (order|lab)|get it drawn|lipid panel)"

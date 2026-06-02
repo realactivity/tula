@@ -1,0 +1,30 @@
+name: prep-my-visit-eval
+description: |
+  Live evaluation suite for the prep-my-visit skill. Verifies the agent
+  recognizes visit-prep requests, follows the resolve-context -> capture-goals
+  -> lab-analysis -> IPS-build -> draft-views -> validate -> render -> persist
+  workflow, classifies lab opportunities into Category A/B/C with the correct
+  safety posture, respects PHI and no-auto-send boundaries, declines
+  diagnosis/treatment/billing, and routes single-purpose requests to med-pdf
+  and epic-note.
+skill: prep-my-visit
+version: "1.0"
+config:
+  trials_per_task: 1
+  timeout_seconds: 300
+  parallel: false
+  executor: copilot-sdk
+  model: claude-sonnet-4.6
+metrics:
+  - name: task_completion
+    weight: 1.0
+    threshold: 0.8
+    description: Did the skill respond correctly to triggers, anti-triggers, and safety boundaries?
+graders:
+  - type: code
+    name: not_empty
+    config:
+      assertions:
+        - "len(output.strip()) > 0"
+tasks:
+  - "tasks/*.yaml"

@@ -1,0 +1,22 @@
+id: func-urgent-sameday-001
+name: Urgent same-day compressed prep (positive trigger)
+description: |
+  Alex needs a fast prep before an urgent-care visit in a few hours. The
+  skill should run a compressed flow and produce a concise brief without
+  inventing history when data is sparse.
+tags:
+  - positive-trigger
+  - functional
+  - urgent
+inputs:
+  prompt: |
+    I have an urgent care appointment in about three hours. Prep me fast.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: compressed_prep_response
+    config:
+      regex_match:
+        - "(?i)(prep|brief|summary|goal|bring|mention|vital)"

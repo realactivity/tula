@@ -1,6 +1,6 @@
 ---
 name: prep-my-visit
-description: "Prepare an IPS-aligned visit-prep package from patient health data. USE FOR: upcoming visit prep, lab opportunities, portal snippets. DO NOT USE FOR: diagnosis/treatment, insurance/billing, or PHI transfer outside the workspace."
+description: "Prepares an IPS-aligned pre-visit package (provider + patient brief, lab opportunities, portal-snippet drafts) from workspace health data. USE FOR: upcoming visit prep, pre-visit lab questions, handoff summaries. DO NOT USE FOR: diagnosis/treatment/medication changes, insurance/billing/prior-auth, PDF extraction (use med-pdf), standalone portal drafting (use epic-note), or PHI transfer outside the workspace."
 metadata:
   {
     "openclaw":
@@ -13,11 +13,7 @@ metadata:
 
 # prep-my-visit
 
-Prepare an IPS-aligned pre-visit package.
-
 ## When to Use
-
-Use when:
 
 - Upcoming visit prep request from patient or caregiver
 - Pre-visit lab question for an upcoming appointment
@@ -25,29 +21,25 @@ Use when:
 
 ## When NOT to Use
 
-Don't use when:
-
 - Any diagnosis, treatment, or medication-change request
 - Billing/insurance/prior-auth/EOB request
-- Standalone PDF extraction request -> use `med-pdf`
-- Standalone portal drafting request -> use `epic-note`
+- Standalone PDF extraction -> use `med-pdf`
+- Standalone portal drafting -> use `epic-note`
 - Any PHI transfer outside `~/.openclaw/workspace/`
 
 ## Workflow
 
-1. Resolve visit context and choose template.
-2. Capture 1-3 patient goals verbatim.
-3. Run lab analysis per [`lab-analyzer`](references/lab-analyzer.md).
-4. Build IPS + Tula extensions per [`ips-contract`](references/ips-contract.md).
-5. Draft provider/patient views and snippets per [`workflow`](references/workflow.md).
-6. Validate outputs per [`scripts`](references/scripts.md).
-7. Render `provider.pdf` and `patient.pdf` via `scripts/render_visit_brief.py`.
-8. Persist outputs in `~/.openclaw/workspace/tula/briefs/{visit_id}/`.
+1. Resolve visit context, choose template, capture 1-3 goals verbatim.
+2. Run lab analysis and build IPS + Tula extensions per
+   [`visit-prep-guide`](references/visit-prep-guide.md).
+3. Draft provider/patient views and snippets; validate per
+   [`scripts`](references/scripts.md).
+4. Render `provider.pdf` and `patient.pdf` via `scripts/render_visit_brief.py`.
+5. Persist outputs in `~/.openclaw/workspace/tula/briefs/{visit_id}/`.
 
 ## Scripts
 
-See [`references/scripts.md`](references/scripts.md). `render_visit_brief.py`
-typesets the IPS Bundle + labs into `provider.pdf` and `patient.pdf`.
+See [`references/scripts.md`](references/scripts.md).
 
 ## Examples
 
@@ -55,8 +47,7 @@ See [`references/examples.md`](references/examples.md).
 
 ## Privacy
 
-- Keep PHI in `~/.openclaw/workspace/`.
-- Never auto-send snippets; patient approval is required.
+- Keep PHI in `~/.openclaw/workspace/`; never auto-send snippets.
 - Reject insurance/billing/prior-auth/EOB content.
 
 ## Troubleshooting

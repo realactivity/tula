@@ -1,0 +1,14 @@
+{
+  "resourceType": "Composition",
+  "status": "preliminary",
+  "title": "Pre-Visit Brief",
+  "section": [
+    { "title": "Patient Story" },
+    { "title": "Problem List" },
+    { "title": "Medication Summary" },
+    { "title": "Allergies and Intolerances" },
+    { "title": "Vital Signs" },
+    { "title": "Pre-Visit Lab Opportunities" },
+    { "title": "Delta Since Last Visit With This Provider" }
+  ]
+}
