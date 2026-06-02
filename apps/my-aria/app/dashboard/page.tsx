@@ -1,4 +1,10 @@
 import { getDashboardData } from "@/lib/data/loader";
+
+// Force server-side rendering on every request so the loader reads
+// `TULA_DATA_DIR` and the FHIR tree fresh each time. Without this, Next.js
+// prerenders the dashboard at build time and the served page is frozen
+// to whatever env + disk state existed during `next build`.
+export const dynamic = "force-dynamic";
 import { DashboardSection } from "@/components/dashboard/section";
 import { WelcomeCard } from "@/components/dashboard/welcome-card";
 import { UpcomingCard } from "@/components/dashboard/upcoming-card";
