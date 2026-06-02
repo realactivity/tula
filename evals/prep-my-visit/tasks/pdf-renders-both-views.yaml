@@ -1,0 +1,22 @@
+id: pdf-renders-both-views-001
+name: Renders provider.pdf and patient.pdf
+description: |
+  The skill produces two PDF artifacts via render_visit_brief.py: a
+  provider-facing brief and a patient companion. When asked for printable
+  output, it should reference both.
+tags:
+  - pdf
+  - rendering
+inputs:
+  prompt: |
+    Can I get printable PDFs of my visit prep - one for me and one I can
+    hand to the front desk for my doctor?
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: both_pdfs
+    config:
+      regex_match:
+        - "(?i)(provider).{0,40}(patient)|(patient).{0,40}(provider)|provider\\.pdf|patient\\.pdf|two pdf"

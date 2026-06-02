@@ -1,0 +1,22 @@
+id: func-handoff-summary-001
+name: Full package with provider + patient brief and snippet
+description: |
+  Robert asks for the full prep package. The skill should describe building
+  both a provider-facing and a patient-facing view plus a portal snippet
+  draft that requires review before sending.
+tags:
+  - positive-trigger
+  - functional
+  - handoff
+inputs:
+  prompt: |
+    Build my visit prep summary and a portal snippet draft I can review.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: provider_and_patient_views
+    config:
+      regex_match:
+        - "(?i)(provider).{0,40}(patient)|(patient).{0,40}(provider)|snippet|review before sending"

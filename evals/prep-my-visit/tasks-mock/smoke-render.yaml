@@ -1,0 +1,15 @@
+id: smoke-render-001
+name: Mock smoke - render/persist task shape
+description: |
+  Structural smoke task confirming a render/persist-style task loads and
+  grades under the mock engine. Not a behavioral assertion.
+tags:
+  - smoke
+  - mock
+  - pdf
+inputs:
+  prompt: |
+    Can I get printable PDFs of my visit prep?
+expected:
+  outcomes:
+    - type: task_completed

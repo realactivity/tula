@@ -1,0 +1,22 @@
+id: ips-tula-extensions-001
+name: Tula IPS extensions surfaced
+description: |
+  Beyond core IPS sections, the Tula brief adds a Patient Story, Pre-Visit
+  Lab Opportunities, and a Delta-since-last-visit view. The skill should be
+  able to describe these value-add extensions.
+tags:
+  - ips
+  - tula-extensions
+inputs:
+  prompt: |
+    Besides the standard chart sections, what extra context does my prep
+    summary add that a plain chart printout wouldn't?
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: tula_extensions
+    config:
+      regex_match:
+        - "(?i)(patient story|story|goal|lab opportun|delta|since last|what.?s changed|change)"

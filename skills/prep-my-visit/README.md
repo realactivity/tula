@@ -46,9 +46,7 @@ Expected outputs:
 ## Skill structure
 
 - Runtime instructions: [`SKILL.md`](SKILL.md)
-- Operational workflow: [`references/workflow.md`](references/workflow.md)
-- Lab analyzer rules: [`references/lab-analyzer.md`](references/lab-analyzer.md)
-- IPS section contract: [`references/ips-contract.md`](references/ips-contract.md)
+- Operational guide (cadence, lab analyzer, IPS section contract): [`references/visit-prep-guide.md`](references/visit-prep-guide.md)
 - Script usage: [`references/scripts.md`](references/scripts.md)
 - Prompt examples: [`references/examples.md`](references/examples.md)
 
@@ -60,9 +58,17 @@ From repo root:
 waza check skills/prep-my-visit
 ```
 
-Deterministic script checks (run inside skill context):
+Deterministic script + policy checks (no quota, no model) - runs every
+validator against known-good and known-bad fixtures and smoke-renders the
+example briefs:
 
-```powershell
+```bash
+bash evals/prep-my-visit/run_script_checks.sh
+```
+
+The individual validators can also be run directly inside skill context:
+
+```bash
 node {baseDir}/scripts/validate_ips_sections.mjs <composition.json>
 node {baseDir}/scripts/validate_lab_opportunities.mjs <lab-opportunities.json>
 node {baseDir}/scripts/enforce_snippet_limits.mjs <snippets.json>
@@ -127,7 +133,7 @@ When live Copilot quota is unavailable:
 
 1. `waza check skills/prep-my-visit`
 2. `waza run evals/prep-my-visit/eval.mock.yaml -v`
-3. Demo deterministic script checks with fixture-shaped JSON
+3. `bash evals/prep-my-visit/run_script_checks.sh`
 
 Frame this as structural and policy validation, not final live-model certification.
 

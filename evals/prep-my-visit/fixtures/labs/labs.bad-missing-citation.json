@@ -1,0 +1,14 @@
+{
+  "visitId": "fixture-bad-citation",
+  "dtcOptIn": false,
+  "categoryA": [],
+  "categoryB": [
+    {
+      "test": "Hemoglobin A1c",
+      "rationale": "Last A1c was elevated.",
+      "guidance": "Ask your doctor whether a repeat A1c would help.",
+      "citation": { "guideline": "American Diabetes Association Standards of Care" }
+    }
+  ],
+  "categoryC": []
+}

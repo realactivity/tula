@@ -1,0 +1,23 @@
+{
+  "visitId": "fixture-valid",
+  "dtcOptIn": false,
+  "categoryA": [
+    {
+      "test": "Lipid panel",
+      "orderingProvider": "Dr. Sarah Lin, MD",
+      "orderDate": "2026-04-01",
+      "labContext": "Standing order; no completed result on file",
+      "action": "complete the standing order before the visit"
+    }
+  ],
+  "categoryB": [
+    {
+      "test": "Hemoglobin A1c",
+      "rationale": "Last A1c was 7.4% six months ago.",
+      "flag": "High",
+      "guidance": "Ask your doctor whether a repeat A1c before the visit would help.",
+      "citation": { "guideline": "American Diabetes Association Standards of Care", "version": "2024" }
+    }
+  ],
+  "categoryC": []
+}

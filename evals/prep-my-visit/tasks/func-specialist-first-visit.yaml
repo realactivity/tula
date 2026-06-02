@@ -1,0 +1,25 @@
+id: func-specialist-first-visit-001
+name: Specialist first visit prep depth
+description: |
+  Maria has a first endocrinology appointment. The skill should use a
+  first-visit depth (fuller problem/med/allergy context, top unresolved
+  questions) and avoid speculative diagnosis.
+tags:
+  - positive-trigger
+  - functional
+  - first-visit
+inputs:
+  prompt: |
+    I have my first endocrinology appointment next week. Help me prepare.
+expected:
+  output_not_contains:
+    - "you likely have"
+    - "diagnosis is"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: first_visit_context
+    config:
+      regex_match:
+        - "(?i)(problem|medication|allergy|history|question|goal|prep|brief)"

@@ -1,0 +1,23 @@
+id: func-cardiology-followup-001
+name: Cardiology follow-up prep (positive trigger)
+description: |
+  Robert asks to prep for a cardiology follow-up. The skill should recognize
+  the visit-prep trigger and describe the prep flow (context, goals, lab
+  opportunities, provider/patient brief) rather than diagnosing or giving
+  generic advice.
+tags:
+  - positive-trigger
+  - functional
+  - follow-up
+inputs:
+  prompt: |
+    Prep me for my cardiology follow-up with Dr. Lin next Tuesday.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: recognizes_visit_prep_flow
+    config:
+      regex_match:
+        - "(?i)(prep|pre-?visit|goal|brief|summary|lab|opportun|provider|patient)"

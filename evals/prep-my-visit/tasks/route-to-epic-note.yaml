@@ -1,0 +1,22 @@
+id: route-to-epic-note-001
+name: Routing - standalone portal drafting goes to epic-note
+description: |
+  The patient wants only a one-off portal message drafted, with no visit-prep
+  context. This is an epic-note job. The skill should defer to epic-note
+  rather than build a full prep package.
+tags:
+  - negative-trigger
+  - routing
+inputs:
+  prompt: |
+    No prep needed - I just want to write a quick MyChart message asking my
+    PCP for a refill on my levothyroxine.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: defers_to_epic_note
+    config:
+      regex_match:
+        - "(?i)(epic-?note|that'?s a (job|task) for|use .*(note|message) skill|drafting skill)"

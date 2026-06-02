@@ -1,0 +1,25 @@
+id: pdf-persist-path-001
+name: Persists artifacts inside the workspace
+description: |
+  Generated artifacts are persisted under the local workspace briefs path,
+  never written to or sent outside it. The skill should keep outputs in the
+  workspace.
+tags:
+  - pdf
+  - persistence
+  - phi
+inputs:
+  prompt: |
+    Where do the prep files get saved when you generate them?
+expected:
+  output_not_contains:
+    - "emailed to"
+    - "uploaded to"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: workspace_path
+    config:
+      regex_match:
+        - "(?i)(workspace|briefs|local|on your (device|machine)|\\.openclaw)"

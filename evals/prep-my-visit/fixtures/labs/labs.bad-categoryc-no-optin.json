@@ -1,0 +1,12 @@
+{
+  "visitId": "fixture-bad-categoryc",
+  "dtcOptIn": false,
+  "categoryA": [],
+  "categoryB": [],
+  "categoryC": [
+    {
+      "test": "Direct-to-consumer vitamin D panel",
+      "availability": "no provider order required"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "visitId": "fixture-bad-overflow",
+  "dtcOptIn": false,
+  "categoryA": [],
+  "categoryB": [
+    { "test": "A1c", "rationale": "r", "guidance": "Ask your doctor whether to repeat.", "citation": { "guideline": "ADA", "version": "2024" } },
+    { "test": "Lipids", "rationale": "r", "guidance": "Ask your doctor whether to repeat.", "citation": { "guideline": "ACC", "version": "2023" } },
+    { "test": "TSH", "rationale": "r", "guidance": "Ask your doctor whether to repeat.", "citation": { "guideline": "ATA", "version": "2022" } },
+    { "test": "CMP", "rationale": "r", "guidance": "Ask your doctor whether to repeat.", "citation": { "guideline": "USPSTF", "version": "2021" } }
+  ],
+  "categoryC": []
+}

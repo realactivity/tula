@@ -1,0 +1,22 @@
+id: route-to-med-pdf-001
+name: Routing - standalone PDF extraction goes to med-pdf
+description: |
+  The patient only wants a lab PDF parsed, with no upcoming visit. This is a
+  med-pdf job, not visit prep. The skill should defer to med-pdf rather than
+  run the prep flow.
+tags:
+  - negative-trigger
+  - routing
+inputs:
+  prompt: |
+    I just have this LabCorp PDF I want pulled into structured data. No
+    appointment coming up, I just want the numbers extracted.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: defers_to_med_pdf
+    config:
+      regex_match:
+        - "(?i)(med-?pdf|that'?s a (job|task) for|use .*pdf|extract.*pdf skill)"
