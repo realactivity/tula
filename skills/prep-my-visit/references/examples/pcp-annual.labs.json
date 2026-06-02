@@ -1,0 +1,28 @@
+{
+  "visitId": "pcp-annual",
+  "generatedAt": "2026-06-02T13:00:00Z",
+  "dtcOptIn": false,
+  "categoryA": [],
+  "categoryB": [
+    {
+      "test": "Thyroid-stimulating hormone (TSH)",
+      "rationale": "On levothyroxine with new fatigue; TSH has not been checked in over a year.",
+      "guidance": "Ask your doctor whether checking your TSH before the visit would help explain the fatigue.",
+      "citation": { "guideline": "American Thyroid Association Guidelines for Hypothyroidism", "version": "2014" },
+      "snippet": "I have been more tired than usual and my last thyroid test was over a year ago. I would like to ask about checking my TSH before my annual visit. Draft - review and approve before sending."
+    },
+    {
+      "test": "Complete blood count with ferritin",
+      "rationale": "Prior iron-deficiency anemia plus new fatigue makes a recheck reasonable to discuss.",
+      "guidance": "Ask your doctor whether a complete blood count and ferritin would be worth repeating given your history.",
+      "citation": { "guideline": "USPSTF Iron Deficiency Screening Statement", "version": "2015" }
+    },
+    {
+      "test": "Lipid panel",
+      "rationale": "Routine cardiovascular risk assessment is due based on age and interval since last panel.",
+      "guidance": "Ask your doctor whether a fasting lipid panel fits your annual cardiovascular risk review.",
+      "citation": { "guideline": "ACC/AHA Cholesterol Guideline", "version": "2018" }
+    }
+  ],
+  "categoryC": []
+}

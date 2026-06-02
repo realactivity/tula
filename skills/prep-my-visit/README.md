@@ -119,7 +119,7 @@ waza run evals/prep-my-visit/eval.yaml -v
 waza run evals/prep-my-visit/eval.mock.yaml -v
 ```
 
-For eval details and scenario map, see [`evals/prep-my-visit/README.md`](../../evals/prep-my-visit/README.md).
+For eval details and the scenario map, see `evals/prep-my-visit/README.md` in the repo root.
 
 ## Demo flow (no quota)
 

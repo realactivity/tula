@@ -1,11 +1,12 @@
 ---
 name: prep-my-visit
-description: "Prepare an IPS-aligned visit-prep package from patient health data. USE FOR: upcoming visit prep, lab opportunities, and portal snippets. DO NOT USE FOR: diagnosis/treatment, insurance/billing tasks, or PHI transfer outside the workspace."
+description: "Prepare an IPS-aligned visit-prep package from patient health data. USE FOR: upcoming visit prep, lab opportunities, portal snippets. DO NOT USE FOR: diagnosis/treatment, insurance/billing, or PHI transfer outside the workspace."
 metadata:
   {
     "openclaw":
       {
-        "requires": { "bins": ["node"] }
+        "emoji": "🩺",
+        "requires": { "bins": ["node", "python3"] }
       }
   }
 ---
@@ -36,15 +37,17 @@ Don't use when:
 
 1. Resolve visit context and choose template.
 2. Capture 1-3 patient goals verbatim.
-3. Run lab analysis using [`references/lab-analyzer.md`](references/lab-analyzer.md).
-4. Build IPS + Tula extensions using [`references/ips-contract.md`](references/ips-contract.md).
-5. Draft provider/patient views and snippets using [`references/workflow.md`](references/workflow.md).
-6. Validate outputs with [`references/scripts.md`](references/scripts.md).
-7. Persist outputs in `~/.openclaw/workspace/tula/briefs/{visit_id}/`.
+3. Run lab analysis per [`lab-analyzer`](references/lab-analyzer.md).
+4. Build IPS + Tula extensions per [`ips-contract`](references/ips-contract.md).
+5. Draft provider/patient views and snippets per [`workflow`](references/workflow.md).
+6. Validate outputs per [`scripts`](references/scripts.md).
+7. Render `provider.pdf` and `patient.pdf` via `scripts/render_visit_brief.py`.
+8. Persist outputs in `~/.openclaw/workspace/tula/briefs/{visit_id}/`.
 
 ## Scripts
 
-Run the commands documented in [`references/scripts.md`](references/scripts.md).
+See [`references/scripts.md`](references/scripts.md). `render_visit_brief.py`
+typesets the IPS Bundle + labs into `provider.pdf` and `patient.pdf`.
 
 ## Examples
 
@@ -58,5 +61,5 @@ See [`references/examples.md`](references/examples.md).
 
 ## Troubleshooting
 
-- Missing data: return constrained draft + missing-items list.
-- Category B overflow or imperative phrasing: keep top three and rewrite to discuss-with-doctor wording.
+- Missing data: return a constrained draft plus a missing-items list.
+- Category B overflow: keep top three, rewrite to discuss-with-doctor wording.
