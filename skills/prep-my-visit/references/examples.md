@@ -1,5 +1,19 @@
 # Examples
 
+Reference fixtures live alongside this file in the `examples/` subdirectory.
+Each scenario ships as two JSON files: the IPS Composition Bundle and the
+lab-opportunities payload. They drive the PDF renderer smoke tests and serve
+as seed data for the eval suite.
+
+| Scenario | Bundle | Labs |
+|---|---|---|
+| Cardiology follow-up | [`examples/cardiology-followup.json`](examples/cardiology-followup.json) | [`examples/cardiology-followup.labs.json`](examples/cardiology-followup.labs.json) |
+| PCP annual | [`examples/pcp-annual.json`](examples/pcp-annual.json) | [`examples/pcp-annual.labs.json`](examples/pcp-annual.labs.json) |
+| Urgent same-day | [`examples/urgent-same-day.json`](examples/urgent-same-day.json) | [`examples/urgent-same-day.labs.json`](examples/urgent-same-day.labs.json) |
+
+All patients in these fixtures are synthetic (Robert Johnson, Maria Chen,
+Alex Smith); clinicians and tenant IDs are likewise fictional.
+
 ## Example 1: Cardiology follow-up with standing order
 
 User prompt:
