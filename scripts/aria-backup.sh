@@ -50,8 +50,9 @@
 # ## Exit codes
 #   0  Success (whether or not there were changes)
 #   1  Generic error
-#   2  Secret-pattern scan failed — see stderr for offending file(s)
+#   2  Secret-pattern scan or large-file guard failed — see stderr
 #   3  Push failed (commit was made; resolve auth and retry `git push`)
+#   4  Privacy guard failed (remote repo is not PRIVATE — refused to push)
 #
 # ## Exclusions (mirrors the repo's `.gitignore` — keep both in sync)
 #   credentials/                          telegram pairing secrets
@@ -153,6 +154,11 @@ PURGE=(
     'logs'
     'update-check.json'
     'plugin-runtime-deps'
+    'npm'                                  # ~700MB of plugin npm projects;
+                                           # contains coding-agent binaries
+                                           # 200MB+ each (> GitHub's 100MB
+                                           # file cap). Regenerable via
+                                           # `openclaw plugins install ...`.
 )
 
 # Nested-.git protection. Any `.git` directory under the source — at any
@@ -171,6 +177,12 @@ PROTECT=(
     'scripts'
     'docs'
 )
+
+# Hard cap on individual file size in the backup tree. GitHub rejects any
+# file >100MB without LFS. We set a tighter 50MB cap to catch problems
+# before they hit the remote, and to keep the repo cloneable on slow links.
+# Anything over this should be added to PURGE.
+MAX_FILE_BYTES=$((50 * 1024 * 1024))
 
 # Regex patterns that look like real credentials. Tuned to be high-signal;
 # if a pattern fires, the run aborts unless the file is in ALLOWLIST_GLOBS.
@@ -340,6 +352,63 @@ else
     log "secret scan: clean"
 fi
 
+# ---------- step 3b: large-file guard --------------------------------------
+#
+# Refuse to stage anything over MAX_FILE_BYTES. GitHub rejects >100MB hard,
+# but we want to catch the problem early (cheaper than a failed push) and
+# under a tighter budget so clone-from-backup stays fast.
+
+if [[ $DRY_RUN -eq 0 ]]; then
+    big_files=$(find "$ARIA_REPO_DIR" -type f -size +"${MAX_FILE_BYTES}c" \
+                    -not -path "$ARIA_REPO_DIR/.git/*" 2>/dev/null || true)
+    if [[ -n "$big_files" ]]; then
+        echo "" >&2
+        echo "Large-file guard FAILED. Files over $((MAX_FILE_BYTES/1024/1024))MB:" >&2
+        echo "------------------------------------------------------------" >&2
+        while IFS= read -r f; do
+            sz=$(du -h "$f" | cut -f1)
+            printf '  %s\t%s\n' "$sz" "${f#$ARIA_REPO_DIR/}" >&2
+        done <<< "$big_files"
+        echo "------------------------------------------------------------" >&2
+        echo "Add the offending path (or its parent dir) to the PURGE array." >&2
+        exit 2
+    fi
+    log "large-file guard: clean (no files > $((MAX_FILE_BYTES/1024/1024))MB)"
+fi
+
+# ---------- step 3c: remote-private guard ----------------------------------
+#
+# Defense in depth: refuse to push if the GitHub repo is somehow public.
+# Catches a hand-toggle in the GitHub UI that would otherwise expose every
+# subsequent backup commit. Only runs for github.com remotes when `gh` is
+# available and authenticated; otherwise it's a soft warning.
+
+verify_repo_private() {
+    local remote_url="$1"
+    if ! command -v gh >/dev/null 2>&1; then
+        log "privacy guard: gh CLI not installed — SKIPPED (soft warning)"
+        return 0
+    fi
+    if ! [[ "$remote_url" =~ github\.com[:/]([^/]+)/([^/.]+)(\.git)?$ ]]; then
+        log "privacy guard: non-github remote — SKIPPED"
+        return 0
+    fi
+    local owner="${BASH_REMATCH[1]}"
+    local name="${BASH_REMATCH[2]}"
+    local visibility
+    visibility=$(gh repo view "$owner/$name" --json visibility -q .visibility 2>/dev/null || echo "")
+    if [[ -z "$visibility" ]]; then
+        log "privacy guard: could not query gh — SKIPPED (soft warning)"
+        return 0
+    fi
+    if [[ "$visibility" != "PRIVATE" ]]; then
+        log "privacy guard: REFUSING to push — $owner/$name is $visibility (expected PRIVATE)"
+        return 1
+    fi
+    log "privacy guard: $owner/$name confirmed PRIVATE"
+    return 0
+}
+
 # ---------- step 4 & 5: commit ---------------------------------------------
 
 cd "$ARIA_REPO_DIR"
@@ -379,6 +448,8 @@ fi
 
 REMOTE_URL=$(git remote get-url "$ARIA_REMOTE" 2>/dev/null || true)
 [[ -z "$REMOTE_URL" ]] && { log "remote '$ARIA_REMOTE' not configured"; exit 3; }
+
+verify_repo_private "$REMOTE_URL" || exit 4
 
 log "push: $ARIA_REMOTE $ARIA_BRANCH ($REMOTE_URL)"
 
