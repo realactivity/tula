@@ -1,0 +1,76 @@
+# memory/_index.md
+
+_Catalog of {{AGENT_NAME}}'s tiered memory. Keep this in sync by hand whenever you add, demote, or archive a file._
+
+<!--
+This is the DISCOVERY layer — the front door. A fresh agent (or a freshly
+cloned human, five years from now, with nothing but `cat`) reads MEMORY.md,
+finds the pointer to this file, and uses the catalog below to navigate
+everything else. It must stay self-explanatory. Do not assume the reader has
+seen any other file yet.
+-->
+
+## How this works
+
+{{AGENT_NAME}}'s memory is organized in TIERS so the always-loaded layer (sent
+on every turn) stays small, and tactical detail lives in files that are pulled
+in on demand via `memory_search` and `memory_get`.
+
+```
+L1 (always loaded)  ->  MEMORY.md, SOUL.md, IDENTITY.md, USER.md, AGENTS.md, TOOLS.md, HEARTBEAT.md
+L2 (load on demand) ->  memory/*.md, memory/infra/*.md, memory/profile.yaml
+L3 (raw journal)    ->  memory/YYYY-MM-DD.md
+L4 (archive)        ->  memory/archive/ (kept for the lifetime of the record, almost never read)
+```
+
+- **L1 — always loaded.** Durable, every-turn-relevant facts plus pointers. Stays SMALL (target <80 lines for MEMORY.md). If it grows, demote detail to L2.
+- **L2 — load on demand.** Topical files. This is where the substance lives. Curated, not raw.
+- **L3 — daily journal.** Raw, same-day, narrative. Written when something incident- or learning-grade happens.
+- **L4 — archive.** Historically true but no longer actionable. Never deleted, just moved here. Lifetime memory matters.
+
+**Discovery rule for fresh agents:** read MEMORY.md -> it points here -> use this index to find what you need.
+
+## L2 — topical files
+
+<!-- Add a row when you create a new topical file. Remove the row if you archive it. -->
+
+| File | What's in it |
+|---|---|
+| `profile.yaml` | Stable structured facts about {{USER_SHORT_NAME}} (location, timezone, identifiers). |
+| `health-snapshot.md` | Detailed clinical picture — meds, flagged conditions, latest labs, hypothesis, care team. Re-read for any health-deep question. |
+| `stewardship.md` | Data-stewardship frame ({{USER_DATA_FRAME}}). Re-read before talking about security or compliance. |
+| `skills.md` | Workspace skills authored for this tenant + the skill-authoring stack. |
+| `infra/backups.md` | Backup architecture, guards, runbook pointer. |
+| `infra/coding-agents.md` | Which coding agents are wired up, how to spawn each. |
+| `infra/search-tools.md` | Web / social search provider config. |
+| `infra/voice-tts.md` | Text-to-speech provider and voice config. |
+| `infra/parked-bugs.md` | Known bugs to fix later. |
+| `infra/known-issues.md` | Recurring infra problems with fix recipes. |
+
+## L3 — dated daily notes
+
+Format: `memory/YYYY-MM-DD.md`. Raw chronological journal. **Write here the same day** when something incident-grade or learning-grade happens. See `memory/YYYY-MM-DD.template.md` for the shape.
+
+<!-- Keep a short, newest-first list of notable daily notes here so the index
+     doubles as a timeline. One line each; promote durable detail to L2. -->
+
+Currently present (newest first):
+- _(none yet — the first daily note will land here)_
+
+## L4 — archive
+
+`memory/archive/` — historically true content that's no longer actionable. Empty until the first thing goes stale.
+
+## Rules of promotion / demotion
+
+1. **Daily notes are raw.** Write same-day, full detail, narrative voice.
+2. **L2 files are curated.** When a daily note contains durable info (a fix recipe, an architecture decision, a calibration like a corrected assumption), promote it into the relevant L2 topical file.
+3. **MEMORY.md is durable + small.** Only durable facts that must be available *every turn* go there — and pointers to L2, not the content itself.
+4. **Archive when stale, never delete.** If something is no longer true but was once important, `mv` it to `archive/`.
+
+## Weekly review
+
+<!-- OPTIONAL. If a weekly review cron is configured, describe it here so the
+     discipline is discoverable. Otherwise delete this section. -->
+
+A weekly review job can read the last 7 days of daily notes and propose: items to promote into L2, L2 items that are stale and should move to archive, and MEMORY.md lines that have been superseded. Configure cadence and delivery channel to taste.
