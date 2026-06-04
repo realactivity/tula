@@ -1,0 +1,95 @@
+{
+  "resourceType": "Bundle",
+  "id": "brief-urgent-same-day",
+  "type": "document",
+  "timestamp": "2026-06-02T13:00:00Z",
+  "meta": { "source": "prep-my-visit@1.0", "profile": ["http://hl7.org/fhir/uv/ips/StructureDefinition/Bundle-uv-ips"] },
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:comp-1",
+      "resource": {
+        "resourceType": "Composition",
+        "id": "comp-1",
+        "status": "preliminary",
+        "type": { "text": "Pre-visit summary" },
+        "title": "Pre-Visit Brief - Urgent Same-Day",
+        "date": "2026-06-02T13:00:00Z",
+        "subject": { "reference": "urn:uuid:patient-1" },
+        "encounter": { "reference": "urn:uuid:encounter-1" },
+        "section": [
+          {
+            "title": "Patient Story",
+            "text": { "status": "additional", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Alex has had a sore throat and a fever since yesterday and is being seen at urgent care this afternoon. Little other history is available in the workspace right now.</p></div>" }
+          },
+          {
+            "title": "Goals for this visit",
+            "text": { "status": "additional", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><ul><li>Get my sore throat and fever checked today</li></ul></div>" }
+          },
+          {
+            "title": "Problem List",
+            "text": { "status": "generated", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>No chronic problems recorded in the workspace.</p></div>" }
+          },
+          {
+            "title": "Medication Summary",
+            "text": { "status": "generated", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>No medications recorded in the workspace.</p></div>" }
+          },
+          {
+            "title": "Allergies and Intolerances",
+            "text": { "status": "generated", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Penicillin - hives (severe).</p></div>" }
+          },
+          {
+            "title": "Vital Signs",
+            "text": { "status": "generated", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Temperature 38.4 C (self-reported).</p></div>" }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:patient-1",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "patient-1",
+        "identifier": [{ "system": "urn:tula:tenant-id", "value": "TULA-330914" }],
+        "name": [{ "use": "official", "family": "Smith", "given": ["Alex"], "text": "Alex Smith" }],
+        "gender": "other",
+        "birthDate": "1996-07-30"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:encounter-1",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "encounter-1",
+        "status": "planned",
+        "class": { "code": "AMB", "display": "ambulatory" },
+        "type": [{ "text": "Urgent care, same day" }],
+        "period": { "start": "2026-06-02T16:00:00" },
+        "location": [{ "location": { "display": "Eastside Urgent Care" } }]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:allergy-1",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "allergy-1",
+        "clinicalStatus": { "coding": [{ "code": "active" }] },
+        "code": { "text": "Penicillin" },
+        "criticality": "high",
+        "reaction": [{ "manifestation": [{ "text": "Hives" }], "severity": "severe" }]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-temp",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-temp",
+        "status": "preliminary",
+        "category": [{ "coding": [{ "code": "vital-signs" }] }],
+        "code": { "text": "Body temperature" },
+        "effectiveDateTime": "2026-06-02",
+        "valueQuantity": { "value": 38.4, "unit": "C" },
+        "note": [{ "text": "self-reported" }]
+      }
+    }
+  ]
+}

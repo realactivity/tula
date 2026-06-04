@@ -1,0 +1,259 @@
+#cloud-config
+#
+# cloud-init userdata for a Tula tenant VM.
+#
+# Rendered by tula-provision.sh with substitutions for {{TENANT_ID}},
+# {{TENANT_DISPLAY_NAME}}, {{TELEGRAM_BOT_TOKEN}}, {{ANTHROPIC_API_KEY}},
+# {{XAI_API_KEY}}, {{GITHUB_PAT}}, {{BACKUP_REPO_URL}}, {{OPERATOR_SSH_PUBKEY}},
+# {{TIMESTAMP}}.
+#
+# This file is sent to Azure via `--custom-data`, base64-encoded by az CLI,
+# and executed by cloud-init on first boot (after the generalized image is
+# unpacked and waagent has regenerated machine-id, SSH host keys, and
+# hostname).
+#
+# Order of operations:
+#   1. write_files     - write secrets and config to disk with strict perms
+#   2. runcmd          - chain of post-boot configuration commands
+#   3. final_message   - operator-readable boot completion signal
+#
+# Idempotent: re-running this template would be a no-op (each runcmd step
+# checks state first), but cloud-init only runs userdata once per instance.
+#
+# License: Apache-2.0
+#
+# See companion spec at ~/.openclaw/workspace/docs/TENANT_TEMPLATE_BUILD.md
+#
+
+# ---------------------------------------------------------------------------
+# Hostname (the image was generalized; waagent already set this from the
+# Azure VM name, which we passed in as tula-tenant-<tenant-id>; we
+# re-confirm here for safety.)
+# ---------------------------------------------------------------------------
+hostname: tula-tenant-{{TENANT_ID}}
+fqdn: tula-tenant-{{TENANT_ID}}
+
+# ---------------------------------------------------------------------------
+# Users - the image already has 'azureuser'; we re-inject the operator's
+# SSH key (the deprovision step cleared authorized_keys).
+# ---------------------------------------------------------------------------
+users:
+  - default
+  - name: azureuser
+    ssh_authorized_keys:
+      - {{OPERATOR_SSH_PUBKEY}}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+
+# ---------------------------------------------------------------------------
+# Files written to disk on first boot. All strict-perms.
+# ---------------------------------------------------------------------------
+write_files:
+
+  # -- /etc/tula-tenant-id ---------------------------------------------------
+  # Single source of truth for "which tenant am I?", queryable by scripts.
+  - path: /etc/tula-tenant-id
+    permissions: '0644'
+    owner: root:root
+    content: |
+      {{TENANT_ID}}
+
+  # -- /etc/tula-tenant-metadata --------------------------------------------
+  # Non-secret tenant metadata, queryable by tools and the health endpoint.
+  - path: /etc/tula-tenant-metadata
+    permissions: '0644'
+    owner: root:root
+    content: |
+      tenant_id={{TENANT_ID}}
+      provisioned_at={{TIMESTAMP}}
+      bot_username={{TELEGRAM_BOT_USERNAME}}
+
+  # -- /etc/tula-tenant-secrets.env -----------------------------------------
+  # Secrets file with strict perms - sourced by openclaw-gateway.service.
+  # NEVER world-readable.
+  - path: /etc/tula-tenant-secrets.env
+    permissions: '0600'
+    owner: azureuser:azureuser
+    content: |
+      TELEGRAM_BOT_TOKEN={{TELEGRAM_BOT_TOKEN}}
+      ANTHROPIC_API_KEY={{ANTHROPIC_API_KEY}}
+      XAI_API_KEY={{XAI_API_KEY}}
+      GITHUB_PAT={{GITHUB_PAT}}
+      BACKUP_REPO_URL={{BACKUP_REPO_URL}}
+
+  # -- /home/azureuser/.openclaw/workspace/USER.md --------------------------
+  # Initial USER.md filled with tenant display name. The tenant can amend
+  # via onboarding; this is only the seed value so the agent has a name
+  # to greet by at first contact.
+  - path: /home/azureuser/.openclaw/workspace/USER.md
+    permissions: '0644'
+    owner: azureuser:azureuser
+    content: |
+      # USER.md - About Your Human
+
+      - **Name:** {{TENANT_DISPLAY_NAME}}
+      - **What to call them:** {{TENANT_DISPLAY_NAME}}
+      - **Email:** {{TENANT_EMAIL}}
+      - **First conversation:** {{TIMESTAMP}}
+
+      ## Context
+
+      _(Build this out over time as they share more - health goals, current
+      conditions, lifestyle, what matters to them.)_
+
+  # -- /home/azureuser/tula/apps/my-aria/.env.local --------------------------
+  # Tell My Aria to read this tenant's FHIR tree.
+  - path: /home/azureuser/tula/apps/my-aria/.env.local
+    permissions: '0600'
+    owner: azureuser:azureuser
+    content: |
+      TULA_DATA_DIR=/home/azureuser/.openclaw/workspace/tula/fhir
+
+  # -- /etc/systemd/system/openclaw-gateway.service -------------------------
+  # The gateway is the long-running process that bridges Telegram/web/etc.
+  # to the OpenClaw runtime. It sources secrets from the env file above.
+  - path: /etc/systemd/system/openclaw-gateway.service
+    permissions: '0644'
+    owner: root:root
+    content: |
+      [Unit]
+      Description=Tula OpenClaw gateway (tenant {{TENANT_ID}})
+      After=network-online.target
+      Wants=network-online.target
+
+      [Service]
+      Type=simple
+      User=azureuser
+      Group=azureuser
+      EnvironmentFile=/etc/tula-tenant-secrets.env
+      WorkingDirectory=/home/azureuser
+      ExecStart=/usr/bin/openclaw gateway start --foreground
+      Restart=on-failure
+      RestartSec=10
+      StandardOutput=journal
+      StandardError=journal
+
+      [Install]
+      WantedBy=multi-user.target
+
+  # -- /etc/cron.d/tula-health-heartbeat ------------------------------------
+  # Sends a content-free hourly heartbeat to the control plane. Disabled
+  # by default; un-comment to enable when the control plane is up.
+  - path: /etc/cron.d/tula-health-heartbeat
+    permissions: '0644'
+    owner: root:root
+    content: |
+      # Tula tenant heartbeat - content-free, aggregate-only telemetry.
+      # Uncomment when the control plane heartbeat endpoint is online.
+      # 0 * * * * azureuser /usr/local/bin/tula-heartbeat.sh
+
+# ---------------------------------------------------------------------------
+# Runtime commands - executed in order, after write_files.
+# ---------------------------------------------------------------------------
+runcmd:
+
+  # ---- Inject keys into openclaw config ---------------------------------
+  # The image ships with openclaw.json containing schema but no secrets.
+  # We use a small python helper to inject keys without disturbing schema.
+  - |
+    set -e
+    sudo -u azureuser python3 - <<'PYEOF'
+    import json, os, pathlib
+    cfg_path = pathlib.Path("/home/azureuser/.openclaw/openclaw.json")
+    if not cfg_path.exists():
+        print("no openclaw.json; skipping key injection")
+        raise SystemExit(0)
+    with open(cfg_path) as f:
+        cfg = json.load(f)
+    # Read secrets file
+    secrets = {}
+    with open("/etc/tula-tenant-secrets.env") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"): continue
+            k, _, v = line.partition("=")
+            secrets[k] = v
+    # Anthropic key
+    cfg.setdefault("providers", {}).setdefault("anthropic", {})["apiKey"] = secrets.get("ANTHROPIC_API_KEY", "")
+    # xAI key (optional)
+    if secrets.get("XAI_API_KEY"):
+        cfg.setdefault("providers", {}).setdefault("xai", {})["apiKey"] = secrets["XAI_API_KEY"]
+    # Telegram bot token - find the telegram account entry or create it
+    msgs = cfg.setdefault("messages", {})
+    accts = msgs.setdefault("accounts", [])
+    tg_acct = None
+    for a in accts:
+        if isinstance(a, dict) and a.get("provider") == "telegram":
+            tg_acct = a; break
+    if tg_acct is None:
+        tg_acct = {"id": "default", "provider": "telegram", "credentials": {}}
+        accts.append(tg_acct)
+    tg_acct.setdefault("credentials", {})["botToken"] = secrets["TELEGRAM_BOT_TOKEN"]
+    with open(cfg_path, "w") as f:
+        json.dump(cfg, f, indent=2)
+    PYEOF
+
+  # ---- Initialize aria-backup with per-tenant remote --------------------
+  - |
+    set -e
+    sudo -u azureuser bash -c '
+      cd /home/azureuser
+      if [ ! -d aria-repo/.git ]; then
+        git init aria-repo
+        cd aria-repo
+        git config user.name "tula-backup"
+        git config user.email "backup@tula.local"
+      fi
+      cd /home/azureuser/aria-repo
+      # Inject PAT into remote URL (URL-encode the @ if needed; PAT is alphanumeric)
+      REMOTE_URL=$(echo "$(grep ^BACKUP_REPO_URL= /etc/tula-tenant-secrets.env | cut -d= -f2-)" \
+                     | sed "s|https://|https://x-access-token:$(grep ^GITHUB_PAT= /etc/tula-tenant-secrets.env | cut -d= -f2-)@|")
+      git remote remove origin 2>/dev/null || true
+      git remote add origin "$REMOTE_URL"
+    '
+
+  # ---- Enable & start backup timer --------------------------------------
+  - systemctl daemon-reload
+  - systemctl enable --now aria-backup.timer
+
+  # ---- Enable & start openclaw gateway ----------------------------------
+  - systemctl enable --now openclaw-gateway.service
+
+  # ---- Wait briefly for openclaw to be healthy, then ack ----------------
+  - |
+    set -e
+    # Allow up to 60s for the gateway to be ready
+    for i in $(seq 1 12); do
+      if systemctl is-active --quiet openclaw-gateway.service; then
+        echo ready > /etc/tula-ready
+        chmod 644 /etc/tula-ready
+        exit 0
+      fi
+      sleep 5
+    done
+    echo "failed:gateway-not-active-in-60s" > /etc/tula-ready
+    chmod 644 /etc/tula-ready
+    exit 1
+
+# ---------------------------------------------------------------------------
+# Final message - printed to /var/log/cloud-init-output.log and the
+# serial console.
+# ---------------------------------------------------------------------------
+final_message: |
+  Tula tenant {{TENANT_ID}} provisioned at $UPTIME seconds after boot.
+  Display name: {{TENANT_DISPLAY_NAME}}
+  Bot username: @{{TELEGRAM_BOT_USERNAME}}
+  Backup repo:  {{BACKUP_REPO_URL}}
+  Ready signal: cat /etc/tula-ready
+
+# ---------------------------------------------------------------------------
+# Phone-home / failure capture
+# ---------------------------------------------------------------------------
+power_state:
+  # Reboot after first boot to ensure systemd unit ordering is clean
+  # (commented out for now; cloud-init's runcmd-then-systemd-enable pattern
+  #  works without a reboot. Enable later if any service ordering bug shows up.)
+  # mode: reboot
+  # delay: "+1"
+  # message: "Tula tenant initialization complete; rebooting once."
+  # condition: True

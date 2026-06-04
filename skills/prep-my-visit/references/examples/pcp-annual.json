@@ -1,0 +1,158 @@
+{
+  "resourceType": "Bundle",
+  "id": "brief-pcp-annual",
+  "type": "document",
+  "timestamp": "2026-06-02T13:00:00Z",
+  "meta": { "source": "prep-my-visit@1.0", "profile": ["http://hl7.org/fhir/uv/ips/StructureDefinition/Bundle-uv-ips"] },
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:comp-1",
+      "resource": {
+        "resourceType": "Composition",
+        "id": "comp-1",
+        "status": "preliminary",
+        "type": { "text": "Pre-visit summary" },
+        "title": "Pre-Visit Brief - PCP Annual",
+        "date": "2026-06-02T13:00:00Z",
+        "subject": { "reference": "urn:uuid:patient-1" },
+        "encounter": { "reference": "urn:uuid:encounter-1" },
+        "author": [{ "reference": "urn:uuid:practitioner-1" }],
+        "section": [
+          {
+            "title": "Patient Story",
+            "text": { "status": "additional", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Maria is a 44-year-old software manager coming in for her annual physical. She feels generally well but has been more tired than usual over the past two months and wants to make sure nothing is being missed. She prefers to keep her medication list short and likes to understand the reasoning behind any test.</p></div>" }
+          },
+          {
+            "title": "Goals for this visit",
+            "text": { "status": "additional", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><ul><li>Review my overall health for the year</li><li>Talk about why I have been so tired lately</li></ul></div>" }
+          },
+          {
+            "title": "Problem List",
+            "text": { "status": "generated", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Hypothyroidism; history of iron-deficiency anemia.</p></div>" }
+          },
+          {
+            "title": "Medication Summary",
+            "text": { "status": "generated", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Levothyroxine.</p></div>" }
+          },
+          {
+            "title": "Allergies and Intolerances",
+            "text": { "status": "generated", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>No known drug allergies.</p></div>" }
+          },
+          {
+            "title": "Vital Signs",
+            "text": { "status": "generated", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>BP 118/74 mmHg; HR 68 bpm; Weight 63.5 kg.</p></div>" }
+          },
+          {
+            "title": "Top Discussion Items",
+            "text": { "status": "additional", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><ul><li>Persistent fatigue over the past two months</li><li>Whether her thyroid dose still fits her symptoms</li></ul></div>" }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:patient-1",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "patient-1",
+        "identifier": [{ "system": "urn:tula:tenant-id", "value": "TULA-204815" }],
+        "name": [{ "use": "official", "family": "Chen", "given": ["Maria"], "text": "Maria Chen" }],
+        "gender": "female",
+        "birthDate": "1981-11-23"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:encounter-1",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "encounter-1",
+        "status": "planned",
+        "class": { "code": "AMB", "display": "ambulatory" },
+        "type": [{ "text": "PCP annual physical" }],
+        "period": { "start": "2026-06-15T09:00:00" },
+        "location": [{ "location": { "display": "Lakeshore Family Medicine" } }]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:practitioner-1",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "practitioner-1",
+        "name": [{ "text": "Dr. James Patel, DO", "family": "Patel", "prefix": ["Dr."] }],
+        "qualification": [{ "code": { "text": "Family Medicine" } }]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:condition-1",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "condition-1",
+        "clinicalStatus": { "coding": [{ "code": "active" }] },
+        "code": { "text": "Hypothyroidism" },
+        "onsetDateTime": "2016-04-01",
+        "recordedDate": "2025-06-12"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:condition-2",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "condition-2",
+        "clinicalStatus": { "coding": [{ "code": "resolved" }] },
+        "code": { "text": "Iron-deficiency anemia (history)" },
+        "onsetDateTime": "2022-01-01",
+        "recordedDate": "2023-02-01"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medstmt-1",
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "medstmt-1",
+        "status": "active",
+        "medicationCodeableConcept": { "text": "Levothyroxine 75 mcg tablet" },
+        "dosage": [{ "text": "75 mcg by mouth once daily, morning" }],
+        "reasonCode": [{ "text": "Hypothyroidism" }],
+        "effectivePeriod": { "start": "2016-05-01" }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-bp",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-bp",
+        "status": "final",
+        "category": [{ "coding": [{ "code": "vital-signs" }] }],
+        "code": { "text": "Blood pressure" },
+        "effectiveDateTime": "2026-05-30",
+        "component": [
+          { "code": { "text": "Systolic" }, "valueQuantity": { "value": 118, "unit": "mmHg" } },
+          { "code": { "text": "Diastolic" }, "valueQuantity": { "value": 74, "unit": "mmHg" } }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-hr",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-hr",
+        "status": "final",
+        "category": [{ "coding": [{ "code": "vital-signs" }] }],
+        "code": { "text": "Heart rate" },
+        "effectiveDateTime": "2026-05-30",
+        "valueQuantity": { "value": 68, "unit": "bpm" }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-weight",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-weight",
+        "status": "final",
+        "category": [{ "coding": [{ "code": "vital-signs" }] }],
+        "code": { "text": "Body weight" },
+        "effectiveDateTime": "2026-05-30",
+        "valueQuantity": { "value": 63.5, "unit": "kg" }
+      }
+    }
+  ]
+}
