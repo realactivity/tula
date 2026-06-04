@@ -37,7 +37,7 @@ DB_PATH = os.environ.get(
 )
 
 NWS_USER_AGENT = os.environ.get(
-    "LOOKOUT_NWS_UA", "Tula-Lookout (contact: pswider@realactivity.com)"
+    "LOOKOUT_NWS_UA", "Tula-Lookout (https://github.com/realactivity/tula)"
 )
 AIRNOW_API_KEY = os.environ.get("AIRNOW_API_KEY", "")
 GOOGLE_PLACES_API_KEY = os.environ.get("GOOGLE_PLACES_API_KEY", "")
@@ -318,11 +318,16 @@ def write_alerts(
 def run_for_location(
     conn: sqlite3.Connection,
     location_id: int,
-    lat: float,
-    lon: float,
+    lat: Optional[float],
+    lon: Optional[float],
     zip_code: str,
     fips_tract: str,
 ) -> tuple[int, int]:
+    if lat is None or lon is None:
+        raise ValueError(
+            "Default Lookout location must include latitude and longitude."
+        )
+
     readings: list[Reading] = []
     readings += fetch_open_meteo(lat, lon)
     readings += fetch_nws_current(lat, lon)
@@ -354,10 +359,14 @@ def main() -> int:
         if row is None:
             print("No default location configured in the lookout DB.", file=sys.stderr)
             return 2
-        n_readings, n_alerts = run_for_location(
-            conn, row["id"], row["latitude"], row["longitude"],
-            row["zip"] or "", row["fips_tract"] or "",
-        )
+        try:
+            n_readings, n_alerts = run_for_location(
+                conn, row["id"], row["latitude"], row["longitude"],
+                row["zip"] or "", row["fips_tract"] or "",
+            )
+        except ValueError as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
     finally:
         conn.close()
     print(f"Lookout fetch complete. readings={n_readings} alerts={n_alerts}")

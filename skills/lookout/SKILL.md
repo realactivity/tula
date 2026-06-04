@@ -38,8 +38,10 @@ Ambient health radar. Lookout reads where the user is right now, fuses environme
 
 1. **Init the store.** `python3 {baseDir}/scripts/init_db.py`
    - Creates `~/.openclaw/workspace/.lookout-cache/lookout.db` from `schema.sql`.
-   - Seeds the default location (Methuen/Salem NH, lat 42.77, lng -71.47) and preferences (imperial, 07:30 briefing, 22:00–07:00 quiet hours). Re-running is safe.
-2. **Optional keys.** Lookout runs end-to-end with no keys. For richer data:
+   - Seeds only tenant-neutral preferences (imperial, 07:30 briefing, 22:00–07:00 quiet hours). Re-running is safe.
+2. **Configure location.** Onboarding or the user profile must create one `location` row with `is_default = 1` and latitude/longitude before fetch runs. Location is user data; don't hard-code it in the skill.
+3. **Install Python dependency.** Ensure `httpx` is available to Python (`python3 -m pip install httpx` or the distro/package-manager equivalent).
+4. **Optional keys.** Lookout runs end-to-end with no keys. For richer data:
    - `AIRNOW_API_KEY` — US AQI by lat/lon (free key from AirNow).
    - `GOOGLE_PLACES_API_KEY` — open-now resources layer (paid).
    - `LOOKOUT_NWS_UA` — descriptive User-Agent for api.weather.gov.
@@ -68,7 +70,7 @@ Ambient health radar. Lookout reads where the user is right now, fuses environme
 
 ## Scripts
 
-- `scripts/init_db.py` — apply `schema.sql`, seed default location + preferences. Idempotent.
+- `scripts/init_db.py` — apply `schema.sql` and seed tenant-neutral preferences. Idempotent. It does not seed a location.
 - `scripts/fetch_environment.py` — deterministic fetch. No PHI ever leaves the VM — only lat/lng or ZIP reach the providers. Run on a schedule or before a briefing.
 
 ## Privacy

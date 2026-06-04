@@ -55,14 +55,16 @@ Lookout sends only a location (latitude/longitude or ZIP) to the public data pro
 
 ## Setup
 
-1. Configure at least one location (label plus latitude/longitude or ZIP). The default location drives the daily briefing.
-2. Set units (imperial by default for US), the briefing time, and quiet hours.
-3. Provide API access:
+1. Initialize the local SQLite store: `python3 scripts/init_db.py`.
+2. Configure at least one location (label plus latitude/longitude or ZIP) through onboarding or the user profile. The default location drives the daily briefing. Location is user data and is not stored in the repo.
+3. Ensure the Python dependency is installed: `python3 -m pip install httpx` or the package-manager equivalent.
+4. Set units (imperial by default for US), the briefing time, and quiet hours.
+5. Provide API access:
    - AirNow free API key (set `AIRNOW_API_KEY`).
    - A descriptive User-Agent for NWS (set `LOOKOUT_NWS_UA`).
    - A Google Maps Platform key for the resources layer (optional).
    - A free CDC Socrata app token for higher SDoH rate limits (optional).
-4. Run the fetch (`scripts/fetch_environment.py`) on a schedule, then let the agent triage and brief.
+6. Run the fetch (`scripts/fetch_environment.py`) on a schedule, then let the agent triage and brief.
 
 ## Storage
 
