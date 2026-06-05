@@ -39,6 +39,13 @@ The public Tula repo is the home of:
   HIPAA-eligible ConversationRelay transport, voice-specific
   governance signals, and EHR-divergence detection on
   voice-asserted facts) is part of Aria.
+- **Self-hostable records relay (Wren)**: [`services/wren/`](services/wren/),
+  a single-tenant SMART on FHIR records relay derived (MIT) from
+  [`jmandel/health-skillz`](https://github.com/jmandel/health-skillz). It is
+  the backend the `health-records` skill pulls through; self-hosting it
+  removes the dependency on any third-party hosted instance. Point the skill
+  at a self-hosted relay via `HEALTH_SKILLZ_BASE_URL`. The multi-tenant,
+  hospital-scale version of the relay is part of Aria (see below).
 
 Contributions that improve any of the above are welcome. See
 [`CONTRIBUTING.md`](CONTRIBUTING.md) for how to submit them.
@@ -63,6 +70,11 @@ hospital-scale platform, and live in a separate private repository:
 - **Audit logging**: append-only, per-tenant, with break-glass procedures.
 - **EHR / patient-portal integrations at hospital scale**: Epic, Oracle
   Health, FHIR API connectors.
+- **Multi-tenant records relay**: the hospital-scale version of the Wren
+  records relay, with per-tenant isolation, per-tenant OAuth client
+  registrations, audit emission, and Azure infrastructure. The
+  single-tenant, self-hostable Wren relay is public (see above); the
+  multi-tenant orchestration around it is not.
 - **Compliance plumbing**: BAA chain management, SOC 2 evidence
   collection, HIPAA controls, FDA SaMD posture.
 

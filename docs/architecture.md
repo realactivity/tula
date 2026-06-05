@@ -17,7 +17,7 @@ User Interface
         |
 Data Sources
   |-- Live
-  |     |-- Patient portals via SMART on FHIR    -> health-records skill
+  |     |-- Patient portals via SMART on FHIR    -> health-records skill (via Wren relay)
   |     |-- Medical PDFs (lab, imaging, OCR)     -> med-pdf skill
   |     |-- X (Twitter) search                   -> @openclaw/xai-plugin
   |     |-- Brave web search                     -> @openclaw/brave-plugin
@@ -32,11 +32,14 @@ OpenClaw Gateway  -- single self-hosted VM (Azure B2s, Ubuntu 24.04, ~$30/mo)
         |
 Tula Skills  -- deployed under ~/.openclaw/workspace/skills/
   |-- Live (this repo, ready on reference VM)
-  |     |-- health-records   -- SMART on FHIR records pull
+  |     |-- health-records   -- SMART on FHIR records pull (via Wren relay)
   |     |-- med-pdf          -- PDF to structured labs, imaging JSON
   |     |-- epic-note        -- draft portal messages to clinicians
   |     |-- myhealth-pulse   -- signal aggregation orchestrator
   |     |-- memory-diff      -- longitudinal change detection
+  |     |-- prep-my-visit    -- IPS-aligned visit-prep package
+  |     |-- request-amendment-- HIPAA-aligned record amendment requests
+  |     |-- lookout          -- ambient environmental / public-health awareness (eval pending)
   |-- Planned
         |-- email-router     -- inbound classification and routing
         |-- lab-parser       -- structured biomarker tracker beyond med-pdf
@@ -48,6 +51,11 @@ Tula Skills  -- deployed under ~/.openclaw/workspace/skills/
         |-- medical-image-interpreter -- DICOM (MedGemma / MedImageInsight)
         |-- de-identification-engine  -- HIPAA Safe Harbor
         |-- research-synthesis        -- PubMed / Google Scholar summarization
+        |
+Self-Hostable Services  -- this repo, under services/
+  |-- wren  -- single-tenant SMART on FHIR records relay; backs health-records.
+  |           Set HEALTH_SKILLZ_BASE_URL to self-host instead of a third-party host.
+  |           MIT derivative of jmandel/health-skillz. Multi-tenant version is Aria.
         |
 Agent Workspace Memory  -- ~/.openclaw/workspace/
   |-- MEMORY.md            -- persistent state (conditions, meds, providers, trends)
@@ -85,11 +93,13 @@ AI Model Routing  -- deployment-context-aware; see docs/model-routing.md
 
 ## Skill composition
 
-The five live skills produce structured outputs (FHIR R4 JSON, extracted lab and imaging JSON, rendered digests) that land in the workspace memory layer. Other skills consume what is already there rather than re-fetching:
+The live skills produce structured outputs (FHIR R4 JSON, extracted lab and imaging JSON, rendered digests) that land in the workspace memory layer. Other skills consume what is already there rather than re-fetching:
 
+- `health-records` pulls through the self-hostable [Wren](../services/wren/) relay, so a deployment can run the entire records-pull path with no third-party dependency.
 - `memory-diff` reads from the cache directories `health-records` and `med-pdf` write to.
 - `myhealth-pulse` writes its own daily cache that `memory-diff` includes in its scan.
 - `epic-note` composes a draft portal message using context from MEMORY.md and the latest cache outputs without forcing the user to paste anything in.
+- `prep-my-visit` and `request-amendment` assemble visit-prep packages and amendment-request drafts from the same workspace memory, never re-fetching from the portal.
 
 This composition is intentional and is what makes the agent feel like it knows you over time rather than like a transactional chatbot.
 

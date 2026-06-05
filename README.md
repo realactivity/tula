@@ -19,10 +19,12 @@ Tula turns a general-purpose AI agent into a personal health intelligence assist
 It currently supports:
 
 - Pulling patient records from portals using SMART on FHIR
+- Self-hosting the records-pull relay (Wren) with no third-party dependency
 - Parsing medical PDFs, lab reports, screenshots, and image-only documents
 - Drafting patient portal messages for medication questions, lab follow-ups, refill requests, and symptom summaries
 - Daily health-signal digests
 - Comparing health information over time through longitudinal memory diffing
+- Preparing visit-prep packages and HIPAA-aligned record amendment requests
 - Running skills inside a self-hosted OpenClaw workspace
 - Continuous evaluation and compliance checks through Microsoft Waza
 
@@ -57,10 +59,14 @@ Full safety positioning in [`docs/safety-and-disclaimer.md`](docs/safety-and-dis
 | Capability | Status |
 |---|---|
 | EHR integration via SMART on FHIR ([`skills/health-records`](skills/health-records/)) | Live |
+| Self-hostable records relay ([`services/wren`](services/wren/)) | Live |
 | Medical PDF and photo capture ([`skills/med-pdf`](skills/med-pdf/)) | Live |
 | Patient portal message drafting ([`skills/epic-note`](skills/epic-note/)) | Live |
 | Daily health signal digest ([`skills/myhealth-pulse`](skills/myhealth-pulse/)) | Live |
 | Longitudinal change detection ([`skills/memory-diff`](skills/memory-diff/)) | Live |
+| Visit preparation packages ([`skills/prep-my-visit`](skills/prep-my-visit/)) | Live |
+| Health-record amendment requests ([`skills/request-amendment`](skills/request-amendment/)) | Live |
+| Ambient environmental and public-health awareness ([`skills/lookout`](skills/lookout/)) | Live (eval pending) |
 | Intelligent email ingestion | In Progress |
 | Patient health dashboard | In Progress |
 | Wearables, medical imaging, genomics, de-identification | Planned |
@@ -107,7 +113,7 @@ Full diagram, data flow, and skill composition in [`docs/architecture.md`](docs/
 
 ## Project Status
 
-Tula is in active development. The reference deployment includes five live skills passing continuous Waza compliance checks. Latest local snapshot from `evals/request-amendment`: 8 of 10 tasks passed, aggregate score 0.97.
+Tula is in active development. The reference deployment includes eight published skills (seven with continuous Waza eval suites) plus the self-hostable Wren records relay. Latest local snapshot from `evals/request-amendment`: 8 of 10 tasks passed, aggregate score 0.97.
 
 Full status (live skills, infrastructure, in progress, planned, community ideas, strategy artifacts, eval snapshots) in [`docs/roadmap.md`](docs/roadmap.md).
 

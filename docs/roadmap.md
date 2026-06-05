@@ -1,8 +1,12 @@
 # Roadmap and Project Status
 
-Tula is in active development. The reference deployment currently includes five live skills that pass continuous Waza compliance checks. This page is the canonical status of every component, eval snapshot, and strategy artifact.
+Tula is in active development. The reference deployment currently includes eight published skills (seven with continuous Waza eval suites) and the self-hostable Wren records relay. This page is the canonical status of every component, eval snapshot, and strategy artifact.
 
 The README contains a short summary and points back here.
+
+## Recent Milestones
+
+- **2026-06-04: Wren merged to public Tula.** The self-hostable SMART on FHIR records relay landed at [`services/wren/`](../services/wren/). The `health-records` skill can now pull through a self-hosted relay with no third-party dependency, set via `HEALTH_SKILLZ_BASE_URL`. The multi-tenant, hospital-scale version of the relay remains private under Aria.
 
 ## Live Skills
 
@@ -13,6 +17,17 @@ The README contains a short summary and points back here.
 | [`epic-note`](../skills/epic-note/) | Patient portal message drafting | Complete |
 | [`myhealth-pulse`](../skills/myhealth-pulse/) | Signal aggregation and daily health digest | Complete |
 | [`memory-diff`](../skills/memory-diff/) | Longitudinal change detection over workspace memory | Complete |
+| [`prep-my-visit`](../skills/prep-my-visit/) | IPS-aligned visit-prep package from patient health data | Complete |
+| [`request-amendment`](../skills/request-amendment/) | HIPAA-aligned health-record amendment request drafting | Complete |
+| [`lookout`](../skills/lookout/) | Ambient environmental and public-health awareness triaged against the record | Published (eval suite pending) |
+
+## Self-Hostable Services
+
+| Service | Description | Status |
+|---|---|---|
+| [`services/wren`](../services/wren/) | Self-hostable SMART on FHIR records relay: the backend the `health-records` skill pulls through. Lets a deployment run the whole records-pull stack with no third-party dependency. Single-tenant; point the skill at it via `HEALTH_SKILLZ_BASE_URL`. | Complete (merged to public main, 2026-06-04) |
+
+Wren is a rebranded MIT derivative of [`jmandel/health-skillz`](https://github.com/jmandel/health-skillz); attribution is preserved in [`services/wren/NOTICE`](../services/wren/NOTICE), [`services/wren/LICENSE`](../services/wren/LICENSE), and the root [`NOTICE`](../NOTICE). The multi-tenant, hospital-scale version of the relay is part of Aria, not this repo.
 
 ## Infrastructure
 
