@@ -2,7 +2,7 @@
 
 **Your health. Your data. Your AI.**
 
-> **Watch the live demo (17 min).** Paul Swider on the [AI Agent and Copilot Podcast: OpenClaw-Powered Healthcare Assistant Builds Patient Agency](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) (May 14, 2026). Epic MyChart record retrieval and core Tula capabilities start at **10:05**.
+> **Watch the live demo (17 min).** [Full demo guide](docs/demo.md) | [Play episode](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) (May 14, 2026). Epic MyChart record retrieval and core Tula capabilities start at **10:05**.
 
 Tula is an open-source personal health agent skill layer built on [OpenClaw](https://github.com/openclaw/openclaw). It helps individuals, caregivers, and health-focused communities organize health records, medical PDFs, lab results, portal messages, personal notes, and longitudinal health signals in a private, self-hosted AI workspace.
 
@@ -77,7 +77,7 @@ Full roadmap, eval snapshots, and component status in [`docs/roadmap.md`](docs/r
 
 ## Coverage
 
-Same episode as the demo callout above: [OpenClaw-Powered Healthcare Assistant Builds Patient Agency](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) (17 minutes, May 14, 2026). Jump to **10:05** for Epic MyChart and live feature walkthrough.
+See [`docs/demo.md`](docs/demo.md) for the full demo guide, chapter timestamps, and share links.
 
 ## Commercial Pilots and Strategic Partnerships
 
@@ -121,6 +121,7 @@ Full status (live skills, infrastructure, in progress, planned, community ideas,
 
 ## Where to Start
 
+- **New here.** [`docs/demo.md`](docs/demo.md) - 17-minute live walkthrough (Epic MyChart at **10:05**), then pick a path below.
 - **Developers.** [`docs/deployment-guide.md`](docs/deployment-guide.md), then [`docs/skills-development.md`](docs/skills-development.md) and [`skills/AGENTS.md`](skills/AGENTS.md).
 - **Healthcare organizations.** [`docs/enterprise-pilots.md`](docs/enterprise-pilots.md), [`docs/aria-commercial-platform.md`](docs/aria-commercial-platform.md), and the [patient-AI evaluation standard draft](articles/how-will-you-know-if-your-patient-ai-is-working.md).
 - **Patients and caregivers.** [`docs/safety-and-disclaimer.md`](docs/safety-and-disclaimer.md), then [`docs/use-cases.md`](docs/use-cases.md) and [`docs/patient-agency.md`](docs/patient-agency.md).

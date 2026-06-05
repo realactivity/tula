@@ -8,6 +8,8 @@ A step-by-step guide to deploying a personal AI health agent on Microsoft Azure 
 
 **Prerequisites:** Basic comfort with a command line. No Linux experience required. This guide was written by a Windows Server administrator of 25 years deploying his first Linux server.
 
+**New to Tula?** Watch the [17-minute live demo](demo.md) first (Epic MyChart retrieval at **10:05**), then continue here.
+
 ## Before You Begin
 
 Ensure you have the following accounts and tools ready:
