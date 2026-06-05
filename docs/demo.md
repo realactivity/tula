@@ -1,36 +1,52 @@
-# Live Demo
+# Videos
 
-**17-minute walkthrough** of Tula on the AI Agent and Copilot Podcast (May 14, 2026).
-
-**Watch now:** [OpenClaw-Powered Healthcare Assistant Builds Patient Agency](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/)
-
-**Jump to Epic MyChart and live features:** start at **10:05** in your player.
+Two ways to see Tula: a **screen-recorded live demo** (start here) and a **podcast interview** (story and context).
 
 ---
 
-## What you will see
+## Live demo (YouTube) - start here
 
-Paul Swider (RealActivity) walks through Tula: a self-hosted personal health agent
-built on [OpenClaw](https://github.com/openclaw/openclaw), running on a Linux VM the
-patient owns. The demo covers patient agency, open-source posture, and capabilities
-that are live in this repo today.
+**~16 minutes.** Screen recording of Tula running on a self-hosted VM: Telegram chat, live SMART on FHIR record pull, and the My Aria patient chart.
+
+| | |
+|---|---|
+| **Watch** | [Tula - The Open-Source Personal Health AI Agent (Live Demo)](https://youtu.be/FcLl6fASpgw) |
+| **Epic MyChart retrieval** | Jump to **[10:00](https://youtu.be/FcLl6fASpgw?t=600)** |
+| **Published** | May 25, 2026 (RealActivity) |
+
+### What you will see
+
+- Tula on Telegram analyzing real longitudinal data (BP, wearables, genomics context)
+- Live **SMART on FHIR** portal connect and record pull (patient-initiated, not agent-automated OAuth)
+- Agent grounded in pulled FHIR bundles answering questions from your chart
+- Preview of **My Aria** - patient-owned chart UI inspired by portal UX, built for multi-hospital life
+
+This is the best entry point if you want to **see the product work** before reading the repo.
+
+Technical background for the records pull:
+[I gave an AI agent OAuth access to my hospital](https://www.paulswider.com/p/i-gave-an-ai-agent-oauth-access-to).
+
+---
+
+## Podcast interview (AI Agent and Copilot)
+
+**~17 minutes.** Conversation with Paul Swider on why Tula exists, OpenClaw vs rented SaaS agents, open source, and health equity.
+
+| | |
+|---|---|
+| **Listen / watch** | [OpenClaw-Powered Healthcare Assistant Builds Patient Agency](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) |
+| **Published** | May 14, 2026 |
+
+### Chapter guide (podcast)
 
 | Timestamp | Topic |
 |---|---|
 | **1:23** | Why Tula exists - patient agency, health equity, personal motivation |
-| **4:28** | OpenClaw on Ubuntu, owning your agent vs renting SaaS agents |
-| **10:05** | **Core features** - health data ingest, MedPDF, portal workflows, live retrieval |
-| **~15:00** | Open source, contributors, scale, and commercial path (Aria) |
+| **4:28** | OpenClaw on Ubuntu; owning your agent vs renting SaaS agents |
+| **10:05** | Core capabilities - ingest, MedPDF, portal workflows |
+| **~15:00** | Open source, contributors, scale, commercial path (Aria) |
 
-At **10:05** the conversation moves into concrete product behavior: pulling and
-working with real health data, healthcare-specific PDF parsing (`med-pdf`), and the
-kind of portal-connected workflows the [`health-records`](../skills/health-records/)
-skill enables via SMART on FHIR.
-
-This is not a synthetic-data UI mock. Tula is built to survive real hospital OAuth
-and FHIR endpoints. See also
-[I gave an AI agent OAuth access to my hospital](https://www.paulswider.com/p/i-gave-an-ai-agent-oauth-access-to)
-for the technical write-up behind the demo.
+Use this episode when you want the **narrative and positioning**, not the screen recording.
 
 ---
 
@@ -56,31 +72,36 @@ and [`services/wren/`](../services/wren/) (self-hostable records relay).
 
 ---
 
-## Share this demo
+## Share
 
-Copy-paste for social posts:
+**Live demo (YouTube):**
 
 ```
-Watch Tula pull live Epic MyChart records into a self-hosted health agent you own (demo starts at 10:05):
-https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/
+Watch Tula pull live Epic MyChart records on hardware you control (jump to 10:00):
+https://youtu.be/FcLl6fASpgw?t=600
 
 Open source (Apache 2.0): https://github.com/realactivity/tula
+```
+
+**Podcast:**
+
+```
+Why we need patient-owned health agents (17-min interview):
+https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/
 ```
 
 ---
 
 ## GitHub repository About link
 
-Repo maintainers: set the GitHub **About** website field to the podcast URL so the
-link appears next to the repo description on the main page:
+Set the GitHub **About** website field to the **YouTube live demo** (primary entry point):
 
 1. Open [github.com/realactivity/tula](https://github.com/realactivity/tula)
 2. Click the gear icon next to **About**
-3. **Website:** `https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/`
-4. Optional **Description:** `Open-source personal health AI agent. Live demo (Epic MyChart at 10:05).`
+3. **Website:** `https://youtu.be/FcLl6fASpgw`
+4. Optional **Description:** `Open-source personal health AI agent. Live demo on YouTube (Epic MyChart at 10:00).`
 
-This page (`docs/demo.md`) is the canonical in-repo guide; the About widget should
-point at the video for one-click access from GitHub.
+This page (`docs/demo.md`) links both videos; the About widget should point at YouTube for one-click access from the repo home page.
 
 ---
 

@@ -7,7 +7,8 @@ The README contains a short summary and points back here.
 ## Recent Milestones
 
 - **2026-06-04: Patient Agent Eval Standard v0.1.** All eight skills plus a cross-skill composition bundle ship under [`evals/`](../evals/README.md): 78 tasks, golden fixtures, adversarial packs, mock CI lanes, and taxonomy lint. See [`docs/evals.md`](evals.md).
-- **2026-05-14: Live demo published.** 17-minute podcast walkthrough with Epic MyChart retrieval at **10:05**. See [`docs/demo.md`](demo.md).
+- **2026-05-25: YouTube live demo.** [~16-minute screen recording](https://youtu.be/FcLl6fASpgw) with Epic MyChart SMART on FHIR pull at **10:00**. See [`docs/demo.md`](demo.md).
+- **2026-05-14: Podcast interview.** [AI Agent and Copilot Podcast](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) (~17 min) - story, OpenClaw, and patient agency. See [`docs/demo.md`](demo.md).
 - **2026-06-04: Wren merged to public Tula.** The self-hostable SMART on FHIR records relay landed at [`services/wren/`](../services/wren/). The `health-records` skill can now pull through a self-hosted relay with no third-party dependency, set via `HEALTH_SKILLZ_BASE_URL`. The multi-tenant, hospital-scale version of the relay remains private under Aria.
 
 ## Live Skills
