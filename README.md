@@ -121,6 +121,7 @@ Full status (live skills, infrastructure, in progress, planned, community ideas,
 
 ## Where to Start
 
+- **Coding agents.** [`AGENTS.md`](AGENTS.md) - canonical repo guide (read first).
 - **New here.** [`docs/demo.md`](docs/demo.md) - [YouTube live demo](https://youtu.be/FcLl6fASpgw) (Epic MyChart at **10:00**) or [podcast interview](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/), then pick a path below.
 - **Developers.** [`docs/deployment-guide.md`](docs/deployment-guide.md), then [`docs/skills-development.md`](docs/skills-development.md) and [`skills/AGENTS.md`](skills/AGENTS.md).
 - **Healthcare organizations.** [`docs/enterprise-pilots.md`](docs/enterprise-pilots.md), [`docs/aria-commercial-platform.md`](docs/aria-commercial-platform.md), and the [patient-AI evaluation standard draft](articles/how-will-you-know-if-your-patient-ai-is-working.md).

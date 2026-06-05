@@ -15,7 +15,7 @@ portals. Users want a heartbeat skill that runs on a schedule and respects
 privacy: no PHI in outbound queries, no auto-posting, no clinical judgment.
 
 This skill is the reference implementation of Tula's **"Personal Data:
-Reference, Don't Embed"** pattern documented in `skills/AGENTS.md` in the repo root).
+Reference, Don't Embed"** pattern documented in [`skills/AGENTS.md`](../AGENTS.md)).
 
 Common failure modes it prevents:
 

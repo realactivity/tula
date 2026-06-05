@@ -2,6 +2,8 @@
 
 Thank you for your interest in contributing. This project is in early development and every contribution has meaningful impact, whether it is a bug report, a documentation improvement, or a new health skill.
 
+**Coding agents:** read [`AGENTS.md`](AGENTS.md) first (repo map, hard rules, eval standard, good first contributions). Humans: continue below and see [`docs/skills-development.md`](docs/skills-development.md).
+
 ## Scope
 
 Before opening a non-trivial PR, please read [`OPEN_CORE.md`](OPEN_CORE.md). It describes what lives in this public repo (core health skills, the eval harness, single-user deployment) versus what's part of Aria, RealActivity's commercial hospital-scale platform (multi-tenant runtime, SSO, patient-facing dashboard at scale, audit, compliance). Contributions to the public scope are welcome; ideas for the out-of-scope areas are best raised in a Discussion or by reaching out directly.
@@ -45,6 +47,10 @@ If you have an idea for a health-related skill, open a Discussion thread with th
 - Whether you would be willing to contribute to its development.
 
 ### Build a Skill
+
+Read [`AGENTS.md`](AGENTS.md) and [`skills/AGENTS.md`](skills/AGENTS.md) before authoring.
+Every new skill should ship a Waza eval suite under `evals/<name>/` per
+[`evals/README.md`](evals/README.md).
 
 Tula skills follow the standard OpenClaw skill format: a directory containing a `SKILL.md` file with metadata and instructions, along with any supporting scripts.
 

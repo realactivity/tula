@@ -5,6 +5,10 @@ host. These are the same files that live in `~/.openclaw/workspace/` on a
 deployed Tula agent. They are reproduced here as a starting point so anyone
 deploying their own Tula instance has a sane baseline.
 
+**Not the same as [`AGENTS.md`](../AGENTS.md) at the repo root.** Root
+`AGENTS.md` orients coding agents working in the GitHub repo. This folder
+templates the **runtime workspace** playbook on a live VM.
+
 ## What's here
 
 | File | Role |

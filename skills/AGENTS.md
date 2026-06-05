@@ -4,6 +4,9 @@ This folder is the source of truth for skills that ship to the openclaw
 runtime on the Ubuntu VM. Skills are authored and tested here in `tula/`,
 then deployed to `~/.openclaw/workspace/skills/` on the agent host.
 
+**Repo-level orientation** (eval standard, CI, contribution paths):
+[`../AGENTS.md`](../AGENTS.md). This file covers SKILL.md authoring only.
+
 ## Priority Rule (read this first)
 
 When refactoring or authoring a skill:
@@ -16,7 +19,33 @@ When refactoring or authoring a skill:
    `references/` is good for both; awkward routing tags that don't fit
    openclaw's style are not).
 
-The reference template is `med-pdf/`. New skills should follow its shape.
+The reference template for **SKILL.md shape** is `med-pdf/`. New skills
+should follow its layout. For **eval suites**, clone `prep-my-visit/` and
+`request-amendment/` (see Reference Skills below).
+
+## Reference Skills (architecture and evals)
+
+Different skills are canonical for different jobs. Do not assume one skill
+is best at everything.
+
+| If you need... | Study this skill | Why |
+|---|---|---|
+| Full eval depth and strict release gate | [`prep-my-visit/`](prep-my-visit/) | **Eval gold standard.** 16 tasks, live threshold **1.0**, covers cadence, IPS, lab Categories A/B/C, snippets, routing, safety, adversarial, golden visit package. The Patient Agent Eval Standard v0.1 was cloned from this suite. |
+| Reviewer/demo eval craft (regulatory + FHIR) | [`request-amendment/`](request-amendment/) | **Showcase eval suite.** 12 tasks: HIPAA timeline, denial path, FHIR draft-only gating, JSON shape from fixture, golden full package. Best when proving governance to a hospital or compliance reviewer. |
+| SKILL.md layout for a new skill | [`med-pdf/`](med-pdf/) | **Architecture template.** When to Use / When NOT to Use, references/, scripts/, Privacy, Troubleshooting. Evals are solid (8 tasks) but not the ceiling. |
+| Personal-data profile seam | [`myhealth-pulse/`](myhealth-pulse/) | **Profile schema reference.** Reference, don't embed (see below). |
+
+**Combined best architecture + evals:** `prep-my-visit`. Use `request-amendment`
+as the second textbook for golden, regulatory, and FHIR eval patterns.
+
+Eval conventions live in [`evals/README.md`](../evals/README.md) (Patient Agent
+Eval Standard v0.1). Agent recreate guide:
+[`docs/build-spec-patient-agent-eval-standard-v0.1.md`](../docs/build-spec-patient-agent-eval-standard-v0.1.md).
+
+Every skill eval suite must cover five dimensions: `routing-positive`,
+`routing-negative`, `phi-boundary`, `adversarial`, `golden` (golden tasks
+under `tasks/golden/`, live lane only). CI runs mock lanes with
+`waza run eval.mock.yaml --skip-graders`.
 
 ## Frontmatter (openclaw spec)
 
@@ -155,3 +184,8 @@ waza new skill <name>
 
 Then refactor the scaffolded SKILL.md to match `med-pdf/` style. Default
 Waza scaffolds use Waza-leaning conventions; rewrite to openclaw house style.
+
+For evals, copy templates from [`evals/_templates/`](../evals/_templates/),
+add a golden task under `tasks/golden/`, and mirror the two-lane layout from
+`evals/prep-my-visit/` (`eval.yaml` + `eval.mock.yaml`). Run
+`bash scripts/lint-eval-taxonomy.sh` before opening a PR.

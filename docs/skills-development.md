@@ -3,21 +3,25 @@
 How Tula skills are authored, tested, and deployed to a running OpenClaw
 agent.
 
+**Start here for coding agents:** [`AGENTS.md`](../AGENTS.md) (repo-wide).
+This guide covers the human developer workflow in more detail.
+
 ## Architecture
 
 ```
 ┌──────────────────────┐         ┌──────────────────────┐
 │   tula/ (this repo)  │         │   OpenClaw on VM     │
 │                      │         │                      │
-│  skills/             │         │  ~/.openclaw/        │
-│   ├── AGENTS.md      │         │   workspace/         │
-│   ├── epic-note/     │ ──────▶ │    skills/           │
-│   ├── med-pdf/       │  rsync  │     ├── epic-note/   │
-│   └── ...              │         │     ├── med-pdf/     │
-│                      │         │     └── ...            │
-│  evals/              │         │                      │
-│   └── <skill>/       │         │  Agent uses the      │
-│     └── tasks/       │         │  skills at runtime.  │
+│  AGENTS.md           │         │  ~/.openclaw/        │
+│  skills/             │         │   workspace/         │
+│   ├── AGENTS.md      │ ──────▶ │    skills/           │
+│   ├── epic-note/     │  rsync  │     ├── epic-note/   │
+│   ├── med-pdf/       │         │     ├── med-pdf/     │
+│   └── ...              │         │     └── ...            │
+│                      │         │                      │
+│  evals/              │         │  Agent uses the      │
+│   └── <skill>/       │         │  skills at runtime.  │
+│     └── tasks/       │         │                      │
 │                      │         │                      │
 │  Source of truth.    │         │  Runtime only.       │
 │  Where Waza tests.   │         │  No tests run here.  │
@@ -226,6 +230,8 @@ by only syncing directories under `skills/`.
 
 ## References
 
+- [AGENTS.md](../AGENTS.md) - canonical repo guide for coding agents
+- [Agent build spec: Patient Agent Eval Standard v0.1](build-spec-patient-agent-eval-standard-v0.1.md) - verbose recreate guide for coding agents
 - [OpenClaw skill spec](https://github.com/openclaw/openclaw/blob/main/docs/tools/skills.md) - definitive
 - [agentskills.io spec](https://agentskills.io) - what openclaw is compatible with
 - [Microsoft Waza](https://github.com/microsoft/waza) - eval framework used here

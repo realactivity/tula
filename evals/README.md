@@ -167,6 +167,8 @@ Aggregate thresholds: see [`TAXONOMY.yaml`](TAXONOMY.yaml) (`0.85` default,
 
 ## See also
 
+- [`AGENTS.md`](../AGENTS.md) - canonical repo guide for coding agents
+- [`docs/build-spec-patient-agent-eval-standard-v0.1.md`](../docs/build-spec-patient-agent-eval-standard-v0.1.md) - agent build spec to recreate this standard
 - [`docs/evals.md`](../docs/evals.md) - continuous compliance status
 - [`docs/skills-development.md`](../docs/skills-development.md) - authoring guide
 - [`scripts/lint-eval-taxonomy.sh`](../scripts/lint-eval-taxonomy.sh) - tag lint

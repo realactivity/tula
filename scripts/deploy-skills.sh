@@ -23,8 +23,8 @@
 # 3. (Optional) Run `openclaw skills list` and look up each deployed skill
 #    in the name column (awk -F'│' on column 3) to confirm `✓ ready`.
 #
-# Note: `tula/skills/AGENTS.md` is NOT a skill - it's the conventions doc -
-# so it's filtered out.
+# Note: `tula/skills/AGENTS.md` is NOT a skill - it's the conventions doc.
+# Root `AGENTS.md` is the repo guide for coding agents - also not deployed.
 #
 # ## Usage
 #   deploy-skills.sh                      Deploy all skills, pull first, verify after
