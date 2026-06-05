@@ -2,6 +2,8 @@
 
 **Your health. Your data. Your AI.**
 
+> **Watch the live demo (17 min).** Paul Swider on the [AI Agent and Copilot Podcast: OpenClaw-Powered Healthcare Assistant Builds Patient Agency](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) (May 14, 2026). Epic MyChart record retrieval and core Tula capabilities start at **10:05**.
+
 Tula is an open-source personal health agent skill layer built on [OpenClaw](https://github.com/openclaw/openclaw). It helps individuals, caregivers, and health-focused communities organize health records, medical PDFs, lab results, portal messages, personal notes, and longitudinal health signals in a private, self-hosted AI workspace.
 
 Tula is designed for patient agency: helping people better understand, organize, and act on their own health information without handing that data to another closed platform.
@@ -75,7 +77,7 @@ Full roadmap, eval snapshots, and component status in [`docs/roadmap.md`](docs/r
 
 ## Coverage
 
-Paul Swider on the AI Agent and Copilot Podcast: [OpenClaw-Powered Healthcare Assistant Builds Patient Agency](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) (17 minutes, May 14, 2026).
+Same episode as the demo callout above: [OpenClaw-Powered Healthcare Assistant Builds Patient Agency](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) (17 minutes, May 14, 2026). Jump to **10:05** for Epic MyChart and live feature walkthrough.
 
 ## Commercial Pilots and Strategic Partnerships
 
