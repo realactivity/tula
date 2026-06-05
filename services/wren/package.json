@@ -1,0 +1,28 @@
+{
+  "name": "wren",
+  "version": "1.0.0",
+  "description": "Wren - self-hostable SMART on FHIR records relay (RealActivity), derived from health-skillz (MIT)",
+  "type": "module",
+  "scripts": {
+    "start": "bun run src/server.ts",
+    "dev": "bun run --watch src/server.ts",
+    "build:brands": "bun run scripts/download-brands.ts",
+    "build:skill": "bun run scripts/package-skill.ts",
+    "generate-jwks": "bun run scripts/generate-jwks.ts",
+    "setup": "bun run build:brands && bun run build:skill && bun run generate-jwks"
+  },
+  "dependencies": {
+    "dompurify": "^3.3.1",
+    "jszip": "^3.10.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.12.0",
+    "rtf.js": "^3.0.9",
+    "zustand": "^5.0.10"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3"
+  }
+}

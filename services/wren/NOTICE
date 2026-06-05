@@ -1,0 +1,39 @@
+Wren
+Copyright 2026 RealActivity
+
+================================================================================
+
+Wren is a derivative work of health-skillz by Joshua Mandel
+(https://github.com/jmandel/health-skillz), used and modified under the terms
+of the MIT License.
+
+Wren preserves the upstream wire protocol verbatim - the SMART on FHIR session
+relay endpoints and the ECDH P-256 + AES-256-GCM chunked end-to-end-encryption
+scheme - so that the Tula `health-records` skill (skills/health-records/)
+interoperates with a Wren backend without any code change, via the
+`HEALTH_SKILLZ_BASE_URL` override.
+
+RealActivity modifications:
+  - Rebranding ("Health Skillz" -> "Wren").
+  - A dark-first design-system reskin of the connection UI to match the
+    RealActivity / my-aria visual language (OKLCH tokens, burgundy accent).
+  - Packaging as the `services/wren` component of the Tula repository.
+
+None of these modifications alter the wire protocol or the end-to-end
+encryption posture. The server stores only ciphertext it cannot decrypt.
+
+The full upstream MIT license text and copyright attribution are in LICENSE.
+The original upstream README and agent notes are preserved verbatim as
+UPSTREAM-README.md and UPSTREAM-AGENTS.md.
+
+--------------------------------------------------------------------------------
+Licensing within the Tula repository
+--------------------------------------------------------------------------------
+
+This component (services/wren/) is governed by the MIT License in its own
+LICENSE file. The Apache License 2.0 grant in the top-level Tula LICENSE does
+NOT apply to files under services/wren/.
+
+"Wren," "Tula," "Aria," and "RealActivity" are trademarks of RealActivity.
+The MIT and Apache licenses cover the code, not the names. Wren is not
+affiliated with, endorsed by, or derived from Epic Systems Corporation.

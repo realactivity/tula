@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Type check
+        run: bun x tsc --noEmit
+
+      - name: Build skill package
+        run: bun run build:skill
+
+      - name: Verify skill package
+        run: |
+          test -f skill/health-record-assistant.zip
+          unzip -l skill/health-record-assistant.zip
+
+      - name: Start server (smoke test)
+        run: |
+          # Create minimal config for testing
+          cp config.json.example config.json
+          mkdir -p data
+          
+          # Start server in background
+          bun run src/server.ts &
+          SERVER_PID=$!
+          sleep 3
+          
+          # Test health endpoint
+          curl -f http://localhost:8000/health
+          
+          # Test session creation (requires ECDH public key for E2E encryption)
+          TEST_PUBLIC_KEY='{"kty":"EC","crv":"P-256","x":"test","y":"test"}'
+          RESPONSE=$(curl -sf -X POST http://localhost:8000/api/session -H 'Content-Type: application/json' -d "{\"publicKey\":$TEST_PUBLIC_KEY}")
+          echo "Session response: $RESPONSE"
+          SESSION_ID=$(echo $RESPONSE | jq -r '.sessionId')
+          test -n "$SESSION_ID" && test "$SESSION_ID" != "null"
+          
+          # Test polling (should return not ready, use short timeout)
+          POLL=$(curl -sf "http://localhost:8000/api/poll/$SESSION_ID?timeout=1")
+          echo "Poll response: $POLL"
+          echo $POLL | jq -e '.ready == false'
+          
+          # Cleanup
+          kill $SERVER_PID 2>/dev/null || true
+
+      - name: Upload skill artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: health-record-assistant-skill
+          path: skill/health-record-assistant.zip
+
+

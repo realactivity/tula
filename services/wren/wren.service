@@ -1,0 +1,16 @@
+[Unit]
+Description=Wren - SMART on FHIR records relay (RealActivity)
+After=network.target
+
+[Service]
+Type=simple
+User=wren
+WorkingDirectory=/opt/wren
+Environment=PATH=/opt/wren/.bun/bin:/usr/local/bin:/usr/bin:/bin
+Environment=CONFIG_PATH=./config.local.json
+ExecStart=/opt/wren/.bun/bin/bun run src/server.ts
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

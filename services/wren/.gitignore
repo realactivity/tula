@@ -1,0 +1,21 @@
+node_modules/
+data/
+brands/
+static/brands/
+static/brands
+static/ehr-connect/
+skill/*.zip
+skill/health-record-assistant/SKILL.md
+*.db
+*.db-journal
+.env
+
+# Local config (may contain client IDs / secrets) - keep config.json.example tracked
+config.local.json
+config.*.local.json
+
+# React build output
+dist/
+
+# Web dependencies
+web/node_modules/

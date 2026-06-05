@@ -1,0 +1,28 @@
+{
+  "server": {
+    "port": 8000,
+    "baseURL": "https://wren.example.com"
+  },
+  "brands": [
+    {
+      "name": "epic-sandbox",
+      "file": "./brands/epic-sandbox.json",
+      "tags": ["epic", "sandbox"],
+      "clientId": "YOUR_SANDBOX_CLIENT_ID",
+      "scopes": "patient/*.rs",
+      "redirectURL": "https://wren.example.com/connect/callback",
+      "note": "Epic Sandbox - Username 'fhircamila', Password 'epicepic1'"
+    },
+    {
+      "name": "epic-prod",
+      "file": "./brands/epic-prod.json",
+      "tags": ["epic", "prod"],
+      "clientId": "YOUR_PROD_CLIENT_ID",
+      "scopes": "patient/*.rs",
+      "redirectURL": "https://wren.example.com/connect/callback"
+    }
+  ],
+  "session": {
+    "timeoutMinutes": 60
+  }
+}

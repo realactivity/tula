@@ -29,3 +29,18 @@ skills/health-records/
     does NOT apply to files under skills/health-records/; those files
     remain governed by the MIT License as documented in their own
     LICENSE file.
+
+services/wren/
+    A self-hostable SMART on FHIR records relay, derived from
+    health-skillz by Joshua Mandel
+    (https://github.com/jmandel/health-skillz)
+
+    Original copyright (c) Joshua Mandel. Used and modified under the
+    terms of the MIT License (declared in the upstream project README).
+    The full MIT license text and attribution are preserved at
+    services/wren/LICENSE, services/wren/NOTICE, and
+    services/wren/UPSTREAM-README.md.
+
+    The Apache License 2.0 grant in this repository's top-level LICENSE
+    does NOT apply to files under services/wren/; those files remain
+    governed by the MIT License as documented in their own LICENSE file.
