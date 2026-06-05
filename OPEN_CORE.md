@@ -19,8 +19,9 @@ The public Tula repo is the home of:
   runtime, authored under the conventions in [`skills/AGENTS.md`](skills/AGENTS.md).
   The reference template is [`skills/med-pdf/`](skills/med-pdf/).
 - **The evaluation harness**: [`evals/`](evals/) and `.waza.yaml`, with
-  [Microsoft Waza](https://github.com/microsoft/waza) running in CI for every
-  PR that touches skills or evals.
+  [Microsoft Waza](https://github.com/microsoft/waza) spec and link gates
+  enforced by [`.github/workflows/waza-gate.yml`](.github/workflows/waza-gate.yml)
+  on every PR that touches skills.
 - **Authoring conventions and tooling**: `skills/AGENTS.md`,
   [`docs/skills-development.md`](docs/skills-development.md), and the deploy
   script in [`scripts/`](scripts/).

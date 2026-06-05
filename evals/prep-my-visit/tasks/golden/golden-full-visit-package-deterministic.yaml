@@ -6,6 +6,7 @@ description: |
   posture without asking follow-up questions.
 tags:
   - golden-case
+  - golden
   - deterministic
   - fixture-backed
   - full-package

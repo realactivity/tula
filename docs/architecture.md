@@ -39,7 +39,7 @@ Tula Skills  -- deployed under ~/.openclaw/workspace/skills/
   |     |-- memory-diff      -- longitudinal change detection
   |     |-- prep-my-visit    -- IPS-aligned visit-prep package
   |     |-- request-amendment-- HIPAA-aligned record amendment requests
-  |     |-- lookout          -- ambient environmental / public-health awareness (eval pending)
+  |     |-- lookout          -- ambient environmental / public-health awareness
   |-- Planned
         |-- email-router     -- inbound classification and routing
         |-- lab-parser       -- structured biomarker tracker beyond med-pdf

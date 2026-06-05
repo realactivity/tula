@@ -26,7 +26,7 @@ It currently supports:
 - Comparing health information over time through longitudinal memory diffing
 - Preparing visit-prep packages and HIPAA-aligned record amendment requests
 - Running skills inside a self-hosted OpenClaw workspace
-- Continuous evaluation and compliance checks through Microsoft Waza
+- Continuous evaluation and compliance checks through Microsoft Waza ([Patient Agent Eval Standard v0.1](evals/README.md): 78 tasks across 8 skills + composition bundle)
 
 Tula is not a medical device, not a clinical decision support system, and not a replacement for professional medical advice. See [`docs/safety-and-disclaimer.md`](docs/safety-and-disclaimer.md).
 
@@ -66,7 +66,7 @@ Full safety positioning in [`docs/safety-and-disclaimer.md`](docs/safety-and-dis
 | Longitudinal change detection ([`skills/memory-diff`](skills/memory-diff/)) | Live |
 | Visit preparation packages ([`skills/prep-my-visit`](skills/prep-my-visit/)) | Live |
 | Health-record amendment requests ([`skills/request-amendment`](skills/request-amendment/)) | Live |
-| Ambient environmental and public-health awareness ([`skills/lookout`](skills/lookout/)) | Live (eval pending) |
+| Ambient environmental and public-health awareness ([`skills/lookout`](skills/lookout/)) | Live |
 | Intelligent email ingestion | In Progress |
 | Patient health dashboard | In Progress |
 | Wearables, medical imaging, genomics, de-identification | Planned |
@@ -113,7 +113,7 @@ Full diagram, data flow, and skill composition in [`docs/architecture.md`](docs/
 
 ## Project Status
 
-Tula is in active development. The reference deployment includes eight published skills (seven with continuous Waza eval suites) plus the self-hostable Wren records relay. Latest local snapshot from `evals/request-amendment`: 8 of 10 tasks passed, aggregate score 0.97.
+Tula is in active development. The reference deployment includes eight published skills (all with Waza eval suites under [Patient Agent Eval Standard v0.1](evals/README.md)) plus the self-hostable Wren records relay. Latest local snapshot from `evals/request-amendment`: 8 of 10 tasks passed, aggregate score 0.97.
 
 Full status (live skills, infrastructure, in progress, planned, community ideas, strategy artifacts, eval snapshots) in [`docs/roadmap.md`](docs/roadmap.md).
 

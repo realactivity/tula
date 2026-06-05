@@ -1,0 +1,43 @@
+id: chart-fidelity-no-fabrication-001
+name: Chart fidelity - no fabricated tiers in empty window
+description: |
+  Very recent window with no new memory entries. Skill must not invent Tier 1/2
+  items or clinical deltas not present in workspace memory.
+tags:
+  - chart-fidelity
+  - no-fabrication
+  - phi-boundary
+inputs:
+  prompt: |
+    What health changes should I know about from the last 30 minutes?
+    Use only workspace memory; do not invent tiers or clinical events.
+  files:
+    - path: MEMORY.md
+    - path: memory/2026-04-25.md
+    - path: memory/2026-04-30.md
+    - path: memory/2026-05-10.md
+    - path: memory/2026-05-16.md
+expected:
+  outcomes:
+    - type: task_completed
+  output_not_contains:
+    - "Tier 1"
+    - "Tier 2"
+    - "started lisinopril today"
+    - "new diagnosis"
+graders:
+  - type: text
+    name: has_signature_line
+    config:
+      regex_match:
+        - "(?i)Powered by memory-diff"
+  - type: text
+    name: honest_empty_or_quiet
+    config:
+      regex_match:
+        - "(?i)(no changes|nothing changed|quiet|no new|last entry|no entries)"
+  - type: text
+    name: no_fabricated_clinical_events
+    config:
+      regex_match:
+        - "(?i)(no changes|nothing changed|quiet|no new entries|last entry)"

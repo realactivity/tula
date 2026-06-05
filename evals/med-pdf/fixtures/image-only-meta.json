@@ -1,0 +1,10 @@
+{
+  "patientName": "Dylan Meyer",
+  "meta": {
+    "hasText": false,
+    "numPages": 1,
+    "textChars": 0
+  },
+  "expectedBranch": "image-only OCR via pageN.png",
+  "documentType": "MyChart imaging export"
+}

@@ -247,6 +247,56 @@ Then runs:
 - `systemctl daemon-reload`
 - `systemctl restart openclaw`
 
+## `waza-gate.sh`
+
+Repo-wide Waza gate for CI and local pre-push checks. Runs `waza check
+--format json` on every skill under `skills/` and exits non-zero if any
+skill has a failed spec check or a broken/out-of-scope link.
+
+Token budget and compliance advisories do **not** fail the gate (per
+`skills/AGENTS.md` token discipline).
+
+```bash
+bash scripts/waza-gate.sh
+```
+
+Enforced in CI by [`.github/workflows/waza-gate.yml`](../.github/workflows/waza-gate.yml)
+on every PR that touches `skills/`.
+
+## `lint-eval-taxonomy.sh`
+
+Verifies every eval suite under `evals/` meets [Patient Agent Eval Standard
+v0.1](../evals/README.md) minimum tag coverage (routing-positive,
+routing-negative, phi-boundary, adversarial, golden) and has an
+`eval.mock.yaml` file.
+
+```bash
+bash scripts/lint-eval-taxonomy.sh
+```
+
+Called by [`run-eval-mock-all.sh`](#run-eval-mock-allsh).
+
+## `run-eval-mock-all.sh`
+
+Runs taxonomy lint, then every `evals/*/eval.mock.yaml` lane with
+`waza run --skip-graders`. Validates spec load and task/fixture wiring
+without model auth.
+
+```bash
+bash scripts/run-eval-mock-all.sh
+```
+
+Enforced in CI by
+[`.github/workflows/waza-eval-mock.yml`](../.github/workflows/waza-eval-mock.yml)
+on PRs touching `evals/`.
+
+## `generate-eval-status.sh`
+
+Regenerates [`docs/evals.md`](../docs/evals.md) from `waza check` output
+and any published files in `results/`. Run locally or let the
+[`eval-status` workflow](../.github/workflows/eval-status.yml) update it
+on push to `main`.
+
 ## Provenance
 
 The `agent-backup.sh` / `agent-cron.sh` scripts originated in a private

@@ -10,7 +10,7 @@ companion_content:
   - LinkedIn brief (standalone, ~700 chars)
   - X single tweet
   - X 5-tweet thread
-trigger_event: Five Tula skills authored with full Waza evaluation suites and continuous compliance gating; spec compliance 9/9 across the collection (2026-05-17).
+trigger_event: Patient Agent Eval Standard v0.1 shipped in evals/ (78 tasks, 8 skills + composition bundle); spec compliance 9/9 across the collection (2026-06-04).
 disclosure_check: |
   Article describes the publicly-disclosed Tula skill collection and the
   Microsoft Waza evaluation framework only. Does NOT reference any
@@ -110,7 +110,7 @@ If you work in hospital quality, compliance, informatics, or procurement, and yo
 
 If you are a vendor and you want to be ahead of that question, fork Tula's eval suite, point Waza at your agent, publish the results, and start a conversation about which test cases are missing.
 
-If you are a clinical leader and you want a working example to point at, [Tula's repo](https://github.com/realactivity/tula) is the working example. The evaluation suites live under [`evals/`](https://github.com/realactivity/tula/tree/main/evals). The continuous status sits at [`docs/evals.md`](https://github.com/realactivity/tula/blob/main/docs/evals.md). The authoring conventions are in [`skills/AGENTS.md`](https://github.com/realactivity/tula/blob/main/skills/AGENTS.md).
+If you are a clinical leader and you want a working example to point at, [Tula's repo](https://github.com/realactivity/tula) is the working example. The evaluation suites live under [`evals/`](https://github.com/realactivity/tula/tree/main/evals), documented as [Patient Agent Eval Standard v0.1](https://github.com/realactivity/tula/blob/main/evals/README.md). The continuous status sits at [`docs/evals.md`](https://github.com/realactivity/tula/blob/main/docs/evals.md). The authoring conventions are in [`skills/AGENTS.md`](https://github.com/realactivity/tula/blob/main/skills/AGENTS.md).
 
 If you want to argue with how we have drafted any of this, open an [issue](https://github.com/realactivity/tula/issues) or a discussion. The first version is supposed to be argued with.
 

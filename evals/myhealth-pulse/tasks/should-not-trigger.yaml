@@ -1,11 +1,9 @@
 id: should-not-trigger-001
 name: Should Not Trigger - PDF prompt routes to med-pdf
 description: |
-  User shares a medical PDF. This is med-pdf territory, not myhealth-pulse.
-  Skill should NOT emit a pulse digest. The agent should either invoke
-  med-pdf or reply with a short routing note that names med-pdf - never
-  produce a "Powered by myhealth-pulse" digest for a PDF prompt.
+  User shares medical PDF. Skill must NOT emit pulse digest; route to med-pdf.
 tags:
+  - routing-negative
   - anti-trigger
   - negative-test
   - routing
@@ -17,3 +15,11 @@ expected:
     - "Powered by myhealth-pulse"
     - "source: social-x"
     - "source: web-brave"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: routes_to_med_pdf
+    config:
+      regex_match:
+        - "(?i)(med-pdf|PDF|extract|parse|not myhealth-pulse|wrong skill)"

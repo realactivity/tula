@@ -1,10 +1,9 @@
 id: negative-trigger-001
 name: Non-medical PDF should not trigger
 description: |
-  Paul sends an insurance EOB or billing statement. This is not a medical
-  document for clinical reasoning. The skill should NOT invoke med-pdf
-  (no extract.mjs, no parse_labs/imaging).
+  User sends insurance EOB. Skill must NOT invoke med-pdf parsing workflow.
 tags:
+  - routing-negative
   - negative-trigger
   - anti-trigger
 inputs:
@@ -17,3 +16,11 @@ expected:
     - "parse_labs"
     - "parse_imaging"
     - ".med-pdf-cache"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: declines_insurance_parsing
+    config:
+      regex_match:
+        - "(?i)(insurance|EOB|billing|not (a )?medical|don't use med-pdf|cannot parse)"

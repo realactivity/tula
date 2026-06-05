@@ -1,11 +1,11 @@
 id: positive-trigger-001
 name: Connect-records request triggers SMART-on-FHIR workflow
 description: |
-  Paul asks to connect his patient portal. The skill should recognize this
-  and either start the create-session -> userUrl workflow or describe it,
-  using health-records vocabulary (session, link, decrypt, FHIR). It must
-  NOT pivot to "send me a PDF" (that's med-pdf) or to drafting a message.
+  User asks to connect a patient portal. Skill should recognize this and describe
+  the create-session -> userUrl -> finalize workflow. Must NOT pivot to PDF or
+  portal message drafting.
 tags:
+  - routing-positive
   - positive-trigger
   - connect
   - smart-on-fhir

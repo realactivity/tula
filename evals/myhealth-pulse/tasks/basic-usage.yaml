@@ -1,12 +1,10 @@
 id: basic-usage-001
 name: Basic Usage - Daily pulse digest with synthetic profile
 description: |
-  User asks for a normal daily pulse. Skill should load the profile from
-  the fixture, resolve enabled adapters (social-x + web-brave), call them,
-  score results against the profile's topics, and emit a digest in the
-  documented shape with the trailing "Powered by myhealth-pulse - feeds:
-  ..." line that names at least one active adapter.
+  User asks for daily pulse. Skill loads profile, calls adapters, emits digest
+  with signature line naming at least one adapter.
 tags:
+  - routing-positive
   - basic
   - happy-path
   - daily-pulse

@@ -1,0 +1,22 @@
+id: composition-amendment-vs-portal-001
+name: Composition - chart correction is request-amendment not epic-note
+description: |
+  User wants chart corrected, not a portal message. Route to request-amendment.
+tags:
+  - composition
+  - routing-negative
+inputs:
+  prompt: |
+    My chart says lisinopril 40mg but I take 10mg. Help me fix the record officially,
+    not just send a casual message.
+expected:
+  output_not_contains:
+    - "Subject:"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: routes_request_amendment
+    config:
+      regex_match:
+        - "(?i)(request-amendment|amendment|correct the record|HIPAA|amend)"

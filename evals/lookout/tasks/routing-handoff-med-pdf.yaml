@@ -1,0 +1,20 @@
+id: routing-handoff-med-pdf-001
+name: Routing - PDF screenshot to med-pdf
+description: |
+  User sends lab screenshot. Lookout must not run; route to med-pdf.
+tags:
+  - routing-negative
+inputs:
+  prompt: |
+    Here's a screenshot of my lab results - what's abnormal?
+expected:
+  output_not_contains:
+    - "Powered by lookout"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: routes_med_pdf
+    config:
+      regex_match:
+        - "(?i)(med-pdf|PDF|extract|parse|not lookout)"

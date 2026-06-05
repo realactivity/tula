@@ -1,0 +1,48 @@
+id: golden-lab-parse-001
+name: Golden deterministic lab parse package
+description: |
+  Fixture-backed golden task. Skill should return a complete med-pdf workflow
+  package referencing abnormal flags from the fixture without follow-up questions.
+tags:
+  - golden-case
+  - golden
+  - deterministic
+  - fixture-backed
+  - routing-positive
+inputs:
+  prompt: |
+    Use only the attached synthetic fixture as complete input.
+    Do not ask follow-up questions.
+    Return a full parse package with these exact section headers:
+    - workflow_steps
+    - abnormal_flags
+    - healthspan_notes
+    Cite LDL 142 mg/dL and A1c 6.8% from the fixture.
+  files:
+    - path: golden-lab-extract.json
+expected:
+  outcomes:
+    - type: task_completed
+  output_not_contains:
+    - "I need more information"
+    - "cannot complete without"
+graders:
+  - type: text
+    name: has_required_sections
+    config:
+      regex_match:
+        - "(?i)workflow_steps"
+        - "(?i)abnormal_flags"
+        - "(?i)healthspan_notes"
+  - type: text
+    name: cites_fixture_abnormals
+    config:
+      regex_match:
+        - "(?i)142"
+        - "(?i)6\\.8"
+        - "(?i)(LDL|A1c|hemoglobin)"
+  - type: text
+    name: references_parse_workflow
+    config:
+      regex_match:
+        - "(?i)(extract\\.mjs|parse_labs\\.mjs)"

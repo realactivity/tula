@@ -1,6 +1,6 @@
 # Healthspan Priorities - What to Flag
 
-Quick reference for what to surface from medical documents. Tula uses this to decide what's actually worth Paul's attention vs. routine noise.
+Quick reference for what to surface from medical documents. Tula uses this to decide what's actually worth the user's attention vs. routine noise.
 
 ## Tier 1 - Always Flag
 

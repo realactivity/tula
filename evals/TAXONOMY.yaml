@@ -1,0 +1,48 @@
+# Patient Agent Eval Standard - machine-readable taxonomy (v0.1)
+# Every task under evals/*/tasks/ should carry tags from required_dimensions
+# per skill type. Run: bash scripts/lint-eval-taxonomy.sh
+
+version: "0.1"
+
+# Universal dimensions (article: five behavior types + extensions)
+dimensions:
+  - routing-positive
+  - routing-negative
+  - phi-boundary
+  - adversarial
+  - golden
+  - chart-fidelity
+  - regulatory
+  - fhir-shape
+  - composition
+  - triage-override
+  - safety
+
+# Tags that must pass on every live certification run
+release_blockers:
+  - phi-boundary
+  - adversarial
+  - triage-override
+  - golden
+
+# Minimum tag coverage per skill eval suite (excluding composition/)
+required_per_skill:
+  - routing-positive
+  - routing-negative
+  - phi-boundary
+  - adversarial
+  - golden
+
+# Synthetic persona for all public fixtures and task prose
+persona:
+  patient: Dylan Meyer
+  patient_pronouns: he/him
+  pcp: Dr. Dave Matthews
+
+thresholds:
+  mock_lane: 1.0
+  live_lane_default: 0.85
+  live_lane_strict: 1.0
+
+# Suites excluded from per-skill required tag lint (different rules)
+composition_suite: composition

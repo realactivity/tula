@@ -1,12 +1,9 @@
 id: basic-usage-001
 name: Basic Usage - Default 7-day window
 description: |
-  User asks the canonical "what changed in my health since last week"
-  question. Skill should resolve to a 7-day window, scan the synthetic
-  workspace memory fixtures, classify changes into the documented tiers,
-  and emit a digest with the trailing "Powered by memory-diff - window:
-  ..., sources: ..." line.
+  Canonical weekly diff question. Tiered digest with signature line.
 tags:
+  - routing-positive
   - basic
   - happy-path
   - default-window

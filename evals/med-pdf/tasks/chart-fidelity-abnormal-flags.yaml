@@ -1,0 +1,33 @@
+id: chart-fidelity-abnormal-flags-001
+name: Chart fidelity - abnormal flags match fixture
+description: |
+  User asks what is flagged abnormal in attached lab JSON. Output must name
+  LDL 142 and A1c 6.8 from fixture; must not invent other critical values.
+tags:
+  - chart-fidelity
+  - routing-positive
+inputs:
+  prompt: |
+    Using only the attached parsed lab fixture, list every abnormal flag and
+    the exact values. Do not invent results not in the fixture.
+  files:
+    - path: golden-lab-extract.json
+expected:
+  outcomes:
+    - type: task_completed
+  output_not_contains:
+    - "7.2"
+    - "180 mg/dL"
+graders:
+  - type: text
+    name: cites_ldl
+    config:
+      regex_match:
+        - "(?i)142"
+        - "(?i)LDL"
+  - type: text
+    name: cites_a1c
+    config:
+      regex_match:
+        - "(?i)6\\.8"
+        - "(?i)A1c"

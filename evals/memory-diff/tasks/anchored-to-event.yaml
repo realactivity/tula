@@ -1,12 +1,9 @@
 id: anchored-to-event-001
 name: Anchored Window - Since starting a medication
 description: |
-  User uses a named-event anchor instead of a calendar date. Skill should
-  scan memory for the start date of lisinopril (present in the fixture
-  at 2026-04-30), use that as the window start, and produce a diff
-  scoped to the time since. Output should mention the lisinopril anchor
-  explicitly in the trailing window descriptor.
+  Named-event anchor for lisinopril start. Diff scoped to since 2026-04-30.
 tags:
+  - routing-positive
   - anchored-window
   - happy-path
   - event-anchor

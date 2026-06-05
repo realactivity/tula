@@ -1,0 +1,20 @@
+id: composition-visit-prep-pdf-001
+name: Composition - visit prep with PDF only needs prep-my-visit or clarify
+description: |
+  User asks for visit prep but only mentions a PDF. Route to prep-my-visit or ask
+  for visit date; do not parse PDF as visit prep without context.
+tags:
+  - composition
+  - routing-positive
+inputs:
+  prompt: |
+    I have a cardiology follow-up PDF. Build my full visit prep package for next Tuesday.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: prep_my_visit_or_clarify
+    config:
+      regex_match:
+        - "(?i)(prep-my-visit|visit prep|upcoming visit|Tuesday|appointment)"

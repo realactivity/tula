@@ -1,10 +1,10 @@
 id: basic-usage-001
 name: Basic Usage - New medication side effect
 description: |
-  Patient wants to ask their PCP about a new dry cough that started after
-  beginning lisinopril. Skill should produce a single, well-formatted portal
-  message with a clear ask, brief context, and pertinent data.
+  Patient wants to ask PCP about dry cough after lisinopril. Skill should
+  produce a well-formatted portal message with clear ask and context.
 tags:
+  - routing-positive
   - basic
   - happy-path
   - medication-question

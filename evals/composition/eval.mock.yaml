@@ -1,0 +1,21 @@
+name: composition-eval-mock
+description: Mock CI lane for composition routing evals.
+skill: patient-agent-routing
+version: "1.0"
+config:
+  trials_per_task: 1
+  timeout_seconds: 120
+  parallel: false
+  executor: mock
+metrics:
+  - name: task_completion
+    weight: 1.0
+    threshold: 1.0
+graders:
+  - type: code
+    name: not_empty
+    config:
+      assertions:
+        - "len(output.strip()) > 0"
+tasks:
+  - "tasks/*.yaml"

@@ -2,7 +2,7 @@ name: Eval Status
 
 # Regenerate docs/evals.md from `waza check` output + any results/ files.
 # Runs static analysis only - no live API calls, no model auth required.
-# Live `waza run` execution lives in the separate eval.yml workflow.
+# Live `waza run` execution is manual; see docs/evals.md for publish steps.
 
 on:
   pull_request:

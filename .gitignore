@@ -3,3 +3,4 @@ results/
 coverage.txt
 *.exe
 *-results.json
+skills/*.zip

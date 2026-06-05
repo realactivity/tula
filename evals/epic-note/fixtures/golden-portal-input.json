@@ -1,0 +1,15 @@
+{
+  "patientName": "Dylan Meyer",
+  "clinician": "Dr. Dave Matthews",
+  "specialty": "internal medicine",
+  "subject": "Persistent dry cough since starting lisinopril - routine",
+  "ask": "whether I should switch off lisinopril due to persistent cough",
+  "context": {
+    "medication": "lisinopril 10 mg daily",
+    "started": "about 3 weeks ago",
+    "symptom": "dry non-productive cough waking most nights",
+    "homeBp": "128/82",
+    "negatives": ["no fever", "no congestion", "no shortness of breath"]
+  },
+  "signOff": "Thank you,"
+}

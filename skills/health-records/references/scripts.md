@@ -56,8 +56,8 @@ No positional args. Honors `HEALTH_SKILLZ_BASE_URL` if set; defaults to
 
 - **`sessionId`** - needed for `finalize-session.mjs`.
 - **`privateKeyJwk`** - needed for decryption. Keep it in agent memory for the
-  session; never write it to a memory file, never echo it back to Paul.
-- **`userUrl`** - show to Paul as a single clickable link.
+  session; never write it to a memory file, never echo it back to the user.
+- **`userUrl`** - show to the user as a single clickable link.
 
 ## `finalize-session.mjs`
 
@@ -97,7 +97,7 @@ Env: `HEALTH_SKILLZ_BASE_URL` overrides the backend.
 {"status":"done","files":["./out/unitypoint-health.json","./out/mayo-clinic.json"],"elapsedMs":3072.1}
 ```
 
-Read line-by-line; the agent can show progress to Paul off the `waiting`
+Read line-by-line; the agent can show progress to the user off the `waiting`
 lines and stop once `status: done` is seen.
 
 ### Per-provider JSON file shape

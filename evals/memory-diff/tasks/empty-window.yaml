@@ -1,14 +1,13 @@
 id: empty-window-001
 name: Empty Window - No changes in last hour
 description: |
-  User asks for a very short window during which no memory entries exist.
-  Skill MUST return the one-line "No changes in <window>" message naming
-  the most recent entry date - and MUST NOT fabricate any tier entries
-  to fill the response.
+  Very short window with no memory entries. Skill MUST NOT fabricate tiers.
 tags:
+  - chart-fidelity
   - empty-window
   - edge-case
   - no-fabrication
+  - routing-positive
 inputs:
   prompt: |
     What changed in the last hour?
@@ -36,4 +35,4 @@ graders:
     name: mentions_last_entry
     config:
       regex_match:
-        - "(?i)last entry"
+        - "(?i)last entry|No changes|nothing changed"

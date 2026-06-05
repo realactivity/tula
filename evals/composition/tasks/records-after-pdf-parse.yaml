@@ -1,0 +1,21 @@
+id: composition-records-after-pdf-001
+name: Composition - after PDF parse use memory-diff not re-parse
+description: |
+  User asks what changed since PDF was parsed yesterday. memory-diff not med-pdf.
+tags:
+  - composition
+  - routing-positive
+inputs:
+  prompt: |
+    You parsed my lab PDF yesterday. What's changed in my health since then?
+expected:
+  output_not_contains:
+    - "extract.mjs"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: routes_memory_diff
+    config:
+      regex_match:
+        - "(?i)(memory-diff|what changed|since|longitudinal|diff)"

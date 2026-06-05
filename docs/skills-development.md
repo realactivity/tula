@@ -68,10 +68,22 @@ Voice: second person, agent-directed, imperative, terse. See
 
 ## Existing Skills
 
-| Skill | Purpose | Status |
+All eight published skills ship Waza eval suites under
+[Patient Agent Eval Standard v0.1](../evals/README.md). Task counts are
+in [`docs/evals.md`](evals.md).
+
+| Skill | Purpose | Eval tasks |
 |---|---|---|
-| [`epic-note`](../skills/epic-note/) | Drafts patient-portal messages for PCP/specialist | Complete, 4 eval tasks |
-| [`med-pdf`](../skills/med-pdf/) | Parses medical PDFs into structured JSON | Complete, 5 eval tasks. **Reference template.** |
+| [`health-records`](../skills/health-records/) | SMART on FHIR record pull | 8 |
+| [`med-pdf`](../skills/med-pdf/) | Parses medical PDFs into structured JSON | 8. **Reference template.** |
+| [`epic-note`](../skills/epic-note/) | Drafts patient-portal messages | 6 |
+| [`myhealth-pulse`](../skills/myhealth-pulse/) | Signal aggregation digest | 6 |
+| [`memory-diff`](../skills/memory-diff/) | Longitudinal change detection | 7 |
+| [`prep-my-visit`](../skills/prep-my-visit/) | Visit-prep package | 16 |
+| [`request-amendment`](../skills/request-amendment/) | HIPAA amendment requests | 12 |
+| [`lookout`](../skills/lookout/) | Ambient environmental awareness | 9 |
+
+Cross-skill routing: [`evals/composition/`](../evals/composition/) (6 tasks).
 
 ## Authoring a New Skill
 
@@ -94,28 +106,41 @@ waza check skills/<name>
 #      Module count: 2-3
 #      Token budget: prefer <500, accept higher if openclaw fidelity demands it
 
-# 4. Scaffold and customize evals
-waza new eval <name>
-#    Edit tasks/*.yaml with realistic scenarios:
-#      - 1-2 positive triggers
-#      - 1-2 negative triggers (anti-trigger / wrong-skill routing)
-#      - 1 safety/PHI boundary task if applicable
+# 4. Scaffold and customize evals (see Patient Agent Eval Standard v0.1)
+#    Copy templates from evals/_templates/ into evals/<name>/tasks/
+#    Required tags: routing-positive, routing-negative, phi-boundary,
+#    adversarial, golden (golden tasks under tasks/golden/)
+#    Add eval.yaml (live) and eval.mock.yaml (CI, excludes golden/)
 
-# 5. Test against the eval
+# 5. Validate taxonomy and structure
+bash scripts/lint-eval-taxonomy.sh
+waza run evals/<name>/eval.mock.yaml --skip-graders -v
+
+# 6. Test live certification
 waza run evals/<name>/eval.yaml -v
 #    Requires GitHub Copilot CLI authenticated (see "Testing" below)
 ```
 
 ## Testing
 
-Waza supports two executors:
+Waza uses a **two-lane** model (see [`evals/README.md`](../evals/README.md)):
 
-| Executor | Auth needed | Use case |
-|---|---|---|
-| `mock` | None | Validate eval pipeline structure (graders fire, schema OK) |
-| `copilot-sdk` | GitHub Copilot CLI authenticated | Real model evaluation against `claude-sonnet-4.6` |
+| Lane | File | Executor | Use case |
+|---|---|---|---|
+| Structural (CI) | `eval.mock.yaml` | `mock` + `--skip-graders` | Spec load, task/fixture wiring, skill binding |
+| Certification | `eval.yaml` | `copilot-sdk` | Live model behavior and grader pass rates |
 
-To use real model evals you need a **GitHub Copilot subscription** (free tier
+Run all mock lanes locally:
+
+```bash
+bash scripts/run-eval-mock-all.sh
+```
+
+The mock executor returns stub output that cannot satisfy regex graders, so
+CI skips graders and validates structure only. Golden tasks live under
+`tasks/golden/` and run only on the live lane.
+
+To use live evals you need a **GitHub Copilot subscription** (free tier
 works). Install and authenticate the CLI:
 
 ```powershell
@@ -126,10 +151,16 @@ copilot
 # then /exit
 ```
 
-After login, `waza run evals/<skill>/eval.yaml -v` will execute against
-`claude-sonnet-4.6` via Copilot.
+After login, `waza run evals/<skill>/eval.yaml -v` executes against the
+model configured in `eval.yaml` (default `claude-sonnet-4.6` when available
+via Copilot). Override with `--model gpt-4.1` or another listed model when
+needed.
 
-Switch eval.yaml to `executor: mock` for offline structure testing.
+Structural check without model auth:
+
+```powershell
+waza run evals/<skill>/eval.mock.yaml --skip-graders -v
+```
 
 ## Deploying to the VM
 

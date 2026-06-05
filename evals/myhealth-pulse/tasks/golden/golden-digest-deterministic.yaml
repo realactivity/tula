@@ -1,0 +1,35 @@
+id: golden-digest-001
+name: Golden deterministic daily digest
+description: |
+  Profile fixture mounted. Skill returns digest with signature line and named
+  adapters without PHI in outbound query language.
+tags:
+  - golden-case
+  - golden
+  - deterministic
+  - fixture-backed
+  - routing-positive
+inputs:
+  prompt: |
+    Run myhealth-pulse using the attached profile only.
+    Do not ask follow-up questions.
+    Return a digest ending with: Powered by myhealth-pulse - feeds: <names>
+  files:
+    - path: profile.yaml
+expected:
+  outcomes:
+    - type: task_completed
+  output_not_contains:
+    - "MRN"
+    - "Driscoll"
+graders:
+  - type: text
+    name: has_signature_line
+    config:
+      regex_match:
+        - "(?i)Powered by myhealth-pulse"
+  - type: text
+    name: names_an_adapter
+    config:
+      regex_match:
+        - "(?i)(feeds:.*?(social-x|web-brave)|source:\\s*(social-x|web-brave))"

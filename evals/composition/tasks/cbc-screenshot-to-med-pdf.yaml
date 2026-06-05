@@ -1,0 +1,22 @@
+id: composition-cbc-screenshot-001
+name: Composition - CBC screenshot routes to med-pdf
+description: |
+  Cross-skill routing: lab screenshot must go to med-pdf, not health-records or lookout.
+tags:
+  - composition
+  - routing-negative
+inputs:
+  prompt: |
+    I attached a screenshot of my CBC from MyChart. What's flagged abnormal?
+expected:
+  output_not_contains:
+    - "create-session.mjs"
+    - "Powered by lookout"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: routes_med_pdf
+    config:
+      regex_match:
+        - "(?i)(med-pdf|extract|parse|PDF|screenshot)"

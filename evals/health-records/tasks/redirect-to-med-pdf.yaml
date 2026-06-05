@@ -1,11 +1,10 @@
 id: redirect-to-med-pdf-001
 name: PDF screenshot should redirect to med-pdf, not create a session
 description: |
-  Paul shares a screenshot/PDF of results. That's med-pdf's job -
-  health-records should NOT spin up a SMART-on-FHIR session for a single
-  document. The agent should recognize the wrong-tool case and either
-  describe the med-pdf workflow or defer to it.
+  User shares a screenshot/PDF of results. health-records should NOT spin up
+  a SMART session. Agent should defer to med-pdf.
 tags:
+  - routing-negative
   - negative-trigger
   - skill-routing
 inputs:

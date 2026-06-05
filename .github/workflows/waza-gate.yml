@@ -1,0 +1,44 @@
+name: Waza Gate
+
+# Hard gate: every skill must pass Waza spec checks and have no broken or
+# out-of-scope links. Token budget and compliance advisories are informational.
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - 'scripts/waza-gate.sh'
+      - '.github/workflows/waza-gate.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - 'scripts/waza-gate.sh'
+      - '.github/workflows/waza-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    name: Waza spec and link gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Waza
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/microsoft/waza/main/install.sh | bash
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Install jq
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq jq
+
+      - name: Show waza version
+        run: waza --version
+
+      - name: Run waza gate on all skills
+        run: bash scripts/waza-gate.sh

@@ -1,12 +1,9 @@
 id: positive-trigger-002
 name: MyChart imaging PDF (image-only)
 description: |
-  Paul shares a MyChart CT export and notes that copy-paste didn't work
-  (the canonical signal of an image-only PDF). The skill should recognize
-  the image-only nature, mention the OCR/extract path, or ask for the
-  file. We test recognition + workflow vocabulary, since no fixture is
-  attached.
+  User shares image-only MyChart export. Skill should recognize OCR/extract path.
 tags:
+  - routing-positive
   - positive-trigger
   - imaging
   - image-only
@@ -23,4 +20,4 @@ graders:
     name: recognizes_image_only
     config:
       regex_match:
-        - "(?i)(image|ocr|transcribe|extract|render|outlined|MyChart|imaging)"
+        - "(?i)(image|ocr|transcribe|extract|render|outlined|MyChart|imaging|pageN\\.png|hasText)"

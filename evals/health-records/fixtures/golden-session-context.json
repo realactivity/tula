@@ -1,0 +1,21 @@
+{
+  "patientName": "Dylan Meyer",
+  "requestType": "connect-records",
+  "backendBaseUrl": "https://example-wren.test",
+  "mockSessionResponse": {
+    "sessionId": "sess-golden-001",
+    "userUrl": "https://example-wren.test/connect/sess-golden-001",
+    "pollUrl": "https://example-wren.test/api/poll/sess-golden-001"
+  },
+  "expectedWorkflowSteps": [
+    "check-backend.mjs",
+    "create-session.mjs",
+    "present userUrl link",
+    "finalize-session.mjs after OAuth"
+  ],
+  "privacyRules": [
+    "never echo privateKeyJwk",
+    "cache under .health-records-cache",
+    "refuse external upload"
+  ]
+}

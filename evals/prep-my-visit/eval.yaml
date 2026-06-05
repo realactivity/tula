@@ -24,3 +24,4 @@ graders:
         - "len(output.strip()) > 0"
 tasks:
   - "tasks/*.yaml"
+  - "tasks/golden/*.yaml"

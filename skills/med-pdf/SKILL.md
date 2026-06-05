@@ -1,6 +1,6 @@
 ---
 name: med-pdf
-description: "Reads medical PDFs (labs, radiology, MyChart/Epic exports, discharge summaries, pathology) and turns them into structured JSON Tula can reason over. USE FOR: Paul sharing a health-related PDF, image, or screenshot, or asking to compare results across visits. DO NOT USE FOR: non-medical PDFs, generating new clinical reports, or sending PHI outside the workspace."
+description: "Reads medical PDFs (labs, radiology, MyChart/Epic exports, discharge summaries, pathology) and turns them into structured JSON Tula can reason over. Personal data is referenced from an external profile file, never embedded. USE FOR: the user sharing a health-related PDF, image, or screenshot, or asking to compare results across visits. DO NOT USE FOR: non-medical PDFs, generating new clinical reports, or sending PHI outside the workspace."
 metadata:
   {
     "openclaw":
@@ -17,9 +17,9 @@ metadata:
 
 ✅ Use when:
 
-- Paul sends a medical PDF (labs, radiology, discharge, pathology)
-- Paul shares a screenshot/image of clinical results
-- Paul asks to compare results across visits or trend a value
+- The user sends a medical PDF (labs, radiology, discharge, pathology)
+- The user shares a screenshot/image of clinical results
+- The user asks to compare results across visits or trend a value
 - A MyChart/Epic export needs parsing before reasoning
 
 ## When NOT to Use
@@ -27,8 +27,16 @@ metadata:
 ❌ Don't use when:
 
 - The PDF is non-medical (insurance, EOB, billing)
-- Paul wants to author a clinical message -> use `epic-note`
+- The user wants to author a clinical message -> use `epic-note`
 - Anything that would send PHI outside the workspace
+
+## Setup
+
+**Profile.** Resolve from the precedence in
+[`references/profile-schema.md`](references/profile-schema.md#where-the-profile-lives)
+(skill config -> env var -> `~/.openclaw/workspace/memory/profile.yaml`).
+Use `identity.short_name` when addressing the user in summaries.
+The skill never contains the profile.
 
 ## Workflow
 

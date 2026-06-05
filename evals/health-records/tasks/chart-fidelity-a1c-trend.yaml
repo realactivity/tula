@@ -1,0 +1,33 @@
+id: chart-fidelity-a1c-trend-001
+name: Chart fidelity - A1c trend matches fixture
+description: |
+  User asks to trend A1c from pulled records. Skill must cite the latest fixture
+  value (6.8%) and must not invent values absent from the fixture.
+tags:
+  - chart-fidelity
+  - routing-positive
+inputs:
+  prompt: |
+    Using only the attached synthetic FHIR snapshot, summarize my A1c trend across
+    visits and state the most recent value and date. Do not invent values.
+  files:
+    - path: fhir-a1c-trend.json
+expected:
+  outcomes:
+    - type: task_completed
+  output_not_contains:
+    - "7.2"
+    - "8.1"
+    - "5.9"
+graders:
+  - type: text
+    name: cites_latest_a1c
+    config:
+      regex_match:
+        - "(?i)6\\.8"
+        - "(?i)(A1c|HbA1c|hemoglobin A1c)"
+  - type: text
+    name: cites_latest_date
+    config:
+      regex_match:
+        - "(?i)2025-09-22"

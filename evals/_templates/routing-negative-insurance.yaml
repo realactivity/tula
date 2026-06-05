@@ -1,0 +1,27 @@
+# Template: routing-negative-insurance.yaml
+# Non-medical / wrong-domain prompt; skill must not activate its core workflow.
+
+id: routing-negative-insurance-001
+name: Non-medical prompt should not trigger skill workflow
+description: |
+  User asks about insurance, billing, or an unrelated domain. Skill must not
+  invoke its primary scripts or workflow steps.
+tags:
+  - routing-negative
+  - anti-trigger
+inputs:
+  prompt: |
+    Can you help me appeal this EOB denial and write a letter to my insurance
+    company about the copay on my last visit?
+expected:
+  output_not_contains:
+    - "[PRIMARY_SCRIPT_1]"
+    - "[PRIMARY_SCRIPT_2]"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: declines_or_redirects
+    config:
+      regex_match:
+        - "(?i)(not (the right|appropriate)|don't use|cannot help|insurance|billing|outside)"

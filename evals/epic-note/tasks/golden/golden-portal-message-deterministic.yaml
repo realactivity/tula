@@ -1,0 +1,51 @@
+id: golden-portal-message-001
+name: Golden deterministic portal message
+description: |
+  Fixture-backed golden portal message. Full copy-paste ready output with
+  Subject, greeting to Dr. Dave Matthews, and sign-off. Word count 40-220.
+tags:
+  - golden-case
+  - golden
+  - deterministic
+  - fixture-backed
+  - routing-positive
+inputs:
+  prompt: |
+    Use only the attached synthetic fixture as complete input.
+    Do not ask follow-up questions.
+    Return a single copy-paste ready portal message (no meta commentary).
+    Greet Dr. Dave Matthews. Mention lisinopril and the cough.
+  files:
+    - path: golden-portal-input.json
+expected:
+  outcomes:
+    - type: task_completed
+  output_not_contains:
+    - "I need more information"
+graders:
+  - type: text
+    name: has_subject_line
+    config:
+      regex_match:
+        - "(?im)^\\**Subject:\\**\\s.+"
+  - type: text
+    name: has_greeting
+    config:
+      regex_match:
+        - "(?i)Hello Dr\\. Dave Matthews"
+  - type: text
+    name: has_signoff
+    config:
+      regex_match:
+        - "(?i)Thank you,"
+  - type: text
+    name: mentions_lisinopril_and_cough
+    config:
+      regex_match:
+        - "(?i)lisinopril"
+        - "(?i)cough"
+  - type: code
+    name: word_count_in_range
+    config:
+      assertions:
+        - "40 <= len(output.split()) <= 220"

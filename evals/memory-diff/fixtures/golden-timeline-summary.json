@@ -1,0 +1,13 @@
+{
+  "patientName": "Dylan Meyer",
+  "pcp": "Dr. Dave Matthews",
+  "expectedTier1Items": [
+    {
+      "date": "2026-04-30",
+      "summary": "PCP visit with Dr. Dave Matthews",
+      "detail": "Lisinopril 10mg started"
+    }
+  ],
+  "windowDefault": "7 days",
+  "signatureFormat": "Powered by memory-diff - window: ..., sources: ..."
+}

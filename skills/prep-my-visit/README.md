@@ -58,6 +58,7 @@ From repo root:
 
 ```powershell
 waza check skills/prep-my-visit
+bash scripts/waza-gate.sh
 ```
 
 Deterministic script checks (run inside skill context):
@@ -94,6 +95,14 @@ openclaw skills list
 
 If your OpenClaw runtime is configured to use Claude models, these invocations run with Claude reasoning while preserving this skill's guardrails.
 
+## Waza evaluation suite
+
+**Status:** live gold standard ([Patient Agent Eval Standard v0.1](../../evals/README.md))
+
+Suite path: `evals/prep-my-visit/` (16 tasks including golden full visit package)
+
+Full scenario map: [`evals/prep-my-visit/README.md`](../../evals/prep-my-visit/README.md) (repo root).
+
 ## Use with Copilot
 
 Copilot is the current live-model path for Waza eval execution in this repo.
@@ -116,17 +125,18 @@ waza run evals/prep-my-visit/eval.yaml -v
 3. Run structural/no-quota fallback suite:
 
 ```powershell
-waza run evals/prep-my-visit/eval.mock.yaml -v
+waza run evals/prep-my-visit/eval.mock.yaml --skip-graders -v
 ```
 
-For eval details and scenario map, see [`evals/prep-my-visit/README.md`](../../evals/prep-my-visit/README.md).
+For eval details and scenario map, see `evals/prep-my-visit/README.md` in the
+repo root (outside this skill directory).
 
 ## Demo flow (no quota)
 
 When live Copilot quota is unavailable:
 
 1. `waza check skills/prep-my-visit`
-2. `waza run evals/prep-my-visit/eval.mock.yaml -v`
+2. `waza run evals/prep-my-visit/eval.mock.yaml --skip-graders -v`
 3. Demo deterministic script checks with fixture-shaped JSON
 
 Frame this as structural and policy validation, not final live-model certification.
@@ -135,7 +145,9 @@ Frame this as structural and policy validation, not final live-model certificati
 
 Before production release:
 
-- pass `waza check`
+- pass `waza check skills/prep-my-visit`
+- pass `bash scripts/waza-gate.sh`
+- pass `waza run evals/prep-my-visit/eval.mock.yaml --skip-graders -v`
 - pass live `waza run evals/prep-my-visit/eval.yaml -v`
 - confirm safety-critical tasks pass (PHI boundary, no diagnosis/treatment, no auto-send, no billing drift)
 - run OpenClaw runtime smoke prompts on deployed VM

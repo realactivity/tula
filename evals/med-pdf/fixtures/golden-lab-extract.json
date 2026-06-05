@@ -1,0 +1,33 @@
+{
+  "patientName": "Dylan Meyer",
+  "meta": {
+    "hasText": true,
+    "numPages": 2,
+    "textChars": 4200
+  },
+  "parsedLabs": {
+    "abnormal": [
+      {
+        "name": "LDL Cholesterol",
+        "loinc": "13457-7",
+        "value": 142,
+        "unit": "mg/dL",
+        "flag": "H"
+      },
+      {
+        "name": "Hemoglobin A1c",
+        "loinc": "4548-4",
+        "value": 6.8,
+        "unit": "%",
+        "flag": "H"
+      }
+    ],
+    "collectionDate": "2025-11-03"
+  },
+  "workflowSteps": [
+    "extract.mjs",
+    "parse_labs.mjs",
+    "reason over abnormal flags",
+    "persist to .med-pdf-cache"
+  ]
+}

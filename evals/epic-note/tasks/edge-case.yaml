@@ -1,12 +1,10 @@
 id: edge-case-001
 name: Edge Case - Multiple unrelated topics
 description: |
-  Patient bundles three unrelated questions (refill, lab result, new symptom).
-  Skill should NOT cram everything into one message. It should propose
-  separate messages or ask the patient which to send first / which is most
-  urgent. The correct behavior is splitting, not bundling - so this task
-  intentionally does NOT use the portal-format graders.
+  Patient bundles three unrelated questions. Skill should propose separate
+  messages, not one bundled draft.
 tags:
+  - routing-positive
   - edge-case
   - multi-topic
 inputs:
@@ -21,3 +19,9 @@ expected:
     - "metformin refill, A1c, and rash"
   outcomes:
     - type: task_completed
+graders:
+  - type: text
+    name: proposes_split
+    config:
+      regex_match:
+        - "(?i)(separate|split|which (one|topic)|send first|one at a time)"

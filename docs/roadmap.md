@@ -1,11 +1,12 @@
 # Roadmap and Project Status
 
-Tula is in active development. The reference deployment currently includes eight published skills (seven with continuous Waza eval suites) and the self-hostable Wren records relay. This page is the canonical status of every component, eval snapshot, and strategy artifact.
+Tula is in active development. The reference deployment currently includes eight published skills (all with Waza eval suites under [Patient Agent Eval Standard v0.1](../evals/README.md)) and the self-hostable Wren records relay. This page is the canonical status of every component, eval snapshot, and strategy artifact.
 
 The README contains a short summary and points back here.
 
 ## Recent Milestones
 
+- **2026-06-04: Patient Agent Eval Standard v0.1.** All eight skills plus a cross-skill composition bundle ship under [`evals/`](../evals/README.md): 78 tasks, golden fixtures, adversarial packs, mock CI lanes, and taxonomy lint. See [`docs/evals.md`](evals.md).
 - **2026-06-04: Wren merged to public Tula.** The self-hostable SMART on FHIR records relay landed at [`services/wren/`](../services/wren/). The `health-records` skill can now pull through a self-hosted relay with no third-party dependency, set via `HEALTH_SKILLZ_BASE_URL`. The multi-tenant, hospital-scale version of the relay remains private under Aria.
 
 ## Live Skills
@@ -19,7 +20,7 @@ The README contains a short summary and points back here.
 | [`memory-diff`](../skills/memory-diff/) | Longitudinal change detection over workspace memory | Complete |
 | [`prep-my-visit`](../skills/prep-my-visit/) | IPS-aligned visit-prep package from patient health data | Complete |
 | [`request-amendment`](../skills/request-amendment/) | HIPAA-aligned health-record amendment request drafting | Complete |
-| [`lookout`](../skills/lookout/) | Ambient environmental and public-health awareness triaged against the record | Published (eval suite pending) |
+| [`lookout`](../skills/lookout/) | Ambient environmental and public-health awareness triaged against the record | Complete |
 
 ## Self-Hostable Services
 
@@ -78,20 +79,25 @@ Community ideas live in [Discussions](../../../discussions) and [`docs/community
 
 | Artifact | Status |
 |---|---|
-| [Patient agent evaluation standard article](../articles/how-will-you-know-if-your-patient-ai-is-working.md) | Draft |
+| [Patient agent evaluation standard article](../articles/how-will-you-know-if-your-patient-ai-is-working.md) | Draft (companion to [`evals/README.md`](../evals/README.md) v0.1) |
 | [Two-score framework article (governance and health portfolio)](../articles/every-patient-ai-needs-two-scores.md) | Draft |
 | [Voice integration architecture (OpenClaw and Twilio)](voice-integration.md) | Plan documented |
 | [Open-core scope split](../OPEN_CORE.md) | Complete |
 
 ## Eval Snapshot: Request-Amendment
 
-Local benchmark snapshot from `waza run evals/request-amendment/eval.yaml -v` using `claude-sonnet-4.6` (latest completed non-quota-interrupted run):
+Prior local benchmark snapshot from `waza run evals/request-amendment/eval.yaml -v`
+using `claude-sonnet-4.6` (pre-v0.1 expansion, 10-task suite):
 
 - Total tests: 10
 - Succeeded: 8
 - Failed: 2
 - Success rate: 80.0%
 - Aggregate score: 0.97
+
+The suite now has **12 tasks** (golden moved to `tasks/golden/`, adversarial
+pack added). Re-run live certification on the VM after merge and publish to
+`results/`.
 
 | Category | Task Coverage | Result |
 |---|---|---|

@@ -1,0 +1,18 @@
+id: positive-lookout-trigger-001
+name: Positive trigger - lookout for me briefing
+description: |
+  User asks for ambient health briefing. Skill should recognize lookout workflow.
+tags:
+  - routing-positive
+inputs:
+  prompt: |
+    Lookout for me - how's the air where I am today?
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: recognizes_lookout
+    config:
+      regex_match:
+        - "(?i)(lookout|air|AQI|ozone|environment|briefing)"

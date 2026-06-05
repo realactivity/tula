@@ -1,16 +1,14 @@
 id: redirect-to-epic-note-001
 name: Authoring request should redirect, not parse
 description: |
-  Paul asks Tula to draft a clinical message. This is an authoring task,
-  not a parsing task - med-pdf should NOT invoke its parsing workflow.
-  The agent should defer to the epic-note skill (or note that med-pdf is
-  the wrong tool here).
+  User asks to draft a portal message. med-pdf should defer to epic-note.
 tags:
+  - routing-negative
   - negative-trigger
   - skill-routing
 inputs:
   prompt: |
-    Can you write a quick MyChart message to my PCP saying I started
+    Can you write a quick MyChart message to Dr. Dave Matthews saying I started
     feeling a cough after the lisinopril? Don't use the lab PDF, just
     draft a message.
 expected:
@@ -18,3 +16,11 @@ expected:
     - "extract.mjs"
     - "parse_labs"
     - "parse_imaging"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: mentions_epic_note_or_draft
+    config:
+      regex_match:
+        - "(?i)(epic-note|portal message|draft|MyChart message|message to)"

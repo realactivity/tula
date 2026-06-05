@@ -1,0 +1,42 @@
+name: Waza Eval Mock
+
+# Run mock Waza lanes for all eval suites (no model auth required).
+# Golden tasks live under tasks/golden/ and are excluded from eval.mock.yaml.
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'evals/**'
+      - 'skills/patient-agent-routing/**'
+      - 'scripts/lint-eval-taxonomy.sh'
+      - 'scripts/run-eval-mock-all.sh'
+      - '.github/workflows/waza-eval-mock.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'evals/**'
+      - 'skills/patient-agent-routing/**'
+      - 'scripts/lint-eval-taxonomy.sh'
+      - 'scripts/run-eval-mock-all.sh'
+      - '.github/workflows/waza-eval-mock.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mock:
+    name: Mock eval lanes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Waza
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/microsoft/waza/main/install.sh | bash
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Run mock eval lanes
+        run: bash scripts/run-eval-mock-all.sh

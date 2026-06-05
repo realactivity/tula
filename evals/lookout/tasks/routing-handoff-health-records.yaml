@@ -1,0 +1,20 @@
+id: routing-handoff-health-records-001
+name: Routing - connect MyChart to health-records
+description: |
+  User asks to connect portal. Lookout must route to health-records.
+tags:
+  - routing-negative
+inputs:
+  prompt: |
+    Connect my MyChart and pull my full chart.
+expected:
+  output_not_contains:
+    - "Powered by lookout"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: routes_health_records
+    config:
+      regex_match:
+        - "(?i)(health-records|SMART|FHIR|connect|portal|not lookout)"

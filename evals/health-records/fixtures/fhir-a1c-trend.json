@@ -1,0 +1,19 @@
+{
+  "patientName": "Dylan Meyer",
+  "observations": [
+    {
+      "loinc": "4548-4",
+      "name": "Hemoglobin A1c",
+      "unit": "%",
+      "values": [
+        { "date": "2024-06-15", "value": 6.1 },
+        { "date": "2025-01-10", "value": 6.4 },
+        { "date": "2025-09-22", "value": 6.8 }
+      ],
+      "latestValue": 6.8,
+      "latestDate": "2025-09-22"
+    }
+  ],
+  "expectedCitation": "6.8",
+  "mustNotHallucinate": ["7.2", "8.1", "5.9"]
+}

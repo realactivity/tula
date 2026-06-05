@@ -61,11 +61,11 @@ Match the canonical openclaw skills (e.g., `skills/github`) - in this order:
 8. `## Examples` - concrete bash, with real paths. Long examples go to
    `references/examples.md`.
 9. `## Privacy` - PHI/data handling, when relevant
-10. `## Notes` - gotchas, rate limits, alias maintenance
+10. `## Troubleshooting` - gotchas, rate limits, alias maintenance
 
 ## Voice
 
-- Second person, agent-directed: "For any PDF Paul sends..."
+- Second person, agent-directed: "For any PDF the user sends..."
 - Imperative and terse: "Always check `unmatchedLines`."
 - Real paths and real commands. No abstractions or pseudocode.
 - Opinions are fine: "Trust the heuristic." "Don't just summarize."
@@ -95,8 +95,9 @@ The pattern:
 2. **The skill resolves the profile at runtime** from a documented
    precedence: `skills.entries.<skill>.profile` in `openclaw.json` ->
    `<SKILL>_PROFILE` env var -> `~/.openclaw/workspace/memory/<file>.yaml`.
-3. **Eval fixtures use a synthetic persona** (e.g., `@drsynth` /
-   "Dr. Casey Synth"). No real names, handles, providers, or topics.
+3. **Eval fixtures use a synthetic persona** (e.g., **Dylan Meyer** /
+   he/him, age 51, PCP Dr. Dave Matthews). No real names, handles,
+   providers, or topics.
 4. **The actual user profile lives outside the repo** - in the workspace
    memory directory on a personal VM, or in the multi-tenant identity
    store in Aria. Either way, never under version control with the skill.
@@ -126,6 +127,7 @@ Before deploying to the VM:
 
 ```powershell
 waza check skills/<skill-name>
+bash scripts/waza-gate.sh   # all skills; same gate CI runs
 ```
 
 Acceptable outcomes:

@@ -9,20 +9,20 @@
  *   1. Generates a fresh ECDH P-256 keypair *locally* in this Node process.
  *      The PRIVATE key never leaves this VM.
  *   2. Sends only the PUBLIC key to the backend at $BASE_URL/api/session.
- *   3. Backend returns a sessionId + a userUrl (which Paul opens in a browser
- *      to log in to his patient portal via SMART OAuth).
+ *   3. Backend returns a sessionId + a userUrl (which the user opens in a browser
+ *      to log in to their patient portal via SMART OAuth).
  *   4. We print the sessionId, userUrl, and privateKeyJwk to stdout as JSON.
  *
  * Why this design (E2E crypto):
- *   The backend collects FHIR data from Paul's patient portal on its server,
+ *   The backend collects FHIR data from the user's patient portal on its server,
  *   then encrypts it under the PUBLIC key we sent it. Only the holder of the
  *   matching PRIVATE key (us, on this VM) can decrypt it. The backend
- *   operator cannot read Paul's records, even if compromised.
+ *   operator cannot read the user's records, even if compromised.
  *
  * Output (JSON to stdout):
  *   {
  *     "sessionId":     "abc123...",                       // pass to finalize-session
- *     "userUrl":       "https://.../connect/abc123...",   // show this link to Paul
+ *     "userUrl":       "https://.../connect/abc123...",   // show this link to the user
  *     "pollUrl":       "https://.../api/poll/abc123...",  // diagnostic only
  *     "privateKeyJwk": { "kty": "EC", ... }               // SAVE THIS - needed to decrypt
  *   }
@@ -46,8 +46,8 @@
  * Requires Node 18+ for the global `fetch` and Web Crypto API.
  */
 
-// Backend base URL. Override via $HEALTH_SKILLZ_BASE_URL if Paul ever wants to
-// point at a self-hosted instance.
+// Backend base URL. Override via $HEALTH_SKILLZ_BASE_URL to point at a
+// self-hosted instance (e.g., services/wren).
 const BASE_URL = process.env.HEALTH_SKILLZ_BASE_URL || 'https://health-skillz.joshuamandel.com';
 
 async function main() {
@@ -87,7 +87,7 @@ async function main() {
 
   // ── 3. Emit everything the caller needs as a single JSON object ─────────
   // The agent reads this, saves privateKeyJwk for later, and shows userUrl
-  // to Paul. The pollUrl is included for debugging; finalize-session.mjs
+  // to the user. The pollUrl is included for debugging; finalize-session.mjs
   // computes its own poll URL from sessionId.
   console.log(JSON.stringify({ sessionId, userUrl, pollUrl, privateKeyJwk }, null, 2));
 }

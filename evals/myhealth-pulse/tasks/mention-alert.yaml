@@ -1,12 +1,9 @@
 id: mention-alert-001
 name: Mention Alert - Search for handle mentions
 description: |
-  User asks specifically about mentions of themselves. Skill should run
-  the mention-only query variant per the social-x adapter contract (drop
-  the broad topic clause, keep identity handles), and still emit the
-  standard digest shape with the trailing signature line. The fixture
-  profile defines the identity (`@dylanmeyer`).
+  User asks about mentions. Skill runs mention query and emits digest shape.
 tags:
+  - routing-positive
   - mention
   - happy-path
 inputs:

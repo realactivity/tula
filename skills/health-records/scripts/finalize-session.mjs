@@ -2,9 +2,9 @@
 /**
  * finalize-session.mjs
  *
- * Step 2 of the health-records skill: poll the backend until Paul has
- * finished the OAuth dance in his browser, then download, decrypt, and
- * decompress his FHIR records into one JSON file per connected provider.
+ * Step 2 of the health-records skill: poll the backend until the user has
+ * finished the OAuth dance in their browser, then download, decrypt, and
+ * decompress their FHIR records into one JSON file per connected provider.
  *
  * Usage:
  *   node finalize-session.mjs <sessionId> '<privateKeyJwk>' <outputDir> [opts]

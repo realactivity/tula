@@ -1,0 +1,45 @@
+# Template: golden-deterministic-package.yaml
+# Fixture-backed full-output task. Place fixture in evals/<skill>/fixtures/.
+# Live lane only - exclude tasks/golden/ from eval.mock.yaml.
+
+id: golden-full-package-001
+name: Golden deterministic full package
+description: |
+  Deterministic golden-case task. All required facts are supplied in a synthetic
+  fixture so the skill should return a complete package without follow-up questions.
+tags:
+  - golden-case
+  - golden
+  - deterministic
+  - fixture-backed
+  - full-package
+inputs:
+  prompt: |
+    Use only the attached synthetic fixture as complete input.
+    Do not ask follow-up questions.
+    Return a full package with these exact section headers:
+    - section_one
+    - section_two
+    - section_three
+  files:
+    - path: golden-input.json
+expected:
+  outcomes:
+    - type: task_completed
+  output_not_contains:
+    - "I need more information"
+    - "cannot complete without"
+graders:
+  - type: text
+    name: has_required_sections
+    config:
+      regex_match:
+        - "(?i)section_one"
+        - "(?i)section_two"
+        - "(?i)section_three"
+  - type: text
+    name: preserves_fixture_facts
+    config:
+      regex_match:
+        - "(?i)[FIXTURE_FACT_1]"
+        - "(?i)[FIXTURE_FACT_2]"

@@ -6,23 +6,27 @@ touches `skills/` or `evals/`. Static analysis (compliance, spec
 checks, token budgets) is fresh on every run; live eval results come
 from manually-published runs in `results/`.
 
-Powered by [Microsoft Waza](https://github.com/microsoft/waza).
+Powered by [Microsoft Waza](https://github.com/microsoft/waza). Standard:
+[Patient Agent Eval Standard v0.1](../evals/README.md).
 
-| Skill | Compliance | Spec | Tokens | Last live run |
-|---|---|---|---|---|
-| `epic-note` | Medium-High | 9/9 ✓ | 705 / 500 ⚠ | - |
-| `health-records` | Medium-High | 9/9 ✓ | 1318 / 500 ⚠ | - |
-| `lookout` | Medium-High | 9/9 ✓ | 1577 / 500 ⚠ | - |
-| `med-pdf` | Medium-High | 9/9 ✓ | 842 / 500 ⚠ | - |
-| `memory-diff` | Medium-High | 9/9 ✓ | 1183 / 500 ⚠ | - |
-| `myhealth-pulse` | Medium-High | 9/9 ✓ | 1176 / 500 ⚠ | - |
-| `prep-my-visit` | Medium-High | 9/9 ✓ | 457 / 500 ✓ | - |
-| `request-amendment` | Medium-High | 9/9 ✓ | 990 / 500 ⚠ | - |
+| Skill | Tasks | Mock CI | Compliance | Spec | Tokens | Last live run |
+|---|---|---|---|---|---|---|
+| `epic-note` | 6 | yes | Medium-High | 9/9 ✓ | 821 / 500 ⚠ | - |
+| `health-records` | 8 | yes | Medium-High | 9/9 ✓ | 1419 / 500 ⚠ | - |
+| `lookout` | 9 | yes | Medium-High | 9/9 ✓ | 1584 / 500 ⚠ | - |
+| `med-pdf` | 8 | yes | Medium-High | 9/9 ✓ | 941 / 500 ⚠ | - |
+| `memory-diff` | 7 | yes | Medium-High | 9/9 ✓ | 1188 / 500 ⚠ | - |
+| `myhealth-pulse` | 6 | yes | Medium-High | 9/9 ✓ | 1182 / 500 ⚠ | - |
+| `prep-my-visit` | 16 | yes | Medium-High | 9/9 ✓ | 464 / 500 ✓ | - |
+| `request-amendment` | 12 | yes | Medium-High | 9/9 ✓ | 996 / 500 ⚠ | - |
+| `composition` | 6 | yes | - | - | - | - |
 
 ---
 
 ## What this measures
 
+- **Tasks** - count of YAML tasks in `evals/<skill>/tasks/` (including `golden/`).
+- **Mock CI** - `yes` when `eval.mock.yaml` exists (structural gate on every PR).
 - **Compliance** - Waza's agentskills.io readiness score
   (`High` / `Medium-High` / `Medium` / `Low`). `Medium-High` or better
   is the house target.
@@ -54,6 +58,7 @@ Powered by [Microsoft Waza](https://github.com/microsoft/waza).
 
 ## See also
 
+- [Patient Agent Eval Standard v0.1](../evals/README.md)
 - [Eval suites](../evals/) - task definitions and fixtures
 - [Skill authoring conventions](../skills/AGENTS.md)
 - [Tula deployment guide](deployment-guide.md)

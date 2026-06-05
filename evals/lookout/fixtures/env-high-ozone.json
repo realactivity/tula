@@ -1,0 +1,18 @@
+{
+  "location": { "lat": 42.36, "lon": -71.06, "label": "Boston, MA" },
+  "readings": [
+    {
+      "source": "airnow",
+      "metric": "ozone",
+      "value": 85,
+      "unit": "ppb",
+      "category": "Unhealthy for Sensitive Groups"
+    },
+    {
+      "source": "open-meteo",
+      "metric": "temperature",
+      "value": 78,
+      "unit": "F"
+    }
+  ]
+}

@@ -1,11 +1,9 @@
 name: med-pdf-eval
 description: |
-  Evaluation suite for the med-pdf skill. Verifies the agent recognizes
-  medical PDF requests, follows the extract -> branch-on-hasText -> parse ->
-  reason -> persist workflow, declines non-medical PDFs, and respects PHI
-  boundaries.
+  Evaluation suite for the med-pdf skill. Verifies PDF parse workflow,
+  routing, PHI boundaries, chart fidelity, and adversarial resistance.
 skill: med-pdf
-version: "1.0"
+version: "1.1"
 config:
   trials_per_task: 1
   timeout_seconds: 300
@@ -15,7 +13,7 @@ config:
 metrics:
   - name: task_completion
     weight: 1.0
-    threshold: 0.8
+    threshold: 0.85
     description: Did the skill respond correctly to triggers and anti-triggers?
 graders:
   - type: code
@@ -25,3 +23,4 @@ graders:
         - "len(output.strip()) > 0"
 tasks:
   - "tasks/*.yaml"
+  - "tasks/golden/*.yaml"

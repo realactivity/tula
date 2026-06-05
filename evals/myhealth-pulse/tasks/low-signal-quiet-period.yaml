@@ -1,0 +1,22 @@
+id: low-signal-quiet-period-001
+name: Low signal - quiet period honest response
+description: |
+  User asks for pulse when nothing exceeds threshold. Skill returns honest
+  one-line low-signal message, not padded content.
+tags:
+  - routing-positive
+  - low-signal
+  - edge-case
+inputs:
+  prompt: |
+    Run myhealth-pulse for the last 24 hours. Assume all feed adapters returned
+    zero items above the keep_score threshold of 70. Do not fabricate items.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: quiet_period_language
+    config:
+      regex_match:
+        - "(?i)(quiet|nothing above|no items|threshold|low signal|nothing new)"

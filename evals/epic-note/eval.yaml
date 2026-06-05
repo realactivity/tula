@@ -1,15 +1,9 @@
 name: epic-note-eval
 description: |
-  Evaluation suite for the epic-note skill. Verifies that drafted portal
-  messages are structured, concise, contain a single clear ask, and route
-  emergencies to 911 instead of producing a message.
-
-  Top-level graders apply to every task. Task-level graders (in each
-  tasks/*.yaml) fire only for that task. Format graders (Subject/greeting/
-  signoff) belong at the task level on `basic-usage` only - other tasks
-  intentionally don't produce a portal message.
+  Evaluation suite for epic-note. Portal message drafting, triage, routing,
+  adversarial resistance, and golden deterministic output.
 skill: epic-note
-version: "1.0"
+version: "1.1"
 config:
   trials_per_task: 1
   timeout_seconds: 300
@@ -19,7 +13,7 @@ config:
 metrics:
   - name: task_completion
     weight: 1.0
-    threshold: 0.8
+    threshold: 0.85
     description: Did the skill produce the correct outcome for this task?
 graders:
   - type: code
@@ -34,3 +28,4 @@ graders:
         - "len(output.split()) < 400"
 tasks:
   - "tasks/*.yaml"
+  - "tasks/golden/*.yaml"

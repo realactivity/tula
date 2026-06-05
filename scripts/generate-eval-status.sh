@@ -53,18 +53,30 @@ touches `skills/` or `evals/`. Static analysis (compliance, spec
 checks, token budgets) is fresh on every run; live eval results come
 from manually-published runs in `results/`.
 
-Powered by [Microsoft Waza](https://github.com/microsoft/waza).
+Powered by [Microsoft Waza](https://github.com/microsoft/waza). Standard:
+[Patient Agent Eval Standard v0.1](../evals/README.md).
 
-| Skill | Compliance | Spec | Tokens | Last live run |
-|---|---|---|---|---|
+| Skill | Tasks | Mock CI | Compliance | Spec | Tokens | Last live run |
+|---|---|---|---|---|---|---|
 EOF
 
 # ---------- per-skill rows -------------------------------------------------
 
 for skill_md in "$SKILLS_DIR"/*/SKILL.md; do
     name="$(basename "$(dirname "$skill_md")")"
+    [[ "$name" == "patient-agent-routing" ]] && continue
 
-    # Static check via waza
+    # Task count from eval suite
+    task_count="-"
+    eval_dir="$TULA_DIR/evals/$name"
+    if [[ -d "$eval_dir/tasks" ]]; then
+        task_count="$(find "$eval_dir/tasks" -name '*.yaml' 2>/dev/null | wc -l | tr -d ' ')"
+    fi
+
+    mock_cell="-"
+    if [[ -f "$eval_dir/eval.mock.yaml" ]]; then
+        mock_cell="yes"
+    fi
     check_json="$(waza check "$SKILLS_DIR/$name" --format json 2>/dev/null || true)"
     if [[ -z "$check_json" ]]; then
         compliance="-"
@@ -118,9 +130,19 @@ for skill_md in "$SKILLS_DIR"/*/SKILL.md; do
         fi
     fi
 
-    printf "| \`%s\` | %s | %s | %s | %s |\n" \
-        "$name" "$compliance" "$spec_cell" "$token_cell" "$live_cell" >> "$OUTPUT"
+    printf "| \`%s\` | %s | %s | %s | %s | %s | %s |\n" \
+        "$name" "$task_count" "$mock_cell" "$compliance" "$spec_cell" "$token_cell" "$live_cell" >> "$OUTPUT"
 done
+
+# Composition bundle row
+comp_tasks="-"
+if [[ -d "$TULA_DIR/evals/composition/tasks" ]]; then
+    comp_tasks="$(find "$TULA_DIR/evals/composition/tasks" -name '*.yaml' 2>/dev/null | wc -l | tr -d ' ')"
+fi
+comp_mock="-"
+[[ -f "$TULA_DIR/evals/composition/eval.mock.yaml" ]] && comp_mock="yes"
+printf "| \`composition\` | %s | %s | - | - | - | - |\n" \
+    "$comp_tasks" "$comp_mock" >> "$OUTPUT"
 
 # ---------- footer ---------------------------------------------------------
 
@@ -130,6 +152,8 @@ cat >> "$OUTPUT" <<'EOF'
 
 ## What this measures
 
+- **Tasks** - count of YAML tasks in `evals/<skill>/tasks/` (including `golden/`).
+- **Mock CI** - `yes` when `eval.mock.yaml` exists (structural gate on every PR).
 - **Compliance** - Waza's agentskills.io readiness score
   (`High` / `Medium-High` / `Medium` / `Low`). `Medium-High` or better
   is the house target.
@@ -161,6 +185,7 @@ cat >> "$OUTPUT" <<'EOF'
 
 ## See also
 
+- [Patient Agent Eval Standard v0.1](../evals/README.md)
 - [Eval suites](../evals/) - task definitions and fixtures
 - [Skill authoring conventions](../skills/AGENTS.md)
 - [Tula deployment guide](deployment-guide.md)

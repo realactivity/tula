@@ -1,0 +1,46 @@
+id: golden-diff-001
+name: Golden deterministic memory diff package
+description: |
+  Fixture-backed diff. Must name Tier 1 item from 2026-04-30 PCP visit with
+  Dr. Dave Matthews and lisinopril without follow-up questions.
+tags:
+  - golden-case
+  - golden
+  - deterministic
+  - fixture-backed
+  - routing-positive
+inputs:
+  prompt: |
+    Use the attached memory fixtures and golden summary contract.
+    Do not ask follow-up questions.
+    Return a tiered diff with signature line.
+    Must mention Dr. Dave Matthews and lisinopril from the 2026-04-30 visit.
+  files:
+    - path: golden-timeline-summary.json
+    - path: MEMORY.md
+    - path: memory/2026-04-25.md
+    - path: memory/2026-04-30.md
+    - path: memory/2026-05-10.md
+    - path: memory/2026-05-16.md
+expected:
+  outcomes:
+    - type: task_completed
+  output_not_contains:
+    - "I need more information"
+graders:
+  - type: text
+    name: has_signature_line
+    config:
+      regex_match:
+        - "(?i)Powered by memory-diff"
+  - type: text
+    name: names_tier
+    config:
+      regex_match:
+        - "(?i)(Tier\\s*1|Tier\\s*2|Signal|Notable)"
+  - type: text
+    name: preserves_pcp_and_med
+    config:
+      regex_match:
+        - "(?i)Dr\\. Dave Matthews"
+        - "(?i)lisinopril"

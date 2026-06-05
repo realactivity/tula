@@ -1,10 +1,10 @@
 id: should-not-trigger-001
 name: Should Not Trigger - General medical question
 description: |
-  Patient asks a general educational question with no intent to message a
-  clinician. Skill should NOT generate a portal message. It should answer the
-  question or redirect to a more appropriate skill.
+  General education question with no portal message intent. Skill must NOT
+  produce Subject/greeting/signoff portal format.
 tags:
+  - routing-negative
   - anti-trigger
   - negative-test
 inputs:
@@ -14,3 +14,11 @@ expected:
     - "Subject:"
     - "Hello Dr."
     - "Thank you,"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: educational_not_portal
+    config:
+      regex_match:
+        - "(?i)(blood pressure|hypertension|heart|cardiovascular|health)"

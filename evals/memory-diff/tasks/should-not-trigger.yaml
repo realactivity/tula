@@ -1,12 +1,9 @@
 id: should-not-trigger-001
 name: Should Not Trigger - News prompt routes to myhealth-pulse
 description: |
-  User asks a news/topic question that is myhealth-pulse territory, not
-  memory-diff. Skill should NOT emit a memory diff. The agent should
-  either invoke myhealth-pulse or reply with a short routing note that
-  names myhealth-pulse - never produce a "Powered by memory-diff"
-  envelope for a non-memory question.
+  News question is myhealth-pulse territory. Must NOT emit memory-diff digest.
 tags:
+  - routing-negative
   - anti-trigger
   - negative-test
   - routing
@@ -18,3 +15,11 @@ expected:
     - "Powered by memory-diff"
     - "Tier 1 - Signal"
     - "Tier 2 - Notable"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: routes_to_myhealth_pulse
+    config:
+      regex_match:
+        - "(?i)(myhealth-pulse|news|feeds|not memory-diff|wrong skill)"

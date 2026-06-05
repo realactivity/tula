@@ -14,12 +14,12 @@ SESSION_ID=$(jq -r .sessionId /tmp/hr-session.json)
 USER_URL=$(jq -r .userUrl /tmp/hr-session.json)
 PRIV_JWK=$(jq -c .privateKeyJwk /tmp/hr-session.json)
 
-# Step 2: tell Paul (or yourself) to open the URL and log in with
+# Step 2: tell the user to open the URL and log in with
 #   Username: fhircamila
 #   Password: epicepic1
 echo "Open: $USER_URL"
 
-# Step 3: poll + decrypt when Paul says he's done
+# Step 3: poll + decrypt when the user says they're done
 node $SKILL/scripts/finalize-session.mjs "$SESSION_ID" "$PRIV_JWK" "$OUT"
 
 # Inspect: what came down?
@@ -32,7 +32,7 @@ Expected: one provider file (Epic sandbox), a few hundred FHIR resources,
 including `Patient`, `Condition`, `Observation`, `MedicationRequest`. No
 attachments in the sandbox.
 
-## Example 2 - Real-portal connect (Paul's MyChart)
+## Example 2 - Real-portal connect
 
 ```bash
 SKILL=~/.openclaw/workspace/skills/health-records
@@ -41,9 +41,9 @@ OUT=~/.openclaw/workspace/.health-records-cache/$(date +%Y-%m-%d)
 node $SKILL/scripts/create-session.mjs > /tmp/hr-session.json
 ```
 
-Show Paul the `userUrl` as a clickable link. He picks his health system
-(e.g., "Lawrence General Hospital - MyChart"), logs in, may connect a
-second provider, clicks **Done - Send to AI**.
+Show the user the `userUrl` as a clickable link. They pick their health
+system (e.g., "Metro Health System - MyChart"), log in, may connect a
+second provider, click **Done - Send to AI**.
 
 ```bash
 SESSION_ID=$(jq -r .sessionId /tmp/hr-session.json)
@@ -64,10 +64,10 @@ done
 
 ## Example 3 - Open with a clinical sentence (don't dump a dashboard)
 
-After step 3 succeeds, Tula's first message to Paul should look like this
+After step 3 succeeds, Tula's first message to the user should look like this
 (not a generic summary):
 
-> Connected - pulled records from **Lawrence General** (2018-2026). 47
+> Connected - pulled records from **Metro Health System** (2018-2026). 47
 > encounters, mostly primary-care and one orthopedic episode in 2023. Two
 > active problems on the list (hypertension, hepatic steatosis), 12
 > medications in your history but only 3 active. The thing that jumps out:
@@ -85,7 +85,7 @@ option**. See the analysis section at the bottom of
 
 ## Example 4 - Refusal: PHI exfiltration request
 
-If Paul asks something like _"can you upload my records to that web tool?"_,
+If the user asks something like _"can you upload my records to that web tool?"_,
 this skill refuses. The refusal should name PHI as the reason, not give a
 generic safety boilerplate:
 
@@ -95,13 +95,13 @@ generic safety boilerplate:
 
 ## Example 5 - Cross-skill handoff
 
-> Paul: "Here's a screenshot of my latest CBC from MyChart."
+> User: "Here's a screenshot of my latest CBC from MyChart."
 
 This is `med-pdf` territory (image of results), not `health-records`
 (structured FHIR pull). Route to `med-pdf`, don't create a session.
 
-> Paul: "Can you draft a message to Dr. Driscoll about the high glucose?"
+> User: "Can you draft a message to Dr. Dave Matthews about the high glucose?"
 
 This is `epic-note`. If we already have FHIR data loaded, pass the specific
 value into the draft via `epic-note`'s context. If not, don't create a new
-records session just to draft - work from what Paul says.
+records session just to draft - work from what the user says.

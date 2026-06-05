@@ -1,0 +1,20 @@
+id: routing-handoff-epic-note-001
+name: Routing - portal message to epic-note
+description: |
+  User asks to draft clinician message. Lookout must route to epic-note.
+tags:
+  - routing-negative
+inputs:
+  prompt: |
+    Draft a MyChart message to Dr. Dave Matthews about my cough.
+expected:
+  output_not_contains:
+    - "Powered by lookout"
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: routes_epic_note
+    config:
+      regex_match:
+        - "(?i)(epic-note|portal message|draft|not lookout)"
