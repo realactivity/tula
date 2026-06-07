@@ -4,3 +4,9 @@ coverage.txt
 *.exe
 *-results.json
 skills/*.zip
+
+# Dependencies
+node_modules/
+
+# Local scratch notes (app/tenant IDs etc.) - not for the public repo
+articles/temp/

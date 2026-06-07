@@ -159,6 +159,11 @@ PURGE=(
                                            # 200MB+ each (> GitHub's 100MB
                                            # file cap). Regenerable via
                                            # `openclaw plugins install ...`.
+    'workspace/tula/briefs/*/node_modules' # npm deps installed by skill scripts
+                                           # (e.g. prep-my-visit email-delivery).
+                                           # Reproducible; contain MSAL type
+                                           # definitions with BEGIN PRIVATE KEY
+                                           # strings that trip the secret scan.
 )
 
 # Nested-.git protection. Any `.git` directory under the source - at any
@@ -267,9 +272,19 @@ for ex in "${PROTECT[@]}" ; do RSYNC_ARGS+=(--exclude="/$ex"); done
 # Nested .git at ANY depth - unanchored (no leading `/`) so rsync matches
 # at every level, with trailing slash to only match directories.
 RSYNC_ARGS+=(--exclude='.git/')
+# node_modules at ANY depth - defense in depth beyond the PURGE entry above.
+RSYNC_ARGS+=(--exclude='node_modules/')
 
 log "rsync ${AGENT_SOURCE}/ -> ${AGENT_REPO_DIR}/ (purge=${#PURGE[@]}, protect=${#PROTECT[@]}, +nested-git)"
-rsync "${RSYNC_ARGS[@]}" "${AGENT_SOURCE}/" "${AGENT_REPO_DIR}/"
+rsync "${RSYNC_ARGS[@]}" "${AGENT_SOURCE}/" "${AGENT_REPO_DIR}/" || {
+    rc=$?
+    if [[ $rc -eq 24 ]]; then
+        log "rsync: some files vanished during transfer (exit 24) - benign race with live spool; continuing"
+    else
+        log "rsync: failed with exit code $rc"
+        exit 1
+    fi
+}
 
 # ---------- step 2: purge secret/junk paths from repo ----------------------
 #

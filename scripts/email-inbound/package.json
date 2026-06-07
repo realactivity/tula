@@ -1,0 +1,18 @@
+{
+  "name": "tula-email-inbound",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Inbound email router for Tula (health data ingestion). Phase A: auth + graph client + attachment downloader plumbing.",
+  "scripts": {
+    "test": "node test-phase-a.mjs",
+    "test:auth": "node -e 'import(\"./auth.mjs\").then(m => m.buildPca().then(pca => m.getAccessToken(pca))).then(t => console.log(\"Auth OK, expires:\", t.expiresOn))'"
+  },
+  "dependencies": {
+    "@azure/msal-node": "^5.2.0",
+    "@microsoft/microsoft-graph-client": "^3.0.7"
+  },
+  "engines": {
+    "node": ">=22.16.0"
+  }
+}

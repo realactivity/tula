@@ -1,0 +1,16 @@
+{
+  "name": "email-send",
+  "version": "1.0.0",
+  "description": "This module handles **outbound** email for Tula skills (starting with prep-my-visit).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/msal-node": "^5.2.3",
+    "@microsoft/microsoft-graph-client": "^3.0.7"
+  }
+}
