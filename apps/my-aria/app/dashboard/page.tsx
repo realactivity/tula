@@ -11,6 +11,12 @@ import {
 } from "@/components/dashboard/capability-section";
 import { DisclaimerFull } from "@/components/shell/disclaimer";
 
+// Force the dashboard to render dynamically on every request so that
+// real-time FHIR reads from disk (via getDashboardData) are reflected
+// immediately. Without this the route would be statically prerendered
+// at build time and new data would only appear after a rebuild.
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   const data = await getDashboardData();
 
