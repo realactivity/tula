@@ -2,12 +2,16 @@
 
 **Your health. Your data. Your AI.**
 
+Built and maintained by [RealActivity](https://realactivity.ai).
+
 > **Watch the live demo (~16 min).** [YouTube](https://youtu.be/FcLl6fASpgw) (Epic MyChart at **[10:00](https://youtu.be/FcLl6fASpgw?t=600)**) | [Video guide](docs/demo.md) | [Podcast interview](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) (~17 min, May 2026)
 
 Tula is an open-source personal health agent skill layer built on [OpenClaw](https://github.com/openclaw/openclaw). It helps individuals, caregivers, and health-focused communities organize health records, medical PDFs, lab results, portal messages, personal notes, and longitudinal health signals in a private, self-hosted AI workspace.
 
 Tula is designed for patient agency: helping people better understand, organize, and act on their own health information without handing that data to another closed platform.
 
+> **Microsoft validated this architecture.** At Build 2026, Microsoft shipped Scout on the same OpenClaw runtime that powers Tula. Think of Tula as your patients' Scout, governed. See [Microsoft Just Validated Our Architecture](https://www.realactivity.ai/frontier/build26/tula-scout-post.html).
+>
 > **Frontier agent posture.** Tula is designed around enterprise-grade evaluation, observability, auditability, least-permission skills, human-in-the-loop safety, and healthcare-specific guardrails. See [`docs/frontier-agent.md`](docs/frontier-agent.md).
 >
 > **Open-core path.** Tula is the open-source foundation. Aria is RealActivity's commercial hospital-scale platform for governed patient-agent infrastructure. See [`OPEN_CORE.md`](OPEN_CORE.md) and [`docs/aria-commercial-platform.md`](docs/aria-commercial-platform.md).
@@ -45,6 +49,19 @@ What that means in practice:
 - **Healthcare-specific guardrails.** Portal messages drafted, never auto-sent. PHI bounded to the agent's workspace. Email locked to an Exchange sender allowlist before any model sees it.
 
 Full technical positioning, the Microsoft Frontier capability table, foundry-agnostic routing, and the enterprise-readiness argument live in [`docs/frontier-agent.md`](docs/frontier-agent.md).
+
+## Tula Is Your Patients' Scout
+
+At Build 2026, Microsoft shipped Scout: an always-on personal agent for the workforce that knows your calendar, inbox, and files, built on the OpenClaw runtime. Tula is the patient-side equivalent, built on that same open foundation: an always-on personal agent that knows your labs, medications, and conditions, and works for the patient.
+
+Microsoft's insight with Scout was that open-source agent capability is only half the equation. The other half is governance: identity, audit, policy enforcement, and controls a compliance team can verify. That is the same split Tula is built around:
+
+- **Microsoft governs the workforce agent.** Scope-bound identity, audit, and policy conformance for the employee.
+- **RealActivity governs the patient agent.** Tula is the open-source patient agent runtime (Apache 2.0, on OpenClaw). Aria is the governance plane: HIPAA-aligned identity, full audit trail, escalation policy, and hospital-controlled model routing.
+
+Patients are already using general-purpose chatbots to interpret labs, manage medications, and understand diagnoses, with no grounding in their real record and no connection to their care team. Tula connects to the patient's clinical record via SMART on FHIR so that conversation can finally be grounded and governed.
+
+Full write-up: [Microsoft Just Validated Our Architecture](https://www.realactivity.ai/frontier/build26/tula-scout-post.html).
 
 ## What Tula Is
 
@@ -88,6 +105,12 @@ RealActivity is also developing Aria, a commercial hospital-scale platform for g
 For commercial or strategic inquiries: **Paul Swider, CEO, RealActivity, pswider@realactivity.com**.
 
 Read more: [`docs/enterprise-pilots.md`](docs/enterprise-pilots.md), [`docs/aria-commercial-platform.md`](docs/aria-commercial-platform.md).
+
+## Stewardship
+
+RealActivity funds and maintains Tula and contributes it to the community under the Apache License 2.0. What is given openly: eight Apache-2.0 health skills, the self-hostable Wren records relay, and the forkable [Patient Agent Eval Standard v0.1](evals/README.md) (78 tasks, adopt or fork for any patient-facing agent).
+
+We are committed to keeping the open core open. Tula is complete and useful on its own; the commercial Aria platform consumes Tula skills as a versioned dependency rather than replacing them. See [`OPEN_CORE.md`](OPEN_CORE.md) for the full scope split.
 
 ## Why This Matters
 

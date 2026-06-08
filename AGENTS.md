@@ -20,6 +20,11 @@ VM; health data stays in the user's workspace. This repo ships skills, Waza eval
 suites, deploy scripts, and the **Patient Agent Eval Standard v0.1** (forkable
 by any patient-facing agent vendor).
 
+Think of Tula as the patient-side equivalent of Microsoft's Scout, built on the
+same OpenClaw runtime: RealActivity governs the patient agent the way Microsoft
+governs the workforce agent. Positioning:
+[Microsoft Just Validated Our Architecture](https://www.realactivity.ai/frontier/build26/tula-scout-post.html).
+
 **Watch first:**
 
 - [YouTube live demo (~16 min)](https://youtu.be/FcLl6fASpgw) - Epic MyChart at
