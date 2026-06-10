@@ -88,6 +88,7 @@ Full safety positioning in [`docs/safety-and-disclaimer.md`](docs/safety-and-dis
 | Ambient environmental and public-health awareness ([`skills/lookout`](skills/lookout/)) | Live |
 | Intelligent email ingestion | In Progress |
 | Patient health dashboard | In Progress |
+| Native apps for Android, iOS, macOS, and Windows with one-click install | In Progress |
 | Wearables, medical imaging, genomics, de-identification | Planned |
 
 Full roadmap, eval snapshots, and component status in [`docs/roadmap.md`](docs/roadmap.md).

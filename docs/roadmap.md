@@ -51,6 +51,7 @@ Wren is a rebranded MIT derivative of [`jmandel/health-skillz`](https://github.c
 |---|---|
 | Intelligent Email Ingestion | Secure inbound routing and classification |
 | Patient Health Dashboard | Mobile-friendly private dashboard |
+| Native Apps | One-click install apps for Android, iOS, macOS, and Windows |
 | Patient Health Journal | Structured check-ins through Telegram |
 | Professional Journal | Daily and weekly synthesis for work notes |
 | Laboratory Parser | Structured biomarker tracker beyond med-pdf |
