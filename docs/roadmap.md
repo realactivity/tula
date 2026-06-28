@@ -10,6 +10,7 @@ The README contains a short summary and points back here.
 - **2026-05-25: YouTube live demo.** [~16-minute screen recording](https://youtu.be/FcLl6fASpgw) with Epic MyChart SMART on FHIR pull at **10:00**. See [`docs/demo.md`](demo.md).
 - **2026-05-14: Podcast interview.** [AI Agent and Copilot Podcast](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) (~17 min) - story, OpenClaw, and patient agency. See [`docs/demo.md`](demo.md).
 - **2026-06-04: Wren merged to public Tula.** The self-hostable SMART on FHIR records relay landed at [`services/wren/`](../services/wren/). The `health-records` skill can now pull through a self-hosted relay with no third-party dependency, set via `HEALTH_SKILLZ_BASE_URL`. The multi-tenant, hospital-scale version of the relay remains private under Aria.
+- **2026-06-20: Wren deployed to Azure Container Apps.** Containerized reference deployment (Dockerfile + Bicep) on Azure Container Apps: HTTPS-only, min = max = 1, RSA-only JWKS persisted on Azure Files, image pull via managed identity. Reproducible runbook in [`services/wren/docs/deployment-azure.md`](../services/wren/docs/deployment-azure.md). Custom-domain bind and Epic Lane 2 client-ID wiring are in progress.
 
 ## Live Skills
 
@@ -28,7 +29,7 @@ The README contains a short summary and points back here.
 
 | Service | Description | Status |
 |---|---|---|
-| [`services/wren`](../services/wren/) | Self-hostable SMART on FHIR records relay: the backend the `health-records` skill pulls through. Lets a deployment run the whole records-pull stack with no third-party dependency. Single-tenant; point the skill at it via `HEALTH_SKILLZ_BASE_URL`. | Complete (merged to public main, 2026-06-04) |
+| [`services/wren`](../services/wren/) | Self-hostable SMART on FHIR records relay: the backend the `health-records` skill pulls through. Lets a deployment run the whole records-pull stack with no third-party dependency. Single-tenant; point the skill at it via `HEALTH_SKILLZ_BASE_URL`. | Complete; Azure Container Apps reference deployment ([runbook](../services/wren/docs/deployment-azure.md)) |
 
 Wren is a rebranded MIT derivative of [`jmandel/health-skillz`](https://github.com/jmandel/health-skillz); attribution is preserved in [`services/wren/NOTICE`](../services/wren/NOTICE), [`services/wren/LICENSE`](../services/wren/LICENSE), and the root [`NOTICE`](../NOTICE). The multi-tenant, hospital-scale version of the relay is part of Aria, not this repo.
 

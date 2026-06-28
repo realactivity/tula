@@ -13,6 +13,13 @@ skill/health-record-assistant/SKILL.md
 # Local config (may contain client IDs / secrets) - keep config.json.example tracked
 config.local.json
 config.*.local.json
+# Deploy config holds real Epic client IDs - not committed, but stays in the
+# Docker build context (.dockerignore does not exclude it).
+config.prod.json
+
+# Operator-specific deploy notes (subscription IDs, FQDNs, resource names).
+# The public runbook uses {{PLACEHOLDERS}}; live values stay local only.
+docs/*.local.md
 
 # React build output
 dist/

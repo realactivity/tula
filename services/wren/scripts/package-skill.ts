@@ -23,7 +23,7 @@ async function main() {
   
   const skillMd = buildAgentSkill(baseUrl);
   writeFileSync(join(SKILL_DIR, "SKILL.md"), skillMd);
-  console.log("✓ Built SKILL.md from partials");
+  console.log("[done] Built SKILL.md from partials");
 
   // Remove old zip if exists
   if (existsSync(OUTPUT_ZIP)) {
@@ -34,7 +34,7 @@ async function main() {
   console.log("Packaging skill...");
   await $`cd ${SKILL_DIR} && zip -r ${OUTPUT_ZIP} SKILL.md scripts/ references/`;
 
-  console.log(`\n✓ Created ${OUTPUT_ZIP}`);
+  console.log(`\n[done] Created ${OUTPUT_ZIP}`);
 }
 
 main().catch(console.error);

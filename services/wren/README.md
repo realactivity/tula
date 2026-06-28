@@ -60,6 +60,18 @@ Use **direct JWKS upload (RSA keys only)** at each organization rather than a
 JWK Set URL - see `UPSTREAM-README.md` and the upstream Epic notes for the
 hard-won details.
 
+## Deploy
+
+Wren is a container (Bun runtime), so it runs on any container host. The
+RealActivity reference deployment runs on **Azure Container Apps** behind
+`https://wren.realactivity.ai`, with the JWKS persisted on Azure Files and
+image pull via a managed identity (no stored registry credentials).
+
+- Step-by-step Azure runbook (with `{{PLACEHOLDERS}}` for your own tenant):
+  [`docs/deployment-azure.md`](docs/deployment-azure.md)
+- Epic on FHIR registration (Lane 2, RSA-only JWKS):
+  [`docs/epic-registration.md`](docs/epic-registration.md)
+
 ## Relationship to Tula
 
 - `services/wren/` (this) - the relay/server (MIT, self-hosted by the operator).

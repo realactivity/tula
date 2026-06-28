@@ -194,7 +194,7 @@ async function main() {
   writeFileSync(sandboxPath, JSON.stringify(sandboxOutput, null, 2));
   console.log(`Wrote ${sandboxPath}`);
   
-  console.log("\n✓ Brands preprocessing complete!");
+  console.log("\n[done] Brands preprocessing complete!");
 }
 
 main().catch(console.error);

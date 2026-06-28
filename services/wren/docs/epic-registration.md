@@ -86,9 +86,15 @@ Before you open the portal, have these ready.
   bun run generate-jwks
   ```
   This writes `data/jwks.json` (public keys), which Wren serves at
-  `{baseURL}/.well-known/jwks.json`. You will register this in Step 5.
+  `{baseURL}/.well-known/jwks.json`. You will register this in Step 5. The
+  script emits **RSA-only** keys (RS256 + RS384, no EC), which is exactly what
+  Epic accepts at per-organization activation - no manual pruning needed.
 - [ ] Your **redirect URIs** decided (see Step 4): one for local development and
   one for your deployed Wren domain.
+
+> **Deploying to Azure?** The end-to-end hosting runbook (Container Apps, custom
+> domain, JWKS persistence) is in [`deployment-azure.md`](deployment-azure.md).
+> This guide covers the Epic side; that one covers the infrastructure.
 
 ---
 

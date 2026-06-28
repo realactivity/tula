@@ -78,7 +78,7 @@ Full safety positioning in [`docs/safety-and-disclaimer.md`](docs/safety-and-dis
 | Capability | Status |
 |---|---|
 | EHR integration via SMART on FHIR ([`skills/health-records`](skills/health-records/)) | Live |
-| Self-hostable records relay ([`services/wren`](services/wren/)) | Live |
+| Self-hostable records relay ([`services/wren`](services/wren/)) | Live (Azure Container Apps reference deployment) |
 | Medical PDF and photo capture ([`skills/med-pdf`](skills/med-pdf/)) | Live |
 | Patient portal message drafting ([`skills/epic-note`](skills/epic-note/)) | Live |
 | Daily health signal digest ([`skills/myhealth-pulse`](skills/myhealth-pulse/)) | Live |
@@ -139,7 +139,7 @@ Full diagram, data flow, and skill composition in [`docs/architecture.md`](docs/
 
 ## Project Status
 
-Tula is in active development. The reference deployment includes eight published skills (all with Waza eval suites under [Patient Agent Eval Standard v0.1](evals/README.md)) plus the self-hostable Wren records relay. Latest local snapshot from `evals/request-amendment`: 8 of 10 tasks passed, aggregate score 0.97.
+Tula is in active development. The reference deployment includes eight published skills (all with Waza eval suites under [Patient Agent Eval Standard v0.1](evals/README.md)) plus the self-hostable Wren records relay. The Wren relay now has a containerized reference deployment on Azure Container Apps (RSA-only JWKS on Azure Files; Epic Lane 2 registration in progress); see the [Azure runbook](services/wren/docs/deployment-azure.md). Latest local snapshot from `evals/request-amendment`: 8 of 10 tasks passed, aggregate score 0.97.
 
 Full status (live skills, infrastructure, in progress, planned, community ideas, strategy artifacts, eval snapshots) in [`docs/roadmap.md`](docs/roadmap.md).
 

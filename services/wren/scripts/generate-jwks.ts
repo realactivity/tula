@@ -9,8 +9,9 @@
  * The private keys are NOT secret for this use case: they ship to end-user
  * browsers that sign client_assertion JWTs for confidential-client OAuth.
  *
- * Keys generated:
- *   - EC P-384  (alg: ES384)
+ * Keys generated (RSA only - Epic rejects EC/ES384 at per-organization
+ * activation even though it accepts them at app registration, so we never
+ * emit an EC key; the browser signs client assertions with keys[0]):
  *   - RSA 2048  (alg: RS256)
  *   - RSA 2048  (alg: RS384)
  */
@@ -28,22 +29,6 @@ if (existsSync(fullPath)) {
 }
 
 mkdirSync(outDir, { recursive: true });
-
-// --- EC P-384 key (ES384) ---
-const ec = generateKeyPairSync("ec", { namedCurve: "P-384" });
-const ecKid = randomUUID();
-
-const ecPrivJwk = {
-  ...ec.privateKey.export({ format: "jwk" }),
-  kid: ecKid,
-  alg: "ES384",
-  use: "sig",
-  key_ops: ["sign"],
-};
-
-const ecPubJwk = { ...ecPrivJwk };
-delete (ecPubJwk as any).d;
-ecPubJwk.key_ops = ["verify"];
 
 // --- RSA 2048 key (RS256) ---
 const rsa = generateKeyPairSync("rsa", { modulusLength: 2048 });
@@ -83,13 +68,13 @@ for (const k of ["d", "p", "q", "dp", "dq", "qi"]) {
 rsa384PubJwk.key_ops = ["verify"];
 
 // --- Write JWKS ---
-const fullJwks = { keys: [ecPrivJwk, rsaPrivJwk, rsa384PrivJwk] };
-const pubJwks = { keys: [ecPubJwk, rsaPubJwk, rsa384PubJwk] };
+// RSA only. keys[0] (RS256) is what client-assertion.ts uses to sign.
+const fullJwks = { keys: [rsaPrivJwk, rsa384PrivJwk] };
+const pubJwks = { keys: [rsaPubJwk, rsa384PubJwk] };
 
 writeFileSync(pubPath, JSON.stringify(pubJwks, null, 2) + "\n");
 writeFileSync(fullPath, JSON.stringify(fullJwks, null, 2) + "\n");
 
-console.log(`Generated EC P-384 key pair   (kid: ${ecKid})`);
 console.log(`Generated RSA 2048 RS256 key  (kid: ${rsaKid})`);
 console.log(`Generated RSA 2048 RS384 key  (kid: ${rsa384Kid})`);
 console.log(`  Full (with private keys): ${fullPath}`);
