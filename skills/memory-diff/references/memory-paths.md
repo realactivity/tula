@@ -7,7 +7,8 @@ when the same fact appears in multiple places.
 
 | # | Path | Shape | Notes |
 |---|---|---|---|
-| 1 | `~/.openclaw/workspace/.health-records-cache/<YYYY-MM-DD>/<provider>.json` | FHIR R4 JSON | Highest precedence. Structured, dated, provider-attributed. Read these for labs, conditions, medications, immunizations. |
+| 0 | Neo4j graph via `neo4j-memory` (when configured) | Cypher query results | Highest precision for structured facts. Use for trend queries, value history, active conditions and medications. Falls back to sources 1–5 when `neo4j-memory` is not configured or the query returns empty. See `skills/neo4j-memory/references/graph-schema.md` for Cypher patterns. |
+| 1 | `~/.openclaw/workspace/.health-records-cache/<YYYY-MM-DD>/<provider>.json` | FHIR R4 JSON | Structured, dated, provider-attributed. Read these for labs, conditions, medications, immunizations. |
 | 2 | `~/.openclaw/workspace/.med-pdf-cache/<slug>/` | `labs.json`, `imaging.json`, `text.txt` | Extracted from user-shared PDFs. Use `labs[].abnormal[]` and `imaging.impression[]` as primary signals. |
 | 3 | `~/.openclaw/workspace/memory/<YYYY-MM-DD>.md` | Dated agent notes | Free-text daily notes the agent writes. Scan for headers like `## Labs`, `## Symptoms`, `## Meds`, `## Visits`. |
 | 4 | `~/.openclaw/workspace/MEMORY.md` | Persistent agent memory | Single file. Treat as the "current state" snapshot - active conditions, current meds, known trends. |

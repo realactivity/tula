@@ -1,0 +1,22 @@
+id: positive-trigger-ingest-001
+name: Ingest after health-records pull
+description: |
+  Paul asks to save his health records to the graph after a portal pull.
+  The skill should recognize the ingest trigger, describe the ingest workflow
+  (scan caches, run ingest.mjs), and not route to a sibling skill.
+tags:
+  - positive-trigger
+  - ingest
+inputs:
+  prompt: |
+    I just synced my health records from Epic. Can you save everything to the
+    health graph so I have it for future trend queries?
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: recognizes_ingest_workflow
+    config:
+      regex_match:
+        - "(?i)(ingest|graph|neo4j|index|persist|save|node)"
