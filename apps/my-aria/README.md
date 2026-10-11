@@ -2,9 +2,12 @@
 
 A MyChart-style personal-portal UI for the Tula health agent.
 
-> **Status:** Phase 1 walking skeleton. Renders fixture data only.
-> Phase 2 swaps `lib/data/loader.ts` to read live FHIR JSON from
-> `~/.openclaw/workspace/tula/fhir/`. The UI does not change.
+> **Status:** Open-source reference UI for a single self-hosted user.
+> The dashboard reads FHIR JSON from the local Tula workspace
+> (`~/.openclaw/workspace/tula/fhir/`, or `TULA_FHIR_DIR`) and falls back
+> to synthetic fixtures when that data is missing or `TULA_USE_FIXTURES=1`
+> is set. Labs, medications, and the greeting are wired; the other routes
+> are still stubs. This is not a hospital-deployable product.
 
 ## What this app is
 

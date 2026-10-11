@@ -44,6 +44,20 @@ Open source, self-hosted, model-agnostic, and accessible on low-bandwidth networ
 
 Patient agency only matters if patients can access it. We are building toward an agent that can run anywhere a person needs it.
 
+## Patient agency in the Super Intelligence era
+
+Healthcare has spent decades building systems that understand patients when they enter a hospital. Most of our health happens outside its walls. Patient agents can support people through the rest of their lives. That is the shift from systems of record to systems of patient agency.
+
+Three ideas shape how we build for it:
+
+- **Longitudinal memory.** The history of the record over time: results, medications, encounters, and how they change.
+- **Whole-person context.** The signals around the record that also shape health, such as environmental and public-health conditions. We sometimes call this latitudinal context. It is a framing term, not a FHIR category.
+- **Verifiable action.** The patient directs the agent, and consequential actions need verifiable boundaries: least-privilege permissions, patient-directed consent, observable tool use, and a clear path to a human.
+
+Capable models make these boundaries more important, not less. The more intelligent the agent, the less we can afford to trust it blindly. Zero Trust applies to the model, its tools, its permissions, and every consequential action, not only to the network.
+
+**A note on terminology.** "Super Intelligence (SI)" has entered official U.S. usage. [Executive Order 14434](https://www.whitehouse.gov/wp-content/uploads/2026/09/eo-14434.pdf) (September 29, 2026) directs federal agencies to use it in place of "artificial intelligence" without changing what the term covers. We use SI the same way, as the name of the era and the category. It is not a claim that Tula, or any model it runs, has superhuman clinical ability. Tula remains a tool for personal health organization and health literacy. It is not a medical device and not a substitute for professional medical advice. See [`docs/safety-and-disclaimer.md`](safety-and-disclaimer.md).
+
 ## Why this matters for healthcare organizations
 
 If patient agents become common, hospitals will need governed infrastructure for safety, consent, identity, escalation, audit, and workflow integration. That is the role of Aria, the commercial hospital-scale platform RealActivity is developing on the same foundation.

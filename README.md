@@ -10,11 +10,13 @@ Tula is an open-source personal health agent skill layer built on [OpenClaw](htt
 
 Tula is designed for patient agency: helping people better understand, organize, and act on their own health information without handing that data to another closed platform.
 
+**Built for the Super Intelligence era.** U.S. federal agencies now use "Super Intelligence (SI)" in place of "artificial intelligence" ([Executive Order 14434](https://www.whitehouse.gov/wp-content/uploads/2026/09/eo-14434.pdf), September 2026). Tula uses the term the same way, to name the era and the category, never to claim superhuman clinical ability. As models grow more capable, patients need an agent that works for them inside verifiable boundaries. Longitudinal memory. Whole-person context. Verifiable action. See [Patient agency in the Super Intelligence era](docs/patient-agency.md#patient-agency-in-the-super-intelligence-era).
+
 > **Microsoft validated this architecture.** At Build 2026, Microsoft shipped Scout on the same OpenClaw runtime that powers Tula. Think of Tula as your patients' Scout, governed. See [Microsoft Just Validated Our Architecture](https://www.realactivity.ai/frontier/build26/tula-scout-post.html).
 >
 > **Frontier agent posture.** Tula is designed around enterprise-grade evaluation, observability, auditability, least-permission skills, human-in-the-loop safety, and healthcare-specific guardrails. See [`docs/frontier-agent.md`](docs/frontier-agent.md).
 >
-> **Open-core path.** Tula is the open-source foundation. Aria is RealActivity's commercial hospital-scale platform for governed patient-agent infrastructure. See [`OPEN_CORE.md`](OPEN_CORE.md) and [`docs/aria-commercial-platform.md`](docs/aria-commercial-platform.md).
+> **Open-core path.** Tula is the open-source foundation. Aria, the trust layer for patient intelligence, is RealActivity's commercial platform for governed patient agents, in active development at pilot stage. See [`OPEN_CORE.md`](OPEN_CORE.md) and [`docs/aria-commercial-platform.md`](docs/aria-commercial-platform.md).
 >
 > **Pilots and partnerships.** RealActivity is selectively exploring commercial pilots, design partnerships, strategic collaborations, and aligned investment conversations with healthcare organizations and mission-aligned partners. See [`docs/enterprise-pilots.md`](docs/enterprise-pilots.md).
 
@@ -87,7 +89,7 @@ Full safety positioning in [`docs/safety-and-disclaimer.md`](docs/safety-and-dis
 | Health-record amendment requests ([`skills/request-amendment`](skills/request-amendment/)) | Live |
 | Ambient environmental and public-health awareness ([`skills/lookout`](skills/lookout/)) | Live |
 | Intelligent email ingestion | In Progress |
-| Patient health dashboard | In Progress |
+| Patient health dashboard ([`apps/my-aria`](apps/my-aria/) reference UI) | In Progress |
 | Native apps for Android, iOS, macOS, and Windows with one-click install | In Progress |
 | Wearables, medical imaging, genomics, de-identification | Planned |
 
@@ -157,7 +159,7 @@ Full status (live skills, infrastructure, in progress, planned, community ideas,
 | Project | Scope | License |
 |---|---|---|
 | Tula | Open-source health agent skill layer and single-user reference deployment | Apache 2.0 |
-| Aria | Commercial hospital-scale patient-agent platform for governed, multi-tenant deployment | Proprietary RealActivity platform |
+| Aria | Commercial hospital-scale patient-agent platform for governed, multi-tenant deployment (in active development, pilot stage) | Proprietary RealActivity platform |
 
 Tula is complete and useful on its own. Aria consumes Tula skills as a versioned dependency and adds the enterprise infrastructure required for healthcare organizations: patient identity, ingest routing, dashboards, LLM gateway governance, audit, compliance, and operational controls.
 
@@ -187,7 +189,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for detailed guidelines and the Develop
 
 ## License, Trademark, and Disclaimer
 
-Tula is licensed under the Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE). The Apache 2.0 license applies to the open-source Tula codebase. It does not grant rights to RealActivity trademarks, the Aria commercial platform, proprietary deployment architecture, or non-public commercial implementation details. The `skills/health-records/` subdirectory retains its upstream MIT terms (see [NOTICE](NOTICE)).
+Tula is licensed under the Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE). The Apache 2.0 license applies to the open-source Tula codebase. It does not grant rights to RealActivity trademarks, the Aria commercial platform, proprietary deployment architecture, or non-public commercial implementation details. The `skills/health-records/` and `services/wren/` subdirectories retain their upstream MIT terms (see [NOTICE](NOTICE)).
 
 RealActivity retains ownership of its trademarks, commercial platform architecture, proprietary Aria components, and non-public implementation details. RealActivity may pursue intellectual property protection around commercial patient-agent orchestration, governance, evaluation, and enterprise deployment patterns.
 
