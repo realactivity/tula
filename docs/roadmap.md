@@ -53,6 +53,7 @@ Wren is a rebranded MIT derivative of [`jmandel/health-skillz`](https://github.c
 |---|---|
 | Intelligent Email Ingestion | Secure inbound routing and classification |
 | Patient Health Dashboard | Mobile-friendly private dashboard; the [`apps/my-aria`](../apps/my-aria/) reference UI reads local FHIR |
+| SMART Health Check-in web wallet | [`apps/check-in-wallet/`](../apps/check-in-wallet/) for Kill the Clipboard Connectathon #2 (3 November 2026). Static web wallet, synthetic Dylan Meyer only. Public https URL still needs a human deploy. |
 | Native Apps | One-click install apps for Android, iOS, macOS, and Windows |
 | Patient Health Journal | Structured check-ins through Telegram |
 | Professional Journal | Daily and weekly synthesis for work notes |

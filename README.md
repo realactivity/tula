@@ -90,6 +90,7 @@ Full safety positioning in [`docs/safety-and-disclaimer.md`](docs/safety-and-dis
 | Ambient environmental and public-health awareness ([`skills/lookout`](skills/lookout/)) | Live |
 | Intelligent email ingestion | In Progress |
 | Patient health dashboard ([`apps/my-aria`](apps/my-aria/) reference UI) | In Progress |
+| SMART Health Check-in web wallet ([`apps/check-in-wallet`](apps/check-in-wallet/)) | In Progress (Connectathon #2) |
 | Native apps for Android, iOS, macOS, and Windows with one-click install | In Progress |
 | Wearables, medical imaging, genomics, de-identification | Planned |
 

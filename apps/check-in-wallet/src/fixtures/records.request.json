@@ -1,0 +1,77 @@
+{
+  "type": "smart-health-checkin-request",
+  "version": "1",
+  "id": "replace-with-a-unique-id",
+  "purpose": "Pre-visit check-in",
+  "fhirVersions": ["4.0.1"],
+  "items": [
+    {
+      "id": "patient",
+      "title": "Demographics",
+      "content": {
+        "kind": "selection.fhir",
+        "profiles": [
+          "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"
+        ]
+      },
+      "accept": ["application/fhir+json"]
+    },
+    {
+      "id": "problems",
+      "title": "Problems and health concerns",
+      "content": {
+        "kind": "selection.fhir",
+        "profiles": [
+          "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns"
+        ]
+      },
+      "accept": ["application/fhir+json"]
+    },
+    {
+      "id": "allergies",
+      "title": "Allergies",
+      "content": {
+        "kind": "selection.fhir",
+        "profiles": [
+          "http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance"
+        ]
+      },
+      "accept": ["application/fhir+json"]
+    },
+    {
+      "id": "medications",
+      "title": "Medications",
+      "content": {
+        "kind": "selection.fhir",
+        "profiles": [
+          "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationrequest"
+        ]
+      },
+      "accept": ["application/fhir+json"]
+    },
+    {
+      "id": "immunizations",
+      "title": "Immunizations",
+      "content": {
+        "kind": "selection.fhir",
+        "profiles": [
+          "http://hl7.org/fhir/us/core/StructureDefinition/us-core-immunization"
+        ]
+      },
+      "accept": ["application/fhir+json"]
+    },
+    {
+      "id": "coverage",
+      "title": "Insurance card",
+      "summary": "Your insurance card, as a CARIN digital insurance card or US Core coverage record.",
+      "content": {
+        "kind": "selection.fhir",
+        "profiles": [
+          "http://hl7.org/fhir/us/insurance-card/StructureDefinition/C4DIC-Coverage",
+          "http://hl7.org/fhir/us/core/StructureDefinition/us-core-coverage"
+        ]
+      },
+      "accept": ["application/fhir+json", "application/smart-health-card"]
+    }
+  ]
+}
