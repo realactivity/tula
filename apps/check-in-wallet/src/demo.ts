@@ -38,11 +38,20 @@ function addScenario(label: string, request: unknown, note: string): void {
   btn.type = "button";
   btn.textContent = label;
   btn.addEventListener("click", async () => {
-    out.innerHTML = `<p>${note}</p><p class="note">The wallet tab should open. Review and share there.</p>`;
+    out.innerHTML = `<p>${escapeHtml(note)}</p><p class="note">The wallet tab should open. Review and share there.</p>`;
     const body = asRequest(structuredClone(request));
     body.id = crypto.randomUUID();
-    const result: CheckinResult = await wallet.start(body as never);
-    renderResult(result);
+    try {
+      const result: CheckinResult = await wallet.start(body as never);
+      renderResult(result);
+    } catch (error) {
+      out.innerHTML = `
+        <div class="banner">
+          <p class="eyebrow">failed</p>
+          <p>${escapeHtml(error instanceof Error ? error.message : "Check-in failed")}</p>
+        </div>
+      `;
+    }
   });
   buttons.append(btn);
 }

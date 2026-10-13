@@ -33,6 +33,21 @@ export function inlineQuestionnaire(item: RequestItem): Questionnaire | undefine
   return isQuestionnaire(item.content.questionnaire) ? item.content.questionnaire : undefined;
 }
 
+/** Remote forms are fetched only from https, or from localhost over http. */
+export function questionnaireFetchUrl(raw: string): string {
+  let url: URL;
+  try {
+    url = new URL(raw);
+  } catch {
+    throw new Error("Questionnaire URL is not absolute");
+  }
+  const local = url.hostname === "localhost" || url.hostname === "127.0.0.1";
+  if (url.protocol === "https:" || (url.protocol === "http:" && local)) {
+    return url.toString();
+  }
+  throw new Error("Questionnaire URL must be https");
+}
+
 export function splitCanonical(canonical: string): { url: string; version?: string } {
   const bar = canonical.indexOf("|");
   if (bar === -1) return { url: canonical };
@@ -78,8 +93,18 @@ export async function loadQuestionnaire(
   }
 
   const { url, version } = splitCanonical(canonical);
+  let fetchUrl: string;
   try {
-    const res = await fetchImpl(url);
+    fetchUrl = questionnaireFetchUrl(url);
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Questionnaire URL is not allowed" };
+  }
+  try {
+    const res = await fetchImpl(fetchUrl, {
+      credentials: "omit",
+      redirect: "error",
+      cache: "no-store",
+    });
     if (!res.ok) {
       return { error: `Could not fetch Questionnaire (${res.status})` };
     }
@@ -131,14 +156,13 @@ export function isFormComplete(
 }
 
 export function hasValue(answer: FormAnswer): boolean {
-  return (
-    answer.valueCoding !== undefined ||
-    answer.valueString !== undefined ||
-    answer.valueBoolean !== undefined ||
-    answer.valueInteger !== undefined ||
-    answer.valueDecimal !== undefined ||
-    answer.valueDate !== undefined
-  );
+  if (answer.valueCoding?.code) return true;
+  if (typeof answer.valueString === "string" && answer.valueString.trim() !== "") return true;
+  if (answer.valueBoolean !== undefined) return true;
+  if (answer.valueInteger !== undefined) return true;
+  if (answer.valueDecimal !== undefined) return true;
+  if (answer.valueDate) return true;
+  return false;
 }
 
 export function buildQuestionnaireResponse(args: {

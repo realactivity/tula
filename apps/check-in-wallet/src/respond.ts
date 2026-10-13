@@ -18,13 +18,13 @@ import type {
   SmartRequest,
   SmartResponse,
 } from "./types";
-import { COVERAGE_UNAVAILABLE_MESSAGE, FHIR_JSON, FHIR_R4 } from "./types";
+import { COVERAGE_UNAVAILABLE_MESSAGE, FHIR_JSON, FHIR_R4, MAX_RESPONSE_BYTES } from "./types";
 
 export type UnsupportedHint = { id: string };
 
-export type BuiltResponse = {
-  response: SmartResponse;
-  issues: string[];
+export type LoadedQuestionnaire = {
+  questionnaire: Questionnaire;
+  canonical: string;
 };
 
 export function asRequest(value: unknown): SmartRequest {
@@ -41,7 +41,7 @@ export function defaultDecisions(
 ): ItemDecision[] {
   const unsupported = new Set(unsupportedIds);
   return request.items.map((item) => {
-    if (unsupported.has(item.id) || isUnknownKind(item)) {
+    if (unsupported.has(item.id) || isUnknownKind(item) || !canAnswer(item)) {
       return { itemId: item.id, action: "unsupported" as const };
     }
     if (isInsuranceItem(item)) {
@@ -62,10 +62,10 @@ export async function buildCheckinResponse(args: {
   entries: BundleEntry[];
   decisions: ItemDecision[];
   unsupportedItems?: UnsupportedHint[];
+  questionnaires?: ReadonlyMap<string, LoadedQuestionnaire>;
   fetchImpl?: typeof fetch;
   now?: string;
-}): Promise<BuiltResponse> {
-  const issues: string[] = [];
+}): Promise<SmartResponse> {
   const artifacts: Artifact[] = [];
   const requestStatus: SmartResponse["requestStatus"] = [];
   const decisionById = new Map(args.decisions.map((decision) => [decision.itemId, decision]));
@@ -103,6 +103,7 @@ export async function buildCheckinResponse(args: {
 
     if (isFormItem(item)) {
       const built = await buildFormArtifact(item, decision.formAnswers ?? [], {
+        cached: args.questionnaires?.get(item.id),
         fetchImpl: args.fetchImpl,
         now: args.now,
         artifactId: `a${artifactIndex}`,
@@ -113,7 +114,6 @@ export async function buildCheckinResponse(args: {
         requestStatus.push({ item: item.id, status: "fulfilled" });
       } else {
         requestStatus.push({ item: item.id, status: built.status, message: built.message });
-        if (built.issue) issues.push(built.issue);
       }
       continue;
     }
@@ -133,6 +133,15 @@ export async function buildCheckinResponse(args: {
         item: item.id,
         status: "unavailable",
         message: "No matching records in this wallet.",
+      });
+      continue;
+    }
+
+    if (!acceptsFhirJson(item)) {
+      requestStatus.push({
+        item: item.id,
+        status: "unsupported",
+        message: "This wallet returns FHIR JSON only.",
       });
       continue;
     }
@@ -171,7 +180,20 @@ export async function buildCheckinResponse(args: {
     requestStatus,
   };
 
-  return { response, issues };
+  if (responseSizeBytes(response) > MAX_RESPONSE_BYTES) {
+    throw new Error("Response is over the 512 KB connectathon limit");
+  }
+  return response;
+}
+
+function canAnswer(item: RequestItem): boolean {
+  if (isInsuranceItem(item)) return true;
+  if (!isFormItem(item) && !isSelectionItem(item)) return false;
+  return acceptsFhirJson(item);
+}
+
+function acceptsFhirJson(item: RequestItem): boolean {
+  return Array.isArray(item.accept) && item.accept.includes(FHIR_JSON);
 }
 
 function selectMatchingEntries(item: RequestItem, entries: BundleEntry[]): BundleEntry[] {
@@ -182,24 +204,35 @@ function selectMatchingEntries(item: RequestItem, entries: BundleEntry[]): Bundl
 async function buildFormArtifact(
   item: RequestItem,
   answers: FormAnswer[],
-  options: { fetchImpl?: typeof fetch; now?: string; artifactId: string },
+  options: {
+    cached?: LoadedQuestionnaire;
+    fetchImpl?: typeof fetch;
+    now?: string;
+    artifactId: string;
+  },
 ): Promise<
   | { kind: "artifact"; artifact: Artifact }
-  | { kind: "status"; status: ItemStatusCode; message?: string; issue?: string }
+  | { kind: "status"; status: ItemStatusCode; message?: string }
 > {
-  const loaded = await loadQuestionnaire(item, options.fetchImpl);
+  if (!acceptsFhirJson(item)) {
+    return {
+      kind: "status",
+      status: "unsupported",
+      message: "This wallet returns FHIR JSON only.",
+    };
+  }
+  const loaded = options.cached ?? (await loadQuestionnaire(item, options.fetchImpl));
   if ("error" in loaded) {
     return {
       kind: "status",
       status: "unsupported",
       message: loaded.error,
-      issue: loaded.error,
     };
   }
   if (!isFormComplete(loaded.questionnaire, answers)) {
     return {
       kind: "status",
-      status: "declined",
+      status: "error",
       message: "The form was not completed.",
     };
   }
@@ -233,10 +266,8 @@ export function responseSizeBytes(response: SmartResponse): number {
   return new TextEncoder().encode(JSON.stringify(response)).length;
 }
 
-export type LoadedForm = {
+export type LoadedForm = LoadedQuestionnaire & {
   itemId: string;
-  questionnaire: Questionnaire;
-  canonical: string;
 };
 
 export async function loadForms(

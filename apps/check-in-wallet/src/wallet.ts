@@ -22,7 +22,7 @@ export function startWallet(root: HTMLElement): { opened: boolean; stop: () => v
         renderError(root, choice.message, context.origin);
         return { error: choice.message };
       }
-      renderSent(root, "Shared with the requesting website");
+      renderSent(root, "Sending your answer");
       return { response: choice.response as SmartCheckinResponse };
     },
   });

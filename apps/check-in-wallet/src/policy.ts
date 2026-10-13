@@ -5,17 +5,26 @@ import type { RequestItem } from "./types";
  * Coverage / C4DIC items are answered unavailable (or declined if the
  * patient turns the item off). They never produce an artifact.
  */
+function canonicals(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((entry): entry is string => typeof entry === "string");
+}
+
+/** Coverage / insurance-card profiles. Tula does not store or share these. */
+export function isCoverageCanonical(canonical: string): boolean {
+  const url = canonical.split("|")[0];
+  return (
+    url.endsWith("/C4DIC-Coverage") ||
+    url.endsWith("/us-core-coverage") ||
+    url.includes("/insurance-card/")
+  );
+}
+
 export function isInsuranceItem(item: RequestItem): boolean {
   const content = item.content;
   if (content.kind !== "selection.fhir") return false;
-  const profiles = Array.isArray(content.profiles)
-    ? (content.profiles as string[])
-    : [];
-  return profiles.some(
-    (profile) =>
-      profile.includes("C4DIC-Coverage") ||
-      profile.includes("us-core-coverage") ||
-      profile.includes("insurance-card"),
+  return [...canonicals(content.profiles), ...canonicals(content.profilesFrom)].some(
+    isCoverageCanonical,
   );
 }
 

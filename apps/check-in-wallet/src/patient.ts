@@ -140,10 +140,10 @@ export const patientBundle: FhirBundle = {
         ],
         text: "Essential hypertension",
       },
-      subject: { reference: `Patient/${PATIENT_ID}`, display: "Dylan Meyer" },
+      subject: { reference: PATIENT_FULL_URL, display: "Dylan Meyer" },
       onsetDateTime: "2026-04-30",
       recordedDate: "2026-04-30",
-      asserter: { reference: `Practitioner/${PRACTITIONER_ID}`, display: "Dr. Dave Matthews" },
+      asserter: { reference: PRACTITIONER_FULL_URL, display: "Dr. Dave Matthews" },
     }),
     entry("Condition", "prediabetes", {
       meta: { profile: [US_CORE_CONDITION] },
@@ -191,7 +191,7 @@ export const patientBundle: FhirBundle = {
         ],
         text: "Prediabetes",
       },
-      subject: { reference: `Patient/${PATIENT_ID}`, display: "Dylan Meyer" },
+      subject: { reference: PATIENT_FULL_URL, display: "Dylan Meyer" },
       onsetDateTime: "2026-04-25",
       recordedDate: "2026-04-25",
     }),
@@ -241,7 +241,7 @@ export const patientBundle: FhirBundle = {
         ],
         text: "Hyperlipidemia",
       },
-      subject: { reference: `Patient/${PATIENT_ID}`, display: "Dylan Meyer" },
+      subject: { reference: PATIENT_FULL_URL, display: "Dylan Meyer" },
       onsetDateTime: "2026-04-25",
       recordedDate: "2026-04-25",
     }),
@@ -278,7 +278,7 @@ export const patientBundle: FhirBundle = {
         ],
         text: "Penicillin",
       },
-      patient: { reference: `Patient/${PATIENT_ID}`, display: "Dylan Meyer" },
+      patient: { reference: PATIENT_FULL_URL, display: "Dylan Meyer" },
       reaction: [
         {
           manifestation: [
@@ -312,10 +312,10 @@ export const patientBundle: FhirBundle = {
         ],
         text: "Lisinopril 10 mg oral tablet",
       },
-      subject: { reference: `Patient/${PATIENT_ID}`, display: "Dylan Meyer" },
+      subject: { reference: PATIENT_FULL_URL, display: "Dylan Meyer" },
       authoredOn: "2026-04-30",
       requester: {
-        reference: `Practitioner/${PRACTITIONER_ID}`,
+        reference: PRACTITIONER_FULL_URL,
         display: "Dr. Dave Matthews",
       },
       dosageInstruction: [
@@ -347,7 +347,7 @@ export const patientBundle: FhirBundle = {
         ],
         text: "Influenza, seasonal, injectable",
       },
-      patient: { reference: `Patient/${PATIENT_ID}`, display: "Dylan Meyer" },
+      patient: { reference: PATIENT_FULL_URL, display: "Dylan Meyer" },
       occurrenceDateTime: "2025-10-15",
       primarySource: true,
     }),
@@ -364,7 +364,7 @@ export const patientBundle: FhirBundle = {
         ],
         text: "COVID-19 mRNA vaccine",
       },
-      patient: { reference: `Patient/${PATIENT_ID}`, display: "Dylan Meyer" },
+      patient: { reference: PATIENT_FULL_URL, display: "Dylan Meyer" },
       occurrenceDateTime: "2025-09-20",
       primarySource: true,
     }),
@@ -381,7 +381,7 @@ export const patientBundle: FhirBundle = {
         ],
         text: "Tdap",
       },
-      patient: { reference: `Patient/${PATIENT_ID}`, display: "Dylan Meyer" },
+      patient: { reference: PATIENT_FULL_URL, display: "Dylan Meyer" },
       occurrenceDateTime: "2021-05-18",
       primarySource: true,
     }),
@@ -389,7 +389,7 @@ export const patientBundle: FhirBundle = {
 };
 
 export function bundleEntries(): BundleEntry[] {
-  return patientBundle.entry;
+  return structuredClone(patientBundle.entry);
 }
 
 export function summarizeResource(resource: { resourceType: string; [key: string]: unknown }): string {

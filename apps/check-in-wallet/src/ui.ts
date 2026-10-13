@@ -85,9 +85,16 @@ export async function showConsentScreen(
   let decisions = defaultDecisions(request, unsupportedIds);
   const formAnswers = new Map<string, FormAnswer[]>();
   const formById = new Map(forms.forms.map((form) => [form.itemId, form]));
+  let formError = "";
 
   return new Promise((resolve) => {
-    const finish = (choice: ConsentChoice) => resolve(choice);
+    let settled = false;
+    let sending = false;
+    const finish = (choice: ConsentChoice) => {
+      if (settled) return;
+      settled = true;
+      resolve(choice);
+    };
 
     const paint = () => {
       root.innerHTML = "";
@@ -97,8 +104,10 @@ export async function showConsentScreen(
         decisions,
         formAnswers,
         formById,
+        formError,
         unsupportedIds,
         onToggle: (itemId, action) => {
+          if (settled || sending) return;
           if (action === "decline") {
             decisions = declineItem(decisions, itemId);
           } else {
@@ -109,9 +118,11 @@ export async function showConsentScreen(
           paint();
         },
         onFormAnswer: (itemId, answers) => {
+          if (settled || sending) return;
           formAnswers.set(itemId, answers);
         },
         onShare: async () => {
+          if (settled || sending) return;
           const withForms = decisions.map((decision) =>
             decision.action === "share" && formById.has(decision.itemId)
               ? { ...decision, formAnswers: formAnswers.get(decision.itemId) ?? [] }
@@ -119,19 +130,23 @@ export async function showConsentScreen(
           );
           const missing = missingForms(request, withForms, formById, formAnswers);
           if (missing.length) {
+            formError = "Answer every question before sharing.";
             paint();
-            const first = root.querySelector(`[data-item="${missing[0]}"]`);
-            first?.scrollIntoView({ behavior: "smooth", block: "center" });
+            root.querySelector(`[data-item="${CSS.escape(missing[0])}"]`)
+              ?.scrollIntoView({ behavior: "smooth", block: "center" });
             return;
           }
+          sending = true;
+          formError = "";
           try {
-            const built = await buildCheckinResponse({
+            const response = await buildCheckinResponse({
               request,
               entries: bundleEntries(),
               decisions: withForms,
+              questionnaires: formById,
               unsupportedItems: [...unsupportedIds].map((id) => ({ id })),
             });
-            finish({ kind: "shared", response: built.response });
+            finish({ kind: "shared", response });
           } catch (error) {
             finish({
               kind: "failed",
@@ -139,8 +154,14 @@ export async function showConsentScreen(
             });
           }
         },
-        onDeclineAll: () => finish({ kind: "declined-all" }),
-        onClose: () => finish({ kind: "closed" }),
+        onDeclineAll: () => {
+          if (settled || sending) return;
+          finish({ kind: "declined-all" });
+        },
+        onClose: () => {
+          if (settled || sending) return;
+          finish({ kind: "closed" });
+        },
       }));
     };
 
@@ -173,6 +194,7 @@ function consentDom(args: {
   decisions: ItemDecision[];
   formAnswers: Map<string, FormAnswer[]>;
   formById: Map<string, { questionnaire: Questionnaire; canonical: string }>;
+  formError: string;
   unsupportedIds: Set<string>;
   onToggle: (itemId: string, action: ItemDecision["action"]) => void;
   onFormAnswer: (itemId: string, answers: FormAnswer[]) => void;
@@ -206,6 +228,13 @@ function consentDom(args: {
   );
   wrap.append(actions);
 
+  if (args.formError) {
+    const error = document.createElement("p");
+    error.className = "note";
+    error.textContent = args.formError;
+    wrap.append(error);
+  }
+
   const note = document.createElement("p");
   note.className = "note";
   note.textContent =
@@ -227,13 +256,14 @@ function itemCard(
 ): HTMLElement {
   const decision = args.decisions.find((entry) => entry.itemId === item.id);
   const action = decision?.action ?? "share";
+  const unsupported = args.unsupportedIds.has(item.id) || action === "unsupported";
   const card = document.createElement("section");
   card.className = "item";
   card.dataset.item = item.id;
   if (action === "decline") card.classList.add("declined");
   if (action === "unavailable" || isInsuranceItem(item)) card.classList.add("unavailable");
 
-  const status = statusLabel(item, action, args.unsupportedIds.has(item.id));
+  const status = statusLabel(item, action, unsupported);
   card.innerHTML = `
     <div class="item-head">
       <div>
@@ -258,7 +288,7 @@ function itemCard(
     return card;
   }
 
-  if (args.unsupportedIds.has(item.id) || (!isSelectionItem(item) && !isFormItem(item))) {
+  if (unsupported || (!isSelectionItem(item) && !isFormItem(item))) {
     const p = document.createElement("p");
     p.className = "note";
     p.textContent = "This wallet cannot answer this kind of item. It will be marked unsupported.";
@@ -276,7 +306,6 @@ function itemCard(
       list.append(li);
     } else {
       for (const match of matches) {
-        if (match.resource.resourceType === "Practitioner") continue;
         const li = document.createElement("li");
         li.textContent = summarizeResource(match.resource);
         list.append(li);
@@ -305,7 +334,11 @@ function itemCard(
 
   const form = args.formById.get(item.id);
   if (!form) return card;
-  card.append(renderQuestionnaire(form.questionnaire, args.formAnswers.get(item.id) ?? [], (answers) => {
+  const source = document.createElement("p");
+  source.className = "note";
+  source.textContent = form.canonical;
+  card.append(source);
+  card.append(renderQuestionnaire(item.id, form.questionnaire, args.formAnswers.get(item.id) ?? [], (answers) => {
     args.onFormAnswer(item.id, answers);
   }));
   card.append(
@@ -318,22 +351,23 @@ function itemCard(
 }
 
 function renderQuestionnaire(
+  formItemId: string,
   questionnaire: Questionnaire,
   answers: FormAnswer[],
   onChange: (answers: FormAnswer[]) => void,
 ): HTMLElement {
   const box = document.createElement("div");
   const current = new Map(answers.map((answer) => [answer.linkId, answer]));
-
   const emit = () => onChange([...current.values()]);
 
   for (const item of questionnaire.item ?? []) {
-    box.append(renderQItem(item, current, emit));
+    box.append(renderQItem(formItemId, item, current, emit));
   }
   return box;
 }
 
 function renderQItem(
+  formItemId: string,
   item: QuestionnaireItem,
   current: Map<string, FormAnswer>,
   emit: () => void,
@@ -346,7 +380,7 @@ function renderQItem(
   }
   if (item.type === "group") {
     wrap.innerHTML = `<p class="q-text">${escapeHtml(item.text ?? item.linkId)}</p>`;
-    for (const child of item.item ?? []) wrap.append(renderQItem(child, current, emit));
+    for (const child of item.item ?? []) wrap.append(renderQItem(formItemId, child, current, emit));
     return wrap;
   }
 
@@ -357,14 +391,16 @@ function renderQItem(
   wrap.append(heading);
 
   if (item.type === "choice" && item.answerOption?.length) {
+    let choices = 0;
     for (const option of item.answerOption) {
       const coding = option.valueCoding;
       if (!coding?.code) continue;
+      choices += 1;
       const label = document.createElement("label");
       label.className = "choice";
       const input = document.createElement("input");
       input.type = "radio";
-      input.name = item.linkId;
+      input.name = `${formItemId}:${item.linkId}`;
       input.value = coding.code;
       input.checked = current.get(item.linkId)?.valueCoding?.code === coding.code;
       input.addEventListener("change", () => {
@@ -382,13 +418,11 @@ function renderQItem(
       label.append(input, document.createTextNode(coding.display ?? coding.code));
       wrap.append(label);
     }
-    return wrap;
+    if (choices > 0) return wrap;
   }
 
   const input = document.createElement("input");
-  input.className = "sans";
-  input.style.width = "100%";
-  input.style.marginTop = "0.35rem";
+  input.className = "sans text-answer";
   input.value = current.get(item.linkId)?.valueString ?? "";
   input.addEventListener("input", () => {
     current.set(item.linkId, {

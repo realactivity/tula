@@ -38,7 +38,7 @@ describe("share-records", () => {
   it("fulfills health items and returns coverage unavailable", async () => {
     const request = parse(records);
     const decisions = defaultDecisions(request);
-    const { response } = await buildCheckinResponse({
+    const response = await buildCheckinResponse({
       request,
       entries: bundleEntries(),
       decisions,
@@ -66,7 +66,7 @@ describe("share-records", () => {
 
   it("returns FHIR R4 application/fhir+json for shared items", async () => {
     const request = parse(records);
-    const { response } = await buildCheckinResponse({
+    const response = await buildCheckinResponse({
       request,
       entries: bundleEntries(),
       decisions: defaultDecisions(request),
@@ -91,7 +91,7 @@ describe("decline-item", () => {
   it("declines immunizations and still shares the rest", async () => {
     const request = parse(records);
     const decisions = declineItem(defaultDecisions(request), "immunizations");
-    const { response } = await buildCheckinResponse({
+    const response = await buildCheckinResponse({
       request,
       entries: bundleEntries(),
       decisions,
@@ -113,7 +113,7 @@ describe("fill-form", () => {
         ? { ...decision, formAnswers: SAMPLE_PHQ2_ANSWERS }
         : decision,
     );
-    const { response } = await buildCheckinResponse({
+    const response = await buildCheckinResponse({
       request,
       entries: bundleEntries(),
       decisions,
@@ -135,7 +135,7 @@ describe("fill-form", () => {
 describe("unknown selector", () => {
   it("answers the unknown item unsupported and still shares demographics", async () => {
     const request = parse(unknownSelector);
-    const { response } = await buildCheckinResponse({
+    const response = await buildCheckinResponse({
       request,
       entries: bundleEntries(),
       decisions: defaultDecisions(request),
@@ -144,6 +144,86 @@ describe("unknown selector", () => {
     expect(byItem.patient.status).toBe("fulfilled");
     expect(byItem.mystery.status).toBe("unsupported");
     expect(checkWalletResponse(specRequest(request), specResponse(response))).toEqual([]);
+  });
+});
+
+describe("edge cases", () => {
+  it("declines insurance when the patient turns that item off", async () => {
+    const request = parse(records);
+    const response = await buildCheckinResponse({
+      request,
+      entries: bundleEntries(),
+      decisions: declineItem(defaultDecisions(request), "coverage"),
+    });
+    const coverage = response.requestStatus.find((row) => row.item === "coverage");
+    expect(coverage?.status).toBe("declined");
+    expect(response.artifacts.some((artifact) => artifact.fulfills.includes("coverage"))).toBe(false);
+    expect(checkWalletResponse(specRequest(request), specResponse(response))).toEqual([]);
+  });
+
+  it("does not call an incomplete form declined", async () => {
+    const request = parse(formPhq2);
+    const response = await buildCheckinResponse({
+      request,
+      entries: bundleEntries(),
+      decisions: defaultDecisions(request),
+    });
+    const phq2 = response.requestStatus.find((row) => row.item === "phq2");
+    expect(phq2?.status).toBe("error");
+    expect(response.artifacts.some((artifact) => artifact.fulfills.includes("phq2"))).toBe(false);
+    expect(checkWalletResponse(specRequest(request), specResponse(response))).toEqual([]);
+  });
+
+  it("returns unsupported when the item does not accept FHIR JSON", async () => {
+    const request = parse({
+      type: "smart-health-checkin-request",
+      version: "1",
+      purpose: "Pre-visit check-in",
+      fhirVersions: ["4.0.1"],
+      items: [
+        {
+          id: "immunizations",
+          title: "Immunizations",
+          content: {
+            kind: "selection.fhir",
+            profiles: ["http://hl7.org/fhir/us/core/StructureDefinition/us-core-immunization"],
+          },
+          accept: ["application/smart-health-card"],
+        },
+      ],
+    });
+    const response = await buildCheckinResponse({
+      request,
+      entries: bundleEntries(),
+      decisions: defaultDecisions(request),
+    });
+    expect(response.requestStatus).toEqual([
+      expect.objectContaining({ item: "immunizations", status: "unsupported" }),
+    ]);
+    expect(response.artifacts).toHaveLength(0);
+    expect(checkWalletResponse(specRequest(request), specResponse(response))).toEqual([]);
+  });
+
+  it("includes a referenced prescriber and refuses an oversized response", async () => {
+    const request = parse(records);
+    const entries = bundleEntries();
+    const response = await buildCheckinResponse({
+      request,
+      entries,
+      decisions: defaultDecisions(request),
+    });
+    const medications = response.artifacts.find((artifact) => artifact.fulfills.includes("medications"));
+    const bundle = medications?.value as { entry?: Array<{ resource: { resourceType: string } }> };
+    expect(bundle.entry?.some((entry) => entry.resource.resourceType === "Practitioner")).toBe(true);
+
+    const bloated = structuredClone(entries);
+    const patient = bloated.find((entry) => entry.resource.resourceType === "Patient");
+    patient!.resource.text = "x".repeat(MAX_RESPONSE_BYTES);
+    await expect(buildCheckinResponse({
+      request,
+      entries: bloated,
+      decisions: defaultDecisions(request),
+    })).rejects.toThrow(/512 KB/);
   });
 });
 

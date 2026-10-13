@@ -184,6 +184,11 @@ label.choice:has(input:checked) {
 
 input[type="radio"] { accent-color: var(--accent); margin-right: 0.45rem; }
 
+.text-answer {
+  width: 100%;
+  margin-top: 0.35rem;
+}
+
 a { color: var(--accent-soft); }
 
 .pill {
