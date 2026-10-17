@@ -185,6 +185,7 @@ tell us in a Discussion. We track forks to improve the RFC.
 | Agent build spec | [`docs/build-spec-patient-agent-eval-standard-v0.1.md`](docs/build-spec-patient-agent-eval-standard-v0.1.md) |
 | Deploy to VM | [`docs/deployment-guide.md`](docs/deployment-guide.md) |
 | Eval compliance table | [`docs/evals.md`](docs/evals.md) |
+| Standards, conformance results, connectathons | [`docs/interoperability.md`](docs/interoperability.md) |
 | Runtime workspace agent | [`docs/agent/AGENTS.md`](docs/agent/AGENTS.md) |
 | Claude Code notes | [`CLAUDE.md`](CLAUDE.md) |
 | Open vs Aria scope | [`OPEN_CORE.md`](OPEN_CORE.md) |
