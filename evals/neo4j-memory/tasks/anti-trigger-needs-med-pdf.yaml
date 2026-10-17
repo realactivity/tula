@@ -1,0 +1,21 @@
+id: anti-trigger-needs-med-pdf-001
+name: PDF shared — route to med-pdf first
+description: |
+  Paul shares a lab PDF. The skill should NOT ingest directly — it should
+  route to med-pdf first to extract structured JSON, then ingest. The skill
+  must recognize that a raw PDF is not a valid ingest source.
+tags:
+  - anti-trigger
+  - routing
+inputs:
+  prompt: |
+    I just downloaded my LabCorp PDF. Can you add it to the health graph?
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: routes_to_med_pdf
+    config:
+      regex_match:
+        - "(?i)(med.?pdf|extract|parse|pdf)"

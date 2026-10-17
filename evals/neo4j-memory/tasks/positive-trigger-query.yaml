@@ -1,0 +1,23 @@
+id: positive-trigger-query-001
+name: Trend query — glucose over time
+description: |
+  Paul asks how his glucose has trended. The skill should recognize the
+  longitudinal query trigger, describe translating the question to Cypher,
+  and reference query.mjs — not route to memory-diff or health-records.
+tags:
+  - positive-trigger
+  - query
+  - trend
+inputs:
+  prompt: |
+    How has my fasting glucose trended over the last six months? I want to
+    see the actual values and whether anything crossed into the abnormal range.
+expected:
+  outcomes:
+    - type: task_completed
+graders:
+  - type: text
+    name: recognizes_query_workflow
+    config:
+      regex_match:
+        - "(?i)(cypher|graph|query|trend|glucose|observation)"
