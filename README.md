@@ -6,6 +6,10 @@ Built and maintained by [RealActivity](https://realactivity.ai).
 
 > **Watch the live demo (~16 min).** [YouTube](https://youtu.be/FcLl6fASpgw) (Epic MyChart at **[10:00](https://youtu.be/FcLl6fASpgw?t=600)**) | [Video guide](docs/demo.md) | [Podcast interview](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) (~17 min, May 2026)
 
+> **New: Tula Check-in Wallet passes the SMART Health Check-in test suite (October 2026).** Tula's open-source patient wallet answers clinic check-in requests with FHIR records and forms the patient approves item by item. It passed every spec check on the official SMART Testing EHR across all three connectathon minimum scenarios. Next stop: live testing at the CMS Kill the Clipboard Connectathon on November 3, 2026.
+>
+> [Try the wallet](https://realactivity.github.io/tula/check-in-wallet/) | [Results and standards](docs/interoperability.md) | [Source](apps/check-in-wallet/)
+
 Tula is an open-source personal health agent skill layer built on [OpenClaw](https://github.com/openclaw/openclaw). It helps individuals, caregivers, and health-focused communities organize health records, medical PDFs, lab results, portal messages, personal notes, and longitudinal health signals in a private, self-hosted AI workspace.
 
 Tula is designed for patient agency: helping people better understand, organize, and act on their own health information without handing that data to another closed platform.
@@ -28,6 +32,7 @@ It currently supports:
 
 - Pulling patient records from portals using SMART on FHIR
 - Self-hosting the records-pull relay (Wren) with no third-party dependency
+- Answering clinic check-in requests with a SMART Health Check-in web wallet ([results](docs/interoperability.md))
 - Parsing medical PDFs, lab reports, screenshots, and image-only documents
 - Drafting patient portal messages for medication questions, lab follow-ups, refill requests, and symptom summaries
 - Daily health-signal digests
@@ -90,7 +95,7 @@ Full safety positioning in [`docs/safety-and-disclaimer.md`](docs/safety-and-dis
 | Ambient environmental and public-health awareness ([`skills/lookout`](skills/lookout/)) | Live |
 | Intelligent email ingestion | In Progress |
 | Patient health dashboard ([`apps/my-aria`](apps/my-aria/) reference UI) | In Progress |
-| SMART Health Check-in web wallet ([`apps/check-in-wallet`](apps/check-in-wallet/)) | In Progress (Connectathon #2) |
+| SMART Health Check-in web wallet ([`apps/check-in-wallet`](apps/check-in-wallet/)) | Live; passes SMART Testing EHR ([results](docs/interoperability.md)); Connectathon #2 on Nov 3 |
 | Native apps for Android, iOS, macOS, and Windows with one-click install | In Progress |
 | Wearables, medical imaging, genomics, de-identification | Planned |
 
@@ -151,7 +156,7 @@ Full status (live skills, infrastructure, in progress, planned, community ideas,
 - **Coding agents.** [`AGENTS.md`](AGENTS.md) - canonical repo guide (read first).
 - **New here.** [`docs/demo.md`](docs/demo.md) - [YouTube live demo](https://youtu.be/FcLl6fASpgw) (Epic MyChart at **10:00**) or [podcast interview](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/), then pick a path below.
 - **Developers.** [`docs/deployment-guide.md`](docs/deployment-guide.md), then [`docs/skills-development.md`](docs/skills-development.md) and [`skills/AGENTS.md`](skills/AGENTS.md).
-- **Healthcare organizations.** [`docs/enterprise-pilots.md`](docs/enterprise-pilots.md), [`docs/aria-commercial-platform.md`](docs/aria-commercial-platform.md), and the [patient-AI evaluation standard draft](articles/how-will-you-know-if-your-patient-ai-is-working.md).
+- **Healthcare organizations.** [`docs/enterprise-pilots.md`](docs/enterprise-pilots.md), [`docs/aria-commercial-platform.md`](docs/aria-commercial-platform.md), [`docs/interoperability.md`](docs/interoperability.md) (standards and conformance results), and the [patient-AI evaluation standard draft](articles/how-will-you-know-if-your-patient-ai-is-working.md).
 - **Patients and caregivers.** [`docs/safety-and-disclaimer.md`](docs/safety-and-disclaimer.md), then [`docs/use-cases.md`](docs/use-cases.md) and [`docs/patient-agency.md`](docs/patient-agency.md).
 - **Contributors.** [`CONTRIBUTING.md`](CONTRIBUTING.md), then [`docs/skills-development.md`](docs/skills-development.md) and [`docs/community-skills.md`](docs/community-skills.md).
 
