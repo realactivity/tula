@@ -20,6 +20,7 @@ We are intentionally selective. Tula and Aria are aimed at organizations that sh
 Tula and Aria are designed to be useful across the patient-experience continuum. We are open to conversations with:
 
 - **Hospitals and health systems** evaluating patient-facing AI under HIPAA-aligned governance, including academic medical centers, community health systems, and integrated delivery networks
+- **Government and public-sector health programs** such as federal and state health agencies, Medicaid programs, public health departments, and veterans and military health systems, deploying patient-facing agents under public accountability, procurement, and interoperability requirements
 - **Payers** building member engagement, care management, and prior-authorization-adjacent workflows on a governed agent foundation
 - **Employers and benefits organizations** offering patient-navigation and benefits-coordination AI to their members
 - **Research organizations** running cohort engagement, longitudinal data capture, and consent-aware patient communication at scale

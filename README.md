@@ -19,10 +19,17 @@ Tula is designed for patient agency: helping people better understand, organize,
 > **Microsoft validated this architecture.** At Build 2026, Microsoft shipped Scout on the same OpenClaw runtime that powers Tula. Think of Tula as your patients' Scout, governed. See [Microsoft Just Validated Our Architecture](https://www.realactivity.ai/frontier/build26/tula-scout-post.html).
 >
 > **Frontier agent posture.** Tula is designed around enterprise-grade evaluation, observability, auditability, least-permission skills, human-in-the-loop safety, and healthcare-specific guardrails. See [`docs/frontier-agent.md`](docs/frontier-agent.md).
->
-> **Open-core path.** Tula is the open-source foundation. Aria, the trust layer for patient intelligence, is RealActivity's commercial platform for governed patient agents, in active development at pilot stage. See [`OPEN_CORE.md`](OPEN_CORE.md) and [`docs/aria-commercial-platform.md`](docs/aria-commercial-platform.md).
->
-> **Pilots and partnerships.** RealActivity is selectively exploring commercial pilots, design partnerships, strategic collaborations, and aligned investment conversations with healthcare organizations and mission-aligned partners. See [`docs/enterprise-pilots.md`](docs/enterprise-pilots.md).
+
+## Open Source for Individuals. My Aria for Hospitals, Health Systems, and Governments.
+
+Tula is free and Apache-2.0: one person, one self-hosted agent, their own data. **My Aria** is RealActivity's commercial version of that same agent, issued and governed by an organization for every patient it serves. It runs on **Aria**, the hospital-scale platform that adds patient identity, consent, multi-tenant runtime, EHR integration, audit, compliance reporting, and organization-controlled model routing. Both are in active development at pilot stage.
+
+| You are | Start with |
+|---|---|
+| An individual, caregiver, or developer | Tula, this repo. [Deployment guide](docs/deployment-guide.md). |
+| A hospital, health system, payer, or government health program | My Aria on Aria. [Commercial pilots and partnerships](docs/enterprise-pilots.md), [Aria platform](docs/aria-commercial-platform.md). |
+
+Commercial inquiries: **Paul Swider, CEO, RealActivity, pswider@realactivity.com**. Scope split between the open and commercial products: [`OPEN_CORE.md`](OPEN_CORE.md).
 
 ## 30-Second Summary
 
@@ -109,7 +116,7 @@ See [`docs/demo.md`](docs/demo.md) for both videos: [YouTube live demo](https://
 
 Tula is the open-source foundation for patient-owned personal health agents.
 
-RealActivity is also developing Aria, a commercial hospital-scale platform for governed patient-agent infrastructure. We are selectively exploring pilots, design-partner relationships, strategic partnerships, and aligned investment conversations with hospitals, health systems, payers, employers, research organizations, advocacy groups, digital health companies, and mission-aligned investors.
+RealActivity also builds My Aria, the commercial patient agent and app, on Aria, a hospital-scale platform for governed patient-agent infrastructure. We are selectively exploring pilots, design-partner relationships, strategic partnerships, and aligned investment conversations with hospitals, health systems, government and public-sector health programs, payers, employers, research organizations, advocacy groups, digital health companies, and mission-aligned investors.
 
 For commercial or strategic inquiries: **Paul Swider, CEO, RealActivity, pswider@realactivity.com**.
 
@@ -156,7 +163,7 @@ Full status (live skills, infrastructure, in progress, planned, community ideas,
 - **Coding agents.** [`AGENTS.md`](AGENTS.md) - canonical repo guide (read first).
 - **New here.** [`docs/demo.md`](docs/demo.md) - [YouTube live demo](https://youtu.be/FcLl6fASpgw) (Epic MyChart at **10:00**) or [podcast interview](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/), then pick a path below.
 - **Developers.** [`docs/deployment-guide.md`](docs/deployment-guide.md), then [`docs/skills-development.md`](docs/skills-development.md) and [`skills/AGENTS.md`](skills/AGENTS.md).
-- **Healthcare organizations.** [`docs/enterprise-pilots.md`](docs/enterprise-pilots.md), [`docs/aria-commercial-platform.md`](docs/aria-commercial-platform.md), [`docs/interoperability.md`](docs/interoperability.md) (standards and conformance results), and the [patient-AI evaluation standard draft](articles/how-will-you-know-if-your-patient-ai-is-working.md).
+- **Hospitals, health systems, and government health programs.** [`docs/enterprise-pilots.md`](docs/enterprise-pilots.md), [`docs/aria-commercial-platform.md`](docs/aria-commercial-platform.md), [`docs/interoperability.md`](docs/interoperability.md) (standards and conformance results), and the [patient-AI evaluation standard draft](articles/how-will-you-know-if-your-patient-ai-is-working.md).
 - **Patients and caregivers.** [`docs/safety-and-disclaimer.md`](docs/safety-and-disclaimer.md), then [`docs/use-cases.md`](docs/use-cases.md) and [`docs/patient-agency.md`](docs/patient-agency.md).
 - **Contributors.** [`CONTRIBUTING.md`](CONTRIBUTING.md), then [`docs/skills-development.md`](docs/skills-development.md) and [`docs/community-skills.md`](docs/community-skills.md).
 
@@ -168,7 +175,7 @@ Full status (live skills, infrastructure, in progress, planned, community ideas,
 | My Aria | The patient's agent and app, issued and governed by a healthcare organization on Aria (in active development, pilot stage) | Proprietary RealActivity product |
 | Aria | Commercial hospital-scale platform behind My Aria: Patient Swarm runtime, identity, audit, EHR integration, governance (in active development, pilot stage) | Proprietary RealActivity platform |
 
-Tula is complete and useful on its own. Aria consumes Tula skills as a versioned dependency and adds the enterprise infrastructure required for healthcare organizations: patient identity, ingest routing, dashboards, LLM gateway governance, audit, compliance, and operational controls.
+Tula is complete and useful on its own. Aria consumes Tula skills as a versioned dependency and adds the enterprise infrastructure required by hospitals, health systems, payers, and government health programs: patient identity, ingest routing, dashboards, LLM gateway governance, audit, compliance, and operational controls.
 
 Full scope split in [`OPEN_CORE.md`](OPEN_CORE.md). Aria platform detail in [`docs/aria-commercial-platform.md`](docs/aria-commercial-platform.md).
 
