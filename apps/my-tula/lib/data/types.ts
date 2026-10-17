@@ -1,5 +1,5 @@
 /**
- * My Aria - typed data layer.
+ * My Tula - typed data layer.
  *
  * Clinical data flows through FHIR R4 types in `lib/fhir/types.ts`.
  * Patient-portal UX state (balances, quick actions, content copy) lives here.

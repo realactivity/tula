@@ -2,7 +2,7 @@
 shortLabel: Personal demo
 ---
 
-**Personal demo, not clinical software.** My Aria is an open-source patient-view
+**Personal demo, not clinical software.** My Tula is an open-source patient-view
 UI built on the [Tula health agent](https://github.com/realactivity/tula). It is
 not affiliated with, endorsed by, or derived from Epic Systems Corporation or
 its MyChart product. It is not a medical device, not FDA-cleared, and not

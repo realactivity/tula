@@ -3,9 +3,9 @@ import { AppShell } from "@/components/shell/app-shell";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "My Aria - personal patient view",
+  title: "My Tula - personal patient view",
   description:
-    "My Aria is the personal patient-portal-style view of Tula, the open-source health AI agent. MyChart-inspired, dark-first, single user, local data.",
+    "My Tula is the personal patient-portal-style view of Tula, the open-source health AI agent. MyChart-inspired, dark-first, single user, local data.",
 };
 
 export default function RootLayout({

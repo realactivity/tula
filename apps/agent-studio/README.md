@@ -12,8 +12,8 @@ for your Tula agent.
 
 - An activity-feed view of every resource your Tula agent has ingested:
   lab panels, imaging reports, appointments, prescriptions, EOBs.
-- Sibling app to [`apps/my-aria/`](../my-aria/). Agent Studio is the
-  newest-first activity log. My Aria is the curated patient-portal
+- Sibling app to [`apps/my-tula/`](../my-tula/). Agent Studio is the
+  newest-first activity log. My Tula is the curated patient-portal
   dashboard. Both read the same on-disk FHIR layer.
 
 ## Stack

@@ -1,4 +1,4 @@
-# My Aria - personal patient view
+# My Tula - personal patient view
 
 A MyChart-style personal-portal UI for the Tula health agent.
 
@@ -36,7 +36,7 @@ A MyChart-style personal-portal UI for the Tula health agent.
 ## Run locally
 
 ```bash
-cd apps/my-aria
+cd apps/my-tula
 npm install
 npm run dev
 # open http://localhost:3002
@@ -82,7 +82,7 @@ render consistently across both apps.
 ## Relationship to `apps/agent-studio`
 
 Both apps share the FHIR types in `lib/fhir/types.ts`. `agent-studio` is
-the ingestion-feed view (newest-first activity log). `my-aria` is the
+the ingestion-feed view (newest-first activity log). `my-tula` is the
 patient-portal view (curated dashboard sections, sparklines, quick
 actions). They will eventually read from the same on-disk FHIR layer.
 
@@ -94,10 +94,28 @@ when you want to know how you're doing.
 
 ## Trademark
 
-Aria is a trademark of RealActivity. MyChart and Epic are trademarks of
+Tula is a trademark of RealActivity. MyChart and Epic are trademarks of
 Epic Systems Corporation. This app uses those names only as nominative
-references in its disclaimer copy. The "My Aria" wordmark is a
+references in its disclaimer copy. The "My Tula" wordmark is a
 RealActivity sub-brand and is not a MyChart variant.
+
+This app was named My Aria until October 2026. "My Aria" now names the
+hospital-issued patient agent and app in RealActivity's commercial Aria
+platform; see [`TRADEMARK.md`](../../TRADEMARK.md).
+
+### Upgrading a running deployment
+
+The directory moved from `apps/my-aria/` to `apps/my-tula/`. On a VM that
+runs the dashboard as a systemd user unit, after `git pull`:
+
+1. Copy `.env.local` and run `npm ci && npm run build` in `apps/my-tula/`.
+2. Point the unit's `WorkingDirectory` at `apps/my-tula/` (and rename the
+   unit to `my-tula.service` if you like), then
+   `systemctl --user daemon-reload && systemctl --user restart <unit>`.
+3. Delete the old `apps/my-aria/` directory once the new one serves on port 3002.
+
+Saved sidebar section state resets once, because the browser storage key
+changed with the name.
 
 ## Disclaimer
 

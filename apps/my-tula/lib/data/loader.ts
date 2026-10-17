@@ -79,7 +79,7 @@ export async function getDashboardData(): Promise<DashboardData> {
     // whole portal down. Fall back to the well-known fixture data.
     // (In production you may want to log this to your agent logs.)
     // eslint-disable-next-line no-console
-    console.error("[my-aria] FHIR data load failed, falling back to fixtures:", err);
+    console.error("[my-tula] FHIR data load failed, falling back to fixtures:", err);
     return {
       ...dashboardFixture,
       refreshedAt: new Date().toISOString(),

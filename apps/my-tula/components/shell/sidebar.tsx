@@ -17,7 +17,7 @@ import {
   type RoadmapNavItem,
 } from "./nav-items";
 
-const SECTION_STORAGE_KEY = "my-aria.sidebar.sections.v1";
+const SECTION_STORAGE_KEY = "my-tula.sidebar.sections.v1";
 
 type SidebarSection = {
   id: string;

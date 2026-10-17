@@ -15,15 +15,15 @@ entry) and one lab-opportunities JSON, and writes two typeset PDFs:
      checklist, discuss-with-doctor lab questions, and optional portal
      snippet drafts marked "review before sending".
 
-Branding is My Aria, not Epic. The wordmark renders as uniform styled text
-("My Aria", single ink color - no two-tone). Burgundy is reserved for the
+Branding is My Tula, not Epic. The wordmark renders as uniform styled text
+("My Tula", single ink color - no two-tone). Burgundy is reserved for the
 header accent rule, "High" pills, the patient-story rule, and the review
 callout. No Epic logo, no MyChart logo, no Epic blue, no text suggesting an
 Epic-affiliated origin. This is defensible structural homage to a familiar
 clinical document, not a copy.
 
 Typesetting is HTML + CSS rendered by WeasyPrint (no headless browser).
-Type is a sans-serif clinical stack (the same family the Aria app uses):
+Type is a sans-serif clinical stack (the same family the My Tula app uses):
 ui-sans-serif / system-ui / Segoe UI / Roboto / Helvetica Neue / Arial,
 resolved by WeasyPrint to the best available host font. No serif body type.
 
@@ -56,10 +56,10 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 WORDMARK_FIRST = "My"
-WORDMARK_SECOND = "Aria"
+WORDMARK_SECOND = "Tula"
 DOC_VERSION = "v1.0"
 
-# Aria brand palette, resolved from apps/my-aria/app/globals.css light-mode
+# My Tula brand palette, resolved from apps/my-tula/app/globals.css light-mode
 # tokens to print-safe hex (WeasyPrint 61 oklch support is uneven; hex is
 # exact and portable). Burgundy is the single accent.
 BURGUNDY = "#9B1C2C"        # --color-accent  oklch(0.46 0.16 18). SPARING:

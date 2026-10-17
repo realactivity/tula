@@ -13,7 +13,7 @@ const { values } = parseArgs({
 });
 
 const url = values.url ?? process.env.URL ?? "http://localhost:3002/dashboard";
-const outRel = values.out ?? process.env.OUT ?? "public/my-aria-dashboard.png";
+const outRel = values.out ?? process.env.OUT ?? "public/my-tula-dashboard.png";
 const out = path.isAbsolute(outRel) ? outRel : path.join(here, "..", outRel);
 
 const browser = await chromium.launch();

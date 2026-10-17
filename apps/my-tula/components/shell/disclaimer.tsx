@@ -28,7 +28,7 @@ export function DisclaimerFull() {
         Personal demo, not clinical software.
       </p>
       <p className="mt-2">
-        My Aria is an open-source patient-view UI built on the{" "}
+        My Tula is an open-source patient-view UI built on the{" "}
         <a
           href="https://github.com/realactivity/tula"
           target="_blank"

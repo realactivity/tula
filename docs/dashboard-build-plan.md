@@ -9,10 +9,15 @@ presents a beautiful, modern UI Paul can browse from any device.
 > exists lives in **[Current state](#current-state-2026-06-06)** directly
 > below; the architecture/stack sections after it retain the original
 > reasoning for context. Where the two disagree, Current state wins.
+>
+> **Rename (2026-10):** the dashboard is now **My Tula** in `apps/my-tula/`.
+> "My Aria" names the commercial patient product on Aria. Systemd unit names
+> below (`my-aria.service`) describe the VM as it was on 2026-06-06; see the
+> upgrade steps in [`apps/my-tula/README.md`](../apps/my-tula/README.md).
 
 ## Current state (2026-06-06)
 
-### The app that exists: `apps/my-aria`
+### The app that exists: `apps/my-tula` (then `apps/my-aria`)
 
 The dashboard is real and running. `apps/agent-studio` (the activity-feed
 sibling) is still a one-page skeleton and is **not** running.
@@ -124,7 +129,7 @@ Because Tula already aggregates the clinical record (FHIR from the portals)
 single source of truth that neither the EHR nor memory alone provides.
 
 The unlock is letting the patient **add and delete medications (and
-supplements/vitamins) directly in My Aria**, layered on top of the
+supplements/vitamins) directly in My Tula**, layered on top of the
 clinically-sourced list. That patient-maintained layer, merged with the FHIR
 import, is exactly the artifact a patient wants to walk into a visit with -
 and the artifact an agent should reason over.
@@ -149,7 +154,7 @@ and the artifact an agent should reason over.
 
 ### Why this is a differentiator
 
-This converts My Aria from a *viewer of someone else's record* into the
+This converts My Tula from a *viewer of someone else's record* into the
 patient's *own authoritative health record*. It is the difference between
 "here is what your clinic thinks you take" and "here is what you actually
 take" - the thing patients and agents both actually need.
@@ -419,14 +424,14 @@ session; a 60s server-side revalidate covers the demo in the meantime.
 
 ## Port allocation (~10 apps)
 
-Today only `3002` (my-aria) is a Tula app port. Adopt this convention before
+Today only `3002` (my-tula) is a Tula app port. Adopt this convention before
 app #3 exists so we never end up tunneling ten separate ports.
 
 | Port | App / service | State |
 |---|---|---|
 | 3000 | `agent-studio` (activity feed) | reserved; skeleton, not running |
 | 3001 | (reserved, originally planned dashboard port) | free |
-| 3002 | `my-aria` | **live** |
+| 3002 | `my-tula` | **live** |
 | 3003–3010 | apps 3–10 | one per app, allocate sequentially |
 | 8080 | filebrowser | existing |
 | 18789 | openclaw gateway | existing |
@@ -568,12 +573,12 @@ medication reconciliation layer (storage, merge, origin labels, export).
 |---|---|
 | Stack | **Next.js 15 + Tailwind CSS v4 + Framer Motion (`motion`)** (TypeScript) — built; `shadcn/ui` not actually used, components are hand-rolled in `components/ui/` |
 | Access | **Tailscale** (decided 2026-06-06, supersedes the earlier Cloudflare pick) — VM stays off the public internet, no domain needed, single-operator + demo machine. Cloudflare Tunnel kept as the future option if non-VPN caregiver access is needed |
-| Apps / brand | **`my-aria`** is the patient-portal dashboard (running on 3002). **`agent-studio`** is the activity-feed sibling (skeleton). "Aria" usage is a RealActivity sub-brand; see [`TRADEMARK.md`](../TRADEMARK.md) |
+| Apps / brand | **`my-tula`** (My Tula) is the patient-portal dashboard (running on 3002). **`agent-studio`** is the activity-feed sibling (skeleton). "My Tula" is a RealActivity sub-brand; "My Aria" is reserved for the commercial product; see [`TRADEMARK.md`](../TRADEMARK.md) |
 | Caregivers in Phase 1 | **Deferred** — Tailscale is operator-device scoped. Caregiver access (without a VPN client) would move us to Cloudflare Tunnel + Access later |
 | Charts library | **Recharts** (in use for sparklines) |
 | Hostname | Tailnet MagicDNS name (e.g. `aria.tula-agent01.<tailnet>.ts.net`); optional TLS via `tailscale serve`/`tailscale cert` |
-| Ports | `127.0.0.1:30xx` per app, registry in [Port allocation](#port-allocation-10-apps); my-aria = 3002 |
-| Repo location | `apps/my-aria/` and `apps/agent-studio/` (monorepo-style; skills + scripts + apps in one repo) |
+| Ports | `127.0.0.1:30xx` per app, registry in [Port allocation](#port-allocation-10-apps); my-tula = 3002 |
+| Repo location | `apps/my-tula/` and `apps/agent-studio/` (monorepo-style; skills + scripts + apps in one repo) |
 
 ### Why these choices
 
