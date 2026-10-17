@@ -70,6 +70,7 @@ Wren is a rebranded MIT derivative of [`jmandel/health-skillz`](https://github.c
 | Medical Image Interpreter | DICOM workflows with healthcare imaging models |
 | De-Identification Engine | PHI removal for sharing and research |
 | Research Synthesis | PubMed and literature monitoring |
+| Trial Companion | Clinical trial participation support for a participant (understand, prepare, connect) against an IRB-approved study content pack, handing off through SMART Health Check-in; see the [design proposal](trial-companion-design.md) |
 | Voice Calling | OpenClaw voice-call plugin integration |
 | Healthcare Model Routing | MedGemma, MedASR, MedImageInsight |
 
@@ -89,6 +90,7 @@ Community ideas live in [Discussions](../../../discussions) and [`docs/community
 | [Patient agent evaluation standard article](../articles/how-will-you-know-if-your-patient-ai-is-working.md) | Draft (companion to [`evals/README.md`](../evals/README.md) v0.1) |
 | [Two-score framework article (governance and health portfolio)](../articles/every-patient-ai-needs-two-scores.md) | Draft |
 | [Voice integration architecture (OpenClaw and Twilio)](voice-integration.md) | Plan documented |
+| [Trial Companion design proposal (patient-owned clinical trial agent)](trial-companion-design.md) | Design proposal; not shipped |
 | [Open-core scope split](../OPEN_CORE.md) | Complete |
 
 ## Eval Snapshot: Request-Amendment

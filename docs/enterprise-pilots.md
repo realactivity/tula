@@ -53,6 +53,7 @@ Pilots are typically scoped against a single bounded workflow with clear success
 - A caregiver-support workflow paired with a clinical service line
 - A patient-reported-outcome capture flow tied to a research protocol or quality program
 - A health-literacy and education flow for a defined population (chronic disease, post-discharge, oncology, maternal health, etc.)
+- A clinical trial participant support flow (understand the approved study materials, prepare one's own records and practical barriers, hand off an approved package to the research site), funded by a sponsor and governed by the site; see the [Trial Companion design proposal](trial-companion-design.md)
 
 We co-define the success criteria with you up front. Evaluation suites are written in the open and committed to the repository (or to your private fork) so that pilot results are reproducible against a stable model snapshot.
 
