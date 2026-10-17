@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Tula Check-in Wallet">
+  <rect width="64" height="64" rx="12" fill="#6b1d2a"/>
+  <path fill="#f4ece8" d="M16 22h32a4 4 0 0 1 4 4v20a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4V26a4 4 0 0 1 4-4zm2 8h12v3H18zm0 7h20v3H18z"/>
+  <circle cx="46" cy="38" r="5" fill="#e8c4b8"/>
+</svg>

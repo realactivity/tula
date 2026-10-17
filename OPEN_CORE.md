@@ -47,6 +47,11 @@ The public Tula repo is the home of:
   removes the dependency on any third-party hosted instance. Point the skill
   at a self-hosted relay via `HEALTH_SKILLZ_BASE_URL`. The multi-tenant,
   hospital-scale version of the relay is part of Aria (see below).
+- **SMART Health Check-in web wallet**: [`apps/check-in-wallet/`](apps/check-in-wallet/),
+  a single-user, static web wallet for the SMART Health Check-in 1.0 draft.
+  It holds a synthetic patient and answers Verifier check-in requests. The
+  hospital-scale identity, SSO, and multi-tenant check-in surfaces are part
+  of Aria.
 
 Contributions that improve any of the above are welcome. See
 [`CONTRIBUTING.md`](CONTRIBUTING.md) for how to submit them.

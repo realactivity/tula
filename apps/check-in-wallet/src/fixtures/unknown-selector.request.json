@@ -1,0 +1,28 @@
+{
+  "type": "smart-health-checkin-request",
+  "version": "1",
+  "id": "replace-with-a-unique-id",
+  "purpose": "Pre-visit check-in",
+  "fhirVersions": ["4.0.1"],
+  "items": [
+    {
+      "id": "patient",
+      "title": "Demographics",
+      "content": {
+        "kind": "selection.fhir",
+        "profiles": [
+          "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"
+        ]
+      },
+      "accept": ["application/fhir+json"]
+    },
+    {
+      "id": "mystery",
+      "title": "A test item your app won't recognize",
+      "content": {
+        "kind": "example.ktc-test"
+      },
+      "accept": ["application/fhir+json"]
+    }
+  ]
+}

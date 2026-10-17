@@ -1,0 +1,142 @@
+{
+  "type": "smart-health-checkin-request",
+  "version": "1",
+  "id": "replace-with-a-unique-id",
+  "purpose": "Pre-visit check-in",
+  "fhirVersions": ["4.0.1"],
+  "items": [
+    {
+      "id": "patient",
+      "title": "Demographics",
+      "content": {
+        "kind": "selection.fhir",
+        "profiles": [
+          "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"
+        ]
+      },
+      "accept": ["application/fhir+json"]
+    },
+    {
+      "id": "phq2",
+      "title": "Two questions about your mood",
+      "required": true,
+      "content": {
+        "kind": "form.fhir",
+        "questionnaireCanonical": "https://smart-health-checkin.org/connectathon/Questionnaire/phq-2.json",
+        "questionnaire": {
+          "resourceType": "Questionnaire",
+          "url": "https://smart-health-checkin.org/connectathon/Questionnaire/phq-2.json",
+          "version": "1",
+          "name": "PHQ2",
+          "title": "PHQ-2 depression screen",
+          "status": "draft",
+          "subjectType": ["Patient"],
+          "date": "2026-09-25",
+          "publisher": "SMART Health IT (connectathon example)",
+          "description": "The two-question PHQ-2 depression screen, for the KTC SMART Health Check-in connectathon.",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "55757-9",
+              "display": "Patient Health Questionnaire 2 item (PHQ-2) [Reported]"
+            }
+          ],
+          "item": [
+            {
+              "linkId": "stem",
+              "type": "display",
+              "text": "Over the last 2 weeks, how often have you been bothered by the following problems?"
+            },
+            {
+              "linkId": "phq2-1",
+              "code": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "44250-9",
+                  "display": "Little interest or pleasure in doing things in last 2 weeks"
+                }
+              ],
+              "prefix": "1.",
+              "text": "Little interest or pleasure in doing things",
+              "type": "choice",
+              "answerOption": [
+                {
+                  "valueCoding": {
+                    "system": "http://loinc.org",
+                    "code": "LA6568-5",
+                    "display": "Not at all"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "system": "http://loinc.org",
+                    "code": "LA6569-3",
+                    "display": "Several days"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "system": "http://loinc.org",
+                    "code": "LA6570-1",
+                    "display": "More than half the days"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "system": "http://loinc.org",
+                    "code": "LA6571-9",
+                    "display": "Nearly every day"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "phq2-2",
+              "code": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "44255-8",
+                  "display": "Feeling down, depressed, or hopeless in last 2 weeks"
+                }
+              ],
+              "prefix": "2.",
+              "text": "Feeling down, depressed, or hopeless",
+              "type": "choice",
+              "answerOption": [
+                {
+                  "valueCoding": {
+                    "system": "http://loinc.org",
+                    "code": "LA6568-5",
+                    "display": "Not at all"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "system": "http://loinc.org",
+                    "code": "LA6569-3",
+                    "display": "Several days"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "system": "http://loinc.org",
+                    "code": "LA6570-1",
+                    "display": "More than half the days"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "system": "http://loinc.org",
+                    "code": "LA6571-9",
+                    "display": "Nearly every day"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "accept": ["application/fhir+json"]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+name: Check-in Wallet
+
+# Structural tests and production build for the SMART Health Check-in
+# web wallet. Does not call the live SMART Testing EHR.
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "apps/check-in-wallet/**"
+      - ".github/workflows/check-in-wallet.yml"
+  push:
+    branches: [main]
+    paths:
+      - "apps/check-in-wallet/**"
+      - ".github/workflows/check-in-wallet.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test and build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/check-in-wallet
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: apps/check-in-wallet/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Typecheck and build
+        run: npm run build

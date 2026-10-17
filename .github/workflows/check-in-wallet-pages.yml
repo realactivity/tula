@@ -1,0 +1,81 @@
+name: Check-in Wallet Pages
+
+# Publishes the SMART Health Check-in web wallet to GitHub Pages at
+# https://realactivity.github.io/tula/check-in-wallet/
+#
+# One-time setup by a repo admin: Settings -> Pages -> Source: GitHub Actions.
+# Until that is done the deploy job fails; rerun it from the Actions tab
+# (workflow_dispatch) once Pages is enabled.
+#
+# The site serves static files only. The wallet ships a synthetic chart and
+# never contacts a Tula VM.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/check-in-wallet/**"
+      - ".github/workflows/check-in-wallet-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: check-in-wallet-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build site
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/check-in-wallet
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: apps/check-in-wallet/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Assemble site
+        # Pages serves the artifact at /tula/. The wallet lives one level
+        # down so the site root stays free for other content later.
+        run: |
+          rm -rf site
+          mkdir -p site/check-in-wallet
+          cp -R dist/. site/check-in-wallet/
+          cp pages-root.html site/index.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/check-in-wallet/site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}check-in-wallet/
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

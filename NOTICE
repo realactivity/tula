@@ -44,3 +44,9 @@ services/wren/
     The Apache License 2.0 grant in this repository's top-level LICENSE
     does NOT apply to files under services/wren/; those files remain
     governed by the MIT License as documented in their own LICENSE file.
+
+apps/check-in-wallet/
+    Uses @smart-health-checkin/client from SMART Health IT
+    (https://github.com/smart-health-checkin/client), Apache License 2.0,
+    pinned to a GitHub release tarball. The Tula wallet code in this
+    directory is Apache-2.0 like the rest of the public Tula repo.

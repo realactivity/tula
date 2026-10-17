@@ -1,0 +1,222 @@
+:root {
+  color-scheme: dark;
+  --bg: #14110f;
+  --bg-elev: #1d1916;
+  --bg-item: #251f1c;
+  --ink: #f4ece8;
+  --muted: #c4b4ac;
+  --faint: #8c7d76;
+  --line: #3a302c;
+  --accent: #9b1c2c;
+  --accent-soft: #c45a5a;
+  --ok: #7d9b6a;
+  --warn: #d4a04a;
+  --focus: #e8c4b8;
+  --radius: 14px;
+  font-family: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+#app {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 3rem;
+}
+
+.sans {
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+}
+
+.eyebrow {
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-soft);
+  margin: 0 0 0.4rem;
+}
+
+h1 {
+  font-size: 1.7rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+}
+
+h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.4rem;
+}
+
+p { margin: 0 0 0.85rem; color: var(--muted); }
+
+.banner {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  margin: 1rem 0;
+}
+
+.banner.origin {
+  border-color: var(--accent);
+  background: #2a1618;
+}
+
+.origin-value {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 1.05rem;
+  color: var(--ink);
+  word-break: break-all;
+}
+
+.note {
+  font-size: 0.92rem;
+  color: var(--faint);
+}
+
+.item {
+  background: var(--bg-item);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.95rem 1rem;
+  margin: 0.75rem 0;
+}
+
+.item.declined { opacity: 0.72; }
+.item.unavailable { border-style: dashed; }
+
+.item-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.item-title { color: var(--ink); font-weight: 600; margin: 0; }
+.item-summary { margin: 0.2rem 0 0; font-size: 0.92rem; }
+
+.matches {
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.matches li { padding: 0.15rem 0; }
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+}
+
+button, .btn {
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-size: 0.95rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+}
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.toggle {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.toggle button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+
+.q-item { margin-top: 0.85rem; }
+.q-text { color: var(--ink); margin: 0 0 0.4rem; }
+.q-display { color: var(--muted); font-style: italic; }
+
+label.choice {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.45rem 0.7rem;
+  margin: 0.35rem 0;
+  cursor: pointer;
+}
+
+label.choice:has(input:checked) {
+  border-color: var(--accent-soft);
+  background: #2a1618;
+}
+
+input[type="radio"] { accent-color: var(--accent); margin-right: 0.45rem; }
+
+.text-answer {
+  width: 100%;
+  margin-top: 0.35rem;
+}
+
+a { color: var(--accent-soft); }
+
+.pill {
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.15rem 0.5rem;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+.pill.warn { color: var(--warn); border-color: var(--warn); }
+.pill.ok { color: var(--ok); border-color: var(--ok); }
+
+pre {
+  background: #0e0c0b;
+  border-radius: 10px;
+  padding: 0.75rem;
+  overflow: auto;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.footer {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--faint);
+}

@@ -1,0 +1,25 @@
+{
+  "organization": "RealActivity",
+  "homepage": "https://realactivity.ai",
+  "contacts": [
+    {
+      "name": "RealActivity connectathon contact",
+      "email": "pswider@realactivity.com"
+    }
+  ],
+  "components": [
+    {
+      "id": "tula-web-wallet",
+      "role": "web-wallet",
+      "name": "Tula Check-in Wallet",
+      "description": "Open-source Tula web wallet for SMART Health Check-in. Holds synthetic patient Dylan Meyer. Health data only; insurance cards come back unavailable.",
+      "status": "not-yet",
+      "walletUrl": "https://realactivity.github.io/tula/check-in-wallet/",
+      "homepage": "https://github.com/realactivity/tula/tree/main/apps/check-in-wallet",
+      "iconUrl": "https://realactivity.github.io/tula/check-in-wallet/icon.svg",
+      "target": "tab",
+      "testPatient": "Dylan Meyer (synthetic, 51). Essential hypertension, prediabetes, hyperlipidemia. Lisinopril 10 mg. Penicillin allergy. Seasonal influenza, COVID-19, and Tdap. No insurance card.",
+      "notes": "Insurance items are returned unavailable (Tula policy: health data only). Opened directly, the page is a landing page. A Verifier must window.open it. Local verifier at demo.html."
+    }
+  ]
+}
