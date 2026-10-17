@@ -12,13 +12,13 @@ Powered by [Microsoft Waza](https://github.com/microsoft/waza). Standard:
 | Skill | Tasks | Mock CI | Compliance | Spec | Tokens | Last live run |
 |---|---|---|---|---|---|---|
 | `epic-note` | 6 | yes | Medium-High | 9/9 ✓ | 821 / 500 ⚠ | - |
-| `health-records` | 8 | yes | Medium-High | 9/9 ✓ | 1419 / 500 ⚠ | - |
-| `lookout` | 9 | yes | Medium-High | 9/9 ✓ | 1584 / 500 ⚠ | - |
-| `med-pdf` | 8 | yes | Medium-High | 9/9 ✓ | 941 / 500 ⚠ | - |
-| `memory-diff` | 7 | yes | Medium-High | 9/9 ✓ | 1188 / 500 ⚠ | - |
-| `myhealth-pulse` | 6 | yes | Medium-High | 9/9 ✓ | 1182 / 500 ⚠ | - |
-| `prep-my-visit` | 16 | yes | Medium-High | 9/9 ✓ | 464 / 500 ✓ | - |
-| `request-amendment` | 12 | yes | Medium-High | 9/9 ✓ | 996 / 500 ⚠ | - |
+| `health-records` | 8 | yes | Medium-High | 9/9 ✓ | 1410 / 500 ⚠ | - |
+| `lookout` | 9 | yes | Medium-High | 9/9 ✓ | 1577 / 500 ⚠ | - |
+| `med-pdf` | 8 | yes | Medium-High | 9/9 ✓ | 930 / 500 ⚠ | - |
+| `memory-diff` | 7 | yes | Medium-High | 9/9 ✓ | 1183 / 500 ⚠ | - |
+| `myhealth-pulse` | 6 | yes | Medium-High | 9/9 ✓ | 1176 / 500 ⚠ | - |
+| `prep-my-visit` | 16 | yes | Medium-High | 9/9 ✓ | 457 / 500 ✓ | - |
+| `request-amendment` | 12 | yes | Medium-High | 9/9 ✓ | 990 / 500 ⚠ | - |
 | `composition` | 6 | yes | - | - | - | - |
 
 ---
