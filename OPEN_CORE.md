@@ -8,6 +8,16 @@ under a shared multi-tenant control plane, an architecture RealActivity
 calls a **Patient Swarm**. The two are distinct products with distinct
 licenses and distinct repositories.
 
+Three names, three audiences:
+
+- **Tula** (public, Apache-2.0): the personal health agent, its skills,
+  and the **My Tula** dashboard, run by one person on their own machine.
+- **My Aria** (commercial): the patient's agent and app, issued and
+  governed by a healthcare organization. Each My Aria agent runs Tula
+  skills under Aria's identity, policy, and audit controls.
+- **Aria** (commercial): the platform the organization buys and runs
+  behind My Aria.
+
 This document scopes what the public Tula repo is for, what it accepts
 contributions for, and what's out of scope.
 

@@ -89,7 +89,7 @@ Full safety positioning in [`docs/safety-and-disclaimer.md`](docs/safety-and-dis
 | Health-record amendment requests ([`skills/request-amendment`](skills/request-amendment/)) | Live |
 | Ambient environmental and public-health awareness ([`skills/lookout`](skills/lookout/)) | Live |
 | Intelligent email ingestion | In Progress |
-| Patient health dashboard ([`apps/my-aria`](apps/my-aria/) reference UI) | In Progress |
+| Patient health dashboard, My Tula ([`apps/my-tula`](apps/my-tula/) reference UI) | In Progress |
 | SMART Health Check-in web wallet ([`apps/check-in-wallet`](apps/check-in-wallet/)) | In Progress (Connectathon #2) |
 | Native apps for Android, iOS, macOS, and Windows with one-click install | In Progress |
 | Wearables, medical imaging, genomics, de-identification | Planned |
@@ -159,8 +159,9 @@ Full status (live skills, infrastructure, in progress, planned, community ideas,
 
 | Project | Scope | License |
 |---|---|---|
-| Tula | Open-source health agent skill layer and single-user reference deployment | Apache 2.0 |
-| Aria | Commercial hospital-scale patient-agent platform for governed, multi-tenant deployment (in active development, pilot stage) | Proprietary RealActivity platform |
+| Tula | Open-source personal health agent, its skills, and the My Tula dashboard, for single-user self-hosted deployment | Apache 2.0 |
+| My Aria | The patient's agent and app, issued and governed by a healthcare organization on Aria (in active development, pilot stage) | Proprietary RealActivity product |
+| Aria | Commercial hospital-scale platform behind My Aria: Patient Swarm runtime, identity, audit, EHR integration, governance (in active development, pilot stage) | Proprietary RealActivity platform |
 
 Tula is complete and useful on its own. Aria consumes Tula skills as a versioned dependency and adds the enterprise infrastructure required for healthcare organizations: patient identity, ingest routing, dashboards, LLM gateway governance, audit, compliance, and operational controls.
 
@@ -194,7 +195,7 @@ Tula is licensed under the Apache License 2.0. See [LICENSE](LICENSE) and [NOTIC
 
 RealActivity retains ownership of its trademarks, commercial platform architecture, proprietary Aria components, and non-public implementation details. RealActivity may pursue intellectual property protection around commercial patient-agent orchestration, governance, evaluation, and enterprise deployment patterns.
 
-"Tula", "Aria", and "RealActivity" are trademarks of RealActivity. The Apache 2.0 license covers the code, not the names. See [`TRADEMARK.md`](TRADEMARK.md).
+"Tula", "My Tula", "Aria", "My Aria", and "RealActivity" are trademarks of RealActivity. The Apache 2.0 license covers the code, not the names. See [`TRADEMARK.md`](TRADEMARK.md).
 
 **Disclaimer.** Tula is an open-source software tool intended to support personal health data organization and health literacy. It is not a medical device, not FDA-cleared or approved, and not intended to diagnose, treat, cure, or prevent any disease or medical condition. Tula does not provide clinical decision support and should not be used as a substitute for professional medical advice, diagnosis, or treatment. Always seek the guidance of qualified healthcare providers with any questions regarding a medical condition. If you are experiencing a medical emergency, contact your local emergency services immediately. Full safety positioning in [`docs/safety-and-disclaimer.md`](docs/safety-and-disclaimer.md).
 

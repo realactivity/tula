@@ -2,15 +2,15 @@
 
 ## Summary
 
-The Tula source code is released under the Apache License, Version 2.0 (see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE)). You are free to use, modify, and distribute the software under the terms of that license. The **Tula**, **Aria**, and **RealActivity** names are not included in that license. You may fork the code, but you may not call your fork "Tula" or "Aria," or represent it as an official RealActivity product.
+The Tula source code is released under the Apache License, Version 2.0 (see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE)). You are free to use, modify, and distribute the software under the terms of that license. The **Tula**, **My Tula**, **Aria**, **My Aria**, and **RealActivity** names are not included in that license. You may fork the code, but you may not call your fork "Tula," "My Tula," "Aria," or "My Aria," or represent it as an official RealActivity product.
 
 ## Details
 
-"Tula," "Aria," and "RealActivity" are trademarks of RealActivity. The Apache License 2.0 grants permission to use, modify, and distribute the *software*, but does not grant permission to use the Tula, Aria, or RealActivity names, logos, or branding (see section 6 of the Apache License).
+"Tula," "My Tula," "Aria," "My Aria," and "RealActivity" are trademarks of RealActivity. The Apache License 2.0 grants permission to use, modify, and distribute the *software*, but does not grant permission to use these names, logos, or branding (see section 6 of the Apache License).
 
-Aria is RealActivity's commercial hospital-scale platform built on Tula skills. The Aria name is reserved for RealActivity's product and may not be used by forks or derivative projects.
+Aria is RealActivity's commercial hospital-scale platform built on Tula skills. "My Aria" is RealActivity's commercial patient product on Aria: the patient's agent and app, issued by a healthcare organization. Both names are reserved for RealActivity's commercial products and may not be used by forks or derivative projects.
 
-"My Aria" is a permitted RealActivity sub-brand used to identify the open-source personal patient-portal UI in `apps/my-aria/`. It is distinct from the commercial Aria platform and is governed by the same trademark rules: forks may use the underlying code but may not be distributed under the "My Aria" name or any variation that implies an official RealActivity product.
+"My Tula" is the RealActivity sub-brand for the open-source personal patient-portal UI in `apps/my-tula/` (named "My Aria" until October 2026). Forks may use the underlying code but may not be distributed under the "My Tula" name or any variation that implies an official RealActivity product.
 
 ### Permitted Uses
 
@@ -22,7 +22,7 @@ Aria is RealActivity's commercial hospital-scale platform built on Tula skills. 
 
 ### Restricted Uses
 
-- Naming your product or service "Tula," "Aria," or any confusingly similar variation.
+- Naming your product or service "Tula," "My Tula," "Aria," "My Aria," or any confusingly similar variation.
 - Using the Tula, Aria, or RealActivity logos in your own product or service.
 - Implying that your project is endorsed by, affiliated with, or an official version of Tula, Aria, or RealActivity.
 - Offering a hosted version of the software under the Tula or Aria name without written permission from RealActivity.
