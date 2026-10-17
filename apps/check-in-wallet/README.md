@@ -67,10 +67,9 @@ Alternative if Pages is not acceptable: Azure Static Web Apps or any static host
 
 ### GitHub Pages steps (human)
 
-1. Merge this PR to `main` when ready.
-2. In the repo settings, enable GitHub Pages. Source: GitHub Actions, or a `gh-pages` branch.
-3. Add a workflow that runs `cd apps/check-in-wallet && npm ci && npm test && npm run build` and publishes `apps/check-in-wallet/dist` to Pages. Keep `base: "./"` in `vite.config.ts` so the app works on the `/tula/check-in-wallet/` subpath.
-4. Confirm https, that `/` shows the landing page, and that `/demo.html` still opens the wallet. The production build sets a Content-Security-Policy meta tag. `frame-ancestors` is ignored in a meta tag, so the host should also send `Content-Security-Policy: frame-ancestors 'none'`.
+1. In the repo settings, enable GitHub Pages. Source: GitHub Actions. This is a one-time admin step.
+2. Merge this PR to `main`. The [`check-in-wallet-pages.yml`](../../.github/workflows/check-in-wallet-pages.yml) workflow runs `npm ci && npm test && npm run build`, places `dist/` under `check-in-wallet/`, and publishes to Pages. `base: "./"` in `vite.config.ts` keeps the app working on the `/tula/check-in-wallet/` subpath. The site root `/tula/` redirects to the wallet via [`pages-root.html`](pages-root.html). If the merge lands before Pages is enabled, rerun the workflow from the Actions tab.
+3. Confirm https, that `/` shows the landing page, and that `/demo.html` still opens the wallet. The production build sets a Content-Security-Policy meta tag. `frame-ancestors` is ignored in a meta tag, so the host should also send `Content-Security-Policy: frame-ancestors 'none'`.
 5. Register the wallet: submit the [connectathon registration form](https://smart-health-checkin.org/connectathon/) using [`participant.example.json`](participant.example.json). Set `status` to `up` only after the URL loads for anyone.
 6. Self-test the three minimum scenarios against the SMART Testing EHR and file results.
 
