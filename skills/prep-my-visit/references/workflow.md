@@ -18,7 +18,7 @@ Allow template-level overrides:
 
 ## Invocation surfaces
 
-- My Aria UI prep button
+- My Tula UI prep button
 - Telegram natural language, slash command, and voice
 - forwarded calendar invite or visit confirmation email
 - automatic trigger from ingested `Appointment`

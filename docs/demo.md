@@ -6,7 +6,7 @@ Two ways to see Tula: a **screen-recorded live demo** (start here) and a **podca
 
 ## Live demo (YouTube) - start here
 
-**~16 minutes.** Screen recording of Tula running on a self-hosted VM: Telegram chat, live SMART on FHIR record pull, and the My Aria patient chart.
+**~16 minutes.** Screen recording of Tula running on a self-hosted VM: Telegram chat, live SMART on FHIR record pull, and the My Tula patient chart (shown under its earlier name, My Aria).
 
 | | |
 |---|---|
@@ -19,7 +19,7 @@ Two ways to see Tula: a **screen-recorded live demo** (start here) and a **podca
 - Tula on Telegram analyzing real longitudinal data (BP, wearables, genomics context)
 - Live **SMART on FHIR** portal connect and record pull (patient-initiated, not agent-automated OAuth)
 - Agent grounded in pulled FHIR bundles answering questions from your chart
-- Preview of **My Aria** - patient-owned chart UI inspired by portal UX, built for multi-hospital life
+- Preview of **My Tula** (then called My Aria) - patient-owned chart UI inspired by portal UX, built for multi-hospital life
 
 This is the best entry point if you want to **see the product work** before reading the repo.
 

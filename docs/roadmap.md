@@ -10,7 +10,7 @@ The README contains a short summary and points back here.
 - **2026-05-25: YouTube live demo.** [~16-minute screen recording](https://youtu.be/FcLl6fASpgw) with Epic MyChart SMART on FHIR pull at **10:00**. See [`docs/demo.md`](demo.md).
 - **2026-05-14: Podcast interview.** [AI Agent and Copilot Podcast](https://agentandcopilot.com/cloud-wars-minute/ai-agent-and-copilot-podcast-openclaw-powered-healthcare-assistant-builds-patient-agency/) (~17 min) - story, OpenClaw, and patient agency. See [`docs/demo.md`](demo.md).
 - **2026-06-04: Wren merged to public Tula.** The self-hostable SMART on FHIR records relay landed at [`services/wren/`](../services/wren/). The `health-records` skill can now pull through a self-hosted relay with no third-party dependency, set via `HEALTH_SKILLZ_BASE_URL`. The multi-tenant, hospital-scale version of the relay remains private under Aria.
-- **2026-06-07: My Aria reads local FHIR.** The [`apps/my-aria`](../apps/my-aria/) reference UI renders labs, medications, and the greeting from the FHIR JSON in the local workspace, with a synthetic-fixture fallback.
+- **2026-06-07: My Aria (now My Tula) reads local FHIR.** The [`apps/my-tula`](../apps/my-tula/) reference UI renders labs, medications, and the greeting from the FHIR JSON in the local workspace, with a synthetic-fixture fallback.
 - **2026-06-20: Wren deployed to Azure Container Apps.** Containerized reference deployment (Dockerfile + Bicep) on Azure Container Apps: HTTPS-only, min = max = 1, RSA-only JWKS persisted on Azure Files, image pull via managed identity. Reproducible runbook in [`services/wren/docs/deployment-azure.md`](../services/wren/docs/deployment-azure.md). Custom-domain bind and Epic Lane 2 client-ID wiring are in progress.
 - **2026-10-17: Check-in Wallet passes the SMART Health Check-in test suite.** The [`apps/check-in-wallet`](../apps/check-in-wallet/) web wallet went live on GitHub Pages and passed every spec check on the official SMART Testing EHR across the three connectathon minimum scenarios, plus unknown-selector and decline-all. Live testing follows at CMS Kill the Clipboard Connectathon #2 on 3 November 2026. See [`docs/interoperability.md`](interoperability.md).
 
@@ -53,7 +53,7 @@ Wren is a rebranded MIT derivative of [`jmandel/health-skillz`](https://github.c
 | Component | Description |
 |---|---|
 | Intelligent Email Ingestion | Secure inbound routing and classification |
-| Patient Health Dashboard | Mobile-friendly private dashboard; the [`apps/my-aria`](../apps/my-aria/) reference UI reads local FHIR |
+| Patient Health Dashboard | Mobile-friendly private dashboard; the [My Tula](../apps/my-tula/) reference UI reads local FHIR |
 | SMART Health Check-in web wallet | [`apps/check-in-wallet/`](../apps/check-in-wallet/) for Kill the Clipboard Connectathon #2 (3 November 2026). Live at [realactivity.github.io/tula/check-in-wallet](https://realactivity.github.io/tula/check-in-wallet/); passes the SMART Testing EHR ([results](interoperability.md)). Synthetic Dylan Meyer only. Registration and official result filing pending. |
 | Native Apps | One-click install apps for Android, iOS, macOS, and Windows |
 | Patient Health Journal | Structured check-ins through Telegram |

@@ -22,7 +22,7 @@ export function Header() {
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/dashboard" className="flex items-baseline gap-2">
           <span className="text-lg font-semibold tracking-tight">
-            My <span className="text-[--color-accent]">Aria</span>
+            My <span className="text-[--color-accent]">Tula</span>
           </span>
           <span className="hidden text-xs text-[--color-fg-subtle] font-mono sm:inline">
             personal patient view

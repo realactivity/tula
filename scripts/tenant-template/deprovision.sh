@@ -220,6 +220,7 @@ step_4_clear_phi_caches() {
         "$WORKSPACE/pmv-review" \
         "$WORKSPACE/pmv-verify" \
         "$WORKSPACE/my-aria-screenshots" \
+        "$WORKSPACE/my-tula-screenshots" \
         "$WORKSPACE/amendment-output" \
         "$WORKSPACE/amendments"; do
         if [[ -d "$dir" ]]; then

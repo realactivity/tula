@@ -101,9 +101,9 @@ write_files:
       _(Build this out over time as they share more - health goals, current
       conditions, lifestyle, what matters to them.)_
 
-  # -- /home/azureuser/tula/apps/my-aria/.env.local --------------------------
-  # Tell My Aria to read this tenant's FHIR tree.
-  - path: /home/azureuser/tula/apps/my-aria/.env.local
+  # -- /home/azureuser/tula/apps/my-tula/.env.local --------------------------
+  # Tell My Tula to read this tenant's FHIR tree.
+  - path: /home/azureuser/tula/apps/my-tula/.env.local
     permissions: '0600'
     owner: azureuser:azureuser
     content: |

@@ -16,7 +16,7 @@ interoperates with a Wren backend without any code change, via the
 RealActivity modifications:
   - Rebranding ("Health Skillz" -> "Wren").
   - A dark-first design-system reskin of the connection UI to match the
-    RealActivity / my-aria visual language (OKLCH tokens, burgundy accent).
+    RealActivity / my-tula visual language (OKLCH tokens, burgundy accent).
   - Packaging as the `services/wren` component of the Tula repository.
 
 None of these modifications alter the wire protocol or the end-to-end

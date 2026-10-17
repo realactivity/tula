@@ -45,7 +45,7 @@ skills + composition bundle). Article:
 | [`skills/`](skills/) | OpenClaw skills (core product). Each skill: `SKILL.md`, `references/`, `scripts/` |
 | [`evals/`](evals/) | Waza eval suites per skill + composition bundle + `_templates/` |
 | [`docs/`](docs/) | Architecture, deploy guide, eval status, build spec, runtime agent templates |
-| [`apps/`](apps/) | My Aria patient portal UI; SMART Health Check-in web wallet |
+| [`apps/`](apps/) | My Tula patient portal UI; SMART Health Check-in web wallet |
 | [`services/wren/`](services/wren/) | Self-hostable SMART on FHIR records relay |
 | [`scripts/`](scripts/) | CI gates, deploy-skills, backup, eval runners |
 | [`templates/`](templates/) | Tenant onboarding placeholders (`{{UPPER_SNAKE}}`) |

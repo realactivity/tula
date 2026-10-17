@@ -87,7 +87,7 @@ cd ~/tula
 openclaw skills list
 ```
 
-3. Invoke naturally from your runtime surface (My Aria, Telegram, or equivalent):
+3. Invoke naturally from your runtime surface (My Tula, Telegram, or equivalent):
 
 - "Prep me for cardiology next Tuesday."
 - "What labs should I discuss before my PCP annual?"

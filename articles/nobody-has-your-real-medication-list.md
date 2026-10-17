@@ -11,7 +11,7 @@ companion_content:
   - LinkedIn long post (promotes this Substack article)
   - LinkedIn brief (standalone, ~700 chars)
   - X 4-tweet thread
-trigger_event: Realized while wiring real FHIR medications into My Aria that the clinic's active-med list never matches what I actually take - supplements and vitamins are missing, some prescriptions were never filled, and stale entries linger. A patient-owned reconciliation layer turns the dashboard into the single source of truth.
+trigger_event: Realized while wiring real FHIR medications into My Tula that the clinic's active-med list never matches what I actually take - supplements and vitamins are missing, some prescriptions were never filled, and stale entries linger. A patient-owned reconciliation layer turns the dashboard into the single source of truth.
 ---
 
 # Nobody Has Your Real Medication List
@@ -56,11 +56,11 @@ That is the whole thesis of what I'm building.
 
 ## The unlock: a patient-owned layer on top of the chart
 
-My agent already pulls my real medical history from five hospitals as FHIR and drops it on a Linux box I control. [My Aria](i-built-the-patient-portal-my-agent-deserves.md) renders it. So the clinical med list is already there, read-only, exactly as the hospitals recorded it. That's the floor, and it's the right floor - I never want to lose or silently mutate what a clinician actually wrote.
+My agent already pulls my real medical history from five hospitals as FHIR and drops it on a Linux box I control. [My Tula](i-built-the-patient-portal-my-agent-deserves.md) renders it. So the clinical med list is already there, read-only, exactly as the hospitals recorded it. That's the floor, and it's the right floor - I never want to lose or silently mutate what a clinician actually wrote.
 
 The unlock is letting *me* add a layer on top.
 
-In My Aria's medications view, I can add a medication or a supplement that no chart knows about. I can mark a prescription the chart thinks I'm taking as *not taking* - without deleting the underlying clinical record, just overlaying the truth. I can correct a dose. I can remove something I added by mistake. And every entry is labeled by where it came from: **from your clinic record**, **added by you**, or **marked not taking.** Provenance is never lost. You can always see what the hospital believes *and* what is actually true, side by side.
+In My Tula's medications view, I can add a medication or a supplement that no chart knows about. I can mark a prescription the chart thinks I'm taking as *not taking* - without deleting the underlying clinical record, just overlaying the truth. I can correct a dose. I can remove something I added by mistake. And every entry is labeled by where it came from: **from your clinic record**, **added by you**, or **marked not taking.** Provenance is never lost. You can always see what the hospital believes *and* what is actually true, side by side.
 
 The merge of those two layers - the clinical import and the patient-maintained overlay - is the artifact medicine has been trying to produce at every handoff and never quite can. It is **one reconciled version of the true state of your health.** The list you would actually want to hand to a new doctor, an ER, a surgeon, or another AI. The list that says, with provenance, *this is what I take, this is what the chart thinks, here is where they disagree, and here is why.*
 

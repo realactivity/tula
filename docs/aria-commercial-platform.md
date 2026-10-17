@@ -16,7 +16,7 @@ Aria demonstrates what an individual patient agent can do at the scale and gover
 
 The opportunity is not simply a better chatbot. The opportunity is governed patient-agent infrastructure.
 
-A hospital-deployable patient experience, in which the patient directs the agent and controls consent and disclosure, is planned as part of the commercial platform. It is distinct from the public [`apps/my-aria`](../apps/my-aria/) reference UI, which stays open source under its existing license.
+**My Aria** is the patient-facing product on Aria: the patient's own agent plus its app, issued by the healthcare organization, in which the patient directs the agent and controls consent and disclosure. Each My Aria agent runs open Tula skills under Aria's identity, policy, and audit controls. My Aria is commercial and planned as part of the platform. The public single-user dashboard is [My Tula](../apps/my-tula/) (named My Aria until October 2026), which stays open source under Apache-2.0.
 
 ## Workflows Aria targets
 
