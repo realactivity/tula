@@ -2,7 +2,7 @@
 
 Aria is RealActivity's commercial hospital-scale platform for governed patient-agent infrastructure. It is the commercial extension of the open-source Tula skill layer.
 
-**Status and positioning.** Aria is the trust layer for patient intelligence in the Super Intelligence era. It is in active development at pilot stage. The multi-tenant capabilities on this page are being built and validated; they are not generally available. "Super Intelligence" names the era and the category, not a claim of superhuman clinical capability (see [`docs/patient-agency.md`](patient-agency.md#patient-agency-in-the-super-intelligence-era)).
+**Status and positioning.** Aria is the trust layer for patient intelligence as SI and AI become more capable. It is in active development at pilot stage. The multi-tenant capabilities on this page are being built and validated; they are not generally available. "SI and AI" name the same technology in federal and clinical usage; neither is a claim of superhuman clinical capability (see [`docs/patient-agency.md`](patient-agency.md#patient-agency-as-si-and-ai-advance)).
 
 ## Tula and Aria, in one paragraph
 

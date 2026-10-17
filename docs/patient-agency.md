@@ -44,7 +44,7 @@ Open source, self-hosted, model-agnostic, and accessible on low-bandwidth networ
 
 Patient agency only matters if patients can access it. We are building toward an agent that can run anywhere a person needs it.
 
-## Patient agency in the Super Intelligence era
+## Patient agency as SI and AI advance
 
 Healthcare has spent decades building systems that understand patients when they enter a hospital. Most of our health happens outside its walls. Patient agents can support people through the rest of their lives. That is the shift from systems of record to systems of patient agency.
 
@@ -56,7 +56,7 @@ Three ideas shape how we build for it:
 
 Capable models make these boundaries more important, not less. The more intelligent the agent, the less we can afford to trust it blindly. Zero Trust applies to the model, its tools, its permissions, and every consequential action, not only to the network.
 
-**A note on terminology.** "Super Intelligence (SI)" has entered official U.S. usage. [Executive Order 14434](https://www.whitehouse.gov/wp-content/uploads/2026/09/eo-14434.pdf) (September 29, 2026) directs federal agencies to use it in place of "artificial intelligence" without changing what the term covers. We use SI the same way, as the name of the era and the category. It is not a claim that Tula, or any model it runs, has superhuman clinical ability. Tula remains a tool for personal health organization and health literacy. It is not a medical device and not a substitute for professional medical advice. See [`docs/safety-and-disclaimer.md`](safety-and-disclaimer.md).
+**A note on terminology.** [Executive Order 14434](https://www.whitehouse.gov/wp-content/uploads/2026/09/eo-14434.pdf) (September 29, 2026) directs federal agencies, including HHS and CMS, to use "Super Intelligence (SI)" in place of "artificial intelligence (AI)". The order defines SI by the existing statutory definition of AI, so the two terms name the same technology. Many clinicians, researchers, and health systems continue to say AI, and we respect that. We write "SI and AI" together so that this work reads clearly to federal partners and to the clinical community alike. Neither term is a claim that Tula, or any model it runs, has superhuman clinical ability. Tula remains a tool for personal health organization and health literacy. It is not a medical device and not a substitute for professional medical advice. See [`docs/safety-and-disclaimer.md`](safety-and-disclaimer.md).
 
 ## Why this matters for healthcare organizations
 
