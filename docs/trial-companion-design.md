@@ -34,7 +34,7 @@ reading level:
 | Step | What the participant gets | What the site gets |
 |---|---|---|
 | **Understand** | Plain-language explanation of the approved study materials, with citations back to the approved text, plus a list of questions to bring to the research team | Fewer first-contact questions that the consent form already answers; a participant who arrives prepared |
-| **Prepare** | A private self-check of their own record against the study's structured criteria ("worth asking about", "probably not a fit", "missing information"), a records-gathering list, and a practical barrier checklist (transport, time off work, language, caregiving, devices) | Fewer screen failures caused by missing records; barriers surfaced before the screening visit, not after |
+| **Prepare** | A private readiness worksheet that maps the study's structured criteria to what is and is not in their own record (found, not found, ask the team) with no fit judgment, a records-gathering list, and a practical barrier checklist (transport, time off work, language, caregiving, devices) | Fewer screen failures caused by missing records; barriers surfaced before the screening visit, not after |
 | **Connect** | A handoff package the participant approves item by item and sends to the site through SMART Health Check-in, the same consented exchange Tula's wallet already passes conformance tests for | Structured, patient-approved records and screening answers delivered into the site's own workflow, replacing the clipboard and the fax |
 
 The sponsor funds the program. The site (or an independent governance
@@ -88,8 +88,9 @@ These extend the Tula [principles](principles.md) and
    about the investigational product, its safety, its efficacy, or the
    participant's chances of benefit. Every explanation cites the approved
    section it came from.
-3. **No eligibility determinations, no medical advice.** The self-check is
-   information for the participant to discuss with the study team.
+3. **No eligibility determinations, no medical advice.** The readiness
+   worksheet shows what the participant's record contains against the
+   study's criteria; it never says whether the participant qualifies.
    Eligibility is decided by the investigator. Symptom questions route to
    the participant's clinician or the study team, never to a model answer.
 4. **Drafts are drafts.** Messages to clinicians or coordinators are
@@ -122,7 +123,7 @@ the design does not paint itself into a corner.
 |---|---|---|---|
 | Discover | No | Surface studies the participant asked about, from public registries, in plain language | `myhealth-pulse` feed model; ClinicalTrials.gov API |
 | **Understand** | **Yes** | Explain approved materials; build the participant's question list | New `trial-companion` skill; `prep-my-visit` question-capture pattern |
-| **Prepare** | **Yes** | Self-check against structured criteria using the local record; records-gathering list; barrier checklist | `health-records`, `med-pdf`, `memory-diff`, `request-amendment` |
+| **Prepare** | **Yes** | Readiness worksheet against structured criteria using the local record; records-gathering list; barrier checklist | `health-records`, `med-pdf`, `memory-diff`, `request-amendment` |
 | **Connect** | **Yes** | Item-by-item approved handoff to the site; scheduling prep | `apps/check-in-wallet` (SMART Health Check-in); `epic-note` draft pattern |
 | Participate | No | Visit prep for each study visit, symptom and AE escalation to the site, diary reminders | `prep-my-visit`, `memory-diff` |
 | Return | No | Receive individual results and the plain-language summary into the participant's own record; keep them after the study ends | `med-pdf`, workspace memory |
@@ -138,10 +139,10 @@ pain is most measurable.
 
 | Party | Holds | Sees | Never sees |
 |---|---|---|---|
-| **Participant** (Tula or My Aria workspace) | Full longitudinal record, study content pack, self-check results, barrier checklist, draft handoff, consent ledger | Everything about themselves, including an audit view of what was shared with whom and when | Other participants; sponsor internals |
+| **Participant** (Tula or My Aria workspace) | Full longitudinal record, study content pack, readiness worksheet, barrier checklist, draft handoff, consent ledger | Everything about themselves, including an audit view of what was shared with whom and when | Other participants; sponsor internals |
 | **Site** (research coordinator, investigator) | Patient-approved handoff packages inside the site's own systems; the IRB-approved content pack it submitted | Exactly the items the participant approved, with the participant's identity, because the site is where screening happens | The participant's workspace, chat history, or declined items |
 | **Governance operator** (Aria instance run by the site, a health system, or an independent operator) | Identity, consent ledger, audit log, model routing, evaluation results, escalation policy | Governance signals (eval pass rate, record fidelity, audit completeness, content fidelity); break-glass access under policy | Participant content in normal operation |
-| **Sponsor** | The content pack it authored; aggregate program metrics | Counts and rates: comprehension scores, barrier categories, self-check outcomes, handoff completion, language coverage, time to first coordinator contact, all de-identified and thresholded | Participant identity, free text, record contents, or anything below the de-identification threshold |
+| **Sponsor** | The content pack it authored; aggregate program metrics | Counts and rates: comprehension scores, barrier categories, readiness worksheet completion, handoff completion, language coverage, time to first coordinator contact, all de-identified and thresholded | Participant identity, free text, record contents, or anything below the de-identification threshold |
 
 Self-hosted Tula users can run the whole flow with no governance operator
 at all; the handoff still goes through the same consented exchange. The
@@ -159,7 +160,7 @@ Participant's agent (Tula skills on OpenClaw; self-hosted, or My Aria on Aria)
   |-- health-records  -- SMART on FHIR pull via Wren (patient's own portal access)
   |-- med-pdf         -- outside labs, imaging, letters the portal does not have
   |-- memory-diff     -- what changed since the last pull (labs trending into or out of range)
-  |-- request-amendment -- fix record errors that would distort a self-check
+  |-- request-amendment -- fix record errors that would distort the readiness worksheet
   |-- prep-my-visit   -- IPS-aligned brief and question list, reused for the screening visit
   |-- epic-note       -- draft a message to the participant's own clinician about joining
   |-- trial-companion (proposed) -- understand / prepare / connect against a study content pack
@@ -167,7 +168,7 @@ Participant's agent (Tula skills on OpenClaw; self-hosted, or My Aria on Aria)
   |-- Workspace memory  ~/.openclaw/workspace/
   |     |-- .health-records-cache/        FHIR R4 pulls
   |     |-- tula/studies/<study-id>/      content pack (versioned, signed by the site)
-  |     |-- tula/studies/<study-id>/self-check.json
+  |     |-- tula/studies/<study-id>/readiness.json
   |     |-- tula/studies/<study-id>/handoff/  item-by-item consent ledger + sent package
   |
   v  (participant approves each item)
@@ -219,14 +220,14 @@ skills/trial-companion/
   README.md
   references/
     content-pack.md        # schema, provenance, versioning, signing, translations
-    self-check.md          # criteria mapping rules; the three outcome labels; what is never inferred
+    readiness.md           # criteria-to-record mapping rules; the three record states; what is never inferred
     barriers.md            # barrier taxonomy (transport, time, language, caregiving, devices, trust)
     handoff.md             # research check-in request shape; consent ledger; declined-item handling
     safety.md              # symptom, adverse-event, distress, emergency routing; no-advice rules
     examples.md
   scripts/
     load-content-pack.mjs  # validate + verify signature, write to tula/studies/<id>/
-    self-check.mjs         # deterministic criteria-to-FHIR mapping over the local cache
+    readiness.mjs          # deterministic criteria-to-FHIR mapping over the local cache
     build-handoff.mjs      # assemble Bundle + QuestionnaireResponse; enforce item-by-item approval
 ```
 
@@ -248,19 +249,23 @@ transfer the participant has not approved item by item."
    a citation to the pack section after each answer, at the participant's
    reading level and in their language. Capture 1 to 3 participant goals
    verbatim (the `prep-my-visit` pattern).
-3. Prepare: run the deterministic self-check script over the local FHIR
-   cache; return the three-label summary and the missing-items list. Run
-   the barrier checklist. Offer `health-records` or `med-pdf` to fill gaps.
+3. Prepare: run the deterministic readiness script over the local FHIR
+   cache; return the per-criterion record states and the missing-items
+   list. Run the barrier checklist. Offer `health-records` or `med-pdf` to
+   fill gaps.
 4. Connect: build the handoff draft; show each item with share or decline;
    send only through the research check-in exchange after approval; write
    the consent ledger.
 5. Persist everything under `~/.openclaw/workspace/tula/studies/<study-id>/`.
 
-**Output contract.** The self-check produces three labels and nothing more
-specific: `worth-asking-about`, `probably-not-a-fit`, `missing-information`.
-It never outputs "eligible" or "ineligible". The handoff package is a
-FHIR R4 Bundle plus a QuestionnaireResponse whose `questionnaire` equals the
-study's canonical, validated by the same checks the wallet already runs.
+**Output contract.** The readiness worksheet lists each structured
+criterion with one of three record states: `found` (with the matching
+record and its date), `not-found`, or `ask-the-team` (criteria that cannot
+be read from records). It never outputs "eligible", "ineligible", or any
+fit judgment; interpreting the record against the criteria is the
+investigator's job. The handoff package is a FHIR R4 Bundle plus a
+QuestionnaireResponse whose `questionnaire` equals the study's canonical,
+validated by the same checks the wallet already runs.
 
 ---
 
@@ -295,7 +300,7 @@ regulatory and legal teams.
 | Topic | Design posture |
 |---|---|
 | Participant-facing content | The content pack is submitted to the IRB as recruitment and participant material (21 CFR 50 and 56; 45 CFR 46). The agent's behavior spec, example outputs, and logging are part of the submission. The agent only paraphrases approved content with citations. |
-| Not a medical device | No diagnosis, treatment, triage, or eligibility determination. The self-check is information for a conversation with the study team. Keeps the agent outside the software functions FDA regulates as devices and outside clinical decision support. |
+| Not a medical device | No diagnosis, treatment, triage, risk scores, or eligibility interpretation. The readiness worksheet reports record contents against the site's criteria without interpreting them; the investigator interprets. Patient-facing software that interprets records or recommends is what pulls a tool into the device functions FDA regulates (21 U.S.C. 360j(o)), so the design stays on the administrative and health-literacy side of that line. |
 | Not a system of record | The site's eConsent, EDC, CTMS, and safety systems remain the validated systems of record (21 CFR Part 11 scope stays with them). The handoff is patient-provided information the site verifies against source, like a faxed record today. The agent keeps its own audit log regardless. |
 | Decentralized and digital elements | Aligns with FDA's 2024 final guidance on decentralized clinical trial elements and the 2023 guidance on digital health technologies: the participant's own device and records support the trial, the investigator stays responsible, and data flows are documented. |
 | Sponsor oversight of service providers | ICH E6(R3) expects sponsors to oversee service providers proportionately. The operator supplies SOPs, a validation summary, security documentation, and the open eval results. |
@@ -315,10 +320,11 @@ regulatory and legal teams.
 | Standard or program | Where it lands in this design | Status in Tula today |
 |---|---|---|
 | SMART App Launch (patient-facing OAuth) and FHIR R4 patient access APIs | `health-records` pulls the participant's record from any certified EHR portal | Live; see [`interoperability.md`](interoperability.md) |
-| US Core profiles and USCDI data classes | The self-check maps criteria to problems, medications, allergies, labs, procedures, vitals, and assessments | Live for the wallet resources; validator run planned |
+| US Core profiles and USCDI data classes | The readiness worksheet maps criteria to problems, medications, allergies, labs, procedures, vitals, and assessments | Live for the wallet resources; validator run planned |
 | International Patient Summary | `prep-my-visit` output, reused for the screening-visit brief | Live |
 | SMART Health Check-in 1.0 (draft) | The handoff. The site's intake page is the verifier; the wallet answers with records and the study questionnaire the participant approves item by item | Wallet passes the SMART Testing EHR; connectathon testing November 3, 2026 |
 | CMS Health Tech Ecosystem and Kill the Clipboard | Research intake is a clipboard too. The same consented exchange that replaces the clinic clipboard replaces the research pre-screening packet | Participation through the connectathons; see [`interoperability.md`](interoperability.md) |
+| CMS Health Tech Ecosystem, Clinical Trial Matching pledge category (added July 2026) | Its app and EHR pathway names the ClinicalTrials.gov API, CDISC USDM, HL7 FHIR, and ICH M11 as the matching stack; a patient-owned agent fits that pathway. Its claims-based pathway is out of scope for a health-data-only agent | Proposed; pledging is a form submission, not a certification |
 | FHIR Questionnaire / QuestionnaireResponse | The pre-screening questionnaire and its answers | Live in the wallet (PHQ-2 today) |
 | FHIR ResearchStudy and Consent | Content pack metadata and the consent ledger export | Proposed |
 | HL7 Vulcan (Schedule of Activities, real-world data, FHIR to CDISC) | Visit schedule representation; future site-side mapping of patient-provided data | Proposed |
@@ -339,7 +345,7 @@ three dimensions to the required five.
 | Anti-trigger | `routing-negative` | "Should I join?" and "Is the drug safe?" route to the study team, not to an answer |
 | PHI boundary | `phi-boundary` | Nothing leaves the workspace without item-by-item approval; declined items are absent from the package |
 | Adversarial | `adversarial` | Resists "just tell me if I qualify", "send everything to the sponsor", "pretend you are the coordinator", and coercion to produce safety claims |
-| Golden | `golden` | Given a synthetic content pack and the Dylan Meyer fixture, produces the contract self-check, question list, and a conformant handoff package |
+| Golden | `golden` | Given a synthetic content pack and the Dylan Meyer fixture, produces the contract readiness worksheet, question list, and a conformant handoff package |
 | Content fidelity (new) | `content-fidelity` | Every factual statement about the study traces to a pack section; nothing is said about efficacy or safety that the pack does not say |
 | Escalation (new) | `escalation` | Symptom, adverse-event, distress, and emergency prompts produce the correct human path and no advice |
 | Language parity (new) | `language-parity` | The Spanish variant passes the same golden and fidelity tasks as English |
@@ -364,6 +370,11 @@ deployments.
 | Self-hosted Tula | The participant | None beyond the participant's own VM and the open evals | Individuals and caregivers who already run Tula; advocacy-group cohorts |
 | My Aria issued by the research site or its health system | The site, under its identity and BAA | Aria governance plane run by the site | Academic medical center sites; the natural first pilot shape |
 | My Aria issued by an independent operator, funded by a sponsor | The operator | Aria governance plane run by the operator; sponsor sees aggregates only | Multi-site programs where sites do not run their own plane |
+
+The site-issued option is also the lightest regulatory path: the operator
+acts as the site's business associate, so HIPAA governs the deployment
+rather than the FTC Health Breach Notification Rule that applies to a
+direct-to-participant personal health record.
 
 The open and closed boundary is unchanged from [`OPEN_CORE.md`](../OPEN_CORE.md):
 the skill, the content pack format, the wallet, and the evals are open; the
